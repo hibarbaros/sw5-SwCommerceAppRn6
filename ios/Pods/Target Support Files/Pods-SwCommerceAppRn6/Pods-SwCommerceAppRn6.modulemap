@@ -1,0 +1,6 @@
+module Pods_SwCommerceAppRn6 {
+  umbrella header "Pods-SwCommerceAppRn6-umbrella.h"
+
+  export *
+  module * { export * }
+}
