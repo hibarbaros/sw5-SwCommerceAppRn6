@@ -15,7 +15,7 @@ import {
 } from '../../../themes/components';
 import CountryDropDown from '../../Common/CountryDropDown/CountryDropDown';
 import LoadSpinner from '../../Common/LoadSpinner/LoadSpinner';
-import {useListMutation} from '../../../utils/hooks/useAddress';
+import {useAddAddress, useEditAddress} from '../../../utils/hooks/useAddress';
 
 export default function UserAddressAddForm() {
   const navigation = useNavigation();
@@ -23,12 +23,11 @@ export default function UserAddressAddForm() {
   const {userData, userAddress} = route.params;
   const cache = useQueryClient();
 
+  const {mutate: addAddress, isLoading: isAddAddressLoading} = useAddAddress();
   const {
-    addAddress,
-    isAddAddressLoading,
-    editAddress,
-    isEditAddressLoading,
-  } = useListMutation();
+    mutate: editAddress,
+    isLoading: isEditAddressLoading,
+  } = useEditAddress();
 
   function handleEditAddress(values) {
     editAddress(values, {

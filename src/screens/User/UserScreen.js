@@ -5,14 +5,14 @@ import UserProfile from '../../components/UserComponents/UserProfile/UserProfile
 import UserAddressList from '../../components/UserComponents/UserAddressList/UserAddressList';
 
 export default function UserScreen() {
-	return (
-		<SafeAreaView>
-			<ScrollView>
-				<Container>
-					<UserProfile />
-					<UserAddressList />
-				</Container>
-			</ScrollView>
-		</SafeAreaView>
-	);
+  return (
+    <SafeAreaView>
+      <ScrollView>
+        <Container>
+          <UserProfile />
+          <UserAddressList />
+        </Container>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }

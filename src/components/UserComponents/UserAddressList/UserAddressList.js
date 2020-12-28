@@ -9,7 +9,7 @@ import LoadSpinner from '../../Common/LoadSpinner/LoadSpinner';
 import AppRoute from '../../../utils/approutes';
 import AppContext from '../../../context/AppContext';
 import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
-import {useListMutation} from '../../../utils/hooks/useAddress';
+import {useDeleteAddress} from '../../../utils/hooks/useAddress';
 
 export default function UserAddressList({checkout = false}) {
   const navigation = useNavigation();
@@ -19,11 +19,20 @@ export default function UserAddressList({checkout = false}) {
   const [isTooltip, setisTooltip] = useState(null);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
 
-  const {deleteAddress, isDeleteLoading} = useListMutation();
+  const {
+    data: customerData,
+    error,
+    isLoading: isSustomerData,
+  } = useCustomerByCustomerId(user);
+
+  const {
+    mutate: deleteAddress,
+    isLoading: isDeleteAddress,
+  } = useDeleteAddress();
 
   function handleDelete() {
     deleteAddress(selectedAddressId, {
-      onSettled: (data, error, mutationVariables) => {
+      onSettled: () => {
         cache.invalidateQueries('userData');
       },
       throwOnError: true,
@@ -35,25 +44,25 @@ export default function UserAddressList({checkout = false}) {
     setSelectedAddressId(adressId);
   }
 
-  const {data: customerData, error, isLoading} = useCustomerByCustomerId(user);
-
-  if (isLoading)
+  if (isSustomerData) {
     return (
       <Text marginB-s3 text60>
         Loading
       </Text>
     );
+  }
 
-  if (error)
-    return (
-      <Text marginB-s3 text60>
-        {error.message}
-      </Text>
-    );
+  error && (
+    <Text marginB-s3 text60>
+      {error.message}
+    </Text>
+  );
+
+  console.log('customerData', customerData.address);
 
   return (
     <>
-      <LoadSpinner isVisible={isDeleteLoading} />
+      <LoadSpinner isVisible={isDeleteAddress} />
       {customerData.address.map((address) => {
         return (
           <UserAddressCard

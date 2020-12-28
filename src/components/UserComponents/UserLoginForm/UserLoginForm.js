@@ -1,7 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
 import {Icon, Input, Button} from '@ui-kitten/components';
-import {useQuery, useMutation, useQueryClient} from 'react-query';
 
 import {View} from 'react-native-ui-lib';
 import Toast from 'react-native-toast-message';
@@ -36,12 +35,6 @@ const UserLoginForm = () => {
     </TouchableWithoutFeedback>
   );
 
-  const handleLoginUser = (id) => {
-    setUser(id);
-    setUserStorage(id);
-    navigation.goBack();
-  };
-
   function passwordCheck(password, data) {
     const {id, hashPassword} = data;
     let checkUserPassword;
@@ -52,7 +45,9 @@ const UserLoginForm = () => {
       checkUserPassword = bcrypt.compareSync(password, hashPassword);
     }
     if (checkUserPassword) {
-      handleLoginUser(id);
+      setUser(1);
+      setUserStorage(id);
+      navigation.goBack();
     }
     if (!checkUserPassword) {
       Toast.show({
@@ -64,23 +59,19 @@ const UserLoginForm = () => {
   }
 
   function handleLogin(values) {
-    checkUserMutate(values);
-    // useCustomerCheckByMail(values);
+    checkUserMutate(values, {
+      onSuccess: (data) => passwordCheck(values.password, data),
+    });
   }
-
-  // console.log('mutateCheckCustomer.status', isLoading);
 
   return (
     <>
       <LoadSpinner isVisible={isLoading} />
-      <Button
-        appearance="outline"
-        onPress={() => checkUserMutate('test')}
-        accessoryRight={ForwardIcon}>
-        Login
-      </Button>
       <Formik
-        initialValues={{email: '', password: '2003980016Bbbbb'}}
+        initialValues={{
+          email: 'Hi.barbaros@gmail.com',
+          password: '2003980016Bbb',
+        }}
         onSubmit={(values) => handleLogin(values)}
         validationSchema={yup.object().shape({
           email: yup.string().email().required(),

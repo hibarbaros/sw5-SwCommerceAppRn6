@@ -51,5 +51,7 @@
 	},
 	"CheckoutSelectBillingAddress": "Select billing address",
 	"CheckoutSelectShippingAddress": "Select shipping address",
-	"aboutShop": "About Shop"
+	"aboutShop": "About Shop",
+	"emailBereits" : "Diese E-Mail Adresse ist bereits registriert worden"
+
 }

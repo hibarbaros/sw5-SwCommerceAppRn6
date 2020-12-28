@@ -1,0 +1,24 @@
+{
+	"Tron Log": {
+		"prefix": "trnlog",
+		"body": [
+			"console.tron.log();"
+		]
+	},
+	"Tron Error": {
+		"prefix": "trnerror",
+		"body": [
+			"console.tron.error();"
+		]
+	},
+	"Tron Display": {
+		"prefix": "trndisplay",
+		"body": [
+			"console.tron.display({",
+			"name: 'Display'",
+			"preview: 'Preview",
+			"value: 'Value",
+			"});"
+		]
+	},
+}

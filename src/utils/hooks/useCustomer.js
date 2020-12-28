@@ -1,4 +1,4 @@
-import React from 'react';
+import {useContext} from 'react';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
 import {LocalizationContext} from '../../context/Translations';
 
@@ -17,162 +17,167 @@ const getCustomerByCustomerId = async (userId) => {
   return data;
 };
 
-export function useCustomerByCustomerId(userId) {
-  return useQuery(['userData', userId], () => getCustomerByCustomerId(userId));
+export function useCustomerByCustomerId(userId, options) {
+  return useQuery(
+    ['userData', userId],
+    () => getCustomerByCustomerId(userId),
+    options,
+  );
 }
 
+//Check Customer By Mail
 const getCustomerCheckByCustomerMail = async (values) => {
   const data = await checkUserForLogin(values);
   return data;
 };
 
 export function useCustomerCheckByMail() {
-  return useMutation((values) => getCustomerCheckByCustomerMail(values), {
+  const {translations} = useContext(LocalizationContext);
+
+  const mutate = useMutation(
+    (values) => getCustomerCheckByCustomerMail(values),
+    {
+      onError: (e) => {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: e.message,
+        });
+      },
+      onSuccess: (data) => {
+        if (data) {
+          return data;
+        }
+        if (!data) {
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: translations.emailBereits,
+          });
+        }
+      },
+    },
+  );
+
+  return mutate;
+}
+
+//Check Customer By Mail
+
+//Register customer
+const getRegisterCustomer = async (values) => {
+  const data = await customerRegister(values);
+  return data;
+};
+
+export function useRegisterCustomer() {
+  const {translations} = useContext(LocalizationContext);
+
+  const mutate = useMutation((values) => getRegisterCustomer(values), {
+    onError: (e) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: e.message,
+      });
+    },
     onSuccess: (data) => {
+      if (data) {
+        setUserStorage(data.id);
+        return data;
+      }
       if (!data) {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: 'Diese E-Mail Adresse ist bereits registriert worden',
+          text2: translations.formularError,
         });
-      } else {
-        setUserStorage(data.data.id);
-        return data;
       }
     },
   });
-}
 
-export const useListMutation = async () => {
-  const {translations} = React.useContext(LocalizationContext);
+  return mutate;
+}
+//Register customer
+
+//Edit customer
+const getEditCustomer = async (values) => {
+  const data = await passwordEdit(values);
+  return data;
+};
+
+export function useEditCustomer() {
+  const {translations} = useContext(LocalizationContext);
   const cache = useQueryClient();
 
-  const mutation = useMutation((values) => checkUserForLogin(values), {
-    onSuccess: (data) => console.log('data', data),
+  const mutate = useMutation((values) => getEditCustomer(values), {
+    onError: (e) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: e.message,
+      });
+    },
+    onSuccess: (data) => {
+      if (data) {
+        cache.invalidateQueries('userData', data.customerId);
+        Toast.show({
+          text1: 'Success',
+          text2: translations.formularSuccess,
+        });
+      }
+      if (!data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: translations.formularError,
+        });
+      }
+    },
   });
 
-  //Add customer
-  const [mutateAddCustomer, {isLoading: addCustomerLoading}] = useMutation(
-    customerRegister,
-    {
-      onError: (e) => {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: e.message,
-        });
-      },
-      onSuccess: (data) => {
-        if (!data) {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Diese E-Mail Adresse ist bereits registriert worden',
-          });
-        } else {
-          setUserStorage(data.data.id);
-          return data;
-        }
-      },
-    },
-  );
+  return mutate;
+}
 
-  //Edit Customer
-  const [mutateEditCustomer, {isLoading: editCustomerLoading}] = useMutation(
-    customerEdit,
-    {
-      onError: (e) => {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: e.message,
-        });
-      },
-      onSuccess: (data) => {
-        if (data) {
-          cache.invalidateQueries('userData', data.customerId);
-          Toast.show({
-            text1: 'Success',
-            text2: translations.formularSuccess,
-          });
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: translations.formularError,
-          });
-        }
-      },
-    },
-  );
+//Edit customer
 
-  //Edit Password
-  const [mutateEditPassword, {isLoading: editPasswordLoading}] = useMutation(
-    passwordEdit,
-    {
-      onError: (e) => {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: e.message,
-        });
-      },
-      onSuccess: (data) => {
-        if (data) {
-          cache.invalidateQueries('userData', data.customerId);
-          Toast.show({
-            text1: 'Success',
-            text2: translations.formularSuccess,
-          });
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: translations.formularError,
-          });
-        }
-      },
-    },
-  );
-
-  //Check Customer For Login
-  const {mutateCheckCustomer, isLoading: loadingcheckCustomer} = useMutation(
-    (values) => checkUserForLogin(values),
-    {
-      onError: (e) => {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: e.message,
-        });
-      },
-      onSuccess: (data) => {
-        console.log(
-          '🚀 ~ file: useCustomer.js ~ line 124 ~ useListMutation ~ data',
-          data,
-        );
-        if (!data) {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Benutzer wurde nicht gefunden',
-          });
-        } else {
-          return data;
-        }
-      },
-    },
-  );
-
-  return {
-    mutateAddCustomer,
-    addCustomerLoading,
-    mutateCheckCustomer,
-    mutateEditCustomer,
-    editCustomerLoading,
-    mutateEditPassword,
-    editPasswordLoading,
-    loadingcheckCustomer,
-    mutation,
-  };
+//Edit customer password
+const getEditCustomerPassword = async (values) => {
+  const data = await customerEdit(values);
+  return data;
 };
+
+export function useEditCustomerPassword() {
+  const {translations} = useContext(LocalizationContext);
+  const cache = useQueryClient();
+
+  const mutate = useMutation((values) => getEditCustomerPassword(values), {
+    onError: (e) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: e.message,
+      });
+    },
+    onSuccess: (data) => {
+      if (data) {
+        cache.invalidateQueries('userData', data.customerId);
+        Toast.show({
+          text1: 'Success',
+          text2: translations.formularSuccess,
+        });
+      }
+      if (!data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: translations.formularError,
+        });
+      }
+    },
+  });
+
+  return mutate;
+}
+
+//Edit customer password

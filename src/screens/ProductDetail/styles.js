@@ -8,8 +8,9 @@ const ImageContainer = styled(View)`
   height: 440px;
 `;
 
-const FavoriteIconContainer = styled(View)`
+const FavoriteIconContainer = styled.View`
   width: 20%;
+  height: 40px;
 `;
 
 const TopContainer = styled(View)`

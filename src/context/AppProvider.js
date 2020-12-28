@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState as useStateOverride, useEffect} from 'react';
 import _ from 'lodash';
 import database from '@react-native-firebase/database';
 import {useQuery} from 'react-query';
@@ -7,9 +7,12 @@ import AppContext from './AppContext';
 import {shopData, paymentsData} from '../utils/actions/appactions';
 import storageHelper from '../utils/storagehelper';
 
+import useStateWrapper from '../config/reactotronStateWatcher';
+const useState = useStateWrapper(useStateOverride); // usecontext state ler takip ediliyor
+
 const AppProvider = (props) => {
   const [cartCount, setCartCount] = useState(0);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const [userCart, setUserCart] = useState(null);
   const [whislist, setWhislist] = useState(null);
   const [currency, setCurrency] = useState('');
@@ -150,9 +153,14 @@ const AppProvider = (props) => {
 
   //init effect
   useEffect(() => {
-    storageHelper
-      ._get('user')
-      .then((response) => (response ? setUser(response) : setUser(response)));
+    // storageHelper._remove('user');
+    storageHelper._get('user').then((response) => {
+      console.log(
+        '🚀 ~ file: AppProvider.js ~ line 159 ~ storageHelper._get ~ response',
+        response,
+      );
+      response && setUser(response);
+    });
     storageHelper._get('userCart').then((value) => value && setUserCart(value));
     storageHelper
       ._get('cartCount')

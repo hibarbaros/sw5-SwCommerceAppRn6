@@ -36,18 +36,17 @@ export default function CategoriesProducts({route}) {
     },
   });
 
-  if (!categoryDetailData.isSuccess) return <LoadSpinner isVisible={true} />;
+  if (!categoryDetailData.isSuccess) {
+    return <LoadSpinner isVisible={true} />;
+  }
 
-  if (categoryDetailData.error)
+  if (categoryDetailData.error) {
     return (
       <Text>An error has occurred: {categoryDetailData.error.message} </Text>
     );
+  }
 
   const uniqueData = _.unionBy(categoryDetailData.data.products, 'articleID');
-  console.log(
-    '🚀 ~ file: CategoriesProducts.js ~ line 47 ~ CategoriesProducts ~ uniqueData',
-    uniqueData,
-  );
 
   // function handleProductsPriceFilter() {
   // 	var listOfvalues = [];

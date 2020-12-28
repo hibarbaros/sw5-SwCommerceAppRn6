@@ -1,4 +1,6 @@
+import {useContext} from 'react';
 import {useQuery, useMutation} from 'react-query';
+import {LocalizationContext} from '../../context/Translations';
 import Toast from 'react-native-toast-message';
 
 import {
@@ -29,74 +31,104 @@ export function useAddressesByUserId(userId) {
   );
 }
 
-export const useListMutation = () => {
-  const [deleteAddress, {isLoading: isDeleteLoading}] = useMutation(
-    addressDelete,
-    {
-      onSuccess: (data) => {
-        if (data) {
-          Toast.show({
-            text1: 'Success',
-            text2: 'Ihre Transaktion ist erfolgreich',
-          });
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Bitte überprüfen Sie Ihr Formular',
-          });
-        }
-      },
-      onError: (error) => {
-        console.log('error', error);
-      },
-    },
-  );
-
-  const [addAddress, {isLoading: isAddAddressLoading}] = useMutation(
-    addressAdd,
-    {
-      onSuccess: (data) => {
-        if (!data) {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Something went wrong',
-          });
-        } else {
-          return true;
-        }
-      },
-      onError: (error) => {
-        console.log('error', error);
-      },
-    },
-  );
-
-  const [editAddress, {isLoading: isEditAddressLoading}] = useMutation(
-    addressEdit,
-    {
-      onSuccess: (data) => {
-        if (!data) {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Something went wrong',
-          });
-        }
-      },
-      onError: (error) => {
-        console.log('error', error);
-      },
-    },
-  );
-
-  return {
-    deleteAddress,
-    isDeleteLoading,
-    addAddress,
-    isAddAddressLoading,
-    editAddress,
-    isEditAddressLoading,
-  };
+//Delete Address
+const getDeleteAddress = async (addressId) => {
+  const data = await addressDelete(addressId);
+  return data;
 };
+
+export function useDeleteAddress() {
+  const {translations} = useContext(LocalizationContext);
+  const mutate = useMutation((addressId) => getDeleteAddress(addressId), {
+    onError: (e) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: e.message,
+      });
+    },
+    onSuccess: (data) => {
+      if (data) {
+        return data;
+      }
+      if (!data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: translations.formularError,
+        });
+      }
+    },
+  });
+
+  return mutate;
+}
+//Delete Address
+
+//Add Address
+const getAddAddress = async (values) => {
+  const data = await addressAdd(values);
+  return data;
+};
+
+export function useAddAddress() {
+  const {translations} = useContext(LocalizationContext);
+  const mutate = useMutation((values) => getAddAddress(values), {
+    onError: (e) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: e.message,
+      });
+    },
+    onSuccess: (data) => {
+      if (data) {
+        return true;
+      }
+      if (!data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: translations.formularError,
+        });
+      }
+    },
+  });
+
+  return mutate;
+}
+//Add Address
+
+//Edit Address
+const getEditAddress = async (values) => {
+  const data = await addressEdit(values);
+  return data;
+};
+
+export function useEditAddress() {
+  const {translations} = useContext(LocalizationContext);
+  const mutate = useMutation((values) => getEditAddress(values), {
+    onError: (e) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: e.message,
+      });
+    },
+    onSuccess: (data) => {
+      if (data) {
+        return true;
+      }
+      if (!data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: translations.formularError,
+        });
+      }
+    },
+  });
+
+  return mutate;
+}
+//Edit Address

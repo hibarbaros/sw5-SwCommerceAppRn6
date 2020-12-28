@@ -33,9 +33,11 @@ const ProductDetail = ({route}) => {
     product.id,
   );
 
-  if (isLoading) return <Text>..Loading</Text>;
+  isLoading && <Text>..Loading</Text>;
 
-  if (error) return <Text>An error has occurred: {error.message} </Text>;
+  error && <Text>An error has occurred: {error.message} </Text>;
+
+  // console.tron.warn(productData);
 
   customerActions.customerVisitedProducts(productData);
   function handleAddToCart() {
