@@ -18,31 +18,17 @@ export default function ShippingMethods() {
 
   const [isSelected, setIsSelected] = useState(null);
 
-  const {
-    data: customerData,
-    isLoading: customerDataLoading,
-  } = useCustomerByCustomerId(user, {
+  useCustomerByCustomerId(user, {
     onSuccess: (res) => {
       console.log('data', res);
       setselectedShippingAddress(res.defaultShippingAddress);
     },
   });
 
-  //   if (customerDataLoading) {
-  //     return <Text>Loading...</Text>;
-  //   }
-
-  //   console.log(
-  //     'customerData.defaultShippingAddress',
-  //     customerData.defaultShippingAddress.country.id,
-  //   );
-
   const addressId =
     selectedShippingAddress && selectedShippingAddress.country.id;
-  console.log(
-    '🚀 ~ file: ShippingMethods.js ~ line 34 ~ ShippingMethods ~ addressId',
-    addressId,
-  );
+
+  console.tron.warn('addressId', addressId);
 
   const {
     isLoading: shippingsDataLoading,

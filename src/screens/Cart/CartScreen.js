@@ -9,36 +9,36 @@ import {useNavigation} from '@react-navigation/native';
 import AppRoutes from '../../utils/approutes';
 
 const CartScreen = () => {
-	const {userCart} = useContext(AppContext);
-	const {translations} = useContext(LocalizationContext);
-	const navigation = useNavigation();
+  const {userCart} = useContext(AppContext);
+  const {translations} = useContext(LocalizationContext);
+  const navigation = useNavigation();
 
-	return (
-		<>
-			{userCart && (
-				<ScrollView>
-					<Container>
-						{userCart.map((product, index) => (
-							<CartBox key={index} product={product} />
-						))}
-						<CartTotalPrice />
-						<Button
-							size="small"
-							text={translations.checkOut}
-							onPress={() => {
-								navigation.navigate(AppRoutes.CHECKOUT_WIZARD);
-							}}
-						/>
-					</Container>
-				</ScrollView>
-			)}
-			{!userCart && (
-				<Container>
-					<Text>In Ihrem Warenkorb befinden sich keine Artikel</Text>
-				</Container>
-			)}
-		</>
-	);
+  return (
+    <>
+      {userCart && (
+        <ScrollView>
+          <Container>
+            {userCart.map((product) => (
+              <CartBox key={product.id} product={product} />
+            ))}
+            <CartTotalPrice />
+            <Button
+              size="small"
+              text={translations.checkOut}
+              onPress={() => {
+                navigation.navigate(AppRoutes.CHECKOUT_WIZARD);
+              }}
+            />
+          </Container>
+        </ScrollView>
+      )}
+      {!userCart && (
+        <Container>
+          <Text>In Ihrem Warenkorb befinden sich keine Artikel</Text>
+        </Container>
+      )}
+    </>
+  );
 };
 
 export default CartScreen;

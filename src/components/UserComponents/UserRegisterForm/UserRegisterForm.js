@@ -22,7 +22,7 @@ import LoadSpinner from '../../Common/LoadSpinner/LoadSpinner';
 
 import {Styled} from './styles';
 
-export default function UserRegisterForm() {
+export default function UserRegisterForm({wizard = false}) {
   const {setUser} = useContext(AppContext);
   const navigation = useNavigation();
 
@@ -33,10 +33,12 @@ export default function UserRegisterForm() {
 
   function handlePress(value) {
     mutateAddCustomer(value, {
-      onSuccess: (data, variables, context) => {
+      onSuccess: (data) => {
         if (data) {
           setUser(data.data.id);
-          navigation.dispatch(StackActions.replace(AppRoutes.PROFILE));
+          !wizard
+            ? navigation.dispatch(StackActions.replace(AppRoutes.PROFILE))
+            : navigation.goBack();
         }
       },
     });

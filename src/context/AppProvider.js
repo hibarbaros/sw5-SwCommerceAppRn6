@@ -1,4 +1,4 @@
-import React, {useState as useStateOverride, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import _ from 'lodash';
 import database from '@react-native-firebase/database';
 import {useQuery} from 'react-query';
@@ -7,8 +7,8 @@ import AppContext from './AppContext';
 import {shopData, paymentsData} from '../utils/actions/appactions';
 import storageHelper from '../utils/storagehelper';
 
-import useStateWrapper from '../config/reactotronStateWatcher';
-const useState = useStateWrapper(useStateOverride); // usecontext state ler takip ediliyor
+// import useStateWrapper from '../config/reactotronStateWatcher';
+// const useState = useStateWrapper(useStateOverride);
 
 const AppProvider = (props) => {
   const [cartCount, setCartCount] = useState(0);

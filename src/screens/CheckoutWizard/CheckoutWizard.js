@@ -12,7 +12,7 @@ import {useCreateOrder} from '../../utils/hooks/useOrder';
 import AppRoute from '../../utils/approutes';
 import CartTotalPrice from '../../components/Common/CartTotalPrice/CartTotalPrice';
 import UserLoginForm from '../../components/UserComponents/UserLoginForm/UserLoginForm';
-import ProductCardMini from '../../components/Common/ProductCardMini/ProductCardMini';
+import CartBox from '../../components/Common/CartBox/CartBox';
 import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods/ShippingMethods';
 import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods/PaymentMethods';
 import Address from '../../components/CheckoutComponents/Address/Address';
@@ -86,8 +86,9 @@ export default function CheckoutWizard() {
               </Text>
               {userCart &&
                 userCart.map((product) => (
-                  <ProductCardMini
+                  <CartBox
                     key={product.id}
+                    wizard={true}
                     product={product}
                     detail={product}
                   />
