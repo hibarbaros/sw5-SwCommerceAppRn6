@@ -16,12 +16,13 @@ export default function UserProfile() {
 
   const {data: customerData, isLoading} = useCustomerByCustomerId(user);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <Text marginB-s3 text60>
         Loading
       </Text>
     );
+  }
 
   return (
     <Card borderRadius={0} marginB-s5 padding-15 enableShadow={false}>

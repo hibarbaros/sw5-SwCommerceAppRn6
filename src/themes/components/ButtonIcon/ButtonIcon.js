@@ -1,5 +1,4 @@
 import React from 'react';
-import {Icon} from '@ui-kitten/components';
 import {Styled} from './styles';
 
 export default function ButtonIcon({
@@ -9,15 +8,13 @@ export default function ButtonIcon({
   iconSize,
   bordered = true,
 }) {
+  const Icon = (props) => <Styled.ButtonIcon {...props} name={iconName} />;
+
   return (
-    <Styled.ButtonContainer onPress={onPress} bordered={bordered}>
-      <Icon
-        name={iconName}
-        fill={iconColor}
-        size={iconSize}
-        bordered={bordered}
-        onPress={onPress}
-      />
-    </Styled.ButtonContainer>
+    <Styled.StyledButton
+      onPress={onPress}
+      bordered={bordered}
+      accessoryLeft={Icon}
+    />
   );
 }

@@ -10,5 +10,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 0,
     'import/no-anonymous-default-export': 0,
     'array-callback-return': 'error',
+    radix: 0,
   },
 };

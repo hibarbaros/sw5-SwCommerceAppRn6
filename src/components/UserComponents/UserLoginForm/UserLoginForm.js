@@ -69,8 +69,8 @@ const UserLoginForm = () => {
       <LoadSpinner isVisible={isLoading} />
       <Formik
         initialValues={{
-          email: 'Hi.barbaros@gmail.com',
-          password: '2003980016Bbb',
+          email: '',
+          password: '',
         }}
         onSubmit={(values) => handleLogin(values)}
         validationSchema={yup.object().shape({

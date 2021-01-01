@@ -102,3 +102,61 @@ dist
 
 # TernJS port file
 .tern-port
+
+##################
+# React-Native
+##################
+# OSX
+#
+.DS_Store
+
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+
+# Android/IJ
+#
+.idea
+.gradle
+local.properties
+
+# node.js
+#
+node_modules/
+npm-debug.log
+
+# BUCK
+buck-out/
+\.buckd/
+
+#IDE files
+android/app/libs
+android/keystores/debug.keystore
+AndroidE2E/.project
+AndroidE2E/app/.project
+lib/android/.project
+playground/android/.project
+AndroidE2E/app/.classpath
+AndroidE2E/app/.settings/
+AndroidE2E/app/bin/
+lib/android/.settings/
+lib/android/app/.settings/
+playground/android/.settings/
+playground/android/app/.settings/
+AndroidE2E/.settings/

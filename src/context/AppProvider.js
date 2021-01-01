@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import _ from 'lodash';
+import Reactotron from 'reactotron-react-native';
 import database from '@react-native-firebase/database';
+
 import {useQuery} from 'react-query';
 
 import AppContext from './AppContext';
@@ -14,13 +16,20 @@ const AppProvider = (props) => {
   const [cartCount, setCartCount] = useState(0);
   const [user, setUser] = useState(null);
   const [userCart, setUserCart] = useState(null);
-  const [whislist, setWhislist] = useState(null);
+  const [whislist, setWhislist] = useState([]);
   const [currency, setCurrency] = useState('');
   const [paymentMethods, setPaymentMethods] = useState(null);
   const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
   const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
   const [visitedProducts, setVisitedProducts] = useState([]);
   const [shippingPrice, setShippingPrice] = useState(null);
+
+  Reactotron.onCustomCommand({
+    command: 'user',
+    handler: () => {
+      console.tron.error(user);
+    },
+  });
 
   //user functions
 
@@ -44,7 +53,7 @@ const AppProvider = (props) => {
 
   //wishlist functions
   const whislistActions = {
-    addToWish: function (product) {
+    addToWish: async function (product) {
       let products = [];
       if (whislist) {
         products = [...whislist];
@@ -56,7 +65,7 @@ const AppProvider = (props) => {
       setWhislist(products);
       storageHelper._set('whislist', products);
       database()
-        .ref(`${user}/whislist`)
+        .ref(`users/${user}/whislist`)
         .set({
           ...products,
         });
@@ -69,11 +78,11 @@ const AppProvider = (props) => {
       _.remove(products, {id: product.id});
       setWhislist(products);
       storageHelper._set('whislist', products);
-      database()
-        .ref(`${user}/whislist`)
-        .set({
-          ...products,
-        });
+      // database()
+      //   .ref(`users/${user}/whislist`)
+      //   .set({
+      //     ...products,
+      //   });
     },
     checkToWish: function (productId) {
       return new Promise((resolve) => {
@@ -155,10 +164,6 @@ const AppProvider = (props) => {
   useEffect(() => {
     // storageHelper._remove('user');
     storageHelper._get('user').then((response) => {
-      console.log(
-        '🚀 ~ file: AppProvider.js ~ line 159 ~ storageHelper._get ~ response',
-        response,
-      );
       response && setUser(response);
     });
     storageHelper._get('userCart').then((value) => value && setUserCart(value));

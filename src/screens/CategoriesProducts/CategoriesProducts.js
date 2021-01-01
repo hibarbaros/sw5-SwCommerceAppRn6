@@ -1,9 +1,13 @@
 import React, {useState, useRef, useContext} from 'react';
 import {ScrollView, FlatList, Modal, SafeAreaView} from 'react-native';
 import _ from 'lodash';
-import {Text} from '@ui-kitten/components';
+import {Text, Button} from '@ui-kitten/components';
 
-import {CloseIcon} from '../../themes/components/IconSet';
+import {
+  CloseIcon,
+  SettingsIcon,
+  FilterIcon,
+} from '../../themes/components/IconSet';
 import TopNavigationModal from '../../components/Common/TopNavigationModal/TopNavigationModal';
 import {useCategoryByCategoryId} from '../../utils/hooks/useCategory';
 import ProductCard from '../../components/Common/ProductCard/ProductCard';
@@ -66,14 +70,14 @@ export default function CategoriesProducts({route}) {
       <Styled.TopContainer>
         <Styled.CategoryTitle>{category.name}</Styled.CategoryTitle>
         <Styled.TopIconContainer>
-          <Styled.FilterIcon
-            name="filter"
-            type="font-awesome"
+          <Button
+            appearance="ghost"
+            accessoryLeft={FilterIcon}
             onPress={() => setIsModalOpen(true)}
           />
-          <Styled.OrderIcon
-            name="sort"
-            type="font-awesome"
+          <Button
+            appearance="ghost"
+            accessoryLeft={SettingsIcon}
             onPress={() => actionSheetRef.current.setModalVisible()}
           />
         </Styled.TopIconContainer>
