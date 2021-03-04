@@ -3,37 +3,43 @@ import {colors} from '../../../themes/variables';
 import {sanFranciscoWeights} from 'react-native-typography';
 
 const Container = styled.View`
-	display: flex;
-	flex: 1;
-	flex-direction: column;
-	margin-top: 20px;
-	min-height: 200px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-top: 20px;
+  min-height: 200px;
 `;
 
 const CategoryTitleContainer = styled.View`
-	align-self: flex-start;
-	margin-left: 10px;
+  align-self: flex-start;
+  margin-left: 10px;
 `;
 
 const CategoryTitleBorder = styled.View`
-	border-bottom-width: 4px;
-	border-color: #d8d8d8;
-	left: 0px;
-	opacity: 0.5;
-	top: 17px;
+  border-bottom-width: 4px;
+  border-color: #d8d8d8;
+  left: 0px;
+  opacity: 0.5;
+  top: 17px;
 `;
 
 const CategoryTitle = styled.Text`
-	color: ${colors.themeColor};
-	${sanFranciscoWeights.bold};
-	display: flex;
-	font-size: 18px;
-	font-weight: bold;
+  color: ${colors.themeColor};
+  ${sanFranciscoWeights.bold};
+  display: flex;
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const StyledCarousel = styled.FlatList`
+  width: 100%;
+  height: 300px;
 `;
 
 export const Styled = {
-	CategoryTitle,
-	Container,
-	CategoryTitleContainer,
-	CategoryTitleBorder,
+  CategoryTitle,
+  Container,
+  CategoryTitleContainer,
+  CategoryTitleBorder,
+  StyledCarousel,
 };

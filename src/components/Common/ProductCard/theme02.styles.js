@@ -6,13 +6,9 @@ const Card = styled.TouchableOpacity`
   background-color: white;
   border: 1px solid ${colors.light};
   border-radius: 6px;
-  /* box-shadow: 8px 8px 8px #f4f4f4; */
-  flex: 1;
+  min-width: 200px;
   margin: 5px;
   padding-bottom: 20px;
-`;
-
-const CardContainer = styled.View`
   display: flex;
   flex-direction: column;
 `;
@@ -47,7 +43,6 @@ const ProductName = styled.Text`
 export const Styled = {
   Card,
   ProductName,
-  CardContainer,
   CurrencyContainer,
   ImageContainer,
   MediaImage,

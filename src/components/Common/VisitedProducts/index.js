@@ -1,6 +1,4 @@
-import React, {useRef, useContext} from 'react';
-import Carousel from 'react-native-anchor-carousel';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import React, {useContext} from 'react';
 
 import ProductCard from '../ProductCard';
 import AppContext from '../../../context/AppContext';
@@ -10,12 +8,11 @@ import {Headline} from '../../../themes/components';
 import {Styled} from './styles';
 
 export default function VisitedProducts() {
-  const carouselRef = useRef(null);
   const {translations} = useContext(LocalizationContext);
   const {visitedProducts} = useContext(AppContext);
 
   const renderCarouselItem = ({item}) => {
-    return <ProductCard theme="theme01" productId={item.id} />;
+    return <ProductCard theme="theme02" productId={item.id} />;
   };
 
   return (
@@ -24,17 +21,15 @@ export default function VisitedProducts() {
         <Styled.CategoryTitleContainer>
           <Headline type="h3">{translations.visitedProducts}</Headline>
         </Styled.CategoryTitleContainer>
-        <Carousel
+        <Styled.StyledCarousel
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          automaticallyAdjustContentInsets={true}
+          removeClippedSubviews={true}
+          enableEmptySections={true}
           data={visitedProducts}
-          renderItem={renderCarouselItem}
-          itemWidth={wp('60%')}
-          containerWidth={wp('100%')}
-          separatorWidth={0}
-          inActiveScale={1}
-          inActiveOpacity={1}
-          ref={carouselRef}
-          pagingEnable={true}
-          //minScrollDistance={20}
+          renderItem={(item) => renderCarouselItem(item)}
+          keyExtractor={(item, index) => index.toString()}
         />
       </Styled.Container>
     )

@@ -173,7 +173,7 @@ const ProductDetail = ({route}) => {
           {/* Property Groups */}
           <ProductPropertyGroup product={productData} />
           {/* Related Products */}
-          {productData.related && (
+          {/* {productData.related && (
             <>
               <Styled.DescriptionTitle>
                 {'.'}
@@ -181,9 +181,9 @@ const ProductDetail = ({route}) => {
               </Styled.DescriptionTitle>
               <ProductDetailRelatedProducts product={productData} />
             </>
-          )}
+          )} */}
           {/* Similar products */}
-          {productData.similar && (
+          {/* {productData.similar && (
             <>
               <Styled.DescriptionTitle>
                 {'.'}
@@ -191,7 +191,7 @@ const ProductDetail = ({route}) => {
               </Styled.DescriptionTitle>
               <ProductDetailSimilarProducts product={productData} />
             </>
-          )}
+          )} */}
         </Styled.Wrapper>
       </ScrollView>
       {productData.mainDetail.inStock > 0 && (

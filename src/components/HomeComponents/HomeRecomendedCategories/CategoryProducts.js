@@ -18,17 +18,15 @@ export default function CategoryProducts({categoryId}) {
   }
 
   return (
-    data && (
-      <Styled.StyledCarousel
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        automaticallyAdjustContentInsets={true}
-        removeClippedSubviews={true}
-        enableEmptySections={true}
-        data={_.take(data, 5)}
-        renderItem={(item) => renderCarouselItem(item)}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    )
+    <Styled.StyledCarousel
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      automaticallyAdjustContentInsets={true}
+      removeClippedSubviews={true}
+      enableEmptySections={true}
+      data={_.take(data, 5)}
+      renderItem={(item) => renderCarouselItem(item)}
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 }

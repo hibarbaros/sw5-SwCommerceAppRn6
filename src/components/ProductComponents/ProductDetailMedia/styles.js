@@ -3,7 +3,7 @@ import SwiperFlatList from 'react-native-swiper-flatlist';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const MediaContainer = styled.View`
-  width: ${wp('100%')};
+  width: ${wp('100%')}px;
   justify-content: center;
 `;
 

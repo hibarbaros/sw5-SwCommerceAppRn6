@@ -13,28 +13,16 @@ export default function ProductCardTheme02({navigation, product, thumbnail}) {
           productData: {product},
         });
       }}>
-      <Styled.CardContainer>
-        {thumbnail && (
-          <Styled.ImageContainer>
-            <ProductCardMedia mediaId={thumbnail.mediaId} />
-          </Styled.ImageContainer>
-        )}
-        <Styled.ProductName numberOfLines={2}>
-          {product.name}
-        </Styled.ProductName>
-        {product.mainDetail.prices.map((price, index) => {
-          return (
-            <Styled.CurrencyContainer key={index}>
-              <PriceWithCurrency
-                fontcolor="green"
-                fontsize={18}
-                price={price.price}
-                product={product}
-              />
-            </Styled.CurrencyContainer>
-          );
-        })}
-      </Styled.CardContainer>
+      <Styled.ImageContainer>
+        <ProductCardMedia thumbnail={thumbnail} />
+      </Styled.ImageContainer>
+      <Styled.ProductName numberOfLines={2}>{product.name}</Styled.ProductName>
+      <Styled.CurrencyContainer>
+        <PriceWithCurrency
+          price={product.mainDetail.prices[0].price}
+          product={product}
+        />
+      </Styled.CurrencyContainer>
     </Styled.Card>
   );
 }

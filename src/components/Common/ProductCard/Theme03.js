@@ -3,8 +3,6 @@ import PriceWithCurrency from '../PriceWithCurrency';
 import ProductCardMedia from '../../ProductComponents/ProductCardMedia';
 import AppRoutes from '../../../utils/approutes';
 
-import {colors} from '../../../themes/variables';
-
 import {Styled} from './theme03.styles';
 
 export default function ProductCardTheme03({navigation, product, thumbnail}) {
@@ -16,24 +14,18 @@ export default function ProductCardTheme03({navigation, product, thumbnail}) {
         });
       }}>
       <Styled.CardContainer>
-        {thumbnail && (
-          <Styled.ImageContainer>
-            <ProductCardMedia mediaId={thumbnail.mediaId} />
-          </Styled.ImageContainer>
-        )}
+        <Styled.ImageContainer>
+          <ProductCardMedia thumbnail={thumbnail} />
+        </Styled.ImageContainer>
         <Styled.ProductName numberOfLines={2}>
           {product.name}
         </Styled.ProductName>
-        {product.mainDetail.prices.map((price, index) => (
-          <Styled.CurrencyContainer key={index}>
-            <PriceWithCurrency
-              fontcolor={colors.themeColor}
-              fontsize={14}
-              price={price.price}
-              product={product}
-            />
-          </Styled.CurrencyContainer>
-        ))}
+        <Styled.CurrencyContainer>
+          <PriceWithCurrency
+            price={product.mainDetail.prices[0].price}
+            product={product}
+          />
+        </Styled.CurrencyContainer>
       </Styled.CardContainer>
     </Styled.Card>
   );

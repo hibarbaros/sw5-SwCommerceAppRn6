@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {useProductByProductId} from '../../../utils/hooks/useProduct';
@@ -18,7 +17,7 @@ export const themes = {
 
 const ProductCard = ({productId, theme}) => {
   const navigation = useNavigation();
-  const {isLoading, error, data} = useProductByProductId(productId);
+  const {isLoading, data} = useProductByProductId(productId);
 
   const Theme = themes[theme];
   if (!Theme) {
@@ -27,10 +26,6 @@ const ProductCard = ({productId, theme}) => {
 
   if (isLoading) {
     return <Styled.Loader />;
-  }
-
-  if (error) {
-    return <Text>An error has occurred: {error.message} </Text>;
   }
 
   const thumbnail = data.images.find((x) => x.main === 1);
