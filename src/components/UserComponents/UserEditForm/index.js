@@ -3,7 +3,7 @@ import {View} from 'react-native-ui-lib';
 import {Button, CheckBox} from '@ui-kitten/components';
 
 import {useEditCustomer} from '../../../utils/hooks/useCustomer';
-import LoadSpinner from '../../../components/Common/LoadSpinner/LoadSpinner';
+import LoadSpinner from '../../Common/LoadSpinner';
 import {LocalizationContext} from '../../../context/Translations';
 import {Container, FormInput} from '../../../themes/components';
 import {ForwardIcon} from '../../../themes/components/IconSet';

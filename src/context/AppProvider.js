@@ -1,16 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import _ from 'lodash';
-import Reactotron from 'reactotron-react-native';
-import database from '@react-native-firebase/database';
-
 import {useQuery} from 'react-query';
 
 import AppContext from './AppContext';
 import {shopData, paymentsData} from '../utils/actions/appactions';
-import storageHelper from '../utils/storagehelper';
-
-// import useStateWrapper from '../config/reactotronStateWatcher';
-// const useState = useStateWrapper(useStateOverride);
+import {setItem, getItem, clearAll, removeItem} from '../utils/storagehelper';
 
 const AppProvider = (props) => {
   const [cartCount, setCartCount] = useState(0);
@@ -23,13 +17,6 @@ const AppProvider = (props) => {
   const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
   const [visitedProducts, setVisitedProducts] = useState([]);
   const [shippingPrice, setShippingPrice] = useState(null);
-
-  Reactotron.onCustomCommand({
-    command: 'user',
-    handler: () => {
-      console.tron.error(user);
-    },
-  });
 
   //user functions
 
@@ -44,7 +31,7 @@ const AppProvider = (props) => {
         }
         products.push(product);
         setVisitedProducts(products);
-        storageHelper._set('visitedproducts', products);
+        setItem('visitedproducts', products);
       }
     },
   };
@@ -63,12 +50,7 @@ const AppProvider = (props) => {
         products.push(product);
       }
       setWhislist(products);
-      storageHelper._set('whislist', products);
-      database()
-        .ref(`users/${user}/whislist`)
-        .set({
-          ...products,
-        });
+      setItem('whislist', products);
     },
     removeToWish: function (product) {
       let products = [];
@@ -77,12 +59,7 @@ const AppProvider = (props) => {
       }
       _.remove(products, {id: product.id});
       setWhislist(products);
-      storageHelper._set('whislist', products);
-      // database()
-      //   .ref(`users/${user}/whislist`)
-      //   .set({
-      //     ...products,
-      //   });
+      setItem('whislist', products);
     },
     checkToWish: function (productId) {
       return new Promise((resolve) => {
@@ -104,9 +81,9 @@ const AppProvider = (props) => {
     emptyCart: function () {
       try {
         setUserCart(null);
-        storageHelper._remove('userCart');
+        removeItem('userCart');
         setCartCount(0);
-        storageHelper._set('cartCount', 0);
+        setItem('cartCount', 0);
       } catch (e) {
         return false;
       }
@@ -127,9 +104,9 @@ const AppProvider = (props) => {
       }
 
       setUserCart(products);
-      storageHelper._set('userCart', products);
+      setItem('userCart', products);
       setCartCount(cartCount + 1);
-      storageHelper._set('cartCount', cartCount + 1);
+      setItem('cartCount', cartCount + 1);
     },
     removeToCart: function (productId) {
       _.remove(userCart, {id: productId});
@@ -138,7 +115,7 @@ const AppProvider = (props) => {
     },
     setCart: function (userCartData) {
       setUserCart(userCartData);
-      storageHelper._set('userCart', userCartData);
+      setItem('userCart', userCartData);
     },
     _setCartCount: function () {
       let total = 0;
@@ -147,7 +124,7 @@ const AppProvider = (props) => {
         total += q;
       });
       setCartCount(total);
-      storageHelper._set('cartCount', total);
+      setItem('cartCount', total);
     },
   };
   //cart functions
@@ -162,18 +139,16 @@ const AppProvider = (props) => {
 
   //init effect
   useEffect(() => {
-    // storageHelper._remove('user');
-    storageHelper._get('user').then((response) => {
+    clearAll();
+    getItem('user').then((response) => {
       response && setUser(response);
     });
-    storageHelper._get('userCart').then((value) => value && setUserCart(value));
-    storageHelper
-      ._get('cartCount')
-      .then((value) => value && setCartCount(value));
-    storageHelper._get('whislist').then((value) => value && setWhislist(value));
-    storageHelper
-      ._get('visitedproducts')
-      .then((value) => value && setVisitedProducts(value));
+    getItem('userCart').then((value) => value && setUserCart(value));
+    getItem('cartCount').then((value) => value && setCartCount(value));
+    getItem('whislist').then((value) => value && setWhislist(value));
+    getItem('visitedproducts').then(
+      (value) => value && setVisitedProducts(value),
+    );
   }, []);
 
   return (

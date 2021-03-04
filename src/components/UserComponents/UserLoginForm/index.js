@@ -17,9 +17,9 @@ import AppContext from '../../../context/AppContext';
 import {setUserStorage} from '../../../utils/actions/useractions';
 import {useCustomerCheckByMail} from '../../../utils/hooks/useCustomer';
 
-import LoadSpinner from '../../Common/LoadSpinner/LoadSpinner';
+import LoadSpinner from '../../Common/LoadSpinner';
 
-const UserLoginForm = () => {
+export default function UserLoginForm() {
   const navigation = useNavigation();
 
   const {mutate: checkUserMutate, isLoading} = useCustomerCheckByMail();
@@ -128,6 +128,4 @@ const UserLoginForm = () => {
       </Formik>
     </>
   );
-};
-
-export default UserLoginForm;
+}

@@ -9,13 +9,13 @@ import AppContext from '../../context/AppContext';
 import {LocalizationContext} from '../../context/Translations';
 import {useProductByProductId} from '../../utils/hooks/useProduct';
 
-import PriceWithCurrency from '../../components/Common/PriceWithCurrency/PriceWithCurrency';
-import ProductPropertyGroup from '../../components/ProductComponents/ProductPropertyGroup/ProductPropertyGroup';
-import ProductWhislistButton from '../../components/ProductComponents/ProductWhislistButton/ProductWhislistButton';
-import ProductDetailSimilarProducts from '../../components/ProductComponents/ProductDetailSimilarProducts/ProductDetailSimilarProducts';
-import ProductDetailVariants from '../../components/ProductComponents/ProductDetailVariants/ProductDetailVariants';
-import ProductDetailMedia from '../../components/ProductComponents/ProductDetailMedia/ProductDetailMedia';
-import ProductDetailRelatedProducts from '../../components/ProductComponents/ProductDetailRelatedProducts/ProductDetailRelatedProducts';
+import PriceWithCurrency from '../../components/Common/PriceWithCurrency';
+import ProductPropertyGroup from '../../components/ProductComponents/ProductPropertyGroup';
+import ProductWhislistButton from '../../components/ProductComponents/ProductWhislistButton';
+import ProductDetailSimilarProducts from '../../components/ProductComponents/ProductDetailSimilarProducts';
+import ProductDetailVariants from '../../components/ProductComponents/ProductDetailVariants';
+import ProductDetailMedia from '../../components/ProductComponents/ProductDetailMedia';
+import ProductDetailRelatedProducts from '../../components/ProductComponents/ProductDetailRelatedProducts';
 
 import {Styled} from './styles';
 import {colors} from '../../themes/variables';

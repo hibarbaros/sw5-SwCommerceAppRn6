@@ -4,11 +4,11 @@ import {Button} from '@ui-kitten/components';
 import {useNavigation} from '@react-navigation/native';
 
 import {Container} from '../../themes/components';
-import UserLoginForm from '../../components//UserComponents/UserLoginForm/UserLoginForm';
+import UserLoginForm from '../../components/UserComponents/UserLoginForm';
 
 import AppRoute from '../../utils/approutes';
 
-const UserLoginScreen = () => {
+export default function UserLoginScreen() {
   const navigation = useNavigation();
 
   return (
@@ -21,6 +21,4 @@ const UserLoginScreen = () => {
       </View>
     </Container>
   );
-};
-
-export default UserLoginScreen;
+}

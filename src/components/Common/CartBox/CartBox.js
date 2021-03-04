@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {View, Text} from 'react-native-ui-lib';
 import Media from '../Media/Media';
-import PriceWithCurrency from '../../Common/PriceWithCurrency/PriceWithCurrency';
+import PriceWithCurrency from '../PriceWithCurrency';
 import {ButtonIcon} from '../../../themes/components/';
 import {colors} from '../../../themes/variables';
 import AppContext from '../../../context/AppContext';

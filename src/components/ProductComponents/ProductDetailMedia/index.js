@@ -3,7 +3,7 @@ import Media from '../../Common/Media/Media';
 
 import {Styled} from './styles';
 
-const ProductDetailMedia = ({images}) => {
+export default function ProductDetailMedia({images}) {
   return (
     <>
       {images && (
@@ -17,6 +17,4 @@ const ProductDetailMedia = ({images}) => {
       )}
     </>
   );
-};
-
-export default ProductDetailMedia;
+}

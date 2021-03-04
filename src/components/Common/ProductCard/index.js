@@ -18,15 +18,12 @@ export const themes = {
 
 const ProductCard = ({productId, theme}) => {
   const navigation = useNavigation();
+  const {isLoading, error, data} = useProductByProductId(productId);
 
   const Theme = themes[theme];
   if (!Theme) {
     return null;
   }
-
-  const {isLoading, error, data: productData} = useProductByProductId(
-    productId,
-  );
 
   if (isLoading) {
     return <Styled.Loader />;
@@ -36,15 +33,9 @@ const ProductCard = ({productId, theme}) => {
     return <Text>An error has occurred: {error.message} </Text>;
   }
 
-  const thumbnail = productData.images.find((x) => x.main === 1);
+  const thumbnail = data.images.find((x) => x.main === 1);
 
-  return (
-    <Theme
-      navigation={navigation}
-      product={productData}
-      thumbnail={thumbnail}
-    />
-  );
+  return <Theme navigation={navigation} product={data} thumbnail={thumbnail} />;
 };
 
 export default ProductCard;

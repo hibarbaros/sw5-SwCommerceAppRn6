@@ -9,7 +9,7 @@ import * as yup from 'yup';
 
 import {Container, FormInput} from '../../../themes/components';
 import {ForwardIcon} from '../../../themes/components/IconSet';
-import LoadSpinner from '../../Common/LoadSpinner/LoadSpinner';
+import LoadSpinner from '../../Common/LoadSpinner';
 
 import {LocalizationContext} from '../../../context/Translations';
 import {useEditCustomerPassword} from '../../../utils/hooks/useCustomer';

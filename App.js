@@ -5,8 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import Toast from 'react-native-toast-message';
-// import database from '@react-native-firebase/database';
-// import messaging from '@react-native-firebase/messaging';
+// import {ReactQueryDevtools} from 'react-query-devtools';
 
 import Navigation from './src/navigation/Navigation';
 import {NavigationTheme} from './src/themes/variables';
@@ -19,26 +18,8 @@ import {default as theme} from './src/themes/theme';
 
 const queryClient = new QueryClient();
 
-// async function saveTokenToDatabase(token) {
-//   // Assume user is already signed in
-
-//   // Add the token to the users datastore
-//   await database().collection('users').update({
-//     tokens: token,
-//   });
-// }
-
 const App = () => {
   const ref = useRef(null);
-
-  // React.useEffect(() => {
-  //   // Get the device token
-  //   messaging()
-  //     .getToken()
-  //     .then((token) => {
-  //       console.tron.error(token);
-  //     });
-  // }, []);
 
   return (
     <>
@@ -57,6 +38,7 @@ const App = () => {
             </AppProvider>
           </LocalizationProvider>
         </ApplicationProvider>
+        {/* <ReactQueryDevtools initialIsOpen /> */}
       </QueryClientProvider>
       <Toast ref={(e) => Toast.setRef(e)} />
     </>

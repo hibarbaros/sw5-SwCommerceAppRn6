@@ -1,5 +1,5 @@
 import React, {useState, useRef, useContext} from 'react';
-import {ScrollView, FlatList, Modal, SafeAreaView} from 'react-native';
+import {FlatList, Modal, SafeAreaView} from 'react-native';
 import _ from 'lodash';
 import {Text, Button} from '@ui-kitten/components';
 
@@ -8,12 +8,12 @@ import {
   SettingsIcon,
   FilterIcon,
 } from '../../themes/components/IconSet';
-import TopNavigationModal from '../../components/Common/TopNavigationModal/TopNavigationModal';
+import TopNavigationModal from '../../components/Common/TopNavigationModal';
 import {useCategoryByCategoryId} from '../../utils/hooks/useCategory';
-import ProductCard from '../../components/Common/ProductCard/ProductCard';
-import LoadSpinner from '../../components/Common/LoadSpinner/LoadSpinner';
-import ProductAttributes from '../../components/ProductComponents/ProductAttributes/ProductAttributes';
-import CategoriesProductOrder from '../../components/ProductComponents/CategoriesProductOrder/CategoriesProductOrder';
+import ProductCard from '../../components/Common/ProductCard';
+import LoadSpinner from '../../components/Common/LoadSpinner';
+import ProductAttributes from '../../components/ProductComponents/ProductAttributes';
+import CategoriesProductOrder from '../../components/ProductComponents/CategoriesProductOrder';
 import {Styled} from './styles';
 
 import FilterContext from '../../context/FilterContext';
@@ -35,19 +35,10 @@ export default function CategoriesProducts({route}) {
     onSuccess: (data) => {
       setFilteredProducts(_.unionBy(data.products, 'articleID'));
     },
-    onError: (error) => {
-      console.log('error', error);
-    },
   });
 
   if (!categoryDetailData.isSuccess) {
     return <LoadSpinner isVisible={true} />;
-  }
-
-  if (categoryDetailData.error) {
-    return (
-      <Text>An error has occurred: {categoryDetailData.error.message} </Text>
-    );
   }
 
   const uniqueData = _.unionBy(categoryDetailData.data.products, 'articleID');
@@ -82,15 +73,14 @@ export default function CategoriesProducts({route}) {
           />
         </Styled.TopIconContainer>
       </Styled.TopContainer>
-      <ScrollView>
-        <Styled.SelectContainer>
-          <CategoriesProductOrder
-            actionSheetRef={actionSheetRef}
-            products={filteredProducts}
-            setProducts={setFilteredProducts}
-          />
-        </Styled.SelectContainer>
-        {/* <Styled.RangeContainer>
+      <Styled.SelectContainer>
+        <CategoriesProductOrder
+          actionSheetRef={actionSheetRef}
+          products={filteredProducts}
+          setProducts={setFilteredProducts}
+        />
+      </Styled.SelectContainer>
+      {/* <Styled.RangeContainer>
 						<Styled.RangeTitle>Price Filter</Styled.RangeTitle>
 						{highestPrice && (
 							<>
@@ -115,19 +105,19 @@ export default function CategoriesProducts({route}) {
 							</>
 						)}
 					</Styled.RangeContainer> */}
-        <FlatList
-          contentInsetAdjustmentBehavior="automatic"
-          scrollEnabled={false}
-          data={filteredProducts}
-          keyExtractor={(item) => item.articleID}
-          numColumns={2}
-          renderItem={({item}) => (
-            <Styled.ProductCardContainer key={item.articleID}>
-              <ProductCard productId={item.articleID} theme="theme03" />
-            </Styled.ProductCardContainer>
-          )}
-        />
-      </ScrollView>
+      <FlatList
+        contentInsetAdjustmentBehavior="automatic"
+        scrollEnabled={true}
+        data={filteredProducts}
+        keyExtractor={(item) => item.articleID}
+        numColumns={2}
+        renderItem={({item}) => (
+          <Styled.ProductCardContainer key={item.articleID}>
+            <ProductCard productId={item.articleID} theme="theme03" />
+          </Styled.ProductCardContainer>
+        )}
+      />
+      {/* Modal Start */}
       <Modal animationType="slide" transparent={false} visible={isModalOpen}>
         <SafeAreaView>
           <TopNavigationModal

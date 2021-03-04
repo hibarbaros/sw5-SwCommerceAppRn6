@@ -1,15 +1,11 @@
 import React from 'react';
 
-import UserEditForm from '../../components/UserComponents/UserEditForm/UserEditForm';
+import UserEditForm from '../../components/UserComponents/UserEditForm';
 
 const UserEditScreen = ({route}) => {
-	const {userData} = route.params;
+  const {userData} = route.params;
 
-	return (
-		<>
-			<UserEditForm userData={userData} />
-		</>
-	);
+  return <UserEditForm userData={userData} />;
 };
 
 export default UserEditScreen;

@@ -1,0 +1,11 @@
+{
+  "root": true,
+  "extends": "@react-native-community",
+  "rules": {
+    "prefer-destructuring": "error",
+    "react/destructuring-assignment": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": 0,
+    "react/prop-types": 0
+  }
+}

@@ -102,7 +102,7 @@ export function useRegisterCustomer() {
 
 //Edit customer
 const getEditCustomer = async (values) => {
-  const data = await passwordEdit(values);
+  const data = await customerEdit(values);
   return data;
 };
 
@@ -143,7 +143,7 @@ export function useEditCustomer() {
 
 //Edit customer password
 const getEditCustomerPassword = async (values) => {
-  const data = await customerEdit(values);
+  const data = await passwordEdit(values);
   return data;
 };
 

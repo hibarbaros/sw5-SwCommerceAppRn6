@@ -1,22 +1,24 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {useQuery} from 'react-query';
 
-import {propertyGroupDetail} from '../../../utils/actions/articleactions';
+import {usePropertyGroupDetail} from '../../../utils/hooks/useProduct';
 import {Styled} from './styles';
 
 export default function ProductPropertyGroup({product}) {
   //TODO: api connector adresine baglanacak
   //TODO: özelliklerde olmayanlarin basliklari cikmamali
 
-  const {isLoading, error, data: propertyGroup} = useQuery(
-    ['ProductPropertyGroup', product.propertyGroup.id],
-    () => propertyGroupDetail(product.propertyGroup.id),
+  const {isLoading, error, data: propertyGroup} = usePropertyGroupDetail(
+    product.propertyGroup.id,
   );
 
-  if (isLoading) return <Text>...Loading</Text>;
+  if (isLoading) {
+    return <Text>...Loading</Text>;
+  }
 
-  if (error) return <Text>An error has occurred: {error.message} </Text>;
+  if (error) {
+    return <Text>An error has occurred: {error.message} </Text>;
+  }
 
   return (
     <>

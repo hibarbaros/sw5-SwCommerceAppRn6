@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {View} from 'react-native-ui-lib';
 import {useNavigation} from '@react-navigation/native';
-import PriceWithCurrency from '../../../components/Common/PriceWithCurrency/PriceWithCurrency';
-import Media from '../../../components/Common/Media/Media';
+import PriceWithCurrency from '../../Common/PriceWithCurrency';
+import Media from '../../Common/Media/Media';
 import {ButtonIcon} from '../../../themes/components';
 import AppContext from '../../../context/AppContext';
 import AppRoutes from '../../../utils/approutes';

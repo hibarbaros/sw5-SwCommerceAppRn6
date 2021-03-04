@@ -1,5 +1,5 @@
 import Api from '../api';
-import storageHelper from '../../utils/storagehelper';
+import {removeItem, setItem} from '../../utils/storagehelper';
 
 //TODO: normalize edilecek
 
@@ -130,9 +130,9 @@ export const customerData = async (customerId) => {
 };
 
 export async function setUserStorage(userID) {
-  storageHelper._set('user', userID);
+  setItem('user', userID);
 }
 
 export function customerLogout() {
-  storageHelper._remove('user');
+  removeItem('user');
 }

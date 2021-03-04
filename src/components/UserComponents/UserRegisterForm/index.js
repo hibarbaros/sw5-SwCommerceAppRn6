@@ -15,10 +15,11 @@ import {
 } from '../../../themes/components';
 import AppContext from '../../../context/AppContext';
 import AppRoutes from '../../../utils/approutes';
-import {useRegisterCustomer} from '../../../utils/hooks/useCustomer';
 import GenderActionSheet from '../../Common/GenderActionSheet/GenderActionSheet';
 import CountryDropDown from '../../Common/CountryDropDown/CountryDropDown';
-import LoadSpinner from '../../Common/LoadSpinner/LoadSpinner';
+import LoadSpinner from '../../Common/LoadSpinner';
+
+import {useRegisterCustomer} from '../../../utils/hooks/useCustomer';
 
 import {Styled} from './styles';
 
@@ -26,13 +27,10 @@ export default function UserRegisterForm({wizard = false}) {
   const {setUser} = useContext(AppContext);
   const navigation = useNavigation();
 
-  const {
-    mutate: addCustomerLoading,
-    isLoading: mutateAddCustomer,
-  } = useRegisterCustomer();
+  const {mutate, isLoading} = useRegisterCustomer();
 
   function handlePress(value) {
-    mutateAddCustomer(value, {
+    mutate(value, {
       onSuccess: (data) => {
         if (data) {
           setUser(data.data.id);
@@ -44,9 +42,11 @@ export default function UserRegisterForm({wizard = false}) {
     });
   }
 
+  //TODO: datalarin degerlerini düzenle
+
   return (
     <>
-      <LoadSpinner isVisible={addCustomerLoading} />
+      <LoadSpinner isVisible={isLoading} />
       <KeyboardAwareScroll>
         <Container>
           <Formik

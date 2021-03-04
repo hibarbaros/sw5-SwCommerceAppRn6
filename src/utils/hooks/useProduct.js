@@ -9,6 +9,7 @@ import {
   articlesSearch,
   attributesOptions,
   articlesByAttributes,
+  propertyGroupDetail,
 } from '../actions/articleactions';
 
 const getSearchByString = async (string) => {
@@ -80,5 +81,16 @@ const getProductCustomAttr = async (attrId) => {
 export function useProductCustomAttr(attrId) {
   return useQuery(['productCustomAttr', attrId], () =>
     getProductCustomAttr(attrId),
+  );
+}
+
+const getPropertyGroupDetail = async (propertyGroupId) => {
+  const data = await propertyGroupDetail(propertyGroupId);
+  return data;
+};
+
+export function usePropertyGroupDetail(propertyGroupId) {
+  return useQuery(['propertyGroupDetail', propertyGroupId], () =>
+    getPropertyGroupDetail(propertyGroupId),
   );
 }

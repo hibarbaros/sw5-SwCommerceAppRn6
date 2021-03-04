@@ -1,14 +1,9 @@
 import styled from 'styled-components/native';
-import Carousel from 'react-native-anchor-carousel';
 
-const StyledCarousel = styled(Carousel).attrs({
-  carouselContainer: {
-    height: 200,
-  },
-  carousel: {
-    flex: 1,
-  },
-})``;
+const StyledCarousel = styled.FlatList`
+  width: 100%;
+  height: 300px;
+`;
 
 export const Styled = {
   StyledCarousel,

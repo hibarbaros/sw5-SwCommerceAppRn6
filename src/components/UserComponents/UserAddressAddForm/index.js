@@ -14,7 +14,7 @@ import {
   FormInput,
 } from '../../../themes/components';
 import CountryDropDown from '../../Common/CountryDropDown/CountryDropDown';
-import LoadSpinner from '../../Common/LoadSpinner/LoadSpinner';
+import LoadSpinner from '../../Common/LoadSpinner';
 import {useAddAddress, useEditAddress} from '../../../utils/hooks/useAddress';
 
 export default function UserAddressAddForm() {

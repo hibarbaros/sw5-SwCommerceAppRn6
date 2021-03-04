@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text} from 'react-native';
 
-import PriceWithCurrency from '../PriceWithCurrency/PriceWithCurrency';
-import ProductCardMedia from '../../ProductComponents/ProductCardMedia/ProductCardMedia';
+import PriceWithCurrency from '../PriceWithCurrency';
+import ProductCardMedia from '../../ProductComponents/ProductCardMedia';
 
 import {useProductByProductId} from '../../../utils/hooks/useProduct';
 

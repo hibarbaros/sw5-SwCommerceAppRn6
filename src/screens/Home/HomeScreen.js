@@ -6,9 +6,9 @@ import {useQueryClient} from 'react-query';
 import {LocalizationContext} from '../../context/Translations';
 import {Headline} from '../../themes/components';
 import Carousel from '../../components/Common/Carousel/Carousel';
-import VisitedProducts from '../../components/Common/VisitedProducts/VisitedProducts';
-import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel/HomeMainCarousel';
-import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories/HomeRecomendedCategories';
+import VisitedProducts from '../../components/Common/VisitedProducts';
+import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
+import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';
 
 import {Styled} from './styles';
 
@@ -51,8 +51,7 @@ const HomeScreen = () => {
           </Styled.CategoryTitleContainer>
           <Carousel
             collection="homescreenrecomended"
-            attrId="attr19"
-            cardTheme="theme03"
+            cardTheme="theme02"
             cardWidth={160}
           />
         </Styled.Container>
@@ -64,8 +63,7 @@ const HomeScreen = () => {
 
           <Carousel
             collection="homescreentopsale"
-            attrId="attr20"
-            cardTheme="theme03"
+            cardTheme="theme02"
             cardWidth={160}
           />
         </Styled.Container>

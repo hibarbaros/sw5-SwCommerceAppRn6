@@ -11,7 +11,7 @@ import {LocalizationContext} from '../../../context/Translations';
 import CheckoutContext from '../../../context/CheckoutContext';
 import {Container, Button} from '../../../themes/components';
 import {CloseIcon} from '../../../themes/components/IconSet';
-import AddressCard from '../AddressCard/AddressCard';
+import AddressCard from '../AddressCard';
 
 export default function Address() {
   const {user} = useContext(AppContext);

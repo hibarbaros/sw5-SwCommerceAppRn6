@@ -56,6 +56,6 @@ export const BellIcon = (props) => (
 );
 
 export const StyledIcon = styled(Icon)`
-  height: 32;
-  width: 32;
+  height: 32px;
+  width: 32px;
 `;

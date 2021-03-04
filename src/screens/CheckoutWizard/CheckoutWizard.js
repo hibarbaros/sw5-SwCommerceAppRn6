@@ -11,12 +11,12 @@ import CheckoutContext from '../../context/CheckoutContext';
 import {useCreateOrder} from '../../utils/hooks/useOrder';
 import AppRoute from '../../utils/approutes';
 import CartTotalPrice from '../../components/Common/CartTotalPrice/CartTotalPrice';
-import UserLoginForm from '../../components/UserComponents/UserLoginForm/UserLoginForm';
+import UserLoginForm from '../../components/UserComponents/UserLoginForm';
 import CartBox from '../../components/Common/CartBox/CartBox';
 import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods/ShippingMethods';
 import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods/PaymentMethods';
-import Address from '../../components/CheckoutComponents/Address/Address';
-import LoadSpinner from '../../components/Common/LoadSpinner/LoadSpinner';
+import Address from '../../components/CheckoutComponents/Address';
+import LoadSpinner from '../../components/Common/LoadSpinner';
 
 export default function CheckoutWizard() {
   const {userCart, user, currency} = useContext(AppContext);

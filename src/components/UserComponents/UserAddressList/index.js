@@ -4,8 +4,8 @@ import {useNavigation} from '@react-navigation/native';
 import {useQueryClient} from 'react-query';
 
 import {Button} from '../../../themes/components';
-import UserAddressCard from '../UserAddressCard/UserAddressCard';
-import LoadSpinner from '../../Common/LoadSpinner/LoadSpinner';
+import UserAddressCard from '../UserAddressCard';
+import LoadSpinner from '../../Common/LoadSpinner';
 import AppRoute from '../../../utils/approutes';
 import AppContext from '../../../context/AppContext';
 import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
@@ -63,7 +63,7 @@ export default function UserAddressList({checkout = false}) {
   return (
     <>
       <LoadSpinner isVisible={isDeleteAddress} />
-      {customerData.address.map((address) => {
+      {/* {customerData.address.map((address) => {
         return (
           <UserAddressCard
             key={address.id}
@@ -73,7 +73,7 @@ export default function UserAddressList({checkout = false}) {
             addressData={address}
           />
         );
-      })}
+      })} */}
       <View marginB-s5>
         <Button
           buttonType="primary"

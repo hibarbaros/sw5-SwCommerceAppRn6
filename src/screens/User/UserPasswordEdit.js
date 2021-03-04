@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {View, Text} from 'react-native';
 
-import UserPasswordEditForm from '../../components/UserComponents/UserPasswordEditForm/UserPasswordEditForm';
+import UserPasswordEditForm from '../../components/UserComponents/UserPasswordEditForm';
 import {useCustomerByCustomerId} from '../../utils/hooks/useCustomer';
 import AppContext from '../../context/AppContext';
 

@@ -4,8 +4,8 @@ import {Text} from 'react-native-ui-lib';
 
 import {Container} from '../../themes/components';
 import {useOrderByOrderId} from '../../utils/hooks/useOrder';
-import ProductCardOrderDetail from '../../components/Common/ProductCardOrderDetail/ProductCardOrderDetail';
-import PriceWithCurrency from '../../components/Common/PriceWithCurrency/PriceWithCurrency';
+import ProductCardOrderDetail from '../../components/Common/ProductCardOrderDetail';
+import PriceWithCurrency from '../../components/Common/PriceWithCurrency';
 import {LocalizationContext} from '../../context/Translations';
 
 import {Styled} from './styles';

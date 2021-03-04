@@ -3,10 +3,10 @@ import {SafeAreaView, FlatList} from 'react-native';
 import {Input, Spinner} from '@ui-kitten/components';
 
 import {Container} from '../../themes/components';
-import VisitedProducts from '../../components/Common/VisitedProducts/VisitedProducts';
+import VisitedProducts from '../../components/Common/VisitedProducts';
 import {useSearchByString} from '../../utils/hooks/useProduct';
 import {LocalizationContext} from '../../context/Translations';
-import ProductCard from '../../components/Common/ProductCard/ProductCard';
+import ProductCard from '../../components/Common/ProductCard';
 
 import {Styled} from './styles';
 
