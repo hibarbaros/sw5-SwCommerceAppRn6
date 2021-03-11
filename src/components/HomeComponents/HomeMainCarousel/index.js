@@ -44,7 +44,7 @@ export default function HomeMainCarousel() {
   return (
     <>
       <View flex>
-        <Carousel
+        {/* <Carousel
           activeSlideAlignment={'start'}
           ref={snapCarousel}
           data={homepageBannerData}
@@ -52,10 +52,10 @@ export default function HomeMainCarousel() {
           onBeforeSnapToItem={handleIndexChange}
           onSnapToIndex={(index) => handleIndexChange(index)}
           firstItem={0}
-          sliderWidth={wp('100%')}
-          itemWidth={wp('100%')}
+          sliderWidth="100px"
+          itemWidth="100px"
           layout={'default'}
-        />
+        /> */}
       </View>
       <View flex row marginH-s5>
         {homepageBannerData.map((element, i) => {

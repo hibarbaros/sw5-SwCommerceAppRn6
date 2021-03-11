@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import {View, Text} from 'react-native-ui-lib';
+import {SafeAreaView} from 'react-native';
 import {sanFranciscoWeights} from 'react-native-typography';
 
 import {colors} from '../../themes/variables';
@@ -79,6 +80,18 @@ const Wrapper = styled(View)`
   top: -30px;
 `;
 
+const StyledSafeView = styled(SafeAreaView)`
+  background-color: ${(props) =>
+    props.noStock ? colors.red : colors.themeColor};
+`;
+
+const NoStockText = styled(Text)`
+  color: ${colors.white};
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+`;
+
 export const Styled = {
   ImageContainer,
   FavoriteIconContainer,
@@ -94,4 +107,6 @@ export const Styled = {
   DescriptionText,
   CategoryContainer,
   GeneralText,
+  StyledSafeView,
+  NoStockText,
 };

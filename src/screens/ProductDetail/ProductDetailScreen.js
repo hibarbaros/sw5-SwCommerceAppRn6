@@ -1,6 +1,6 @@
-import React, {useState, useContext} from 'react';
-import {ScrollView, SafeAreaView} from 'react-native';
-import {View, Text} from 'react-native-ui-lib';
+import React, {useState, useContext, useEffect} from 'react';
+import {ScrollView, Text} from 'react-native';
+import {View} from 'react-native-ui-lib';
 import {Button} from '@ui-kitten/components';
 import HTMLView from 'react-native-htmlview';
 import Toast from 'react-native-toast-message';
@@ -12,13 +12,12 @@ import {useProductByProductId} from '../../utils/hooks/useProduct';
 import PriceWithCurrency from '../../components/Common/PriceWithCurrency';
 import ProductPropertyGroup from '../../components/ProductComponents/ProductPropertyGroup';
 import ProductWhislistButton from '../../components/ProductComponents/ProductWhislistButton';
-import ProductDetailSimilarProducts from '../../components/ProductComponents/ProductDetailSimilarProducts';
 import ProductDetailVariants from '../../components/ProductComponents/ProductDetailVariants';
 import ProductDetailMedia from '../../components/ProductComponents/ProductDetailMedia';
-import ProductDetailRelatedProducts from '../../components/ProductComponents/ProductDetailRelatedProducts';
+// import ProductDetailSimilarProducts from '../../components/ProductComponents/ProductDetailSimilarProducts';
+// import ProductDetailRelatedProducts from '../../components/ProductComponents/ProductDetailRelatedProducts';
 
 import {Styled} from './styles';
-import {colors} from '../../themes/variables';
 
 //TODO ürün varyantlarina göre numarasi secilecek ve sepete o numara ile eklenecek
 //TODO: ziyaret edilmis ürünleri firebase e kaydetme
@@ -29,21 +28,23 @@ const ProductDetail = ({route}) => {
   const {product} = route.params.productData;
   const [selectedVariants, setSelectedVariants] = useState([]);
 
-  const {isLoading, error, data: productData} = useProductByProductId(
-    product.id,
-  );
+  const {isLoading, data: productData} = useProductByProductId(product.id);
 
-  isLoading && <Text>..Loading</Text>;
+  if (isLoading) {
+    return <Text>..Loading</Text>;
+  }
 
-  error && <Text>An error has occurred: {error.message} </Text>;
+  console.log('productData', productData);
 
-  // console.tron.warn(productData);
-
-  customerActions.customerVisitedProducts(productData);
   function handleAddToCart() {
+    const confSetLength = productData.configuratorSet?.groups.length;
+    let cartProduct = {
+      id: productData.id,
+      quantity: 1,
+    };
     // NOTE: variant yok ise sepet islemi
     if (!productData.configuratorSet) {
-      cartActions.addToCart(productData);
+      cartActions.addToCart(cartProduct);
       Toast.show({
         type: 'success',
         text1: 'Success',
@@ -51,20 +52,16 @@ const ProductDetail = ({route}) => {
       });
     }
     // NOTE: variant var ise sepet islemi
-    if (productData.configuratorSet) {
-      if (
-        selectedVariants.length !== productData.configuratorSet.groups.length
-      ) {
+    else {
+      if (selectedVariants.length !== confSetLength) {
         Toast.show({
           type: 'error',
           text1: 'Error',
           text2: translations.variantError,
         });
-      }
-      if (
-        selectedVariants.length === productData.configuratorSet.groups.length
-      ) {
+      } else {
         // NOTE:  variantlari tutan ürün bulunuyor
+        //TODO: burayi bir incele
         let obj = [];
         obj.push(productData.mainDetail);
         const flatDetail = [...productData.details, ...obj];
@@ -78,8 +75,8 @@ const ProductDetail = ({route}) => {
             if (finded) {
               findedCount++;
               if (findedCount === selectedVariants.length) {
-                productData.variantProduct = element;
-                cartActions.addToCart(productData);
+                cartProduct.variantProduct = element;
+                cartActions.addToCart(cartProduct);
               }
             }
           });
@@ -92,6 +89,10 @@ const ProductDetail = ({route}) => {
       }
     }
   }
+
+  useEffect(() => {
+    customerActions.customerVisitedProducts(productData);
+  }, []);
 
   return (
     <>
@@ -194,25 +195,18 @@ const ProductDetail = ({route}) => {
           )} */}
         </Styled.Wrapper>
       </ScrollView>
-      {productData.mainDetail.inStock > 0 && (
-        <SafeAreaView
-          style={{
-            backgroundColor: colors.themeColor,
-          }}>
+      {productData.mainDetail.inStock > 0 ? (
+        <Styled.StyledSafeView>
           <Button onPress={() => handleAddToCart()}>
             {translations.addToCart}
           </Button>
-        </SafeAreaView>
-      )}
-      {productData.mainDetail.inStock === 0 && (
-        <SafeAreaView
-          style={{
-            backgroundColor: colors.red,
-          }}>
-          <Text center marginT-s5 text90 style={{color: colors.white}}>
+        </Styled.StyledSafeView>
+      ) : (
+        <Styled.StyledSafeView noStock>
+          <Styled.NoStockText>
             {translations.productNotAvailable}
-          </Text>
-        </SafeAreaView>
+          </Styled.NoStockText>
+        </Styled.StyledSafeView>
       )}
     </>
   );

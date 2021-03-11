@@ -5,16 +5,12 @@ import {Styled} from './styles';
 
 export default function ProductDetailMedia({images}) {
   return (
-    <>
-      {images && (
-        <Styled.StyledSwiperFlatList index={0} showPagination>
-          {images.map((image, index) => (
-            <Styled.MediaContainer key={index}>
-              <Media mediaId={image.mediaId} />
-            </Styled.MediaContainer>
-          ))}
-        </Styled.StyledSwiperFlatList>
-      )}
-    </>
+    <Styled.StyledSwiperFlatList index={0} showPagination>
+      {images.map((image) => (
+        <Styled.MediaContainer key={image.id}>
+          <Media thumbnail={image} />
+        </Styled.MediaContainer>
+      ))}
+    </Styled.StyledSwiperFlatList>
   );
 }

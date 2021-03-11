@@ -1,7 +1,7 @@
 import React, {useState, useRef, useContext} from 'react';
 import {FlatList, Modal, SafeAreaView} from 'react-native';
 import _ from 'lodash';
-import {Text, Button} from '@ui-kitten/components';
+import {Button} from '@ui-kitten/components';
 
 import {
   CloseIcon,
@@ -31,17 +31,17 @@ export default function CategoriesProducts({route}) {
   // const [multiSliderValue, setMultiSliderValue] = useState([0, 0]);
   // const [highestPrice, setHighestPrice] = useState(null);
 
-  const categoryDetailData = useCategoryByCategoryId(category.id, {
-    onSuccess: (data) => {
-      setFilteredProducts(_.unionBy(data.products, 'articleID'));
+  const {data, isLoading} = useCategoryByCategoryId(category.id, {
+    onSuccess: (response) => {
+      setFilteredProducts(_.unionBy(response.products, 'articleID'));
     },
   });
 
-  if (!categoryDetailData.isSuccess) {
+  if (isLoading) {
     return <LoadSpinner isVisible={true} />;
   }
 
-  const uniqueData = _.unionBy(categoryDetailData.data.products, 'articleID');
+  const uniqueData = _.unionBy(data.products, 'articleID');
 
   // function handleProductsPriceFilter() {
   // 	var listOfvalues = [];

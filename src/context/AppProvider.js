@@ -4,7 +4,7 @@ import {useQuery} from 'react-query';
 
 import AppContext from './AppContext';
 import {shopData, paymentsData} from '../utils/actions/appactions';
-import {setItem, getItem, clearAll, removeItem} from '../utils/storagehelper';
+import {setItem, getItem, removeItem} from '../utils/storagehelper';
 
 const AppProvider = (props) => {
   const [cartCount, setCartCount] = useState(0);
@@ -17,6 +17,8 @@ const AppProvider = (props) => {
   const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
   const [visitedProducts, setVisitedProducts] = useState([]);
   const [shippingPrice, setShippingPrice] = useState(null);
+
+  const {children} = props;
 
   //user functions
 
@@ -139,7 +141,7 @@ const AppProvider = (props) => {
 
   //init effect
   useEffect(() => {
-    clearAll();
+    // clearAll();
     getItem('user').then((response) => {
       response && setUser(response);
     });
@@ -175,7 +177,7 @@ const AppProvider = (props) => {
         setUserCart,
         setCartCount,
       }}>
-      {props.children}
+      {children}
     </AppContext.Provider>
   );
 };

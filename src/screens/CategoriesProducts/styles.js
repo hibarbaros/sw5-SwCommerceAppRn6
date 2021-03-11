@@ -23,7 +23,7 @@ const StyledAnimatedView = styled(AnimatedView)`
   background-color: white;
   width: 100%;
   height: 100%;
-  top: 50;
+  top: 50px;
 `;
 
 const TopContainer = styled.View`

@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {View} from 'react-native-ui-lib';
+import {View} from 'react-native';
 
 import {SimpleStepper as unStyledSimpleStepper} from 'react-native-simple-stepper';
 import {colors} from '../../../themes/variables';
@@ -10,22 +10,6 @@ const CardContainer = styled(View)`
   border-width: 1px;
   margin-bottom: 10px;
   padding: 20px;
-`;
-
-const ImageContainer = styled.View`
-  height: 80px;
-  width: 80px;
-`;
-
-const TextContainer = styled.View`
-  padding-left: 10px;
-  padding-right: 10px;
-`;
-
-const RightContainer = styled(View)`
-  padding-left: 10px;
-  padding-right: 10px;
-  width: 30%;
 `;
 
 const SimpleStepper = styled(unStyledSimpleStepper).attrs({
@@ -68,8 +52,5 @@ const SimpleStepper = styled(unStyledSimpleStepper).attrs({
 
 export const Styled = {
   CardContainer,
-  ImageContainer,
-  TextContainer,
-  RightContainer,
   SimpleStepper,
 };
