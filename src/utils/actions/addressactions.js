@@ -1,4 +1,8 @@
 import Api from '../api';
+import {
+  addressAddNormalize,
+  addressEditNormalize,
+} from '../normalize/address-normalize';
 
 export async function addressDetail(addressId) {
   const address = await Api.get(`/addresses/${addressId}`);
@@ -6,19 +10,7 @@ export async function addressDetail(addressId) {
 }
 
 export async function addressAdd(data) {
-  data.salutation = 'mr';
-  const formData = JSON.stringify({
-    firstname: data.firstname,
-    lastname: data.lastname,
-    street: data.street,
-    zipcode: data.zipcode,
-    city: data.city,
-    state: data.state,
-    salutation: data.salutation,
-    country: data.country,
-    customer: data.customer,
-  });
-
+  const formData = addressAddNormalize(data);
   const response = await Api.post('/addresses', formData);
   if (response.data.id > 0) {
     return true;
@@ -28,19 +20,9 @@ export async function addressAdd(data) {
 }
 
 export async function addressEdit(data) {
-  const {values, userAddress} = data;
-  const formData = JSON.stringify({
-    firstname: values.firstname,
-    lastname: values.lastname,
-    street: values.street,
-    zipcode: values.zipcode,
-    state: values.state,
-    city: values.city,
-    salutation: userAddress.salutation,
-    country: values.country,
-  });
+  const formData = addressEditNormalize(data);
   const response = await Api.put(
-    `/ConnectorAddress/${userAddress.id}`,
+    `/ConnectorAddress/${data.userAddress.id}`,
     formData,
   );
   if (response.data.id > 0) {
@@ -52,7 +34,7 @@ export async function addressEdit(data) {
 
 export async function addressDelete(addressId) {
   const response = await Api.delete(`/addresses/${addressId}`);
-  if (response.success === true) {
+  if (response.success) {
     return true;
   } else {
     return false;

@@ -19,11 +19,7 @@ export default function UserAddressList({checkout = false}) {
   const [isTooltip, setisTooltip] = useState(null);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
 
-  const {
-    data: customerData,
-    error,
-    isLoading: isSustomerData,
-  } = useCustomerByCustomerId(user);
+  const {data, isLoading} = useCustomerByCustomerId(user);
 
   const {
     mutate: deleteAddress,
@@ -44,7 +40,7 @@ export default function UserAddressList({checkout = false}) {
     setSelectedAddressId(adressId);
   }
 
-  if (isSustomerData) {
+  if (isLoading) {
     return (
       <Text marginB-s3 text60>
         Loading
@@ -52,28 +48,22 @@ export default function UserAddressList({checkout = false}) {
     );
   }
 
-  error && (
-    <Text marginB-s3 text60>
-      {error.message}
-    </Text>
-  );
-
-  console.log('customerData', customerData.address);
+  const {address} = data;
 
   return (
     <>
       <LoadSpinner isVisible={isDeleteAddress} />
-      {/* {customerData.address.map((address) => {
+      {address.map((item) => {
         return (
           <UserAddressCard
-            key={address.id}
+            key={item.id}
             checkout={checkout}
             setisTooltip={handleSetTooltip}
-            userData={customerData}
-            addressData={address}
+            userData={data}
+            addressData={item}
           />
         );
-      })} */}
+      })}
       <View marginB-s5>
         <Button
           buttonType="primary"
@@ -81,7 +71,7 @@ export default function UserAddressList({checkout = false}) {
           text="Add New Address"
           onPress={() =>
             navigation.navigate(AppRoute.ADDRESS_ADD, {
-              userData: customerData,
+              userData: data,
             })
           }
         />

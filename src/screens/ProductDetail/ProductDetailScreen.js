@@ -1,13 +1,13 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {ScrollView, Text} from 'react-native';
-import {View} from 'react-native-ui-lib';
-import {Button} from '@ui-kitten/components';
+import {SafeAreaView, ScrollView} from 'react-native';
+import {Div, Text, Button} from 'react-native-magnus';
 import HTMLView from 'react-native-htmlview';
 import Toast from 'react-native-toast-message';
 
 import AppContext from '../../context/AppContext';
 import {LocalizationContext} from '../../context/Translations';
 import {useProductByProductId} from '../../utils/hooks/useProduct';
+import {useAddToCart} from '../../utils/hooks/useCart';
 
 import PriceWithCurrency from '../../components/Common/PriceWithCurrency';
 import ProductPropertyGroup from '../../components/ProductComponents/ProductPropertyGroup';
@@ -19,40 +19,36 @@ import ProductDetailMedia from '../../components/ProductComponents/ProductDetail
 
 import {Styled} from './styles';
 
-//TODO ürün varyantlarina göre numarasi secilecek ve sepete o numara ile eklenecek
-//TODO: ziyaret edilmis ürünleri firebase e kaydetme
-
 const ProductDetail = ({route}) => {
-  const {cartActions, customerActions} = useContext(AppContext);
+  const {customerActions, cartCount} = useContext(AppContext);
   const {translations} = useContext(LocalizationContext);
   const {product} = route.params.productData;
   const [selectedVariants, setSelectedVariants] = useState([]);
+  const [initialQuantity, setInitialQuantity] = useState(1);
 
   const {isLoading, data: productData} = useProductByProductId(product.id);
+  const {mutate} = useAddToCart();
 
   if (isLoading) {
     return <Text>..Loading</Text>;
   }
 
-  console.log('productData', productData);
+  useEffect(() => {
+    console.log('cartCount', cartCount);
+  }, [cartCount]);
 
   function handleAddToCart() {
     const confSetLength = productData.configuratorSet?.groups.length;
-    let cartProduct = {
-      id: productData.id,
-      quantity: 1,
+    const mutateVariables = {
+      productData,
+      quantity: initialQuantity,
+      selectedVariants,
     };
-    // NOTE: variant yok ise sepet islemi
     if (!productData.configuratorSet) {
-      cartActions.addToCart(cartProduct);
-      Toast.show({
-        type: 'success',
-        text1: 'Success',
-        text2: translations.addToCartMessage,
-      });
-    }
-    // NOTE: variant var ise sepet islemi
-    else {
+      // NOTE: variantsiz
+      mutate(mutateVariables);
+    } else {
+      // NOTE: variantli
       if (selectedVariants.length !== confSetLength) {
         Toast.show({
           type: 'error',
@@ -60,32 +56,7 @@ const ProductDetail = ({route}) => {
           text2: translations.variantError,
         });
       } else {
-        // NOTE:  variantlari tutan ürün bulunuyor
-        //TODO: burayi bir incele
-        let obj = [];
-        obj.push(productData.mainDetail);
-        const flatDetail = [...productData.details, ...obj];
-        flatDetail.forEach((element) => {
-          let findedCount = 0;
-          selectedVariants.forEach((variant) => {
-            const finded = element.configuratorOptions.find(
-              (x) => x.name === variant.variant.name,
-            );
-
-            if (finded) {
-              findedCount++;
-              if (findedCount === selectedVariants.length) {
-                cartProduct.variantProduct = element;
-                cartActions.addToCart(cartProduct);
-              }
-            }
-          });
-        });
-        Toast.show({
-          type: 'success',
-          text1: 'Success',
-          text2: translations.addToCartMessage,
-        });
+        mutate(mutateVariables);
       }
     }
   }
@@ -107,12 +78,12 @@ const ProductDetail = ({route}) => {
               <Styled.ProductPrice>
                 {productData.mainDetail.prices.map((price, index) => {
                   return (
-                    <View key={index} flex row>
+                    <Div key={index} row>
                       <PriceWithCurrency
                         price={price.price}
                         product={productData}
                       />
-                    </View>
+                    </Div>
                   );
                 })}
               </Styled.ProductPrice>
@@ -157,7 +128,7 @@ const ProductDetail = ({route}) => {
           </Styled.CategoryContainer>
           {/* Variants */}
           {productData.configuratorSet && (
-            <View marginV-s3>
+            <Div my={15}>
               <Styled.DescriptionTitle>
                 {'.'}
                 {translations.variants}
@@ -168,7 +139,7 @@ const ProductDetail = ({route}) => {
                 configuratorSet={productData.configuratorSet}
                 productData={productData}
               />
-            </View>
+            </Div>
           )}
 
           {/* Property Groups */}
@@ -195,19 +166,27 @@ const ProductDetail = ({route}) => {
           )} */}
         </Styled.Wrapper>
       </ScrollView>
-      {productData.mainDetail.inStock > 0 ? (
-        <Styled.StyledSafeView>
-          <Button onPress={() => handleAddToCart()}>
-            {translations.addToCart}
-          </Button>
-        </Styled.StyledSafeView>
-      ) : (
-        <Styled.StyledSafeView noStock>
-          <Styled.NoStockText>
-            {translations.productNotAvailable}
-          </Styled.NoStockText>
-        </Styled.StyledSafeView>
-      )}
+      <SafeAreaView>
+        {productData.mainDetail.inStock > 0 ? (
+          <Div row>
+            <Button w="50%" onPress={() => handleAddToCart()}>
+              {translations.addToCart}
+            </Button>
+            <Styled.SimpleStepper
+              showText
+              minimumValue={1}
+              initialValue={initialQuantity}
+              valueChanged={(value) => setInitialQuantity(value)}
+            />
+          </Div>
+        ) : (
+          <Styled.StyledSafeView noStock>
+            <Styled.NoStockText>
+              {translations.productNotAvailable}
+            </Styled.NoStockText>
+          </Styled.StyledSafeView>
+        )}
+      </SafeAreaView>
     </>
   );
 };

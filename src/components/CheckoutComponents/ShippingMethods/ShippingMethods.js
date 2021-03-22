@@ -20,15 +20,12 @@ export default function ShippingMethods() {
 
   useCustomerByCustomerId(user, {
     onSuccess: (res) => {
-      console.log('data', res);
       setselectedShippingAddress(res.defaultShippingAddress);
     },
   });
 
   const addressId =
     selectedShippingAddress && selectedShippingAddress.country.id;
-
-  console.tron.warn('addressId', addressId);
 
   const {
     isLoading: shippingsDataLoading,

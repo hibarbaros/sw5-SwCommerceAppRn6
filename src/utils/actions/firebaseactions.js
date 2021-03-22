@@ -13,7 +13,6 @@ export async function useGetToken(user) {
   await messaging()
     .getToken()
     .then((token) => {
-      console.tron.error('test', token);
       return saveTokenToDatabase(token, user);
     });
 }
@@ -36,15 +35,14 @@ export const requestUserPermission = async () => {
 
   if (enabled) {
     getFcmToken();
-    console.tron.error('Authorization status:', authStatus);
   }
 };
 
 const getFcmToken = async () => {
   const fcmToken = await messaging().getToken();
   if (fcmToken) {
-    console.tron.error('Your Firebase Token is:', fcmToken);
+    console.log('Your Firebase Token is:', fcmToken);
   } else {
-    console.tron.error('Failed', 'No token received');
+    console.log('Failed', 'No token received');
   }
 };

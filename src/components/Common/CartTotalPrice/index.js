@@ -1,41 +1,26 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import _ from 'lodash';
 
 import PriceWithCurrency from '../PriceWithCurrency';
-import {priceWithTax} from '../../../utils/functions';
 import AppContext from '../../../context/AppContext';
 import CheckoutContext from '../../../context/CheckoutContext';
 
 import {Styled} from './styles';
 
-export default function CartTotalPrice() {
-  const {userCart, cartCount} = useContext(AppContext);
+export default function CartTotalPrice({cart}) {
+  const {cartCount} = useContext(AppContext);
   const {selectedShippingMethod} = useContext(CheckoutContext);
-  const [totalPrice, setTotalPrice] = useState(null);
-  const [totalWithoutPrice, setTotalWithoutPrice] = useState(null);
 
-  useEffect(() => {
-    let total = 0;
-    let totalWithout = 0;
+  const editedCart = cart.map((product) => ({
+    netPrice: product.netPrice * product.quantity,
+    price: product.price * product.quantity,
+  }));
 
-    _.forEach(userCart, function (product) {
-      const price = priceWithTax(
-        product.mainDetail.prices[0].price.toFixed(2),
-        product.tax.tax,
-      );
-      total += price * product.quantity;
-      const prcWithTax = priceWithTax(
-        product.mainDetail.prices[0].price.toFixed(2),
-      );
-      totalWithout += prcWithTax * product.quantity;
-    });
-
-    setTotalPrice(total);
-    setTotalWithoutPrice(totalWithout);
-  }, [userCart, cartCount]);
+  const netPrice = _.sumBy(editedCart, 'netPrice');
+  const totalPrice = _.sumBy(editedCart, 'price');
 
   const shippingPrice =
-    selectedShippingMethod && parseInt(selectedShippingMethod.detail.value);
+    selectedShippingMethod && parseInt(selectedShippingMethod.detail.value, 10);
 
   return (
     <Styled.CardContainer>
@@ -43,7 +28,15 @@ export default function CartTotalPrice() {
         <Styled.TextLeft>Items{` ( ${cartCount} )`}</Styled.TextLeft>
         <Styled.CurrencyContainer row>
           <Styled.TextRight marginL-5>
-            <PriceWithCurrency price={totalWithoutPrice} />
+            <PriceWithCurrency price={netPrice} />
+          </Styled.TextRight>
+        </Styled.CurrencyContainer>
+      </Styled.TextContainer>
+      <Styled.TextContainer row>
+        <Styled.TextLeft>Total Price</Styled.TextLeft>
+        <Styled.CurrencyContainer row>
+          <Styled.TextRight marginL-5>
+            <PriceWithCurrency price={totalPrice} />
           </Styled.TextRight>
         </Styled.CurrencyContainer>
       </Styled.TextContainer>
@@ -59,11 +52,11 @@ export default function CartTotalPrice() {
         <Styled.TextLeft>Tax</Styled.TextLeft>
         <Styled.CurrencyContainer row>
           <Styled.TextRight marginL-5>
-            <PriceWithCurrency price={totalPrice - totalWithoutPrice} />
+            <PriceWithCurrency price={totalPrice - netPrice} />
           </Styled.TextRight>
         </Styled.CurrencyContainer>
       </Styled.TextContainer>
-      <Styled.TextContainer row marginT-20 bordered>
+      {/* <Styled.TextContainer row marginT-20 bordered>
         <Styled.TextLeft total>Total Price</Styled.TextLeft>
         <Styled.CurrencyContainer row>
           <Styled.TextRight marginL-5>
@@ -74,7 +67,7 @@ export default function CartTotalPrice() {
             />
           </Styled.TextRight>
         </Styled.CurrencyContainer>
-      </Styled.TextContainer>
+      </Styled.TextContainer> */}
     </Styled.CardContainer>
   );
 }

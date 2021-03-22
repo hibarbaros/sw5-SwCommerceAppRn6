@@ -18,7 +18,7 @@ import {
 
 const Tab = createBottomTabNavigator();
 const TabComponent = () => {
-  const {cartCount, user} = useContext(AppContext);
+  const {user, cartCount} = useContext(AppContext);
 
   return (
     <Tab.Navigator

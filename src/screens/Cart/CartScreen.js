@@ -1,33 +1,38 @@
 import React, {useContext} from 'react';
 import {ScrollView, Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+
 import CartBox from '../../components/Common/CartBox';
 import CartTotalPrice from '../../components/Common/CartTotalPrice';
 import AppContext from '../../context/AppContext';
 import {LocalizationContext} from '../../context/Translations';
 import {Container, Button} from '../../themes/components';
-import {useNavigation} from '@react-navigation/native';
 import AppRoutes from '../../utils/approutes';
+import {useUserCart} from '../../utils/hooks/useCart';
+
+import LoadSpinner from '../../components/Common/LoadSpinner';
 
 const CartScreen = () => {
-  const {userCart} = useContext(AppContext);
-  const {translations} = useContext(LocalizationContext);
   const navigation = useNavigation();
+  const {sessionId} = useContext(AppContext);
+  const {translations} = useContext(LocalizationContext);
 
-  console.log('userCart', userCart);
+  const {data = [], isLoading} = useUserCart(sessionId);
 
   return (
     <>
-      {userCart && (
+      <LoadSpinner isVisible={isLoading} />
+      {data.length > 0 ? (
         <ScrollView>
           <Container>
-            {userCart.map((product) => (
+            {data.map((product) => (
               <CartBox
-                key={product.id}
-                productId={product.id}
+                key={product.articleId}
+                productId={product.articleId}
                 quantity={product.quantity}
               />
             ))}
-            {/* <CartTotalPrice /> */}
+            <CartTotalPrice cart={data} />
             <Button
               size="small"
               text={translations.checkOut}
@@ -37,8 +42,7 @@ const CartScreen = () => {
             />
           </Container>
         </ScrollView>
-      )}
-      {!userCart && (
+      ) : (
         <Container>
           <Text>In Ihrem Warenkorb befinden sich keine Artikel</Text>
         </Container>

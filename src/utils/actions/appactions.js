@@ -1,6 +1,11 @@
 import Api from '../api';
 import _ from 'lodash';
 
+export async function customerData(customerId) {
+  const user = await Api.get(`/ConnectorCustomers/${customerId}`);
+  return user.data;
+}
+
 export async function countriesData() {
   const response = await Api.get('/countries');
   const active = _.filter(response.data, {active: true});
@@ -18,13 +23,9 @@ export async function shippingsData() {
 }
 export async function shippingsDataByCountry(countryId) {
   const response = await Api.get('/ConnectorShippingMethods');
-  console.log(
-    '🚀 ~ file: appactions.js ~ line 21 ~ shippingsDataByCountry ~ response',
-    response,
-  );
   const active = _.filter(response.data, {active: true});
   let shippingList = [];
-  _(active).forEach(function (item) {
+  _.forEach(active, function (item) {
     const finded = _.find(item.countries, {countryID: countryId.toString()});
     finded && shippingList.push(item);
   });

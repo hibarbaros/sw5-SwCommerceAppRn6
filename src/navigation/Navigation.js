@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {HeaderLeft, HeaderRight} from '../components/Header';
+import {useQuery} from 'react-query';
+import _ from 'lodash';
+import {v4 as uuidv4} from 'uuid';
+
 import DrawerComponent from './DrawerComponent';
-import AppRoutes from '../utils/approutes';
 import SerciveHelpStacks from './SerciveHelpStacks';
+import {HeaderLeft, HeaderRight} from '../components/Header';
+import AppRoutes from '../utils/approutes';
+import {customerData} from '../utils/actions/useractions';
+import {getCartBySessionId} from '../utils/actions/cartactions';
+import {shopData, paymentsData} from '../utils/actions/appactions';
+import AppContext from '../context/AppContext';
 
 //Screens
 import {
@@ -31,7 +39,49 @@ import {
 
 const Stack = createStackNavigator();
 
-function MainNavigator() {
+export default function MainNavigator() {
+  const {
+    user,
+    setUserContext,
+    setCurrency,
+    setPaymentMethods,
+    setCartCount,
+    sessionId,
+    setSessionId,
+  } = useContext(AppContext);
+
+  useQuery('customerDataContext', () => customerData(user), {
+    enabled: !!user,
+    onSuccess: (res) => {
+      if (res) {
+        setUserContext(res.id, res.sessionId);
+      }
+    },
+  });
+
+  useQuery('userCartCount', () => getCartBySessionId(sessionId), {
+    enabled: !!sessionId,
+    onSuccess: (res) => {
+      const totalPrice = _.sumBy(res, 'quantity');
+      setCartCount(totalPrice);
+    },
+  });
+
+  useQuery('shopContext', () => shopData(), {
+    onSuccess: (data) => setCurrency(data.currencies[0]),
+  });
+
+  useQuery('paymentContext', () => paymentsData(), {
+    onSuccess: (data) => setPaymentMethods(data),
+  });
+
+  React.useEffect(() => {
+    if (!sessionId) {
+      setSessionId(uuidv4());
+      console.log(`sayi1`, uuidv4());
+    }
+  }, [sessionId]);
+
   return (
     <Stack.Navigator
       headerMode="float"
@@ -46,7 +96,7 @@ function MainNavigator() {
       })}>
       <Stack.Screen
         component={DrawerComponent}
-        name="AppWare"
+        name="Lemken Shop"
         useRoute="mainscreen"
       />
 
@@ -102,5 +152,3 @@ function MainNavigator() {
     </Stack.Navigator>
   );
 }
-
-export default MainNavigator;

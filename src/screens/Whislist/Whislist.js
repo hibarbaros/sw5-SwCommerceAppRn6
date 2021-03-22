@@ -7,7 +7,6 @@ import {Container, Headline} from '../../themes/components';
 
 export default function Whislist() {
   const {whislist} = useContext(AppContext);
-  console.tron.error(whislist);
 
   return (
     <Container>

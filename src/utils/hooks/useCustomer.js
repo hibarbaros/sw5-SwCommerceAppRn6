@@ -1,6 +1,9 @@
 import {useContext} from 'react';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
+import Toast from 'react-native-toast-message';
+
 import {LocalizationContext} from '../../context/Translations';
+import AppContext from '../../context/AppContext';
 
 import {
   customerData,
@@ -10,7 +13,6 @@ import {
   checkUserForLogin,
   passwordEdit,
 } from '../actions/useractions';
-import Toast from 'react-native-toast-message';
 
 const getCustomerByCustomerId = async (userId) => {
   const data = await customerData(userId);
@@ -25,6 +27,57 @@ export function useCustomerByCustomerId(userId, options) {
   );
 }
 
+//Customer logout
+//TODO: logout yapildiginda user girisi yapilmamissa sepetten ürünler silinmeli
+export function useCustomerLogout() {
+  const {logoutUserContext, sessionId} = useContext(AppContext);
+  const cache = useQueryClient();
+
+  const mutate = useMutation(logoutUserContext, {
+    onSuccess: () => {
+      cache.invalidateQueries(['userCart', sessionId]);
+      cache.invalidateQueries('userCartCount');
+    },
+  });
+
+  return mutate;
+}
+//Customer logout
+
+//Customer login
+
+const getCustomerLogin = async (values) => {
+  const data = await checkUserForLogin(values);
+  return data;
+};
+
+export function useCustomerLogin() {
+  const {translations} = useContext(LocalizationContext);
+  const {setUserContext} = useContext(AppContext);
+  const cache = useQueryClient();
+
+  const mutate = useMutation((values) => getCustomerLogin(values), {
+    onSuccess: (data) => {
+      const {id, sessionId} = data;
+      if (data) {
+        setUserContext(id, sessionId);
+        cache.invalidateQueries(['userCart', sessionId]);
+        cache.invalidateQueries('userCartCount');
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: translations.passwordFalsch,
+        });
+      }
+    },
+  });
+
+  return mutate;
+}
+
+//Customer login
+
 //Check Customer By Mail
 const getCustomerCheckByCustomerMail = async (values) => {
   const data = await checkUserForLogin(values);
@@ -37,13 +90,6 @@ export function useCustomerCheckByMail() {
   const mutate = useMutation(
     (values) => getCustomerCheckByCustomerMail(values),
     {
-      onError: (e) => {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: e.message,
-        });
-      },
       onSuccess: (data) => {
         if (data) {
           return data;
@@ -74,13 +120,6 @@ export function useRegisterCustomer() {
   const {translations} = useContext(LocalizationContext);
 
   const mutate = useMutation((values) => getRegisterCustomer(values), {
-    onError: (e) => {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: e.message,
-      });
-    },
     onSuccess: (data) => {
       if (data) {
         setUserStorage(data.id);

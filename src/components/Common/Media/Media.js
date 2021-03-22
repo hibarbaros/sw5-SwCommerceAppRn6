@@ -8,8 +8,8 @@ const Media = ({thumbnail}) => {
 
   return (
     <Image
-      h={80}
-      w={80}
+      h={'100%'}
+      w={'100%'}
       borderRadius={10}
       source={{
         uri: image,

@@ -3,28 +3,22 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {Icon, Input, Button} from '@ui-kitten/components';
 
 import {View} from 'react-native-ui-lib';
-import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 import {Formik, getIn} from 'formik';
 import * as yup from 'yup';
-import md5 from 'react-native-md5';
-import bcrypt from 'react-native-bcrypt';
 
 import {LocalizationContext} from '../../../context/Translations';
 import {FormErrorLabel} from '../../../themes/components';
 import {EmailIcon, ForwardIcon} from '../../../themes/components/IconSet';
-import AppContext from '../../../context/AppContext';
-import {setUserStorage} from '../../../utils/actions/useractions';
-import {useCustomerCheckByMail} from '../../../utils/hooks/useCustomer';
+import {useCustomerLogin} from '../../../utils/hooks/useCustomer';
 
 import LoadSpinner from '../../Common/LoadSpinner';
 
 export default function UserLoginForm() {
   const navigation = useNavigation();
 
-  const {mutate: checkUserMutate, isLoading} = useCustomerCheckByMail();
+  const {mutate, isLoading} = useCustomerLogin();
 
-  const {setUser} = useContext(AppContext);
   const {translations} = useContext(LocalizationContext);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
@@ -35,32 +29,11 @@ export default function UserLoginForm() {
     </TouchableWithoutFeedback>
   );
 
-  function passwordCheck(password, data) {
-    const {id, hashPassword} = data;
-    let checkUserPassword;
-    if (data.encoderName === 'md5') {
-      checkUserPassword = md5.hex_md5(password);
-    }
-    if (data.encoderName === 'bcrypt') {
-      checkUserPassword = bcrypt.compareSync(password, hashPassword);
-    }
-    if (checkUserPassword) {
-      setUser(1);
-      setUserStorage(id);
-      navigation.goBack();
-    }
-    if (!checkUserPassword) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: translations.passwordFalsch,
-      });
-    }
-  }
-
   function handleLogin(values) {
-    checkUserMutate(values, {
-      onSuccess: (data) => passwordCheck(values.password, data),
+    mutate(values, {
+      onSuccess: (res) => {
+        res && navigation.goBack();
+      },
     });
   }
 
@@ -69,8 +42,8 @@ export default function UserLoginForm() {
       <LoadSpinner isVisible={isLoading} />
       <Formik
         initialValues={{
-          email: '',
-          password: '',
+          email: 'pixtanbul@gmail.com',
+          password: '2003980016Bbb',
         }}
         onSubmit={(values) => handleLogin(values)}
         validationSchema={yup.object().shape({

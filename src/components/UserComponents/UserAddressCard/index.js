@@ -10,7 +10,7 @@ import {Styled} from './styles';
 export default function UserAddressCard({setisTooltip, userData, addressData}) {
   const navigation = useNavigation();
 
-  const parsedId = parseInt(addressData.id);
+  const parsedId = parseInt(addressData.id, 10);
 
   return (
     <>

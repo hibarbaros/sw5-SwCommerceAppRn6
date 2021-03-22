@@ -23,9 +23,9 @@ const SettingScreen = () => {
     setAppLanguage(locale);
   }
 
-  function handleCurrency(currency) {
-    setCurrency(currency);
-    setSelectedCurrencyIndex(currency.id);
+  function handleCurrency(cur) {
+    setCurrency(cur);
+    setSelectedCurrencyIndex(cur.id);
   }
 
   const {isLoading, error, data: initialShopData} = useQuery('shopData', () =>

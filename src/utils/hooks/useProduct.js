@@ -26,9 +26,11 @@ const getProductByProductId = async (articleId) => {
   return data;
 };
 
-export function useProductByProductId(articleId) {
-  return useQuery(['productDetail', articleId], () =>
-    getProductByProductId(articleId),
+export function useProductByProductId(articleId, options) {
+  return useQuery(
+    ['productDetail', articleId],
+    () => getProductByProductId(articleId),
+    options,
   );
 }
 

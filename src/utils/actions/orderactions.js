@@ -41,9 +41,10 @@ export async function orderCreate(orderData) {
   selectedBilllingAddress.phone = '';
 
   const fullDate = moment().format('YYYY-MM-DD h:mm:ss');
-  const shippingPrice = parseInt(selectedShippingMethod.detail.value).toFixed(
-    2,
-  );
+  const shippingPrice = parseInt(
+    selectedShippingMethod.detail.value,
+    10,
+  ).toFixed(2);
 
   let productList = [];
   let total = 0;

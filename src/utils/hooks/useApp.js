@@ -1,9 +1,14 @@
-import {useQuery} from 'react-query';
+import {useContext} from 'react';
+import _ from 'lodash';
+
+import {useQuery, useMutation} from 'react-query';
 import {
   shopData,
   shippingsDataByCountry,
   paymentsData,
 } from '../actions/appactions';
+
+import AppContext from '../../context/AppContext';
 
 const getShopPagesByShopId = async (shopId) => {
   const data = await shopData(shopId);
@@ -43,4 +48,24 @@ const getPaymentMethods = async () => {
 
 export function usePaymentMethods() {
   return useQuery('paymentMethodsData', () => getPaymentMethods());
+}
+
+const getAddRemoveToWishList = async (productId, whislist, setWhislist) => {
+  let products = whislist;
+  const someProduct = _.some(products, {id: productId});
+  if (someProduct) {
+    _.remove(products, {id: productId});
+  } else {
+    products.push(productId);
+  }
+  setWhislist(products);
+  return true;
+};
+
+export function useAddRemoveToWishList() {
+  const {whislist, setWhislist} = useContext(AppContext);
+  const mutate = useMutation('paymentMethodsData', (productId) =>
+    getAddRemoveToWishList(productId, whislist, setWhislist),
+  );
+  return mutate;
 }

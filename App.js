@@ -8,8 +8,8 @@ import Toast from 'react-native-toast-message';
 
 import Navigation from './src/navigation/Navigation';
 import {NavigationTheme} from './src/themes/variables';
-import AppProvider from './src/context/AppProvider';
-import CheckoutProvider from './src/context/CheckoutProvider';
+import {AppProvider} from './src/context/AppContext';
+import {CheckoutProvider} from './src/context/CheckoutContext';
 import FilterProvider from './src/context/FilterProvider';
 import {LocalizationProvider} from './src/context/Translations';
 
