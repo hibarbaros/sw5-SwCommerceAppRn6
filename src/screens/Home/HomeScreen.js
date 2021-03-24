@@ -1,7 +1,6 @@
 import React, {useState, useCallback, useContext} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
 import {View} from 'react-native-ui-lib';
-import {Text} from 'react-native-magnus';
 import {useQueryClient} from 'react-query';
 
 import {LocalizationContext} from '../../context/Translations';

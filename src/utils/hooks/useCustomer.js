@@ -14,6 +14,8 @@ import {
   passwordEdit,
 } from '../actions/useractions';
 
+// import {changeCartSessionIdAndUserId} from '../actions/cartactions';
+
 const getCustomerByCustomerId = async (userId) => {
   const data = await customerData(userId);
   return data;
@@ -37,6 +39,7 @@ export function useCustomerLogout() {
     onSuccess: () => {
       cache.invalidateQueries(['userCart', sessionId]);
       cache.invalidateQueries('userCartCount');
+      cache.invalidateQueries('nonUserCartCount');
     },
   });
 
@@ -53,16 +56,17 @@ const getCustomerLogin = async (values) => {
 
 export function useCustomerLogin() {
   const {translations} = useContext(LocalizationContext);
-  const {setUserContext} = useContext(AppContext);
+  const {setUserContext, sessionId} = useContext(AppContext);
   const cache = useQueryClient();
 
   const mutate = useMutation((values) => getCustomerLogin(values), {
     onSuccess: (data) => {
-      const {id, sessionId} = data;
+      const {id, sessionId: dataSessionId} = data;
       if (data) {
-        setUserContext(id, sessionId);
+        setUserContext(id, dataSessionId);
         cache.invalidateQueries(['userCart', sessionId]);
         cache.invalidateQueries('userCartCount');
+        cache.invalidateQueries('nonUserCartCount');
       } else {
         Toast.show({
           type: 'error',

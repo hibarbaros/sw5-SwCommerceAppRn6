@@ -1,15 +1,19 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useQuery} from 'react-query';
 import _ from 'lodash';
-import {v4 as uuidv4} from 'uuid';
+import DeviceInfo from 'react-native-device-info';
 
 import DrawerComponent from './DrawerComponent';
 import SerciveHelpStacks from './SerciveHelpStacks';
 import {HeaderLeft, HeaderRight} from '../components/Header';
 import AppRoutes from '../utils/approutes';
 import {customerData} from '../utils/actions/useractions';
-import {getCartBySessionId} from '../utils/actions/cartactions';
+import {
+  getCartBySessionId,
+  getCartByUserId,
+} from '../utils/actions/cartactions';
+
 import {shopData, paymentsData} from '../utils/actions/appactions';
 import AppContext from '../context/AppContext';
 
@@ -47,7 +51,7 @@ export default function MainNavigator() {
     setPaymentMethods,
     setCartCount,
     sessionId,
-    setSessionId,
+    isCart,
   } = useContext(AppContext);
 
   useQuery('customerDataContext', () => customerData(user), {
@@ -59,11 +63,17 @@ export default function MainNavigator() {
     },
   });
 
-  useQuery('userCartCount', () => getCartBySessionId(sessionId), {
-    enabled: !!sessionId,
+  useQuery('userCartCount', () => getCartByUserId(user), {
+    enabled: !!user,
     onSuccess: (res) => {
-      const totalPrice = _.sumBy(res, 'quantity');
-      setCartCount(totalPrice);
+      setCartCount(_.sumBy(res, 'quantity'));
+    },
+  });
+
+  useQuery('nonUserCartCount', () => getCartBySessionId(sessionId), {
+    enabled: isCart === 0,
+    onSuccess: (res) => {
+      setCartCount(_.sumBy(res, 'quantity'));
     },
   });
 
@@ -75,12 +85,12 @@ export default function MainNavigator() {
     onSuccess: (data) => setPaymentMethods(data),
   });
 
-  React.useEffect(() => {
-    if (!sessionId) {
-      setSessionId(uuidv4());
-      console.log(`sayi1`, uuidv4());
+  useEffect(() => {
+    if (!user) {
+      const uniqueId = DeviceInfo.getUniqueId();
+      setUserContext(null, uniqueId);
     }
-  }, [sessionId]);
+  }, [user]);
 
   return (
     <Stack.Navigator

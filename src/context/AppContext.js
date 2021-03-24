@@ -8,6 +8,7 @@ const AppContext = createContext([{}, () => {}]);
 
 export const AppProvider = ({children}) => {
   const [user, setUser] = useState(null);
+  const [isCart, setIsCart] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [sessionId, setSessionId] = useState(null);
   const [whislist, setWhislist] = useState([]);
@@ -21,9 +22,12 @@ export const AppProvider = ({children}) => {
   //user functions
 
   const setUserContext = (userId, userSessionId) => {
-    setUser(userId);
+    if (userId) {
+      setUser(userId);
+      setItem('user', userId);
+      setIsCart(1);
+    }
     setSessionId(userSessionId);
-    setItem('user', userId);
     setItem('sessionId', userSessionId);
   };
 
@@ -33,6 +37,7 @@ export const AppProvider = ({children}) => {
     setCartCount(0);
     removeItem('user');
     removeItem('sessionId');
+    setIsCart(0);
     return true;
   };
 
@@ -98,6 +103,9 @@ export const AppProvider = ({children}) => {
     getItem('user').then((response) => {
       if (response) {
         setUser(response);
+        setIsCart(1);
+      } else {
+        setIsCart(0);
       }
     });
     getItem('whislist').then((value) => value && setWhislist(value));
@@ -131,6 +139,8 @@ export const AppProvider = ({children}) => {
         cartCount,
         setCartCount,
         logoutUserContext,
+        setIsCart,
+        isCart,
       }}>
       {children}
     </AppContext.Provider>

@@ -4,7 +4,6 @@ import {useNavigation} from '@react-navigation/native';
 
 import CartBox from '../../components/Common/CartBox';
 import CartTotalPrice from '../../components/Common/CartTotalPrice';
-import AppContext from '../../context/AppContext';
 import {LocalizationContext} from '../../context/Translations';
 import {Container, Button} from '../../themes/components';
 import AppRoutes from '../../utils/approutes';
@@ -14,10 +13,9 @@ import LoadSpinner from '../../components/Common/LoadSpinner';
 
 const CartScreen = () => {
   const navigation = useNavigation();
-  const {sessionId} = useContext(AppContext);
   const {translations} = useContext(LocalizationContext);
 
-  const {data = [], isLoading} = useUserCart(sessionId);
+  const {data = [], isLoading} = useUserCart();
 
   return (
     <>

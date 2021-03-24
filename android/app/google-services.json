@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1082668086835",
+    "project_id": "swapp6-5d7ec",
+    "storage_bucket": "swapp6-5d7ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082668086835:android:e7d4340ec76c4eeed59546",
+        "android_client_info": {
+          "package_name": "com.swcommerceapprn6"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082668086835-j2nlsj8e2hvennduhd1t9jpaih6rkj01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6lCmAeBB1fy1Kfo_oofqfVnPCtld1nRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082668086835-j2nlsj8e2hvennduhd1t9jpaih6rkj01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,7 +9,25 @@ import {
   addToCartSimpleProduct,
   getCartBySessionId,
   removeFromCart,
+  getCartByUserId,
 } from '../actions/cartactions';
+
+//Get Customer Cart
+const getUserCart = async (sessionId, user) => {
+  if (user) {
+    const data = await getCartByUserId(user);
+    return data;
+  } else {
+    const data = await getCartBySessionId(sessionId);
+    return data;
+  }
+};
+
+export function useUserCart() {
+  const {sessionId, user} = useContext(AppContext);
+  return useQuery(['userCart', sessionId], () => getUserCart(sessionId, user));
+}
+//Get Customer Cart
 
 //Add to Cart
 const getAddToCart = async (mutateVariables, user, sessionId) => {
@@ -30,8 +48,9 @@ export function useAddToCart() {
     (mutateVariables) => getAddToCart(mutateVariables, user, sessionId),
     {
       onSuccess: () => {
-        cache.invalidateQueries('userCart');
+        cache.invalidateQueries(['userCart', sessionId]);
         cache.invalidateQueries('userCartCount');
+        cache.invalidateQueries('nonUserCartCount');
         Toast.show({
           type: 'success',
           text1: 'Success',
@@ -44,17 +63,6 @@ export function useAddToCart() {
   return mutate;
 }
 //Add to Cart
-
-//Get Customer Cart
-const getUserCart = async (sessionId) => {
-  const data = await getCartBySessionId(sessionId);
-  return data;
-};
-
-export function useUserCart(sessionId) {
-  return useQuery(['userCart', sessionId], () => getUserCart(sessionId));
-}
-//Get Customer Cart
 
 //Remove to Cart
 const getRemoveToCart = async (mutateVariables, sessionId) => {
@@ -70,8 +78,9 @@ export function useRemoveToCart() {
     (mutateVariables) => getRemoveToCart(mutateVariables, sessionId),
     {
       onSuccess: () => {
-        cache.invalidateQueries('userCart');
+        cache.invalidateQueries(['userCart', sessionId]);
         cache.invalidateQueries('userCartCount');
+        cache.invalidateQueries('nonUserCartCount');
       },
     },
   );
