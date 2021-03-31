@@ -1,21 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {useQuery} from 'react-query';
-import _ from 'lodash';
-import DeviceInfo from 'react-native-device-info';
 
 import DrawerComponent from './DrawerComponent';
 import SerciveHelpStacks from './SerciveHelpStacks';
 import {HeaderLeft, HeaderRight} from '../components/Header';
 import AppRoutes from '../utils/approutes';
-import {customerData} from '../utils/actions/useractions';
-import {
-  getCartBySessionId,
-  getCartByUserId,
-} from '../utils/actions/cartactions';
-
-import {shopData, paymentsData} from '../utils/actions/appactions';
-import AppContext from '../context/AppContext';
 
 //Screens
 import {
@@ -44,54 +33,6 @@ import {
 const Stack = createStackNavigator();
 
 export default function MainNavigator() {
-  const {
-    user,
-    setUserContext,
-    setCurrency,
-    setPaymentMethods,
-    setCartCount,
-    sessionId,
-    isCart,
-  } = useContext(AppContext);
-
-  useQuery('customerDataContext', () => customerData(user), {
-    enabled: !!user,
-    onSuccess: (res) => {
-      if (res) {
-        setUserContext(res.id, res.sessionId);
-      }
-    },
-  });
-
-  useQuery('userCartCount', () => getCartByUserId(user), {
-    enabled: !!user,
-    onSuccess: (res) => {
-      setCartCount(_.sumBy(res, 'quantity'));
-    },
-  });
-
-  useQuery('nonUserCartCount', () => getCartBySessionId(sessionId), {
-    enabled: isCart === 0,
-    onSuccess: (res) => {
-      setCartCount(_.sumBy(res, 'quantity'));
-    },
-  });
-
-  useQuery('shopContext', () => shopData(), {
-    onSuccess: (data) => setCurrency(data.currencies[0]),
-  });
-
-  useQuery('paymentContext', () => paymentsData(), {
-    onSuccess: (data) => setPaymentMethods(data),
-  });
-
-  useEffect(() => {
-    if (!user) {
-      const uniqueId = DeviceInfo.getUniqueId();
-      setUserContext(null, uniqueId);
-    }
-  }, [user]);
-
   return (
     <Stack.Navigator
       headerMode="float"

@@ -39,7 +39,6 @@ export function useCustomerLogout() {
     onSuccess: () => {
       cache.invalidateQueries(['userCart', sessionId]);
       cache.invalidateQueries('userCartCount');
-      cache.invalidateQueries('nonUserCartCount');
     },
   });
 
@@ -68,7 +67,6 @@ export function useCustomerLogin() {
           setUserContext(id, dataSessionId);
           cache.invalidateQueries(['userCart', sessionId]);
           cache.invalidateQueries('userCartCount');
-          // cache.invalidateQueries('nonUserCartCount');
         } else {
           Toast.show({
             type: 'error',

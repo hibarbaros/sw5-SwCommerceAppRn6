@@ -17,7 +17,7 @@ export const customerCheck = async (values) => {
 export const customerRegister = async (data, sessionId) => {
   const check = await customerCheck(data);
   if (check) {
-    // kullanici var
+    // kullanici kayitli
     return false;
   } else {
     const formData = customerRegisterNormalize(data, sessionId);
@@ -83,6 +83,7 @@ export async function userLogin(values, sessionId) {
     return false;
   }
 }
+
 export async function checkUserForLogin(values) {
   const {email, password} = values;
   const response = await Api.get(`/ConnectorCustomers?filter[email]=${email}`);

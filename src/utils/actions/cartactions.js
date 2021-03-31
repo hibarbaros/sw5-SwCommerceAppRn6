@@ -38,9 +38,36 @@ export async function getFindCartBySessionId(sessionId, orderNumber) {
   }
 }
 
+const asenkronFonksiyon = (sayi) => {
+  return new Promise((resolve, reject) => {
+    if (sayi === 4) {
+      resolve('her şey yolunda!');
+    } else {
+      reject('bir sorun var abim!');
+    }
+  });
+};
+
+asenkronFonksiyon(5)
+  .then((data) => {
+    console.log(data);
+    return 1;
+  })
+  .then((data) => {
+    console.log(data);
+    return 2;
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+//TODO: promise ile yeniden tasarla
 export async function addToCartSimpleProduct(mutateVariables, user, sessionId) {
   const {productData, quantity, selectedVariants} = mutateVariables;
-  if (selectedVariants.length > 0) {
+  if (selectedVariants) {
     const findedVariantProduct = findVariantProductOrderNumber(
       productData,
       selectedVariants,

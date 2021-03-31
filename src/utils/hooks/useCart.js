@@ -13,7 +13,7 @@ import {
 } from '../actions/cartactions';
 
 //Get Customer Cart
-const getUserCart = async (sessionId, user) => {
+const getUserCart = async (user, sessionId) => {
   if (user) {
     const data = await getCartByUserId(user);
     return data;
@@ -25,7 +25,7 @@ const getUserCart = async (sessionId, user) => {
 
 export function useUserCart() {
   const {sessionId, user} = useContext(AppContext);
-  return useQuery(['userCart', sessionId], () => getUserCart(sessionId, user));
+  return useQuery(['userCart', sessionId], () => getUserCart(user, sessionId));
 }
 //Get Customer Cart
 
