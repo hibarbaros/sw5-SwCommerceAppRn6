@@ -50,18 +50,9 @@ export async function passwordEdit(data) {
 }
 
 export async function cartMigrate(sessionId, userId, userSessionId) {
-  console.log(
-    '🚀 ~ file: useractions.js ~ line 53 ~ cartMigrate ~ sessionId, userId, userSessionId',
-    sessionId,
-    userId,
-    userSessionId,
-  );
   const response = await Api.get(
     `/ConnectorBasket?migrate=1&sessionId=${sessionId}&userId=${userId}&userSessionId=${userSessionId}`,
   );
-  // const response = await Api.get(
-  //   `/ConnectorBasket?migrate=1&sessionId=6F426E50-3B3B-4C19-B3DA-68B087819A66&userId=16`,
-  // );
   return response;
 }
 
@@ -82,10 +73,6 @@ export async function userLogin(values, sessionId) {
     }
     if (data[0].encoderName === 'bcrypt') {
       const checked = checkBcryptPass(password, hash);
-      console.log(
-        '🚀 ~ file: useractions.js ~ line 85 ~ userLogin ~ checked',
-        checked,
-      );
       if (checked) {
         const migrated = await cartMigrate(sessionId, userId, userSessionId);
         return migrated ? data[0] : false;

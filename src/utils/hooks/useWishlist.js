@@ -7,26 +7,28 @@ import AppContext from '../../context/AppContext';
 export function useAddToWhislist() {
   const {wishlist, setWishlist} = useContext(AppContext);
 
-  //TODO:bu fonksiyonu kontrol et
+  function setHandleWishList(newList) {
+    setWishlist(newList);
+    setItem('wishlist', newList);
+  }
 
   return useMutation((productId) => {
-    let newList = [];
     if (!wishlist) {
+      let newList = [];
       newList.push(productId);
-      setWishlist(newList);
+      setHandleWishList(newList);
     } else {
-      newList = [...wishlist];
+      let newList = [...wishlist];
       const finded = newList.some((x) => x === productId);
       if (!finded) {
         newList.push(productId);
-        setWishlist(newList);
+        setHandleWishList(newList);
       } else {
         const idIndex = newList.indexOf(productId);
         newList.splice(idIndex, 1);
-        setWishlist(newList);
+        setHandleWishList(newList);
       }
     }
-    setItem('wishlist', newList);
     return true;
   });
 }

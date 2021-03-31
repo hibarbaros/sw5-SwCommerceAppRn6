@@ -40,7 +40,7 @@ export async function getFindCartBySessionId(sessionId, orderNumber) {
 
 export async function addToCartSimpleProduct(mutateVariables, user, sessionId) {
   const {productData, quantity, selectedVariants} = mutateVariables;
-  if (selectedVariants) {
+  if (selectedVariants.length > 0) {
     const findedVariantProduct = findVariantProductOrderNumber(
       productData,
       selectedVariants,

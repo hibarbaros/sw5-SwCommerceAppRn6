@@ -4,10 +4,10 @@ import {Div, Text, Button} from 'react-native-magnus';
 import HTMLView from 'react-native-htmlview';
 import Toast from 'react-native-toast-message';
 
-import AppContext from '../../context/AppContext';
 import {LocalizationContext} from '../../context/Translations';
 import {useProductByProductId} from '../../utils/hooks/useProduct';
 import {useAddToCart} from '../../utils/hooks/useCart';
+import {useAddToVisitedlist} from '../../utils/hooks/useVisitedProduct';
 
 import PriceWithCurrency from '../../components/Common/PriceWithCurrency';
 import ProductPropertyGroup from '../../components/ProductComponents/ProductPropertyGroup';
@@ -20,13 +20,13 @@ import ProductDetailMedia from '../../components/ProductComponents/ProductDetail
 import {Styled} from './styles';
 
 const ProductDetail = ({route}) => {
-  const {customerActions} = useContext(AppContext);
   const {translations} = useContext(LocalizationContext);
   const [selectedVariants, setSelectedVariants] = useState([]);
   const [initialQuantity, setInitialQuantity] = useState(1);
 
   const {isLoading, data} = useProductByProductId(route.params.productId);
   const {mutate} = useAddToCart();
+  const {mutate: visitedMutate} = useAddToVisitedlist();
 
   if (isLoading) {
     return <Text>..Loading</Text>;
@@ -35,7 +35,7 @@ const ProductDetail = ({route}) => {
   function handleAddToCart() {
     const confSetLength = data.configuratorSet?.groups.length;
     const mutateVariables = {
-      data,
+      productData: data,
       quantity: initialQuantity,
       selectedVariants,
     };
@@ -57,7 +57,7 @@ const ProductDetail = ({route}) => {
   }
 
   useEffect(() => {
-    customerActions.customerVisitedProducts(data);
+    visitedMutate(data.id);
   }, []);
 
   return (

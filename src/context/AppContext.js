@@ -1,5 +1,4 @@
 import React, {useState, useEffect, createContext} from 'react';
-import _ from 'lodash';
 
 // eslint-disable-next-line no-unused-vars
 import {setItem, getItem, removeItem, clearAll} from '../utils/storagehelper';
@@ -38,22 +37,6 @@ export const AppProvider = ({children}) => {
     return true;
   };
 
-  const customerActions = {
-    customerVisitedProducts: function (product) {
-      let products = [...visitedProducts];
-      const finded = _.find(products, {id: product.id});
-      if (!finded) {
-        if (products.length > 9) {
-          const last = _.first(products);
-          _.remove(products, {id: last.id});
-        }
-        products.push(product);
-        setVisitedProducts(products);
-        setItem('visitedproducts', products);
-      }
-    },
-  };
-
   //user functions
 
   //init effect
@@ -65,7 +48,7 @@ export const AppProvider = ({children}) => {
       }
     });
     getItem('wishlist').then((value) => value && setWishlist(value));
-    getItem('visitedproducts').then(
+    getItem('visitedProducts').then(
       (value) => value && setVisitedProducts(value),
     );
   }, []);
@@ -74,7 +57,6 @@ export const AppProvider = ({children}) => {
     <AppContext.Provider
       value={{
         user,
-        customerActions,
         currency,
         setCurrency,
         paymentMethods,
@@ -95,6 +77,7 @@ export const AppProvider = ({children}) => {
         logoutUserContext,
         wishlist,
         setWishlist,
+        setVisitedProducts,
       }}>
       {children}
     </AppContext.Provider>

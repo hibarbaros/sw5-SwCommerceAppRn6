@@ -12,7 +12,7 @@ export default function VisitedProducts() {
   const {visitedProducts} = useContext(AppContext);
 
   const renderCarouselItem = ({item}) => {
-    return <ProductCard theme="theme02" productId={item.id} />;
+    return <ProductCard theme="theme02" productId={item} />;
   };
 
   return (
