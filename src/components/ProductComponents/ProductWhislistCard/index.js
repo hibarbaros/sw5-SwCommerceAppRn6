@@ -9,7 +9,7 @@ import AppRoutes from '../../../utils/approutes';
 import ProductCardMedia from '../../ProductComponents/ProductCardMedia';
 
 import {useProductByProductId} from '../../../utils/hooks/useProduct';
-import {useAddToWhislist} from '../../../utils/hooks/useWhislist';
+import {useAddToWhislist} from '../../../utils/hooks/useWishlist';
 
 import {Styled} from './styles';
 

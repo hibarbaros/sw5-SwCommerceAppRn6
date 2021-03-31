@@ -10,8 +10,7 @@ export const AppProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [sessionId, setSessionId] = useState(null);
-  const [whislist, setWhislist] = useState([]);
-  const [wishlist, setWishlist] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
   const [currency, setCurrency] = useState('');
   const [paymentMethods, setPaymentMethods] = useState(null);
   const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
@@ -65,7 +64,7 @@ export const AppProvider = ({children}) => {
         setUser(response);
       }
     });
-    getItem('whislist').then((value) => value && setWishlist(value));
+    getItem('wishlist').then((value) => value && setWishlist(value));
     getItem('visitedproducts').then(
       (value) => value && setVisitedProducts(value),
     );
@@ -78,7 +77,6 @@ export const AppProvider = ({children}) => {
         customerActions,
         currency,
         setCurrency,
-        whislist,
         paymentMethods,
         selectedShippingAddress,
         setSelectedShippingAddress,

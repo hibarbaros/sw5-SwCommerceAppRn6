@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import AppContext from '../../../context/AppContext';
-import {useAddToWhislist} from '../../../utils/hooks/useWhislist';
+import {useAddToWhislist} from '../../../utils/hooks/useWishlist';
 
 import {Styled} from './styles';
 
@@ -19,7 +19,6 @@ export default function ProductWhislistButton({product}) {
       const finded = wishlist.some((x) => x === product.id);
       finded ? setCheckWishList(true) : setCheckWishList(false);
     }
-    console.log('object :>> ', wishlist);
   }, [wishlist]);
 
   return (
