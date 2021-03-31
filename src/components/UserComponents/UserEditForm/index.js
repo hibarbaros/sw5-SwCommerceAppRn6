@@ -1,18 +1,30 @@
 import React, {useState, useContext} from 'react';
-import {View} from 'react-native-ui-lib';
+import {View, Text} from 'react-native-ui-lib';
 import {Button, CheckBox} from '@ui-kitten/components';
-
-import {useEditCustomer} from '../../../utils/hooks/useCustomer';
-import LoadSpinner from '../../Common/LoadSpinner';
-import {LocalizationContext} from '../../../context/Translations';
-import {Container, FormInput} from '../../../themes/components';
-import {ForwardIcon} from '../../../themes/components/IconSet';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 
-export default function UserEditForm({userData}) {
+import {
+  useEditCustomer,
+  useCustomerByCustomerId,
+} from '../../../utils/hooks/useCustomer';
+
+import LoadSpinner from '../../Common/LoadSpinner';
+import {LocalizationContext} from '../../../context/Translations';
+import AppContext from '../../../context/AppContext';
+
+import {Container, FormInput} from '../../../themes/components';
+import {ForwardIcon} from '../../../themes/components/IconSet';
+
+export default function UserEditForm() {
+  const [userNewsletter, setUserNewsletter] = useState(null);
   const {translations} = useContext(LocalizationContext);
-  const [userNewsletter, setUserNewsletter] = useState(userData.newsletter);
+  const {user} = useContext(AppContext);
+  const {data: customerData, isLoading} = useCustomerByCustomerId(user, {
+    onSuccess: () => {
+      setUserNewsletter(customerData.newsletter);
+    },
+  });
 
   const {
     mutate: mutateEditCustomer,
@@ -20,19 +32,24 @@ export default function UserEditForm({userData}) {
   } = useEditCustomer();
 
   function handleForm(values) {
-    mutateEditCustomer({customerId: userData.id, values});
+    mutateEditCustomer({customerId: customerData.id, values});
   }
+
+  if (isLoading) {
+    return <Text>Loading</Text>;
+  }
+
   return (
     <>
       <LoadSpinner isVisible={editCustomerLoading} />
       <Container>
         <Formik
           initialValues={{
-            email: userData.email,
-            firstname: userData.firstname,
-            lastname: userData.lastname,
-            newsletter: userData.newsletter,
-            salutation: userData.salutation,
+            email: customerData.email,
+            firstname: customerData.firstname,
+            lastname: customerData.lastname,
+            newsletter: customerData.newsletter,
+            salutation: customerData.salutation,
           }}
           onSubmit={(values) => handleForm(values)}
           validationSchema={yup.object().shape({

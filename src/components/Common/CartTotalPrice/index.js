@@ -19,9 +19,6 @@ export default function CartTotalPrice({cart}) {
   const netPrice = _.sumBy(editedCart, 'netPrice');
   const totalPrice = _.sumBy(editedCart, 'price');
 
-  const shippingPrice =
-    selectedShippingMethod && parseInt(selectedShippingMethod.detail.value, 10);
-
   return (
     <Styled.CardContainer>
       <Styled.TextContainer row>
@@ -44,7 +41,7 @@ export default function CartTotalPrice({cart}) {
         <Styled.TextContainer row>
           <Styled.TextLeft>Shipping costs</Styled.TextLeft>
           <Styled.CurrencyContainer row>
-            <PriceWithCurrency price={shippingPrice} />
+            <PriceWithCurrency price={selectedShippingMethod.detail.value} />
           </Styled.CurrencyContainer>
         </Styled.TextContainer>
       )}

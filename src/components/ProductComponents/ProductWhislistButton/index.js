@@ -1,30 +1,26 @@
 import React, {useState, useEffect, useContext} from 'react';
 import AppContext from '../../../context/AppContext';
+import {useAddToWhislist} from '../../../utils/hooks/useWhislist';
 
 import {Styled} from './styles';
 
 export default function ProductWhislistButton({product}) {
-  const {whislistActions, whislist} = useContext(AppContext);
-  const [checkWishList, setCheckWishList] = useState(null);
+  const {wishlist} = useContext(AppContext);
+  const [checkWishList, setCheckWishList] = useState(false);
+
+  const {mutate} = useAddToWhislist();
 
   function handleWhislist() {
-    if (checkWishList) {
-      whislistActions.removeToWish(product);
-    }
-    if (!checkWishList) {
-      whislistActions.addToWish(product);
-    }
-  }
-
-  function handleCheckWhislist() {
-    whislistActions.checkToWish(product.id).then((response) => {
-      setCheckWishList(response);
-    });
+    mutate(product.id);
   }
 
   useEffect(() => {
-    handleCheckWhislist();
-  }, [whislist]);
+    if (wishlist || wishlist.length !== 0) {
+      const finded = wishlist.some((x) => x === product.id);
+      finded ? setCheckWishList(true) : setCheckWishList(false);
+    }
+    console.log('object :>> ', wishlist);
+  }, [wishlist]);
 
   return (
     <Styled.FavoriteIcon

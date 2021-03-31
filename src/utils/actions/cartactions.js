@@ -26,20 +26,6 @@ export async function getCartByUserId(userId) {
   }
 }
 
-export async function changeCartSessionIdAndUserId(sessionId, userId) {
-  const intses = '6F426E50-3B3B-4C19-B3DA-68B087819A66';
-  const response = await Api.get(
-    `/ConnectorBasket?filter[0][property]=sessionId&filter[0][value]=${sessionId}`,
-  );
-  response.data.map((element) => {
-    const formData = {
-      sessionId: element.sessionId,
-      userId: userId,
-    };
-    console.log(`formData`, formData);
-  });
-}
-
 export async function getFindCartBySessionId(sessionId, orderNumber) {
   const response = await Api.get(
     `/ConnectorBasket?filter[0][property]=sessionId&filter[0][value]=${sessionId}`,

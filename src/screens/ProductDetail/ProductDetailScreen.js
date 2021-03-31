@@ -20,31 +20,26 @@ import ProductDetailMedia from '../../components/ProductComponents/ProductDetail
 import {Styled} from './styles';
 
 const ProductDetail = ({route}) => {
-  const {customerActions, cartCount} = useContext(AppContext);
+  const {customerActions} = useContext(AppContext);
   const {translations} = useContext(LocalizationContext);
-  const {product} = route.params.productData;
   const [selectedVariants, setSelectedVariants] = useState([]);
   const [initialQuantity, setInitialQuantity] = useState(1);
 
-  const {isLoading, data: productData} = useProductByProductId(product.id);
+  const {isLoading, data} = useProductByProductId(route.params.productId);
   const {mutate} = useAddToCart();
 
   if (isLoading) {
     return <Text>..Loading</Text>;
   }
 
-  useEffect(() => {
-    console.log('cartCount', cartCount);
-  }, [cartCount]);
-
   function handleAddToCart() {
-    const confSetLength = productData.configuratorSet?.groups.length;
+    const confSetLength = data.configuratorSet?.groups.length;
     const mutateVariables = {
-      productData,
+      data,
       quantity: initialQuantity,
       selectedVariants,
     };
-    if (!productData.configuratorSet) {
+    if (!data.configuratorSet) {
       // NOTE: variantsiz
       mutate(mutateVariables);
     } else {
@@ -62,38 +57,35 @@ const ProductDetail = ({route}) => {
   }
 
   useEffect(() => {
-    customerActions.customerVisitedProducts(productData);
+    customerActions.customerVisitedProducts(data);
   }, []);
 
   return (
     <>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Styled.ImageContainer>
-          <ProductDetailMedia images={productData.images} />
+          <ProductDetailMedia images={data.images} />
         </Styled.ImageContainer>
         <Styled.Wrapper>
           <Styled.TopContainer>
             <Styled.TextContainer>
-              <Styled.ProductName>{productData.name}</Styled.ProductName>
+              <Styled.ProductName>{data.name}</Styled.ProductName>
               <Styled.ProductPrice>
-                {productData.mainDetail.prices.map((price, index) => {
+                {data.mainDetail.prices.map((price, index) => {
                   return (
                     <Div key={index} row>
-                      <PriceWithCurrency
-                        price={price.price}
-                        product={productData}
-                      />
+                      <PriceWithCurrency price={price.price} product={data} />
                     </Div>
                   );
                 })}
               </Styled.ProductPrice>
             </Styled.TextContainer>
             <Styled.FavoriteIconContainer>
-              <ProductWhislistButton product={productData} />
+              <ProductWhislistButton product={data} />
             </Styled.FavoriteIconContainer>
           </Styled.TopContainer>
 
-          {productData.mainDetail.inStock > 0 && (
+          {data.mainDetail.inStock > 0 && (
             <Styled.ShipContainer>
               <Styled.ShipText>
                 {translations.readyToShipToday}
@@ -102,7 +94,7 @@ const ProductDetail = ({route}) => {
               <Styled.ShipText>
                 {translations.deliverytime}
                 {': '}
-                {productData.mainDetail.shippingTime} {translations.workdays}
+                {data.mainDetail.shippingTime} {translations.workdays}
               </Styled.ShipText>
             </Styled.ShipContainer>
           )}
@@ -112,7 +104,7 @@ const ProductDetail = ({route}) => {
               Products Description
             </Styled.DescriptionTitle>
             <HTMLView
-              value={productData.descriptionLong}
+              value={data.descriptionLong}
               TextComponent={(props) => <Styled.DescriptionText {...props} />}
             />
           </Styled.DescriptionContainer>
@@ -122,12 +114,12 @@ const ProductDetail = ({route}) => {
               {'.'}
               {translations.categories}
             </Styled.DescriptionTitle>
-            {productData.categories.map((cat, index) => (
+            {data.categories.map((cat, index) => (
               <Styled.GeneralText key={index}>{cat.name}</Styled.GeneralText>
             ))}
           </Styled.CategoryContainer>
           {/* Variants */}
-          {productData.configuratorSet && (
+          {data.configuratorSet && (
             <Div my={15}>
               <Styled.DescriptionTitle>
                 {'.'}
@@ -136,14 +128,14 @@ const ProductDetail = ({route}) => {
               <ProductDetailVariants
                 selectedVariants={selectedVariants}
                 setSelectedVariants={setSelectedVariants}
-                configuratorSet={productData.configuratorSet}
-                productData={productData}
+                configuratorSet={data.configuratorSet}
+                productData={data}
               />
             </Div>
           )}
 
           {/* Property Groups */}
-          <ProductPropertyGroup product={productData} />
+          <ProductPropertyGroup product={data} />
           {/* Related Products */}
           {/* {productData.related && (
             <>
@@ -167,7 +159,7 @@ const ProductDetail = ({route}) => {
         </Styled.Wrapper>
       </ScrollView>
       <SafeAreaView>
-        {productData.mainDetail.inStock > 0 ? (
+        {data.mainDetail.inStock > 0 ? (
           <Div row>
             <Button w="50%" onPress={() => handleAddToCart()}>
               {translations.addToCart}

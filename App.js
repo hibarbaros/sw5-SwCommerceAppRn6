@@ -18,6 +18,12 @@ const queryClient = new QueryClient();
 const App = () => {
   const ref = useRef(null);
 
+  if (__DEV__) {
+    import('react-query-native-devtools').then(({addPlugin}) => {
+      addPlugin({queryClient});
+    });
+  }
+
   return (
     <>
       <QueryClientProvider client={queryClient}>

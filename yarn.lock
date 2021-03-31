@@ -7387,10 +7387,10 @@ react-native-flipper@^0.34.0:
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.34.0.tgz#7df1f38ba5d97a9321125fe0fccbe47d99e6fa1d"
   integrity sha512-48wgm29HJTOlZ0DibBsvXueEOY0EPIVL0wWKbwRfgrk86+luSEuLW3aZC50oJa95zSFb9qYShTV/6dWqh4Jamg==
 
-react-native-flipper@^0.69.0:
-  version "0.69.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.69.0.tgz#6e0ff2d1c91da49bf5536c9ad6cd2980f9e5d0f7"
-  integrity sha512-5ZqlNWCd5+h9G309sQiV/uSogATM3y2RRblsF8Lyx2NexmISeTYv8/oGxtBvq89Kysit8ZY1wExyF9laT4wx6w==
+react-native-flipper@^0.82.1:
+  version "0.82.1"
+  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.82.1.tgz#57c1679205bedfbe922bbe59b772954bb4088449"
+  integrity sha512-u9PQBPpAo9zbN5nQ1bZp7zx6ovzeiZIouLB+p5uekBh/sBBkPbJdH14E1/Z9gKEh4t5tDOko2XT4htmefwyF7w==
 
 react-native-gesture-handler@^1.9.0:
   version "1.9.0"
@@ -7600,6 +7600,11 @@ react-native-vector-icons@^8.1.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
+react-native-wizard@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-wizard/-/react-native-wizard-2.1.0.tgz#513be620d3e94790d9b40b532d1027036a02584e"
+  integrity sha512-GUkQcbZERHsx3WEyNC+9cVGo4NwrXOB1tsFgbcSoEYn1yO+3fqbiC2I8dVqzl9+KZpyDqI9BcQJbNe/X2EgUlQ==
+
 react-native@0.63.4:
   version "0.63.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.63.4.tgz#2210fdd404c94a5fa6b423c6de86f8e48810ec36"
@@ -7648,10 +7653,12 @@ react-query-devtools@^2.6.3:
   dependencies:
     match-sorter "^4.1.0"
 
-react-query-native-devtools@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/react-query-native-devtools/-/react-query-native-devtools-0.3.2.tgz#967471d08f786896f8afda223b04c8e2785eb200"
-  integrity sha512-N3Qeb4iRAqscY6O1TnQ2+Lh/c8kmzmVVX4NlDHf5U2VCvhkX9kbF0J+nr1B7Ji8ahimON+sMLV0zVmH8QDc/dg==
+react-query-native-devtools@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-query-native-devtools/-/react-query-native-devtools-3.0.0.tgz#151844186a7fb13822d7ea29fc92035e078bff58"
+  integrity sha512-NZ7VaAeWgzf3QuaAyvWEdhy53xzNlPFe8GT8b3utssU3NHMfMM/nqCZ8gs8P4Lq1rsssUO0Hv2aKRIBbgAXGhg==
+  dependencies:
+    flatted "^3.1.0"
 
 react-query-navigation-native@^0.2.2:
   version "0.2.2"

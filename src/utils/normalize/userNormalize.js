@@ -1,4 +1,4 @@
-export function customerRegisterNormalize(data) {
+export function customerRegisterNormalize(data, sessionId) {
   const {
     email,
     password,
@@ -55,6 +55,7 @@ export function customerRegisterNormalize(data) {
     password,
     firstname,
     lastname,
+    sessionId,
     salutation,
     newsletter,
     billing,

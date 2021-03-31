@@ -5,9 +5,6 @@ import {usePropertyGroupDetail} from '../../../utils/hooks/useProduct';
 import {Styled} from './styles';
 
 export default function ProductPropertyGroup({product}) {
-  //TODO: api connector adresine baglanacak
-  //TODO: özelliklerde olmayanlarin basliklari cikmamali
-
   const {isLoading, error, data: propertyGroup} = usePropertyGroupDetail(
     product.propertyGroup.id,
   );

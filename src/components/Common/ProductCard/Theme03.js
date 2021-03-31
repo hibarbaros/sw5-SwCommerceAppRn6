@@ -10,7 +10,7 @@ export default function ProductCardTheme03({navigation, product, thumbnail}) {
     <Styled.Card
       onPress={() => {
         navigation.navigate(AppRoutes.PRODUCT_DETAIL, {
-          productData: {product},
+          productId: product.id,
         });
       }}>
       <Styled.CardContainer>

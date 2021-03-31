@@ -8,10 +8,10 @@ const AppContext = createContext([{}, () => {}]);
 
 export const AppProvider = ({children}) => {
   const [user, setUser] = useState(null);
-  const [isCart, setIsCart] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [sessionId, setSessionId] = useState(null);
   const [whislist, setWhislist] = useState([]);
+  const [wishlist, setWishlist] = useState(null);
   const [currency, setCurrency] = useState('');
   const [paymentMethods, setPaymentMethods] = useState(null);
   const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
@@ -25,7 +25,6 @@ export const AppProvider = ({children}) => {
     if (userId) {
       setUser(userId);
       setItem('user', userId);
-      setIsCart(1);
     }
     setSessionId(userSessionId);
     setItem('sessionId', userSessionId);
@@ -37,7 +36,6 @@ export const AppProvider = ({children}) => {
     setCartCount(0);
     removeItem('user');
     removeItem('sessionId');
-    setIsCart(0);
     return true;
   };
 
@@ -59,56 +57,15 @@ export const AppProvider = ({children}) => {
 
   //user functions
 
-  //wishlist functions
-  const whislistActions = {
-    addToWish: async function (product) {
-      let products = [];
-      if (whislist) {
-        products = [...whislist];
-      }
-      const findProduct = _.filter(products, {id: product.id});
-      if (findProduct.length === 0) {
-        products.push(product);
-      }
-      setWhislist(products);
-      setItem('whislist', products);
-    },
-    removeToWish: function (product) {
-      let products = [];
-      if (whislist) {
-        products = [...whislist];
-      }
-      _.remove(products, {id: product.id});
-      setWhislist(products);
-      setItem('whislist', products);
-    },
-    checkToWish: function (productId) {
-      return new Promise((resolve) => {
-        const findProduct = _.filter(whislist, {id: productId});
-        if (findProduct.length === 0) {
-          return resolve(false);
-        }
-        if (findProduct.length > 0) {
-          return resolve(true);
-        }
-      });
-    },
-  };
-
-  //wishlist functions
-
   //init effect
   useEffect(() => {
     // clearAll();
     getItem('user').then((response) => {
       if (response) {
         setUser(response);
-        setIsCart(1);
-      } else {
-        setIsCart(0);
       }
     });
-    getItem('whislist').then((value) => value && setWhislist(value));
+    getItem('whislist').then((value) => value && setWishlist(value));
     getItem('visitedproducts').then(
       (value) => value && setVisitedProducts(value),
     );
@@ -119,7 +76,6 @@ export const AppProvider = ({children}) => {
       value={{
         user,
         customerActions,
-        whislistActions,
         currency,
         setCurrency,
         whislist,
@@ -139,8 +95,8 @@ export const AppProvider = ({children}) => {
         cartCount,
         setCartCount,
         logoutUserContext,
-        setIsCart,
-        isCart,
+        wishlist,
+        setWishlist,
       }}>
       {children}
     </AppContext.Provider>

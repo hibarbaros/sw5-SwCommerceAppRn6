@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Button} from '@ui-kitten/components';
-import {View} from 'react-native-ui-lib';
+import {View, Text} from 'react-native-ui-lib';
 import md5 from 'react-native-md5';
 import bcrypt from 'react-native-bcrypt';
 import Toast from 'react-native-toast-message';
@@ -12,10 +12,16 @@ import {ForwardIcon} from '../../../themes/components/IconSet';
 import LoadSpinner from '../../Common/LoadSpinner';
 
 import {LocalizationContext} from '../../../context/Translations';
-import {useEditCustomerPassword} from '../../../utils/hooks/useCustomer';
+import AppContext from '../../../context/AppContext';
+import {
+  useEditCustomerPassword,
+  useCustomerByCustomerId,
+} from '../../../utils/hooks/useCustomer';
 
-export default function UserPasswordEditForm({customerData}) {
+export default function UserPasswordEditForm() {
   const {translations} = useContext(LocalizationContext);
+  const {user} = useContext(AppContext);
+  const {data: customerData, isLoading} = useCustomerByCustomerId(user);
   const {
     mutate: mutateEditPassword,
     isLoading: editPasswordLoading,
@@ -56,6 +62,10 @@ export default function UserPasswordEditForm({customerData}) {
 
   function handleLogin(values) {
     passwordCheck(values.oldPassword, values.password);
+  }
+
+  if (isLoading) {
+    return <Text>isLoading</Text>;
   }
 
   return (

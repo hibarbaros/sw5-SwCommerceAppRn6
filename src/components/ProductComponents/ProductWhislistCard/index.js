@@ -1,46 +1,54 @@
-import React, {useContext} from 'react';
+import React from 'react';
+import {Text} from 'react-native';
 import {View} from 'react-native-ui-lib';
 import {useNavigation} from '@react-navigation/native';
+
 import PriceWithCurrency from '../../Common/PriceWithCurrency';
-import Media from '../../Common/Media/Media';
 import {ButtonIcon} from '../../../themes/components';
-import AppContext from '../../../context/AppContext';
 import AppRoutes from '../../../utils/approutes';
+import ProductCardMedia from '../../ProductComponents/ProductCardMedia';
+
+import {useProductByProductId} from '../../../utils/hooks/useProduct';
+import {useAddToWhislist} from '../../../utils/hooks/useWhislist';
 
 import {Styled} from './styles';
 
-export default function ProductWhislistCard({product}) {
-  const {whislistActions} = useContext(AppContext);
+export default function ProductWhislistCard({productId}) {
   const navigation = useNavigation();
 
-  function handleRemoveProducttoList() {
-    whislistActions.removeToWish(product);
+  const {data, isLoading} = useProductByProductId(productId);
+  const {mutate} = useAddToWhislist();
+
+  if (isLoading) {
+    return <Text>Loading</Text>;
   }
+
+  const thumbnail = data.images.find((x) => x.main === 1);
 
   return (
     <Styled.CardContainer
       onPress={() => {
         navigation.navigate(AppRoutes.PRODUCT_DETAIL, {
-          productData: {product},
+          productId,
         });
       }}>
       <View flex row centerV>
         <Styled.ImageContainer>
-          <Media borderRadius={5} mediaId={product.images[0].mediaId} />
+          <ProductCardMedia thumbnail={thumbnail} />
         </Styled.ImageContainer>
         <Styled.RightContainer>
           <Styled.TextContainer>
-            <Styled.ProductName>{product.name} </Styled.ProductName>
-            {product.mainDetail.prices.map((price, i) => {
+            <Styled.ProductName>{data.name} </Styled.ProductName>
+            {data.mainDetail.prices.map((price, i) => {
               return (
                 <View key={i}>
-                  <PriceWithCurrency price={price.price} product={product} />
+                  <PriceWithCurrency price={price.price} product={data} />
                 </View>
               );
             })}
           </Styled.TextContainer>
           <View centerV>
-            <ButtonIcon iconName="trash" onPress={handleRemoveProducttoList} />
+            <ButtonIcon iconName="trash" onPress={() => mutate(productId)} />
           </View>
         </Styled.RightContainer>
       </View>

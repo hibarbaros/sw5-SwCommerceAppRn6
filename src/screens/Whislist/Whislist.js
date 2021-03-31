@@ -6,18 +6,18 @@ import ProductWhislistCard from '../../components/ProductComponents/ProductWhisl
 import {Container, Headline} from '../../themes/components';
 
 export default function Whislist() {
-  const {whislist} = useContext(AppContext);
+  const {wishlist} = useContext(AppContext);
 
   return (
     <Container>
-      {whislist.length > 0 && (
+      {wishlist.length > 0 && (
         <ScrollView>
-          {whislist.map((product, index) => (
-            <ProductWhislistCard key={index} product={product} />
+          {wishlist.map((productId, index) => (
+            <ProductWhislistCard key={index} productId={productId} />
           ))}
         </ScrollView>
       )}
-      {whislist.length === 0 && <Headline>Your wishlist is empty</Headline>}
+      {wishlist.length === 0 && <Headline>Your wishlist is empty</Headline>}
     </Container>
   );
 }

@@ -1,7 +1,10 @@
 import {useContext} from 'react';
 import {useQuery, useMutation} from 'react-query';
-import {LocalizationContext} from '../../context/Translations';
 import Toast from 'react-native-toast-message';
+
+import {LocalizationContext} from '../../context/Translations';
+import AppContext from '../../context/AppContext';
+import CheckoutContext from '../../context/CheckoutContext';
 
 import {
   orderbyCustomerList,
@@ -37,7 +40,24 @@ const getCreateOrder = async (values) => {
 
 export function useCreateOrder() {
   const {translations} = useContext(LocalizationContext);
-  const mutate = useMutation((values) => getCreateOrder(values), {
+  const {user, currency} = useContext(AppContext);
+  const {
+    selectedPaymentMethod,
+    selectedShippingMethod,
+    selectedShippingAddress,
+    selectedBilllingAddress,
+  } = useContext(CheckoutContext);
+
+  const mutateVariables = {
+    user,
+    paymentMethodId: selectedPaymentMethod?.id,
+    currency,
+    selectedShippingAddress,
+    selectedBilllingAddress,
+    selectedShippingMethod,
+  };
+
+  const mutate = useMutation(() => getCreateOrder(mutateVariables), {
     onError: (e) => {
       Toast.show({
         type: 'error',

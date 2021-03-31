@@ -8,27 +8,27 @@ import Toast from 'react-native-toast-message';
 import {Container} from '../../themes/components';
 import AppContext from '../../context/AppContext';
 import CheckoutContext from '../../context/CheckoutContext';
-import {useCreateOrder} from '../../utils/hooks/useOrder';
 import AppRoute from '../../utils/approutes';
 import CartTotalPrice from '../../components/Common/CartTotalPrice';
 import UserLoginForm from '../../components/UserComponents/UserLoginForm';
 import CartBox from '../../components/Common/CartBox';
-import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods/ShippingMethods';
-import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods/PaymentMethods';
+import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods';
+import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods';
 import Address from '../../components/CheckoutComponents/Address';
 import LoadSpinner from '../../components/Common/LoadSpinner';
 
+import {useCreateOrder} from '../../utils/hooks/useOrder';
+import {useUserCart} from '../../utils/hooks/useCart';
+
 export default function CheckoutWizard() {
-  const {userCart, user, currency} = useContext(AppContext);
-  const {
-    selectedPaymentMethod,
-    selectedShippingMethod,
-    selectedShippingAddress,
-    selectedBilllingAddress,
-  } = useContext(CheckoutContext);
+  const {user} = useContext(AppContext);
+  const {selectedPaymentMethod, selectedShippingMethod} = useContext(
+    CheckoutContext,
+  );
   const navigation = useNavigation();
 
-  const {mutate: addOrderMutate, isLoading: checkoutLoading} = useCreateOrder();
+  const {mutate, isLoading} = useCreateOrder();
+  const {data = []} = useUserCart();
 
   function handleOrderCreate() {
     if (!selectedPaymentMethod) {
@@ -48,22 +48,13 @@ export default function CheckoutWizard() {
       return null;
     }
     if (selectedPaymentMethod) {
-      const orderData = {
-        userCart,
-        user,
-        paymentMethodId: selectedPaymentMethod.id,
-        currency,
-        selectedShippingAddress,
-        selectedBilllingAddress,
-        selectedShippingMethod,
-      };
-      addOrderMutate(orderData);
+      // addOrderMutate(orderData);
     }
   }
 
   return (
     <>
-      <LoadSpinner isVisible={checkoutLoading} />
+      <LoadSpinner isVisible={isLoading} />
 
       {user && (
         <ScrollView contentInsetAdjustmentBehavior="automatic">
@@ -84,16 +75,16 @@ export default function CheckoutWizard() {
               <Text text60 marginB-s5>
                 Cart
               </Text>
-              {userCart &&
-                userCart.map((product) => (
+
+              {data.length > 0 &&
+                data.map((product) => (
                   <CartBox
-                    key={product.id}
-                    wizard={true}
-                    product={product}
-                    detail={product}
+                    key={product.articleId}
+                    productId={product.articleId}
+                    quantity={product.quantity}
                   />
                 ))}
-              <CartTotalPrice />
+              <CartTotalPrice cart={data} />
             </Container>
             <View margin-s5>
               <Button onPress={() => handleOrderCreate()}>Check</Button>

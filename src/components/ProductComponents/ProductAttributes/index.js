@@ -35,8 +35,6 @@ export default function ProductAttributes({products}) {
                     option={finded}
                   />
                 );
-              } else {
-                return null;
               }
             })}
           </React.Fragment>
