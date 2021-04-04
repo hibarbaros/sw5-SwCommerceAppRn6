@@ -6,7 +6,8 @@ import Wizard from 'react-native-wizard';
 
 // import CartTotalPrice from '../../components/Common/CartTotalPrice';
 import {Container} from '../../themes/components';
-import AppContext from '../../context/AppContext';
+import CartContext from '../../context/CartContext';
+import {useMigrateUserCart} from '../../utils/hooks/useCart';
 
 import Titles from './Titles';
 import Step01 from './Step01';
@@ -16,14 +17,16 @@ import Step04 from './Step04';
 
 const CartScreen = () => {
   const wizardRef = useRef();
-  const {userCart} = useContext(AppContext);
+  const {userCart} = useContext(CartContext);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isLastStep, setIsLastStep] = useState();
   const [currentStep, setCurrentStep] = useState(0);
 
+  const {mutate} = useMigrateUserCart();
+
   const stepList = [
     {
-      content: <Step01 cart={userCart} />,
+      content: <Step01 initialCart={userCart} />,
     },
     {
       content: <Step02 setIsDisabled={setIsDisabled} />,
@@ -44,45 +47,51 @@ const CartScreen = () => {
   useFocusEffect(
     useCallback(() => {
       handleGoTo(0);
-    }, []),
+    }, [userCart]),
   );
 
   return (
     <>
       <Titles handleGoTo={handleGoTo} currentStep={currentStep} />
-      <>
-        {userCart.length > 0 ? (
-          <>
-            <ScrollView
-              contentInsetAdjustmentBehavior="automatic"
-              contentContainerStyle={{paddingBottom: 200}}>
-              <Wizard
-                ref={wizardRef}
-                steps={stepList}
-                isLastStep={(val) => setIsLastStep(val)}
-              />
-            </ScrollView>
-            <Div position="absolute" bottom={0} bg="white">
-              {!isLastStep ? (
-                <>
-                  {/* <CartTotalPrice /> */}
-                  <Button
-                    onPress={() => handleGoTo(currentStep + 1)}
-                    disabled={isDisabled}
-                    w="100%"
-                    rounded={0}>
-                    Weiter
-                  </Button>
-                </>
-              ) : null}
-            </Div>
-          </>
-        ) : (
-          <Container>
-            <Text>In Ihrem Warenkorb befinden sich keine Artikel</Text>
-          </Container>
-        )}
-      </>
+      {userCart ? (
+        <>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            contentContainerStyle={{paddingBottom: 200}}>
+            <Wizard
+              ref={wizardRef}
+              steps={stepList}
+              isLastStep={(val) => setIsLastStep(val)}
+            />
+            <Button
+              onPress={() => mutate()}
+              disabled={isDisabled}
+              w="100%"
+              rounded={0}>
+              Migrate
+            </Button>
+          </ScrollView>
+
+          <Div position="absolute" bottom={0} bg="white">
+            {!isLastStep ? (
+              <>
+                {/* <CartTotalPrice /> */}
+                <Button
+                  onPress={() => handleGoTo(currentStep + 1)}
+                  disabled={isDisabled}
+                  w="100%"
+                  rounded={0}>
+                  Weiter
+                </Button>
+              </>
+            ) : null}
+          </Div>
+        </>
+      ) : (
+        <Container>
+          <Text>In Ihrem Warenkorb befinden sich keine Artikel</Text>
+        </Container>
+      )}
     </>
   );
 };

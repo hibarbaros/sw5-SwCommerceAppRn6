@@ -10,6 +10,7 @@ import Navigation from './src/navigation/Navigation';
 import {NavigationTheme} from './src/themes/variables';
 import {AppProvider} from './src/context/AppContext';
 import {CheckoutProvider} from './src/context/CheckoutContext';
+import {CartProvider} from './src/context/CartContext';
 import FilterProvider from './src/context/FilterProvider';
 import {LocalizationProvider} from './src/context/Translations';
 
@@ -31,13 +32,15 @@ const App = () => {
         <ApplicationProvider {...eva} theme={{...eva.light}}>
           <LocalizationProvider>
             <AppProvider>
-              <CheckoutProvider>
-                <FilterProvider>
-                  <NavigationContainer theme={NavigationTheme} ref={ref}>
-                    <Navigation />
-                  </NavigationContainer>
-                </FilterProvider>
-              </CheckoutProvider>
+              <CartProvider>
+                <CheckoutProvider>
+                  <FilterProvider>
+                    <NavigationContainer theme={NavigationTheme} ref={ref}>
+                      <Navigation />
+                    </NavigationContainer>
+                  </FilterProvider>
+                </CheckoutProvider>
+              </CartProvider>
             </AppProvider>
           </LocalizationProvider>
         </ApplicationProvider>

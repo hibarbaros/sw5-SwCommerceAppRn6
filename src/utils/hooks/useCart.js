@@ -5,16 +5,15 @@ import _ from 'lodash';
 
 import {LocalizationContext} from '../../context/Translations';
 import AppContext from '../../context/AppContext';
-
-import {findProductVariant} from '../functions';
+import CartContext from '../../context/CartContext';
 
 import {
-  addToCartSimpleProduct,
   getCartBySessionId,
   removeFromCart,
   getCartByUserId,
   addInitialUserCart,
   removeInitialUserCart,
+  migrateUserCart,
 } from '../actions/cartactions';
 
 //Get Customer Cart
@@ -41,7 +40,7 @@ export function useUserCart() {
 //Get Customer Cart
 
 //Add to Cart
-const getAddToCart = async (mutateVariables, userCart) => {
+const getAddToCart = async (mutateVariables, userCart, setUserCart) => {
   const {productData, selectedVariants} = mutateVariables;
 
   if (selectedVariants) {
@@ -59,13 +58,14 @@ const getAddToCart = async (mutateVariables, userCart) => {
 
 export function useAddToCart() {
   const {translations} = useContext(LocalizationContext);
-  const {user, userCart, setInitialUserCart} = useContext(AppContext);
+  const {userCart, setInitialUserCart, setUserCart} = useContext(CartContext);
 
   const mutate = useMutation(
-    (mutateVariables) => getAddToCart(mutateVariables, userCart, user),
+    (mutateVariables) => getAddToCart(mutateVariables, userCart, setUserCart),
     {
       onSuccess: (res) => {
-        setInitialUserCart(res);
+        const newList = [...res];
+        setInitialUserCart(newList);
         Toast.show({
           type: 'success',
           text1: 'Success',
@@ -81,15 +81,16 @@ export function useAddToCart() {
 
 //Remove to Cart
 const getRemoveToCart = async (productNumber, user, userCart) => {
-  if (user) {
-    await removeFromCart(productNumber, user);
-  }
+  // if (user) {
+  //   await removeFromCart(productNumber, user);
+  // }
   const response = removeInitialUserCart(userCart, productNumber);
   return response;
 };
 
 export function useRemoveToCart() {
-  const {user, userCart, setInitialUserCart} = useContext(AppContext);
+  const {user} = useContext(AppContext);
+  const {userCart, setInitialUserCart} = useContext(CartContext);
 
   const mutate = useMutation(
     (productNumber) => getRemoveToCart(productNumber, user, userCart),
@@ -103,3 +104,25 @@ export function useRemoveToCart() {
   return mutate;
 }
 //Remove to Cart
+
+//Migrate User Cart
+const getMigrateUserCart = async (user, userCart, sessionId) => {
+  const response = migrateUserCart(user, userCart, sessionId);
+  return response;
+};
+
+export function useMigrateUserCart() {
+  const {user, userCart, sessionId} = useContext(AppContext);
+
+  const mutate = useMutation(
+    () => getMigrateUserCart(user, userCart, sessionId),
+    {
+      onSuccess: (res) => {
+        // setInitialUserCart(res);
+      },
+    },
+  );
+
+  return mutate;
+}
+//Migrate User Cart

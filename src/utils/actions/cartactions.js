@@ -92,8 +92,32 @@ export async function addInitialUserCart(userCart, mutateVariables) {
 export async function removeInitialUserCart(userCart, productNumber) {
   const newList = [...userCart];
   _.remove(newList, (n) => {
-    console.log('n :>> ', n);
     return n.number === productNumber;
   });
   return newList;
+}
+
+export async function migrateUserCart(user, userCart, sessionId) {
+  const response = await Api.get(
+    `/ConnectorBasket?filter[0][property]=customerId&filter[0][value]=${user}`,
+  );
+  const {data} = response;
+  _.map(userCart, (n) => {
+    const finded = _.find(data, {orderNumber: n.number});
+    if (finded) {
+      const formData = {
+        quantity: finded.quantity + n.quantity,
+      };
+      Api.put(`/ConnectorBasket/${finded.id}`, formData);
+    } else {
+      const response = Api.get(`/ConnectorArticles/${n.id}`);
+      console.log(
+        '🚀 ~ file: cartactions.js ~ line 114 ~ _.map ~ response',
+        response,
+      );
+      // const formData = cartNormalize(productData, n.quantity, user, sessionId);
+      // Api.post('/ConnectorBasket', formData);
+    }
+  });
+  return true;
 }

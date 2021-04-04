@@ -3,10 +3,10 @@ import React from 'react';
 import CartBox from '../../components/Common/CartBox';
 import {Container} from '../../themes/components';
 
-const CartScreen = ({cart}) => {
+const CartScreen = ({initialCart}) => {
   return (
     <Container>
-      {cart.map((product, index) => (
+      {initialCart.map((product, index) => (
         <CartBox
           key={index}
           productId={product.id}

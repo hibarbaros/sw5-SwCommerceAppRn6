@@ -41,8 +41,6 @@ export default function CartBox({productId, quantity, productNumber}) {
 
   const [variantDetail] = productVariantData;
 
-  console.log('configuratorOptions :>> ', variantDetail.configuratorOptions);
-
   return (
     <Styled.CardContainer>
       <Div row>

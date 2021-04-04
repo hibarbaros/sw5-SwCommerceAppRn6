@@ -1,6 +1,5 @@
 import React, {useState, useEffect, createContext} from 'react';
 import {useQuery} from 'react-query';
-import DeviceInfo from 'react-native-device-info';
 
 // eslint-disable-next-line no-unused-vars
 import {setItem, getItem, removeItem, clearAll} from '../utils/storagehelper';
@@ -11,8 +10,6 @@ const AppContext = createContext([{}, () => {}]);
 
 export const AppProvider = ({children}) => {
   const [user, setUser] = useState(null);
-  const [userCart, setUserCart] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
   const [sessionId, setSessionId] = useState(null);
   const [wishlist, setWishlist] = useState([]);
   const [currency, setCurrency] = useState('');
@@ -36,15 +33,9 @@ export const AppProvider = ({children}) => {
   const logoutUserContext = () => {
     setUser(null);
     setSessionId(null);
-    setCartCount(0);
     removeItem('user');
     removeItem('sessionId');
     return true;
-  };
-
-  const setInitialUserCart = (products) => {
-    setUserCart(products);
-    setItem('userCart', products);
   };
 
   //user functions
@@ -67,18 +58,11 @@ export const AppProvider = ({children}) => {
   });
 
   useEffect(() => {
-    if (!user) {
-      const uniqueId = DeviceInfo.getUniqueId();
-      setUserContext(null, uniqueId);
-    }
-  }, [user]);
-
-  useEffect(() => {
     // clearAll();
     getItem('user').then((v) => v && setUser(v));
     getItem('wishlist').then((v) => v && setWishlist(v));
-    getItem('userCart').then((v) => v && setUserCart(v));
     getItem('visitedProducts').then((v) => v && setVisitedProducts(v));
+    getItem('sessionId').then((v) => v && setSessionId(v));
   }, []);
 
   return (
@@ -100,14 +84,10 @@ export const AppProvider = ({children}) => {
         setSessionId,
         setUserContext,
         setPaymentMethods,
-        cartCount,
-        setCartCount,
         logoutUserContext,
         wishlist,
         setWishlist,
         setVisitedProducts,
-        userCart,
-        setInitialUserCart,
       }}>
       {children}
     </AppContext.Provider>

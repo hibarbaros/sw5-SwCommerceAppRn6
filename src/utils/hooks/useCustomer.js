@@ -4,6 +4,7 @@ import Toast from 'react-native-toast-message';
 
 import {LocalizationContext} from '../../context/Translations';
 import AppContext from '../../context/AppContext';
+import CartContext from '../../context/CartContext';
 
 import {
   customerData,
@@ -33,10 +34,12 @@ export function useCustomerByCustomerId(userId, options) {
 //Customer logout
 export function useCustomerLogout() {
   const {logoutUserContext, sessionId} = useContext(AppContext);
+  // const {setUserCart} = useContext(CartContext);
   const cache = useQueryClient();
 
   const mutate = useMutation(logoutUserContext, {
     onSuccess: () => {
+      // setUserCart([]);
       cache.invalidateQueries(['userCart', sessionId]);
       cache.invalidateQueries('userCartCount');
     },

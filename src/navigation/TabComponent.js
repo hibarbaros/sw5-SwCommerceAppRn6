@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AppRoute from '../utils/approutes';
 import {colors} from '../themes/variables';
 import AppContext from '../context/AppContext';
+import CartContext from '../context/CartContext';
 
 import {Styled} from './styles';
 
@@ -18,7 +19,12 @@ import {
 
 const Tab = createBottomTabNavigator();
 const TabComponent = () => {
-  const {user, userCart} = useContext(AppContext);
+  const {user} = useContext(AppContext);
+  const {userCart} = useContext(CartContext);
+  console.log(
+    '🚀 ~ file: TabComponent.js ~ line 24 ~ TabComponent ~ userCart',
+    userCart,
+  );
 
   return (
     <Tab.Navigator
@@ -76,11 +82,10 @@ const TabComponent = () => {
                 fill={focused ? colors.blue : colors.themeColor}
                 name="shopping-cart-outline"
               />
-              {userCart.length > 0 && (
-                <Styled.CartIcon>
-                  <Styled.CartIconText>{userCart.length}</Styled.CartIconText>
-                </Styled.CartIcon>
-              )}
+
+              <Styled.CartIcon>
+                <Styled.CartIconText>{userCart?.length}</Styled.CartIconText>
+              </Styled.CartIcon>
             </>
           ),
         }}
