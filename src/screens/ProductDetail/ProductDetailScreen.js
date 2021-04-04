@@ -44,14 +44,14 @@ const ProductDetail = ({route}) => {
       mutate(mutateVariables);
     } else {
       // NOTE: variantli
-      if (selectedVariants.length !== confSetLength) {
+      if (selectedVariants.length === confSetLength) {
+        mutate(mutateVariables);
+      } else {
         Toast.show({
           type: 'error',
           text1: 'Error',
           text2: translations.variantError,
         });
-      } else {
-        mutate(mutateVariables);
       }
     }
   }
@@ -128,7 +128,7 @@ const ProductDetail = ({route}) => {
               <ProductDetailVariants
                 selectedVariants={selectedVariants}
                 setSelectedVariants={setSelectedVariants}
-                configuratorSet={data.configuratorSet}
+                groups={data.configuratorSet.groups}
                 productData={data}
               />
             </Div>

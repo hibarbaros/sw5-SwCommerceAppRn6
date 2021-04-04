@@ -69,3 +69,12 @@ export function findVariantProductOrderNumber(productData, selectedVariants) {
   });
   return returnObject;
 }
+
+export const findProductVariant = (details, selectedVariantsId) => {
+  console.table(
+    '🚀 ~ file: functions.js ~ line 74 ~ findProductVariant ~ details, selectedVariantsId',
+    details,
+    selectedVariantsId,
+  );
+  return true;
+};

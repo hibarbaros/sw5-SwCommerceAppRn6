@@ -1,6 +1,6 @@
-import Api from '../api';
-// import _ from 'lodash';
+import _ from 'lodash';
 
+import Api from '../api';
 import {cartNormalize} from '../normalize/cartNormalize';
 import {findVariantProductOrderNumber} from '../functions';
 
@@ -38,32 +38,6 @@ export async function getFindCartBySessionId(sessionId, orderNumber) {
   }
 }
 
-const asenkronFonksiyon = (sayi) => {
-  return new Promise((resolve, reject) => {
-    if (sayi === 4) {
-      resolve('her şey yolunda!');
-    } else {
-      reject('bir sorun var abim!');
-    }
-  });
-};
-
-asenkronFonksiyon(5)
-  .then((data) => {
-    console.log(data);
-    return 1;
-  })
-  .then((data) => {
-    console.log(data);
-    return 2;
-  })
-  .then((data) => {
-    console.log(data);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
 //TODO: promise ile yeniden tasarla
 export async function addToCartSimpleProduct(mutateVariables, user, sessionId) {
   const {productData, quantity, selectedVariants} = mutateVariables;
@@ -97,4 +71,29 @@ export async function removeFromCart(mutateVariables, sessionId) {
     productData.mainDetail.number,
   );
   return await Api.delete(`/ConnectorBasket/${checktoBasket.id}`);
+}
+
+export async function addInitialUserCart(userCart, mutateVariables) {
+  const newList = userCart ? userCart : [];
+  const finded = newList.find(
+    (x) => x.number === mutateVariables.productData.number,
+  );
+  if (!finded || !userCart) {
+    newList.unshift({
+      id: mutateVariables.productData.id,
+      number: mutateVariables.number,
+      quantity: mutateVariables.quantity,
+    });
+  } else {
+    finded.quantity = finded.quantity + mutateVariables.quantity;
+  }
+  return newList;
+}
+export async function removeInitialUserCart(userCart, productNumber) {
+  const newList = [...userCart];
+  _.remove(newList, (n) => {
+    console.log('n :>> ', n);
+    return n.number === productNumber;
+  });
+  return newList;
 }

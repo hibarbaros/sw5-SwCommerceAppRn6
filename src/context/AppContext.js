@@ -6,15 +6,12 @@ import DeviceInfo from 'react-native-device-info';
 import {setItem, getItem, removeItem, clearAll} from '../utils/storagehelper';
 import {customerData} from '../utils/actions/useractions';
 import {shopData, paymentsData} from '../utils/actions/appactions';
-import {
-  getCartBySessionId,
-  getCartByUserId,
-} from '../utils/actions/cartactions';
 
 const AppContext = createContext([{}, () => {}]);
 
 export const AppProvider = ({children}) => {
   const [user, setUser] = useState(null);
+  const [userCart, setUserCart] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [sessionId, setSessionId] = useState(null);
   const [wishlist, setWishlist] = useState([]);
@@ -45,6 +42,11 @@ export const AppProvider = ({children}) => {
     return true;
   };
 
+  const setInitialUserCart = (products) => {
+    setUserCart(products);
+    setItem('userCart', products);
+  };
+
   //user functions
 
   useQuery('customerDataContext', () => customerData(user), {
@@ -53,20 +55,6 @@ export const AppProvider = ({children}) => {
       if (res) {
         setUserContext(res.id, res.sessionId);
       }
-    },
-  });
-
-  useQuery('userCartCount', () => getCartByUserId(user), {
-    enabled: !!user,
-    onSuccess: (res) => {
-      setCartCount(res.length);
-    },
-  });
-
-  useQuery('nonUserCartCount', () => getCartBySessionId(sessionId), {
-    enabled: user === null,
-    onSuccess: (res) => {
-      setCartCount(res.length);
     },
   });
 
@@ -85,18 +73,12 @@ export const AppProvider = ({children}) => {
     }
   }, [user]);
 
-  //init effect
   useEffect(() => {
     // clearAll();
-    getItem('user').then((response) => {
-      if (response) {
-        setUser(response);
-      }
-    });
-    getItem('wishlist').then((value) => value && setWishlist(value));
-    getItem('visitedProducts').then(
-      (value) => value && setVisitedProducts(value),
-    );
+    getItem('user').then((v) => v && setUser(v));
+    getItem('wishlist').then((v) => v && setWishlist(v));
+    getItem('userCart').then((v) => v && setUserCart(v));
+    getItem('visitedProducts').then((v) => v && setVisitedProducts(v));
   }, []);
 
   return (
@@ -124,6 +106,8 @@ export const AppProvider = ({children}) => {
         wishlist,
         setWishlist,
         setVisitedProducts,
+        userCart,
+        setInitialUserCart,
       }}>
       {children}
     </AppContext.Provider>

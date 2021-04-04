@@ -18,7 +18,7 @@ import {
 
 const Tab = createBottomTabNavigator();
 const TabComponent = () => {
-  const {user, cartCount} = useContext(AppContext);
+  const {user, userCart} = useContext(AppContext);
 
   return (
     <Tab.Navigator
@@ -76,9 +76,9 @@ const TabComponent = () => {
                 fill={focused ? colors.blue : colors.themeColor}
                 name="shopping-cart-outline"
               />
-              {cartCount > 0 && (
+              {userCart.length > 0 && (
                 <Styled.CartIcon>
-                  <Styled.CartIconText>{cartCount}</Styled.CartIconText>
+                  <Styled.CartIconText>{userCart.length}</Styled.CartIconText>
                 </Styled.CartIcon>
               )}
             </>

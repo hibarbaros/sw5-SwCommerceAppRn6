@@ -10,7 +10,7 @@ import {useAddToCart, useRemoveToCart} from '../../../utils/hooks/useCart';
 
 import {Styled} from './styles';
 
-export default function CartBox({productId, quantity, wizard = false}) {
+export default function CartBox({productId, quantity, productNumber}) {
   const [initialQuantity, setInitialQuantity] = useState(quantity);
 
   const {data: product, isLoading} = useProductByProductId(productId);
@@ -26,16 +26,22 @@ export default function CartBox({productId, quantity, wizard = false}) {
       productData: product,
       quantity: isNeg ? -1 : 1,
     };
+    mutateVariables.productData.number = productNumber;
     addToCart(mutateVariables);
     setInitialQuantity(eventQuantity);
   }
 
   function handleRemoveProducttoCart() {
-    const mutateVariables = {
-      productData: product,
-    };
-    removeToCart(mutateVariables);
+    removeToCart(productNumber);
   }
+
+  const productVariantData = product.details?.filter(
+    (x) => x.number === productNumber,
+  );
+
+  const [variantDetail] = productVariantData;
+
+  console.log('configuratorOptions :>> ', variantDetail.configuratorOptions);
 
   return (
     <Styled.CardContainer>
@@ -53,10 +59,10 @@ export default function CartBox({productId, quantity, wizard = false}) {
               product={product}
             />
           </Div>
-          {product.variantProduct && (
+          {variantDetail.configuratorOptions.length > 0 && (
             <Div>
               <Text>Variant</Text>
-              {product.variantProduct.configuratorOptions.map((variant) => (
+              {variantDetail.configuratorOptions.map((variant) => (
                 <Div key={variant.name}>
                   <Text>{variant.name}</Text>
                 </Div>
@@ -65,25 +71,23 @@ export default function CartBox({productId, quantity, wizard = false}) {
           )}
         </Div>
       </Div>
-      {!wizard && (
-        <Div row my={10} justifyContent="flex-end">
-          <ButtonIcon
-            iconName="trash"
-            iconSize={22}
-            bordered={false}
-            iconColor={colors.blue}
-            onPress={() => handleRemoveProducttoCart()}
-          />
-          <Styled.SimpleStepper
-            showText
-            disabled={mutateLoading}
-            minimumValue={1}
-            initialValue={initialQuantity}
-            onIncrement={(value) => handleUserCart(value)}
-            onDecrement={(value) => handleUserCart(value, true)}
-          />
-        </Div>
-      )}
+      <Div row my={10} justifyContent="flex-end">
+        <ButtonIcon
+          iconName="trash"
+          iconSize={22}
+          bordered={false}
+          iconColor={colors.blue}
+          onPress={() => handleRemoveProducttoCart()}
+        />
+        <Styled.SimpleStepper
+          showText
+          disabled={mutateLoading}
+          minimumValue={1}
+          initialValue={initialQuantity}
+          onIncrement={(value) => handleUserCart(value)}
+          onDecrement={(value) => handleUserCart(value, true)}
+        />
+      </Div>
     </Styled.CardContainer>
   );
 }

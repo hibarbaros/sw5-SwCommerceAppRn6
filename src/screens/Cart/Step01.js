@@ -9,7 +9,8 @@ const CartScreen = ({cart}) => {
       {cart.map((product, index) => (
         <CartBox
           key={index}
-          productId={product.articleId}
+          productId={product.id}
+          productNumber={product.number}
           quantity={product.quantity}
         />
       ))}
