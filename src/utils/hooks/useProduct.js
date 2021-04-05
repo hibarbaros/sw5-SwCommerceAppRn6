@@ -10,6 +10,7 @@ import {
   attributesOptions,
   articlesByAttributes,
   propertyGroupDetail,
+  articleDetailByVariant,
 } from '../actions/articleactions';
 
 const getSearchByString = async (string) => {
@@ -31,6 +32,16 @@ export function useProductByProductId(articleId, options) {
     ['productDetail', articleId],
     () => getProductByProductId(articleId),
     options,
+  );
+}
+const getProductByVariant = async (variantId) => {
+  const data = await articleDetailByVariant(variantId);
+  return data;
+};
+
+export function useProductByVariant(variantId) {
+  return useQuery(['productByVariant', variantId], () =>
+    getProductByVariant(variantId),
   );
 }
 
@@ -55,13 +66,13 @@ export function useProductAttributesOptions() {
   return useQuery(['productAttributesOptions'], getProductAttributesOptions);
 }
 
-const getAttributesOptions = async (_) => {
+const getAttributesOptions = async () => {
   const data = await attributesOptions();
   return data;
 };
 
 export function useAttributesOptions() {
-  return useQuery(['attributesOptions'], getAttributesOptions);
+  return useQuery('attributesOptions', getAttributesOptions);
 }
 
 const getProductAttributesOptionsFilterByOptionId = async (optionId) => {

@@ -15,9 +15,6 @@ export const CartProvider = ({children}) => {
   useEffect(() => {
     getItem('userCart').then((v) => v && setUserCart(v));
   }, []);
-  useEffect(() => {
-    console.log('userCart :>> ', userCart);
-  }, [userCart]);
 
   return (
     <CartContext.Provider

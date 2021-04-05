@@ -83,6 +83,7 @@ export async function addInitialUserCart(userCart, mutateVariables) {
       id: mutateVariables.productData.id,
       number: mutateVariables.number,
       quantity: mutateVariables.quantity,
+      variantId: mutateVariables.variantId,
     });
   } else {
     finded.quantity = finded.quantity + mutateVariables.quantity;

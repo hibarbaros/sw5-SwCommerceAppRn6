@@ -4,7 +4,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {Text, Div, Button} from 'react-native-magnus';
 import Wizard from 'react-native-wizard';
 
-// import CartTotalPrice from '../../components/Common/CartTotalPrice';
+import CartTotalPrice from '../../components/Common/CartTotalPrice';
 import {Container} from '../../themes/components';
 import CartContext from '../../context/CartContext';
 import {useMigrateUserCart} from '../../utils/hooks/useCart';
@@ -26,7 +26,7 @@ const CartScreen = () => {
 
   const stepList = [
     {
-      content: <Step01 initialCart={userCart} />,
+      content: <Step01 userCart={userCart} />,
     },
     {
       content: <Step02 setIsDisabled={setIsDisabled} />,
@@ -75,7 +75,7 @@ const CartScreen = () => {
           <Div position="absolute" bottom={0} bg="white">
             {!isLastStep ? (
               <>
-                {/* <CartTotalPrice /> */}
+                <CartTotalPrice userCart={userCart} />
                 <Button
                   onPress={() => handleGoTo(currentStep + 1)}
                   disabled={isDisabled}

@@ -21,10 +21,6 @@ const Tab = createBottomTabNavigator();
 const TabComponent = () => {
   const {user} = useContext(AppContext);
   const {userCart} = useContext(CartContext);
-  console.log(
-    '🚀 ~ file: TabComponent.js ~ line 24 ~ TabComponent ~ userCart',
-    userCart,
-  );
 
   return (
     <Tab.Navigator

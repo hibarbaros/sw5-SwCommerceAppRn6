@@ -20,6 +20,14 @@ export async function articleDetailByArticleNumber(articleNumber) {
     return false;
   }
 }
+export async function articleDetailByVariant(variantId) {
+  const response = await Api.get(`/variants/${variantId}`);
+  if (response.data) {
+    return response.data;
+  } else {
+    return false;
+  }
+}
 
 export async function articles() {
   const response = await Api.get('/ConnectorArticles/');

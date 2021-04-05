@@ -49,8 +49,10 @@ const getAddToCart = async (mutateVariables, userCart, setUserCart) => {
     });
     const [variantProduct] = filteredVariants;
     mutateVariables.number = variantProduct.number;
+    mutateVariables.variantId = variantProduct.id;
   } else {
     mutateVariables.number = productData.number;
+    mutateVariables.variantId = productData.mainDetail.id;
   }
   const response = addInitialUserCart(userCart, mutateVariables);
   return response;
@@ -64,8 +66,7 @@ export function useAddToCart() {
     (mutateVariables) => getAddToCart(mutateVariables, userCart, setUserCart),
     {
       onSuccess: (res) => {
-        const newList = [...res];
-        setInitialUserCart(newList);
+        setInitialUserCart([...res]);
         Toast.show({
           type: 'success',
           text1: 'Success',
