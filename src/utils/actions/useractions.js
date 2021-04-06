@@ -49,34 +49,19 @@ export async function passwordEdit(data) {
   }
 }
 
-export async function cartMigrate(sessionId, userId, userSessionId) {
-  const response = await Api.get(
-    `/ConnectorBasket?migrate=1&sessionId=${sessionId}&userId=${userId}&userSessionId=${userSessionId}`,
-  );
-  return response;
-}
-
-export async function userLogin(values, sessionId) {
+export async function userLogin(values) {
   const {email, password} = values;
   const response = await Api.get(`/ConnectorCustomers?filter[email]=${email}`);
-  const {data} = response;
-  const userSessionId = data[0].sessionId;
-  const userId = data[0].id;
-  const hash = data[0].hashPassword;
-  if (data.length > 0) {
-    if (data[0].encoderName === 'md5') {
+  const [user] = response.data;
+  const hash = user.hashPassword;
+  if (user) {
+    if (user.encoderName === 'md5') {
       const checked = checkMd5Pass(password);
-      if (checked) {
-        const migrated = await cartMigrate(sessionId, userId, userSessionId);
-        return migrated ? data[0] : false;
-      }
+      return checked ? user : false;
     }
-    if (data[0].encoderName === 'bcrypt') {
+    if (user.encoderName === 'bcrypt') {
       const checked = checkBcryptPass(password, hash);
-      if (checked) {
-        const migrated = await cartMigrate(sessionId, userId, userSessionId);
-        return migrated ? data[0] : false;
-      }
+      return checked ? user : false;
     }
   } else {
     //Email not found

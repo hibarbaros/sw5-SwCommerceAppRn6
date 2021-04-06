@@ -2,7 +2,6 @@ import _ from 'lodash';
 
 import Api from '../api';
 import {cartNormalize} from '../normalize/cartNormalize';
-import {findVariantProductOrderNumber} from '../functions';
 
 export async function getCartBySessionId(sessionId) {
   const response = await Api.get(
@@ -38,41 +37,41 @@ export async function getFindCartBySessionId(sessionId, orderNumber) {
   }
 }
 
-//TODO: promise ile yeniden tasarla
-export async function addToCartSimpleProduct(mutateVariables, user, sessionId) {
-  const {productData, quantity, selectedVariants} = mutateVariables;
-  if (selectedVariants) {
-    const findedVariantProduct = findVariantProductOrderNumber(
-      productData,
-      selectedVariants,
-    );
-    productData.number = findedVariantProduct.number;
-    productData.prices = findedVariantProduct.prices;
-  }
-  const checktoBasket = await getFindCartBySessionId(
-    sessionId,
-    productData.mainDetail.number,
+//Database cart fonksiyonlari: Kullanici login ise kullaniliyor
+export async function removeFromCart(productNumber, user) {
+  const checktoBasket = await getCartByUserId(user);
+  const finded = checktoBasket.find((x) => x.orderNumber === productNumber);
+  await Api.delete(`/ConnectorBasket/${finded.id}`);
+  return true;
+}
+
+export async function addFromCart(mutateVariables, user, sessionId) {
+  const checktoBasket = await getCartByUserId(user);
+  const finded = checktoBasket.find(
+    (x) => x.orderNumber === mutateVariables.number,
   );
-  if (checktoBasket) {
-    const formData = {
-      quantity: checktoBasket.quantity + quantity,
+  if (finded) {
+    const formDataPut = {
+      quantity: finded.quantity + mutateVariables.quantity,
     };
-    return await Api.put(`/ConnectorBasket/${checktoBasket.id}`, formData);
+    Api.put(`/ConnectorBasket/${finded.id}`, formDataPut);
   } else {
-    const formData = cartNormalize(productData, quantity, user, sessionId);
-    return await Api.post('/ConnectorBasket', formData);
+    const productGet = await Api.get(
+      `/ConnectorArticles/${mutateVariables.productData.id}`,
+    );
+    const formDataPost = cartNormalize(
+      productGet.data,
+      mutateVariables.quantity,
+      user,
+      sessionId,
+    );
+    await Api.post('/ConnectorBasket', formDataPost);
   }
+  return true;
 }
+//Database cart fonksiyonlari: Kullanici login ise kullaniliyor
 
-export async function removeFromCart(mutateVariables, sessionId) {
-  const {productData} = mutateVariables;
-  const checktoBasket = await getFindCartBySessionId(
-    sessionId,
-    productData.mainDetail.number,
-  );
-  return await Api.delete(`/ConnectorBasket/${checktoBasket.id}`);
-}
-
+//Context Api cart fonksiyonlari
 export async function addInitialUserCart(userCart, mutateVariables) {
   const newList = userCart ? userCart : [];
   const finded = newList.find(
@@ -86,10 +85,12 @@ export async function addInitialUserCart(userCart, mutateVariables) {
       variantId: mutateVariables.variantId,
     });
   } else {
-    finded.quantity = finded.quantity + mutateVariables.quantity;
+    finded.quantity =
+      parseInt(finded.quantity, 10) + parseInt(mutateVariables.quantity, 10);
   }
   return newList;
 }
+
 export async function removeInitialUserCart(userCart, productNumber) {
   const newList = [...userCart];
   _.remove(newList, (n) => {
@@ -97,28 +98,37 @@ export async function removeInitialUserCart(userCart, productNumber) {
   });
   return newList;
 }
+//Context Api cart fonksiyonlari
 
+//Kullanici login olduktan sonra cart migrate fonksiyonu
 export async function migrateUserCart(user, userCart, sessionId) {
   const response = await Api.get(
     `/ConnectorBasket?filter[0][property]=customerId&filter[0][value]=${user}`,
   );
   const {data} = response;
-  _.map(userCart, (n) => {
-    const finded = _.find(data, {orderNumber: n.number});
-    if (finded) {
-      const formData = {
-        quantity: finded.quantity + n.quantity,
-      };
-      Api.put(`/ConnectorBasket/${finded.id}`, formData);
-    } else {
-      const response = Api.get(`/ConnectorArticles/${n.id}`);
-      console.log(
-        '🚀 ~ file: cartactions.js ~ line 114 ~ _.map ~ response',
-        response,
-      );
-      // const formData = cartNormalize(productData, n.quantity, user, sessionId);
-      // Api.post('/ConnectorBasket', formData);
-    }
-  });
-  return true;
+  const migratePromise = await Promise.all(
+    userCart.map(async (n) => {
+      const finded = _.find(data, {orderNumber: n.number});
+      if (finded) {
+        const formDataPut = {
+          quantity: finded.quantity + n.quantity,
+        };
+        Api.put(`/ConnectorBasket/${finded.id}`, formDataPut);
+        return true;
+      } else {
+        const productGet = await Api.get(`/ConnectorArticles/${n.id}`);
+        const formDataPost = cartNormalize(
+          productGet.data,
+          n.quantity,
+          user,
+          sessionId,
+        );
+        Api.post('/ConnectorBasket', formDataPost);
+        return true;
+      }
+    }),
+  );
+
+  return migratePromise;
 }
+//Kullanici login olduktan sonra cart migrate fonksiyonu

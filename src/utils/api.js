@@ -9,7 +9,7 @@ let axiosInstance = axios.create({
 });
 
 axiosInstance.defaults.headers.common['Content-Type'] = 'application/json';
-axiosInstance.defaults.headers.common['Authorization'] = `Basic ${base64.encode(
+axiosInstance.defaults.headers.common.Authorization = `Basic ${base64.encode(
   `${vars.username}:${vars.password}`,
 )}`;
 

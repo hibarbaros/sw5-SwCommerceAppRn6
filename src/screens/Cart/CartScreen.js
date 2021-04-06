@@ -7,7 +7,6 @@ import Wizard from 'react-native-wizard';
 import CartTotalPrice from '../../components/Common/CartTotalPrice';
 import {Container} from '../../themes/components';
 import CartContext from '../../context/CartContext';
-import {useMigrateUserCart} from '../../utils/hooks/useCart';
 
 import Titles from './Titles';
 import Step01 from './Step01';
@@ -21,8 +20,6 @@ const CartScreen = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [isLastStep, setIsLastStep] = useState();
   const [currentStep, setCurrentStep] = useState(0);
-
-  const {mutate} = useMigrateUserCart();
 
   const stepList = [
     {
@@ -63,13 +60,6 @@ const CartScreen = () => {
               steps={stepList}
               isLastStep={(val) => setIsLastStep(val)}
             />
-            <Button
-              onPress={() => mutate()}
-              disabled={isDisabled}
-              w="100%"
-              rounded={0}>
-              Migrate
-            </Button>
           </ScrollView>
 
           <Div position="absolute" bottom={0} bg="white">

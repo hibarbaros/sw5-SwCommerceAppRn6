@@ -23,7 +23,7 @@ import {LocalizationContext} from '../context/Translations';
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
-  const {user, logoutUserContext} = useContext(AppContext);
+  const {user} = useContext(AppContext);
   const {translations} = useContext(LocalizationContext);
 
   const {mutate: logoutMutate} = useCustomerLogout();

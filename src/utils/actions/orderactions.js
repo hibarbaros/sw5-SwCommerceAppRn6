@@ -1,8 +1,8 @@
-import moment from 'moment';
+// import moment from 'moment';
 
 import Api from '../api';
-import {priceWithTax} from '../functions';
-import {orderNormalize} from '../normalize/orderNormalize';
+// import {priceWithTax} from '../functions';
+// import {orderNormalize} from '../normalize/orderNormalize';
 
 export async function orderbyCustomerList(customerId) {
   const response = await Api.get(`/ConnectorCustomers/${customerId}`);
@@ -24,8 +24,8 @@ export async function orderDetail(orderId) {
 }
 
 export async function orderCreate(orderData) {
-  const formData = orderNormalize(orderData);
-  console.log(`formData`, formData);
+  // const formData = orderNormalize(orderData);
+  // console.log('formData', formData);
   // const response = await Api.post('/orders', formData);
   // if (response.data.id > 0) {
   //   return response.data;

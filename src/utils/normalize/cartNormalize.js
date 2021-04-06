@@ -6,7 +6,7 @@ export function cartNormalize(productData, quantity, user, sessionId) {
   const taxInt = parseInt(productData.tax.tax, 10);
   const articleName = productData.name;
   const formData = {
-    customerId: user ? user : 0,
+    customerId: user,
     articleId: productData.id,
     orderNumber: productData.mainDetail.number,
     taxRate: taxInt,

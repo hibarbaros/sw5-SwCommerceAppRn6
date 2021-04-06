@@ -7,12 +7,7 @@ const CartScreen = ({userCart}) => {
   return (
     <Container>
       {userCart.map((product, index) => (
-        <CartBox
-          key={index}
-          productId={product.id}
-          productNumber={product.number}
-          quantity={product.quantity}
-        />
+        <CartBox key={index} product={product} />
       ))}
     </Container>
   );

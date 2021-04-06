@@ -7,14 +7,19 @@ import {LocalizationContext} from '../../context/Translations';
 import AppContext from '../../context/AppContext';
 import CartContext from '../../context/CartContext';
 
+import {priceWithTax} from '../../utils/functions';
+
 import {
   getCartBySessionId,
   removeFromCart,
+  addFromCart,
   getCartByUserId,
   addInitialUserCart,
   removeInitialUserCart,
   migrateUserCart,
 } from '../actions/cartactions';
+
+import {articleDetail} from '../actions/articleactions';
 
 //Get Customer Cart
 const getUserCart = async (user, sessionId) => {
@@ -39,8 +44,39 @@ export function useUserCart() {
 }
 //Get Customer Cart
 
+//Cart Total Price
+
+const getUserCartTotalPrice = async (userCart) => {
+  let netPrice = 0;
+  let taxPrice = 0;
+  for (const cartProduct of userCart) {
+    const data = await articleDetail(cartProduct.id);
+    if (data) {
+      const productDetail = data.details.find(
+        (x) => x.number === cartProduct.number,
+      );
+      const [price] = productDetail.prices;
+      const priceCalc = priceWithTax(price.price, data.tax.tax);
+      netPrice += priceCalc * cartProduct.quantity;
+      const taxCalc = price.price * (data.tax.tax / 100);
+      taxPrice += taxCalc * cartProduct.quantity;
+    }
+  }
+  return {netPrice, taxPrice};
+};
+
+export function useUserCartTotalPrice() {
+  const {userCart} = useContext(CartContext);
+  let priceTotal = 0;
+  return useQuery(['userCartTotalPrice', userCart], () =>
+    getUserCartTotalPrice(userCart, priceTotal),
+  );
+}
+
+//Cart Total Price
+
 //Add to Cart
-const getAddToCart = async (mutateVariables, userCart, setUserCart) => {
+const getAddToCart = async (mutateVariables, userCart, user, sessionId) => {
   const {productData, selectedVariants} = mutateVariables;
 
   if (selectedVariants) {
@@ -49,10 +85,12 @@ const getAddToCart = async (mutateVariables, userCart, setUserCart) => {
     });
     const [variantProduct] = filteredVariants;
     mutateVariables.number = variantProduct.number;
-    mutateVariables.variantId = variantProduct.id;
   } else {
     mutateVariables.number = productData.number;
     mutateVariables.variantId = productData.mainDetail.id;
+  }
+  if (user) {
+    await addFromCart(mutateVariables, user, sessionId);
   }
   const response = addInitialUserCart(userCart, mutateVariables);
   return response;
@@ -60,10 +98,12 @@ const getAddToCart = async (mutateVariables, userCart, setUserCart) => {
 
 export function useAddToCart() {
   const {translations} = useContext(LocalizationContext);
-  const {userCart, setInitialUserCart, setUserCart} = useContext(CartContext);
+  const {user, sessionId} = useContext(AppContext);
+  const {userCart, setInitialUserCart} = useContext(CartContext);
 
   const mutate = useMutation(
-    (mutateVariables) => getAddToCart(mutateVariables, userCart, setUserCart),
+    (mutateVariables) =>
+      getAddToCart(mutateVariables, userCart, user, sessionId),
     {
       onSuccess: (res) => {
         setInitialUserCart([...res]);
@@ -82,9 +122,9 @@ export function useAddToCart() {
 
 //Remove to Cart
 const getRemoveToCart = async (productNumber, user, userCart) => {
-  // if (user) {
-  //   await removeFromCart(productNumber, user);
-  // }
+  if (user) {
+    await removeFromCart(productNumber, user);
+  }
   const response = removeInitialUserCart(userCart, productNumber);
   return response;
 };
@@ -113,7 +153,8 @@ const getMigrateUserCart = async (user, userCart, sessionId) => {
 };
 
 export function useMigrateUserCart() {
-  const {user, userCart, sessionId} = useContext(AppContext);
+  const {user, sessionId} = useContext(AppContext);
+  const {userCart} = useContext(CartContext);
 
   const mutate = useMutation(
     () => getMigrateUserCart(user, userCart, sessionId),

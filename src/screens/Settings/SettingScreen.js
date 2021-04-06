@@ -1,18 +1,19 @@
 import React, {useState, useContext} from 'react';
 import {Menu, MenuGroup, MenuItem, Text} from '@ui-kitten/components';
-import {useQuery} from 'react-query';
 
 import {LocalizationContext} from '../../context/Translations';
 import {Container} from '../../themes/components';
 import AppContext from '../../context/AppContext';
 import languages from '../../localization/languages.json';
-import {shopData} from '../../utils/actions/appactions';
+import {useShopByShopId} from '../../utils/hooks/useApp';
 
 const SettingScreen = () => {
   const {translations, setAppLanguage, appLanguage} = useContext(
     LocalizationContext,
   );
   const {currency, setCurrency} = useContext(AppContext);
+
+  const {isLoading, data} = useShopByShopId();
 
   const [selectedIndex, setSelectedIndex] = useState(appLanguage);
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(
@@ -27,12 +28,6 @@ const SettingScreen = () => {
     setCurrency(cur);
     setSelectedCurrencyIndex(cur.id);
   }
-
-  const {isLoading, error, data: initialShopData} = useQuery('shopData', () =>
-    shopData(),
-  );
-
-  if (error) return <Text>{error.message}</Text>;
 
   return (
     <Container>
@@ -56,7 +51,7 @@ const SettingScreen = () => {
       ) : (
         <Menu>
           <MenuGroup title={translations.appCurrencies}>
-            {initialShopData.currencies.map((currencyItem, index) => (
+            {data.currencies.map((currencyItem, index) => (
               <MenuItem
                 key={currencyItem.id}
                 selected={currencyItem.id === selectedCurrencyIndex}

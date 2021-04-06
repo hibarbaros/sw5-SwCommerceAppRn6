@@ -16,6 +16,8 @@ import {
   userLogin,
 } from '../actions/useractions';
 
+import {migrateUserCart} from '../actions/cartactions';
+
 // import {changeCartSessionIdAndUserId} from '../actions/cartactions';
 
 const getCustomerByCustomerId = async (userId) => {
@@ -33,15 +35,12 @@ export function useCustomerByCustomerId(userId, options) {
 
 //Customer logout
 export function useCustomerLogout() {
-  const {logoutUserContext, sessionId} = useContext(AppContext);
-  // const {setUserCart} = useContext(CartContext);
-  const cache = useQueryClient();
+  const {logoutUserContext} = useContext(AppContext);
+  const {setInitialUserCart} = useContext(CartContext);
 
   const mutate = useMutation(logoutUserContext, {
     onSuccess: () => {
-      // setUserCart([]);
-      cache.invalidateQueries(['userCart', sessionId]);
-      cache.invalidateQueries('userCartCount');
+      setInitialUserCart(null);
     },
   });
 
@@ -50,40 +49,47 @@ export function useCustomerLogout() {
 //Customer logout
 
 //Customer login
-
-const getCustomerLogin = async (values, sessionId, user) => {
-  const data = await userLogin(values, sessionId, user);
-  return data;
+const getCustomerLogin = async (values) => {
+  const response = await userLogin(values);
+  return response;
 };
 
 export function useCustomerLogin() {
   const {translations} = useContext(LocalizationContext);
-  const {setUserContext, sessionId, user} = useContext(AppContext);
-  const cache = useQueryClient();
+  const {setUserContext} = useContext(AppContext);
+  const {userCart, setInitialUserCart} = useContext(CartContext);
 
-  const mutate = useMutation(
-    (values) => getCustomerLogin(values, sessionId, user),
-    {
-      onSuccess: (data) => {
-        const {id, sessionId: dataSessionId} = data;
-        if (data) {
-          setUserContext(id, dataSessionId);
-          cache.invalidateQueries(['userCart', sessionId]);
-          cache.invalidateQueries('userCartCount');
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: translations.passwordFalsch,
-          });
+  const mutate = useMutation((values) => getCustomerLogin(values), {
+    onSuccess: async (data) => {
+      const {id, sessionId: dataSessionId} = data;
+      if (data) {
+        if (userCart) {
+          await migrateUserCart(data.id, userCart, data.sessionId);
         }
-      },
+        setTimeout(async () => {
+          const userResponse = await customerData(data.id);
+          const {basket} = userResponse;
+          const newInitialCart = basket.map((product) => ({
+            id: product.articleID,
+            number: product.ordernumber,
+            quantity: product.quantity,
+          }));
+          setInitialUserCart(newInitialCart);
+        }, 1000);
+
+        setUserContext(id, dataSessionId);
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: translations.passwordFalsch,
+        });
+      }
     },
-  );
+  });
 
   return mutate;
 }
-
 //Customer login
 
 //Check Customer By Mail
@@ -115,7 +121,6 @@ export function useCustomerCheckByMail() {
 
   return mutate;
 }
-
 //Check Customer By Mail
 
 //Register customer
@@ -189,7 +194,6 @@ export function useEditCustomer() {
 
   return mutate;
 }
-
 //Edit customer
 
 //Edit customer password
@@ -230,5 +234,4 @@ export function useEditCustomerPassword() {
 
   return mutate;
 }
-
 //Edit customer password

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import FilterContext from './FilterContext';
 
 const FilterProvider = (props) => {
+  const {children} = props;
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -13,7 +14,7 @@ const FilterProvider = (props) => {
         filteredProducts,
         setFilteredProducts,
       }}>
-      {props.children}
+      {children}
     </FilterContext.Provider>
   );
 };

@@ -21,13 +21,13 @@ export function useShopPagesByShopId(shopId) {
   );
 }
 
-const getShopByShopId = async (shopId) => {
-  const data = await shopData(shopId);
+const getShopByShopId = async () => {
+  const data = await shopData();
   return data;
 };
 
-export function useShopByShopId(shopId) {
-  return useQuery(['shopPagesData', shopId], () => getShopByShopId(shopId));
+export function useShopByShopId() {
+  return useQuery(['shopData'], () => getShopByShopId());
 }
 
 const getShippingByCountryId = async (countryId) => {

@@ -34,8 +34,7 @@ export function setProductCategories(data) {
 export function priceWithTax(price, tax = 0) {
   const taxCalc = tax / 100 + 1;
   const priceCalc = price * taxCalc;
-  const fixed = priceCalc.toFixed(2);
-  return parseInt(fixed, 10);
+  return priceCalc;
 }
 
 export function checkMd5Pass(password) {

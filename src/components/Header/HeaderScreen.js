@@ -4,18 +4,17 @@ import {colors} from '../../themes/variables';
 import {BackIcon} from '../../themes/components/IconSet';
 
 const HeaderLeft = () => {
-	// NOTE: Ekranlarin header'lari
+  //NOTE: Ekranlarin header'lari
+  const navigation = useNavigation();
 
-	const navigation = useNavigation();
-
-	return (
-		<BackIcon
-			fill={colors.themeColor}
-			onPress={() => {
-				navigation.goBack();
-			}}
-		/>
-	);
+  return (
+    <BackIcon
+      fill={colors.themeColor}
+      onPress={() => {
+        navigation.goBack();
+      }}
+    />
+  );
 };
 
 export default HeaderLeft;

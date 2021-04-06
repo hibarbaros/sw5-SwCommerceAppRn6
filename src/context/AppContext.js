@@ -1,10 +1,7 @@
 import React, {useState, useEffect, createContext} from 'react';
-import {useQuery} from 'react-query';
 
 // eslint-disable-next-line no-unused-vars
 import {setItem, getItem, removeItem, clearAll} from '../utils/storagehelper';
-import {customerData} from '../utils/actions/useractions';
-import {shopData, paymentsData} from '../utils/actions/appactions';
 
 const AppContext = createContext([{}, () => {}]);
 
@@ -18,8 +15,6 @@ export const AppProvider = ({children}) => {
   const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
   const [visitedProducts, setVisitedProducts] = useState([]);
   const [shippingPrice, setShippingPrice] = useState(null);
-
-  //user functions
 
   const setUserContext = (userId, userSessionId) => {
     if (userId) {
@@ -35,27 +30,7 @@ export const AppProvider = ({children}) => {
     setSessionId(null);
     removeItem('user');
     removeItem('sessionId');
-    return true;
   };
-
-  //user functions
-
-  useQuery('customerDataContext', () => customerData(user), {
-    enabled: !!user,
-    onSuccess: (res) => {
-      if (res) {
-        setUserContext(res.id, res.sessionId);
-      }
-    },
-  });
-
-  useQuery('shopContext', () => shopData(), {
-    onSuccess: (data) => setCurrency(data.currencies[0]),
-  });
-
-  useQuery('paymentContext', () => paymentsData(), {
-    onSuccess: (data) => setPaymentMethods(data),
-  });
 
   useEffect(() => {
     // clearAll();

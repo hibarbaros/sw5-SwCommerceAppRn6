@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Div, Text} from 'react-native-magnus';
 
 import Media from '../Media/Media';
@@ -10,33 +10,30 @@ import {useAddToCart, useRemoveToCart} from '../../../utils/hooks/useCart';
 
 import {Styled} from './styles';
 
-export default function CartBox({productId, quantity, productNumber}) {
-  const [initialQuantity, setInitialQuantity] = useState(quantity);
-
-  const {data: product, isLoading} = useProductByProductId(productId);
-  const {mutate: addToCart, isLoading: mutateLoading} = useAddToCart();
-  const {mutate: removeToCart} = useRemoveToCart();
+export default function CartBox({product}) {
+  const {data: productData, isLoading} = useProductByProductId(product.id);
+  const {mutate: mutateAddToCart, isLoading: mutateLoading} = useAddToCart();
+  const {mutate: mutateRemoveToCart} = useRemoveToCart();
 
   if (isLoading) {
     return null;
   }
 
-  function handleUserCart(eventQuantity, isNeg = false) {
+  function handleUserCart(value) {
     const mutateVariables = {
-      productData: product,
-      quantity: isNeg ? -1 : 1,
+      productData,
+      quantity: value,
     };
-    mutateVariables.productData.number = productNumber;
-    addToCart(mutateVariables);
-    setInitialQuantity(eventQuantity);
+    mutateVariables.productData.number = product.number;
+    mutateAddToCart(mutateVariables);
   }
 
   function handleRemoveProducttoCart() {
-    removeToCart(productNumber);
+    mutateRemoveToCart(product.number);
   }
 
-  const productVariantData = product.details?.filter(
-    (x) => x.number === productNumber,
+  const productVariantData = productData.details?.filter(
+    (x) => x.number === product.number,
   );
 
   const [variantDetail] = productVariantData;
@@ -45,16 +42,17 @@ export default function CartBox({productId, quantity, productNumber}) {
     <Styled.CardContainer>
       <Div row>
         <Div w={80} h={80}>
-          {product.images[0].mediaId && (
-            <Media borderRadius={8} thumbnail={product.images[0]} />
+          {productData.images[0].mediaId && (
+            <Media borderRadius={8} thumbnail={productData.images[0]} />
           )}
         </Div>
         <Div>
           <Div mx={10}>
-            <Text>{product.name}</Text>
+            <Text>{productData.name}</Text>
+            <Text>{variantDetail.number}</Text>
             <PriceWithCurrency
-              price={product.mainDetail.prices[0].price}
-              product={product}
+              price={productData.mainDetail.prices[0].price}
+              product={productData}
             />
           </Div>
           {variantDetail.configuratorOptions.length > 0 && (
@@ -81,9 +79,9 @@ export default function CartBox({productId, quantity, productNumber}) {
           showText
           disabled={mutateLoading}
           minimumValue={1}
-          initialValue={initialQuantity}
-          onIncrement={(value) => handleUserCart(value)}
-          onDecrement={(value) => handleUserCart(value, true)}
+          initialValue={parseInt(product.quantity, 10)}
+          onIncrement={() => handleUserCart(+1)}
+          onDecrement={() => handleUserCart(-1)}
         />
       </Div>
     </Styled.CardContainer>

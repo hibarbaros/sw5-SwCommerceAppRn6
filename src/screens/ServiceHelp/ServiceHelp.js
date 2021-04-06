@@ -13,11 +13,11 @@ export default function ServiceHelp() {
   const [htmlData, setHtmlData] = useState(null);
   const [modalTitle, setModalTitle] = useState(null);
 
-  const {isLoading, error, data} = useShopPagesByShopId();
+  const {isLoading, data} = useShopPagesByShopId();
 
-  if (isLoading) return <Text>Loading</Text>;
-
-  if (error) return <Text>{error.message}</Text>;
+  if (isLoading) {
+    return <Text>Loading</Text>;
+  }
 
   var grouped = _.groupBy(data, 'grouping');
 

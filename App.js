@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import {QueryClient, QueryClientProvider, setLogger} from 'react-query';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {NavigationContainer} from '@react-navigation/native';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
@@ -24,6 +24,12 @@ const App = () => {
       addPlugin({queryClient});
     });
   }
+
+  setLogger({
+    log: console.log,
+    warn: console.log,
+    error: console.log,
+  });
 
   return (
     <>

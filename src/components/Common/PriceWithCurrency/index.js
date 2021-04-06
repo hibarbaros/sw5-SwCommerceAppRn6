@@ -5,11 +5,11 @@ import {priceWithTax} from '../../../utils/functions';
 
 export default function PriceWithCurrency({price, product}) {
   const {currency} = useContext(AppContext);
-  const floatPrice = parseFloat(price, 10);
+  const parsedPrice = parseFloat(price);
 
   const priceWith = product
-    ? priceWithTax(floatPrice, product.tax.tax)
-    : floatPrice;
+    ? priceWithTax(price, product.tax.tax)
+    : parsedPrice;
 
   return currency ? (
     <Text>

@@ -22,7 +22,7 @@ export default function CountryDropDown({onPress, userAddress = null}) {
     onSuccess: (res) => {
       if (userAddress) {
         const finded = res.find(
-          (x) => x.id === parseInt(userAddress.country_id),
+          (x) => x.id === parseInt(userAddress.country_id, 10),
         );
         setButtonValue(finded.name);
         onPress(userAddress.country_id);

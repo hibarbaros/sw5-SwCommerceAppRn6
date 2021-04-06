@@ -15,9 +15,7 @@ import CartBox from '../../components/Common/CartBox';
 import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods';
 import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods';
 import Address from '../../components/CheckoutComponents/Address';
-import LoadSpinner from '../../components/Common/LoadSpinner';
 
-import {useCreateOrder} from '../../utils/hooks/useOrder';
 import {useUserCart} from '../../utils/hooks/useCart';
 
 export default function CheckoutWizard() {
@@ -27,7 +25,6 @@ export default function CheckoutWizard() {
   );
   const navigation = useNavigation();
 
-  const {mutate, isLoading} = useCreateOrder();
   const {data = []} = useUserCart();
 
   function handleOrderCreate() {
@@ -54,8 +51,6 @@ export default function CheckoutWizard() {
 
   return (
     <>
-      <LoadSpinner isVisible={isLoading} />
-
       {user && (
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <SafeAreaView>

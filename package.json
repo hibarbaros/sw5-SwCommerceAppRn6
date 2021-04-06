@@ -1,5 +1,5 @@
 {
-  "name": "SwCommerceAppRn6",
+  "name": "swcommerceapprn6",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint \"**/*.js\""
   },
   "dependencies": {
     "@eva-design/eva": "^2.0.0",

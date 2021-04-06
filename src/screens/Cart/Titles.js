@@ -17,6 +17,7 @@ export default function Titles({handleGoTo, currentStep}) {
           return (
             <Button
               key={index}
+              disabled={currentStep + 1 <= index}
               maxW="20%"
               bg="transparent"
               p={0}

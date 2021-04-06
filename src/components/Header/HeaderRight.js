@@ -7,15 +7,15 @@ import {colors} from '../../themes/variables';
 import {Styled} from './styles';
 
 export default function HeaderRight() {
-	const navigation = useNavigation();
-	return (
-		<Styled.RightHeaderContainer>
-			<BellIcon
-				fill={colors.themeColor}
-				onPress={() => {
-					navigation.navigate(AppRoutes.LOCAL_NOTIFICATION);
-				}}
-			/>
-		</Styled.RightHeaderContainer>
-	);
+  const navigation = useNavigation();
+  return (
+    <Styled.RightHeaderContainer>
+      <BellIcon
+        fill={colors.themeColor}
+        onPress={() => {
+          navigation.navigate(AppRoutes.LOCAL_NOTIFICATION);
+        }}
+      />
+    </Styled.RightHeaderContainer>
+  );
 }

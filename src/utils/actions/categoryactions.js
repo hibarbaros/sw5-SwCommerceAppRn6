@@ -29,15 +29,16 @@ export function setSubCategories(subCat) {
   return subCat.children[0];
 }
 
+//TODO: Bu fonksiyon düzenlenmeli
 export async function flatChildCategories(category) {
-  let categories = [];
+  let catergoryList = [];
   let i;
   for (i = 0; i < category.children.length; i++) {
-    categories.push(category.children[i]);
+    catergoryList.push(category.children[i]);
     if (category.children[i].children) {
       const subCat = setSubCategories(category.children[i]);
-      categories.push(subCat);
+      catergoryList.push(subCat);
     }
   }
-  return _.orderBy(categories, ['id'], ['asc']);
+  return _.orderBy(catergoryList, ['id'], ['asc']);
 }

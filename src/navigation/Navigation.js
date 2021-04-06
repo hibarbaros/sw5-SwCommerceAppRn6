@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useQuery} from 'react-query';
 
 import DrawerComponent from './DrawerComponent';
 import SerciveHelpStacks from './SerciveHelpStacks';
 import {HeaderLeft, HeaderRight} from '../components/Header';
 import AppRoutes from '../utils/approutes';
+import {customerData} from '../utils/actions/useractions';
+import {shopData, paymentsData} from '../utils/actions/appactions';
+import AppContext from '../context/AppContext';
+import CartContext from '../context/CartContext';
 
 //Screens
 import {
@@ -33,6 +38,37 @@ import {
 const Stack = createStackNavigator();
 
 export default function MainNavigator() {
+  const {user, setUserContext, setCurrency, setPaymentMethods} = useContext(
+    AppContext,
+  );
+  const {setInitialUserCart} = useContext(CartContext);
+
+  useQuery('customerDataContext', () => customerData(user), {
+    enabled: !!user,
+    onSuccess: (res) => {
+      if (res) {
+        const newBasket = res.basket.map((basket) => ({
+          id: parseInt(basket.articleID, 10),
+          number: basket.ordernumber,
+          quantity: parseInt(basket.quantity, 10),
+        }));
+        setInitialUserCart(newBasket);
+        setUserContext(res.id, res.sessionId);
+      }
+    },
+  });
+
+  useQuery('shopContext', () => shopData(), {
+    onSuccess: (data) => {
+      const [mainCurrencies] = data.currencies;
+      setCurrency(mainCurrencies);
+    },
+  });
+
+  useQuery('paymentContext', () => paymentsData(), {
+    onSuccess: (data) => setPaymentMethods(data),
+  });
+
   return (
     <Stack.Navigator
       headerMode="float"
