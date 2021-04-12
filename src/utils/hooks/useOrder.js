@@ -18,7 +18,9 @@ const getOrderByOrderId = async (orderId) => {
 };
 
 export function useOrderByOrderId(orderId) {
-  return useQuery(['orderDetail', orderId], () => getOrderByOrderId(orderId));
+  return useQuery(['orderDetail', orderId], () => getOrderByOrderId(orderId), {
+    enabled: !!orderId,
+  });
 }
 
 const getOrderByCustomerId = async (userId) => {
@@ -33,8 +35,8 @@ export function useOrdersByCustomerId(userId) {
 }
 
 //Create Order
-const getCreateOrder = async (values) => {
-  const data = await orderCreate(values);
+const getCreateOrder = async (mutateVariables) => {
+  const data = await orderCreate(mutateVariables);
   return data;
 };
 
@@ -65,17 +67,11 @@ export function useCreateOrder() {
         text2: e.message,
       });
     },
-    onSuccess: (data) => {
-      if (data) {
-        return true;
-      }
-      if (!data) {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: translations.formularError,
-        });
-      }
+    onSuccess: () => {
+      Toast.show({
+        text1: 'Success',
+        text2: translations.formularSuccess,
+      });
     },
   });
 

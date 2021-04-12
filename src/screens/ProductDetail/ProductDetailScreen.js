@@ -27,6 +27,7 @@ const ProductDetail = ({route}) => {
   const {isLoading, data} = useProductByProductId(route.params.productId);
   const {mutate} = useAddToCart();
   const {mutate: visitedMutate} = useAddToVisitedlist();
+  console.log(`data`, data);
 
   if (isLoading) {
     return <Text>..Loading</Text>;
@@ -56,15 +57,15 @@ const ProductDetail = ({route}) => {
     }
   }
 
-  useEffect(() => {
-    visitedMutate(data.id);
-  }, []);
+  // useEffect(() => {
+  //   visitedMutate(data.id);
+  // }, []);
 
   return (
     <>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Styled.ImageContainer>
-          <ProductDetailMedia images={data.images} />
+          <ProductDetailMedia images={data?.images} />
         </Styled.ImageContainer>
         <Styled.Wrapper>
           <Styled.TopContainer>

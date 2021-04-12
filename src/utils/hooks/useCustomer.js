@@ -17,8 +17,7 @@ import {
 } from '../actions/useractions';
 
 import {migrateUserCart} from '../actions/cartactions';
-
-// import {changeCartSessionIdAndUserId} from '../actions/cartactions';
+import {initialCartNormalize} from '../normalize/cartNormalize';
 
 const getCustomerByCustomerId = async (userId) => {
   const data = await customerData(userId);
@@ -69,12 +68,7 @@ export function useCustomerLogin() {
         setTimeout(async () => {
           const userResponse = await customerData(data.id);
           const {basket} = userResponse;
-          const newInitialCart = basket.map((product) => ({
-            id: product.articleID,
-            number: product.ordernumber,
-            quantity: product.quantity,
-          }));
-          setInitialUserCart(newInitialCart);
+          setInitialUserCart(initialCartNormalize(basket));
         }, 1000);
 
         setUserContext(id, dataSessionId);

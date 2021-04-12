@@ -5,12 +5,14 @@ import ProductCard from '../ProductCard';
 
 import {Styled} from './styles';
 
-export default function Carousel({cardTheme, collection}) {
-  const {data} = useCollectionByCollectinName(collection);
+export default function Carousel({cardTheme, collection, doc}) {
+  const {data} = useCollectionByCollectinName(collection, doc);
 
   const renderCarouselItem = ({item}) => {
     return <ProductCard theme={cardTheme} productId={item.id} product={item} />;
   };
+
+  // return null;
 
   return (
     <>

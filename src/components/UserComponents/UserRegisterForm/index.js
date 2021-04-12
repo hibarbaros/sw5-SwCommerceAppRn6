@@ -23,7 +23,7 @@ import {useRegisterCustomer} from '../../../utils/hooks/useCustomer';
 
 import {Styled} from './styles';
 
-export default function UserRegisterForm({wizard = false}) {
+export default function UserRegisterForm({modalVisible = false}) {
   const {setUser} = useContext(AppContext);
   const navigation = useNavigation();
 
@@ -34,9 +34,9 @@ export default function UserRegisterForm({wizard = false}) {
       onSuccess: (data) => {
         if (data) {
           setUser(data.data.id);
-          !wizard
-            ? navigation.dispatch(StackActions.replace(AppRoutes.PROFILE))
-            : navigation.goBack();
+          modalVisible
+            ? modalVisible()
+            : navigation.dispatch(StackActions.replace(AppRoutes.PROFILE));
         }
       },
     });

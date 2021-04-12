@@ -4,20 +4,26 @@ import {View} from 'react-native-ui-lib';
 import {useQueryClient} from 'react-query';
 
 import {LocalizationContext} from '../../context/Translations';
+import AppContext from '../../context/AppContext';
 import {Headline} from '../../themes/components';
 import Carousel from '../../components/Common/Carousel/Carousel';
 import VisitedProducts from '../../components/Common/VisitedProducts';
-import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
-import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';
+// import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
+// import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';
 
 import {Styled} from './styles';
 
 const HomeScreen = () => {
   const {translations} = useContext(LocalizationContext);
-
+  const {selectedLanguage, translations: lang} = useContext(AppContext);
   const cache = useQueryClient();
 
   const [refreshing, setRefreshing] = useState(false);
+
+  console.log(
+    'translations.general.deliveryShippingFree :>> ',
+    lang?.general.deliveryShippingFree,
+  );
 
   const wait = (timeout) => {
     return new Promise((resolve) => {
@@ -42,7 +48,7 @@ const HomeScreen = () => {
       }>
       <View>
         <Styled.MainCarouselContainer marginV-s5>
-          <HomeMainCarousel refreshing={refreshing} />
+          {/* <HomeMainCarousel refreshing={refreshing} /> */}
         </Styled.MainCarouselContainer>
 
         <Styled.Container>
@@ -51,6 +57,7 @@ const HomeScreen = () => {
           </Styled.CategoryTitleContainer>
           <Carousel
             collection="homescreenrecomended"
+            doc={`mainCategory${selectedLanguage}`}
             cardTheme="theme02"
             cardWidth={160}
           />
@@ -63,6 +70,7 @@ const HomeScreen = () => {
 
           <Carousel
             collection="homescreentopsale"
+            doc={`mainCategory${selectedLanguage}`}
             cardTheme="theme02"
             cardWidth={160}
           />
@@ -73,7 +81,7 @@ const HomeScreen = () => {
           <Styled.CategoryTitleContainer>
             <Headline type="h3">{translations.recomendedCategories}</Headline>
           </Styled.CategoryTitleContainer>
-          <HomeRecomendedCategories />
+          {/* <HomeRecomendedCategories /> */}
         </Styled.Container>
       </View>
     </ScrollView>

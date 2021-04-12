@@ -4,6 +4,7 @@ import moment from 'moment';
 export function cartNormalize(productData, quantity, user, sessionId) {
   const deviceId = DeviceInfo.getDeviceId();
   const taxInt = parseInt(productData.tax.tax, 10);
+  const [price] = productData.mainDetail.prices;
   const articleName = productData.name;
   const formData = {
     customerId: user,
@@ -15,10 +16,8 @@ export function cartNormalize(productData, quantity, user, sessionId) {
     articleName,
     shippingFree: 0,
     quantity: quantity,
-    price: Math.round(
-      productData.mainDetail.prices[0].price * (taxInt / 100 + 1),
-    ),
-    netPrice: productData.mainDetail.prices[0].price,
+    price: Math.round(price.price * (taxInt / 100 + 1)),
+    netPrice: price.price,
     date: moment(),
     mode: 0,
     esdArticle: 0,
@@ -28,4 +27,12 @@ export function cartNormalize(productData, quantity, user, sessionId) {
     currencyFactor: 1,
   };
   return formData;
+}
+
+export function initialCartNormalize(list) {
+  return list.map((product) => ({
+    id: parseInt(product.articleID, 10),
+    number: product.ordernumber,
+    quantity: product.quantity,
+  }));
 }

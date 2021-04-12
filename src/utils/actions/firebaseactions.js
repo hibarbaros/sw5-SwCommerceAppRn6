@@ -1,12 +1,27 @@
-import firebase from '../../config/firebase';
+import {firestore} from '../../config/firebase';
 import messaging from '@react-native-firebase/messaging';
 import database from '@react-native-firebase/database';
 
-export function getReferenceFromFirebase(reference) {
-  const ref = firebase.database().ref(reference);
-  return ref.once('value').then(function (snapshot) {
-    return snapshot.val();
-  });
+export async function getReferenceFromFirebase(collection, doc) {
+  const ref = await firestore.collection(collection).doc(doc).get();
+  const result = ref.data();
+  if (result) {
+    return result.data;
+  } else {
+    return false;
+  }
+}
+
+export async function setReferenceFromFirebase(collection, doc, data) {
+  const ref = firestore.collection(collection).doc(doc);
+  return ref
+    .set({data}, {merge: true})
+    .then(() => {
+      return true;
+    })
+    .catch((error) => {
+      return error;
+    });
 }
 
 export async function useGetToken(user) {

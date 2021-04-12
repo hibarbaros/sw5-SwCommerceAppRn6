@@ -6,6 +6,7 @@ import AppRoutes from '../../../utils/approutes';
 import {Styled} from './theme03.styles';
 
 export default function ProductCardTheme03({navigation, product, thumbnail}) {
+  const [price] = product?.mainDetail?.prices;
   return (
     <Styled.Card
       onPress={() => {
@@ -21,10 +22,7 @@ export default function ProductCardTheme03({navigation, product, thumbnail}) {
           {product.name}
         </Styled.ProductName>
         <Styled.CurrencyContainer>
-          <PriceWithCurrency
-            price={product.mainDetail.prices[0].price}
-            product={product}
-          />
+          <PriceWithCurrency price={price.price} product={product} />
         </Styled.CurrencyContainer>
       </Styled.CardContainer>
     </Styled.Card>

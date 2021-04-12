@@ -28,7 +28,7 @@ const ProductCard = ({productId, theme}) => {
     return <Styled.Loader />;
   }
 
-  const thumbnail = data.images.find((x) => x.main === 1);
+  const thumbnail = data?.images.find((x) => x.main === 1);
 
   return <Theme navigation={navigation} product={data} thumbnail={thumbnail} />;
 };

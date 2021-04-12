@@ -2,6 +2,8 @@ import _ from 'lodash';
 import md5 from 'react-native-md5';
 import bcrypt from 'react-native-bcrypt';
 
+import vars from '../utils/vars';
+
 //German categories id = 3
 
 function setSubCategories(data, categoryId) {
@@ -9,21 +11,18 @@ function setSubCategories(data, categoryId) {
   return categories;
 }
 
-export function setProductCategories(data) {
-  const mainCategories = _.filter(data, {id: 3});
-
+export function setProductCategories(allCategories, selectedLanguage) {
+  const mainCategories = _.filter(allCategories, {id: selectedLanguage});
   let categoriesTree = [];
-  let element = {};
-  let i;
-  for (i = 0; i < data.length; i++) {
-    let dataSubCategories = setSubCategories(data, data[i].id);
-    if (dataSubCategories.length > 0) {
-      element = data[i];
-      element.children = dataSubCategories;
+  for (const category of allCategories) {
+    const dataSubCategories = setSubCategories(allCategories, category.id);
+    if (dataSubCategories.length === 0 && category.parentId === 3) {
+      const element = category;
       categoriesTree.push(element);
     }
-    if (dataSubCategories.length === 0 && data[i].parentId === 3) {
-      element = data[i];
+    if (dataSubCategories.length > 0) {
+      const element = category;
+      element.children = dataSubCategories;
       categoriesTree.push(element);
     }
   }
@@ -69,11 +68,6 @@ export function findVariantProductOrderNumber(productData, selectedVariants) {
   return returnObject;
 }
 
-export const findProductVariant = (details, selectedVariantsId) => {
-  console.table(
-    '🚀 ~ file: functions.js ~ line 74 ~ findProductVariant ~ details, selectedVariantsId',
-    details,
-    selectedVariantsId,
-  );
-  return true;
+export const makeImageUrl = (thumbnail) => {
+  return `${vars.imageUrl}/media/image/${thumbnail.path}.${thumbnail.extension}`;
 };

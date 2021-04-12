@@ -18,13 +18,13 @@ export function useCategoryByCategoryId(categoryId, options) {
   );
 }
 
-const getAllCategories = async (_) => {
+const getAllCategories = async () => {
   const data = await categories();
   return data;
 };
 
-export function useAllCategories() {
-  return useQuery(['allCategoriesData'], getAllCategories);
+export function useAllCategories(mainCategory) {
+  return useQuery(['allCategoriesData', mainCategory], getAllCategories);
 }
 
 const getAllReacomendedCategories = async () => {

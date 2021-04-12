@@ -2,10 +2,8 @@ import axios from 'axios';
 import vars from './vars';
 import base64 from 'base-64';
 
-export const host = vars.host + '/api';
-
 let axiosInstance = axios.create({
-  baseURL: host,
+  baseURL: vars.host,
 });
 
 axiosInstance.defaults.headers.common['Content-Type'] = 'application/json';

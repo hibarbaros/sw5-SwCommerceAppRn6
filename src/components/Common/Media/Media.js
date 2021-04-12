@@ -1,21 +1,27 @@
-import React from 'react';
-import {Image} from 'react-native-magnus';
+import React, {useState} from 'react';
+import FastImage from 'react-native-fast-image';
+import {Skeleton} from 'react-native-magnus';
 
-import vars from '../../../utils/vars';
+import {Styled} from './styles';
 
-const Media = ({thumbnail}) => {
-  const image = `${vars.host}/media/image/${thumbnail.path}.${thumbnail.extension}`;
+import {makeImageUrl} from '../../../utils/functions';
+
+export default function Media({thumbnail}) {
+  const image = makeImageUrl(thumbnail);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <Image
-      h={'100%'}
-      w={'100%'}
-      borderRadius={10}
-      source={{
-        uri: image,
-      }}
-    />
+    <>
+      {isLoading && <Skeleton.Box h="100%" w="100%" />}
+      <Styled.MediaImage
+        onLoadEnd={() => setIsLoading(false)}
+        source={{
+          uri: image,
+          priority: FastImage.priority.high,
+        }}
+        resizeMode={FastImage.resizeMode.contain}
+      />
+    </>
   );
-};
-
-export default Media;
+}

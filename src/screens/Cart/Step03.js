@@ -2,21 +2,16 @@ import React from 'react';
 import {Text} from 'react-native-magnus';
 
 import {Container} from '../../themes/components';
-import Address from '../../components/CheckoutComponents/Address';
-import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods';
+import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods';
 
-export default function Step03({setIsDisabled}) {
+export default function Step03() {
   return (
     <>
       <Container>
-        <Text text60>Addresses</Text>
-        <Address />
-      </Container>
-      <Container>
         <Text text60 marginB-s5>
-          Shipping Methods
+          Payments Methods
         </Text>
-        <ShippingMethods setIsDisabled={setIsDisabled} />
+        <PaymentMethods />
       </Container>
     </>
   );

@@ -4,7 +4,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const MediaContainer = styled.View`
   width: ${wp('100%')}px;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
 const StyledSwiperFlatList = styled(SwiperFlatList).attrs({

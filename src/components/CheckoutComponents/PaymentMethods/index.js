@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {Text} from 'react-native-ui-lib';
 
 import CheckoutContext from '../../../context/CheckoutContext';
@@ -6,22 +6,14 @@ import {usePaymentMethods} from '../../../utils/hooks/useApp';
 import {Styled} from './styles';
 
 export default function PaymentMethods() {
-  const {setselectedPaymentMethod} = useContext(CheckoutContext);
+  const {selectedPaymentMethod, setselectedPaymentMethod} = useContext(
+    CheckoutContext,
+  );
 
-  const [isSelected, setIsSelected] = useState(null);
-
-  const {isLoading, error, data} = usePaymentMethods();
+  const {isLoading, data} = usePaymentMethods();
 
   if (isLoading) {
     return <Text>Loading...</Text>;
-  }
-  if (error) {
-    return <Text>{error.message}</Text>;
-  }
-
-  function handleSetSelected(item) {
-    setIsSelected(item.id);
-    setselectedPaymentMethod(item);
   }
 
   return (
@@ -30,8 +22,8 @@ export default function PaymentMethods() {
         data.map((item) => (
           <Styled.PaymentCard
             key={item.id}
-            selected={isSelected === item.id && true}
-            onPress={() => handleSetSelected(item)}>
+            selected={selectedPaymentMethod?.id === item.id && true}
+            onPress={() => setselectedPaymentMethod(item)}>
             <Text>{item.description}</Text>
           </Styled.PaymentCard>
         ))}

@@ -8,6 +8,7 @@ import {HeaderLeft, HeaderRight} from '../components/Header';
 import AppRoutes from '../utils/approutes';
 import {customerData} from '../utils/actions/useractions';
 import {shopData, paymentsData} from '../utils/actions/appactions';
+import {initialCartNormalize} from '../utils/normalize/cartNormalize';
 import AppContext from '../context/AppContext';
 import CartContext from '../context/CartContext';
 
@@ -47,12 +48,7 @@ export default function MainNavigator() {
     enabled: !!user,
     onSuccess: (res) => {
       if (res) {
-        const newBasket = res.basket.map((basket) => ({
-          id: parseInt(basket.articleID, 10),
-          number: basket.ordernumber,
-          quantity: parseInt(basket.quantity, 10),
-        }));
-        setInitialUserCart(newBasket);
+        setInitialUserCart(initialCartNormalize(res.basket));
         setUserContext(res.id, res.sessionId);
       }
     },

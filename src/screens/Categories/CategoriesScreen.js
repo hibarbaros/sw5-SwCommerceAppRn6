@@ -6,11 +6,13 @@ import {setProductCategories} from '../../utils/functions';
 import AppRoute from '../../utils/approutes';
 import {useAllCategories} from '../../utils/hooks/useCategory';
 import {LocalizationContext} from '../../context/Translations';
+import AppContext from '../../context/AppContext';
 
 export default function CategoriesScreen({navigation}) {
   const {translations} = useContext(LocalizationContext);
+  const {selectedLanguage} = useContext(AppContext);
 
-  const {isLoading, data: allCategories} = useAllCategories();
+  const {isLoading, data} = useAllCategories(selectedLanguage);
 
   if (isLoading) {
     return <Text>Loading </Text>;
@@ -46,7 +48,7 @@ export default function CategoriesScreen({navigation}) {
         {translations.allCategories}
       </Text>
       <NestedListView
-        data={setProductCategories(allCategories)}
+        data={setProductCategories(data, selectedLanguage)}
         getChildrenName={() => 'children'}
         renderNode={renderNode}
       />

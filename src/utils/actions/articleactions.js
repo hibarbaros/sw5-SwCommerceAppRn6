@@ -32,7 +32,10 @@ export async function articleDetailByVariant(variantId) {
 export async function articles() {
   const response = await Api.get('/ConnectorArticles/');
   if (response.data) {
-    const active = _.filter(response.data, {active: true});
+    const active = _.filter(
+      response.data,
+      (item) => item.id && item.active === true,
+    );
     return active;
   }
 }
@@ -111,8 +114,9 @@ export async function productAttributesOptionsFilterByOptionId(optionId) {
     return response.data;
   }
 }
-
-export default {
-  articleDetail,
-  articles,
-};
+export async function productsWithFilter(filter) {
+  const response = await Api.get(`/ConnectorArticles?${filter}`);
+  if (response.data) {
+    return response.data;
+  }
+}

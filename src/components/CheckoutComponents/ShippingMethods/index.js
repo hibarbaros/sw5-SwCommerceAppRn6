@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {View, Text} from 'react-native';
 
 import CheckoutContext from '../../../context/CheckoutContext';
@@ -10,13 +10,12 @@ import {Styled} from './styles';
 export default function ShippingMethods() {
   const {
     selectedShippingAddress,
+    selectedShippingMethod,
     setselectedShippingMethod,
     setselectedShippingAddress,
   } = useContext(CheckoutContext);
 
   const {user} = useContext(AppContext);
-
-  const [isSelected, setIsSelected] = useState(null);
 
   useCustomerByCustomerId(user, {
     onSuccess: (res) => {
@@ -27,30 +26,22 @@ export default function ShippingMethods() {
   const addressId =
     selectedShippingAddress && selectedShippingAddress.country.id;
 
-  const {
-    isLoading: shippingsDataLoading,
-    data: shippingsData,
-  } = useShippingByCountryId(addressId, {
+  const {isLoading, data} = useShippingByCountryId(addressId, {
     enabled: addressId,
   });
 
-  if (shippingsDataLoading) {
+  if (isLoading) {
     return <Text>Loading...</Text>;
   }
 
-  const handleCard = (shipping) => {
-    setIsSelected(shipping.id);
-    setselectedShippingMethod(shipping);
-  };
-
   return (
     <View>
-      {shippingsData.map((shipping) => {
+      {data.map((shipping) => {
         return (
           <Styled.AddressCard
             key={shipping.id}
-            selected={isSelected === shipping.id && true}
-            onPress={() => handleCard(shipping)}>
+            selected={selectedShippingMethod?.id === shipping.id && true}
+            onPress={() => setselectedShippingMethod(shipping)}>
             <Text>{shipping.name}</Text>
             <Text>{shipping.description}</Text>
             <Text>Cost : {shipping.detail.value}</Text>

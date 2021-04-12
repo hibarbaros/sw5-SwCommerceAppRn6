@@ -19,19 +19,18 @@ export default function ServiceHelp() {
     return <Text>Loading</Text>;
   }
 
-  var grouped = _.groupBy(data, 'grouping');
-
-  console.log('grouped', grouped);
+  // var grouped = _.groupBy(data, 'grouping');
+  // console.log('grouped', data);
 
   return (
     <>
       <Styled.Container>
         <Styled.StyledScrollView>
-          {data.map((page) => {
+          {data.map((page, index) => {
             if (page.html) {
               return (
                 <Styled.StyledMenuItem
-                  key={page.description}
+                  key={index}
                   title={page.description}
                   onPress={() => {
                     setModalVisible(true);

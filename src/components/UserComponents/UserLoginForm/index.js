@@ -14,7 +14,7 @@ import {useCustomerLogin} from '../../../utils/hooks/useCustomer';
 
 import LoadSpinner from '../../Common/LoadSpinner';
 
-export default function UserLoginForm() {
+export default function UserLoginForm({modalVisible = false}) {
   const navigation = useNavigation();
 
   const {mutate, isLoading} = useCustomerLogin();
@@ -31,8 +31,8 @@ export default function UserLoginForm() {
 
   function handleLogin(values) {
     mutate(values, {
-      onSuccess: (res) => {
-        res && navigation.goBack();
+      onSuccess: () => {
+        modalVisible ? modalVisible() : navigation.goBack();
       },
     });
   }

@@ -1,26 +1,23 @@
-import React, {useContext} from 'react';
+import React from 'react';
+import {Text} from 'react-native-magnus';
 
 import {Container} from '../../themes/components';
-import UserLoginForm from '../../components/UserComponents/UserLoginForm';
-import UserProfile from '../../components/UserComponents/UserProfile';
-import AppContext from '../../context/AppContext';
+import Address from '../../components/CheckoutComponents/Address';
+import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods';
 
-export default function Step02({setIsDisabled}) {
-  const {user} = useContext(AppContext);
-
-  React.useEffect(() => {
-    setIsDisabled(user ? false : true);
-  }, [user]);
-
+export default function Step02() {
   return (
     <>
-      {user ? (
-        <UserProfile />
-      ) : (
-        <Container>
-          <UserLoginForm />
-        </Container>
-      )}
+      <Container>
+        <Text text60>Addresses</Text>
+        <Address />
+      </Container>
+      <Container>
+        <Text text60 marginB-s5>
+          Shipping Methods
+        </Text>
+        <ShippingMethods />
+      </Container>
     </>
   );
 }

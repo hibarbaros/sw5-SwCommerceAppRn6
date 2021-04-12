@@ -8,12 +8,13 @@ export default function PriceWithCurrency({price, product}) {
   const parsedPrice = parseFloat(price);
 
   const priceWith = product
-    ? priceWithTax(price, product.tax.tax)
+    ? priceWithTax(parsedPrice, product.tax.tax)
     : parsedPrice;
 
-  return currency ? (
-    <Text>
-      {`${currency.templatechar} ${(priceWith * currency.factor).toFixed(2)}`}
-    </Text>
-  ) : null;
+  const priceFormat = (priceWith * currency.factor).toLocaleString('de-DE', {
+    style: 'currency',
+    currency: currency.currency,
+    minimumFractionDigits: 2,
+  });
+  return currency ? <Text>{priceFormat}</Text> : null;
 }

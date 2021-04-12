@@ -19,7 +19,7 @@ import {
   migrateUserCart,
 } from '../actions/cartactions';
 
-import {articleDetail} from '../actions/articleactions';
+import {productsWithFilter} from '../actions/articleactions';
 
 //Get Customer Cart
 const getUserCart = async (user, sessionId) => {
@@ -45,22 +45,29 @@ export function useUserCart() {
 //Get Customer Cart
 
 //Cart Total Price
-
 const getUserCartTotalPrice = async (userCart) => {
   let netPrice = 0;
   let taxPrice = 0;
+  const reducer = _.reduce(
+    userCart,
+    (prevValue, reduceProduct) => {
+      return `${prevValue}&filter[id][]=${reduceProduct.id}`;
+    },
+    '',
+  );
+  const filteredProductList = await productsWithFilter(reducer);
+  const mapped = _.map(filteredProductList, 'details');
+  const flattenDeep = _.flattenDeep(mapped);
   for (const cartProduct of userCart) {
-    const data = await articleDetail(cartProduct.id);
-    if (data) {
-      const productDetail = data.details.find(
-        (x) => x.number === cartProduct.number,
-      );
-      const [price] = productDetail.prices;
-      const priceCalc = priceWithTax(price.price, data.tax.tax);
-      netPrice += priceCalc * cartProduct.quantity;
-      const taxCalc = price.price * (data.tax.tax / 100);
-      taxPrice += taxCalc * cartProduct.quantity;
-    }
+    const mainProduct = _.find(filteredProductList, {id: cartProduct.id});
+    const findedProduct = _.find(flattenDeep, {
+      number: cartProduct.number,
+    });
+    const [price] = findedProduct.prices;
+    const priceCalc = priceWithTax(price.price, mainProduct.tax.tax);
+    netPrice += priceCalc * cartProduct.quantity;
+    const taxCalc = price.price * (mainProduct.tax.tax / 100);
+    taxPrice += taxCalc * cartProduct.quantity;
   }
   return {netPrice, taxPrice};
 };
@@ -72,7 +79,6 @@ export function useUserCartTotalPrice() {
     getUserCartTotalPrice(userCart, priceTotal),
   );
 }
-
 //Cart Total Price
 
 //Add to Cart

@@ -4,14 +4,17 @@ import {Menu, MenuGroup, MenuItem, Text} from '@ui-kitten/components';
 import {LocalizationContext} from '../../context/Translations';
 import {Container} from '../../themes/components';
 import AppContext from '../../context/AppContext';
-import languages from '../../localization/languages.json';
+import {languages} from '../../localization/languages';
 import {useShopByShopId} from '../../utils/hooks/useApp';
 
 const SettingScreen = () => {
-  const {translations, setAppLanguage, appLanguage} = useContext(
-    LocalizationContext,
-  );
-  const {currency, setCurrency} = useContext(AppContext);
+  const {translations, appLanguage} = useContext(LocalizationContext);
+  const {
+    currency,
+    setCurrency,
+    setSelectedLanguageContext,
+    selectedLanguage,
+  } = useContext(AppContext);
 
   const {isLoading, data} = useShopByShopId();
 
@@ -20,8 +23,8 @@ const SettingScreen = () => {
     currency.id,
   );
 
-  function handleLanguage(locale) {
-    setAppLanguage(locale);
+  function handleLanguage(lang) {
+    setSelectedLanguageContext(lang.id);
   }
 
   function handleCurrency(cur) {
@@ -35,13 +38,13 @@ const SettingScreen = () => {
         selectedIndex={selectedIndex}
         onSelect={(index) => setSelectedIndex(index)}>
         <MenuGroup title={translations.appLanguages}>
-          {languages.languages.map((lang) => (
+          {languages.map((lang) => (
             <MenuItem
               key={lang.name}
-              selected={appLanguage === lang.locale}
+              selected={selectedLanguage === lang.id}
               title={lang.name}
               locale={lang.locale}
-              onPress={() => handleLanguage(lang.locale)}
+              onPress={() => handleLanguage(lang)}
             />
           ))}
         </MenuGroup>

@@ -6,7 +6,10 @@ import Wizard from 'react-native-wizard';
 
 import CartTotalPrice from '../../components/Common/CartTotalPrice';
 import {Container} from '../../themes/components';
+import AppContext from '../../context/AppContext';
 import CartContext from '../../context/CartContext';
+import CheckoutContext from '../../context/CheckoutContext';
+import CartDropdown from './CartDropdown';
 
 import Titles from './Titles';
 import Step01 from './Step01';
@@ -17,22 +20,26 @@ import Step04 from './Step04';
 const CartScreen = () => {
   const wizardRef = useRef();
   const {userCart} = useContext(CartContext);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const {user} = useContext(AppContext);
+  const {selectedShippingMethod, selectedPaymentMethod} = useContext(
+    CheckoutContext,
+  );
   const [isLastStep, setIsLastStep] = useState();
   const [currentStep, setCurrentStep] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const stepList = [
     {
       content: <Step01 userCart={userCart} />,
     },
     {
-      content: <Step02 setIsDisabled={setIsDisabled} />,
+      content: <Step02 />,
     },
     {
-      content: <Step03 setIsDisabled={setIsDisabled} />,
+      content: <Step03 />,
     },
     {
-      content: <Step04 setIsDisabled={setIsDisabled} />,
+      content: <Step04 />,
     },
   ];
 
@@ -47,41 +54,52 @@ const CartScreen = () => {
     }, [userCart]),
   );
 
+  const isNextDisabled = () => {
+    if (currentStep === 1) {
+      return selectedShippingMethod ? false : true;
+    }
+    if (currentStep === 2) {
+      return selectedPaymentMethod ? false : true;
+    }
+    return false;
+  };
+
   return (
     <>
       <Titles handleGoTo={handleGoTo} currentStep={currentStep} />
       {userCart ? (
         <>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            contentContainerStyle={{paddingBottom: 200}}>
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
             <Wizard
               ref={wizardRef}
               steps={stepList}
               isLastStep={(val) => setIsLastStep(val)}
             />
-          </ScrollView>
-
-          <Div position="absolute" bottom={0} bg="white">
-            {!isLastStep ? (
-              <>
-                <CartTotalPrice userCart={userCart} />
+            {currentStep < 2 && <CartTotalPrice userCart={userCart} />}
+            <Div bg="white">
+              {!isLastStep && (
                 <Button
-                  onPress={() => handleGoTo(currentStep + 1)}
-                  disabled={isDisabled}
+                  onPress={() =>
+                    user ? handleGoTo(currentStep + 1) : setModalVisible(true)
+                  }
+                  disabled={isNextDisabled()}
                   w="100%"
                   rounded={0}>
                   Weiter
                 </Button>
-              </>
-            ) : null}
-          </Div>
+              )}
+            </Div>
+          </ScrollView>
         </>
       ) : (
         <Container>
           <Text>In Ihrem Warenkorb befinden sich keine Artikel</Text>
         </Container>
       )}
+      <CartDropdown
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+      />
     </>
   );
 };
