@@ -39,9 +39,13 @@ import {
 const Stack = createStackNavigator();
 
 export default function MainNavigator() {
-  const {user, setUserContext, setCurrency, setPaymentMethods} = useContext(
-    AppContext,
-  );
+  const {
+    user,
+    setUserContext,
+    setCurrency,
+    setPaymentMethods,
+    setAllCurrencies,
+  } = useContext(AppContext);
   const {setInitialUserCart} = useContext(CartContext);
 
   useQuery('customerDataContext', () => customerData(user), {
@@ -57,6 +61,7 @@ export default function MainNavigator() {
   useQuery('shopContext', () => shopData(), {
     onSuccess: (data) => {
       const [mainCurrencies] = data.currencies;
+      setAllCurrencies(data.currencies);
       setCurrency(mainCurrencies);
     },
   });

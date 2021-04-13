@@ -18,7 +18,7 @@ export async function categories() {
   }
 }
 
-export async function categoriesByRecomended() {
+export async function categoriesByRecomended(collection) {
   const response = await Api.get('ConnectorCategories');
   if (response.data) {
     const active = _.filter(response.data, {active: true, attr6: '1'});

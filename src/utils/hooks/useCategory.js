@@ -27,11 +27,11 @@ export function useAllCategories(mainCategory) {
   return useQuery(['allCategoriesData', mainCategory], getAllCategories);
 }
 
-const getAllReacomendedCategories = async () => {
+const getRecomendedCategories = async (collection) => {
   const data = await categoriesByRecomended();
   return data;
 };
 
-export function useAllReacomendedCategories() {
-  return useQuery('allReacomendedCategories', getAllReacomendedCategories);
+export function useRecomendedCategories(collection) {
+  return useQuery('recomendedCategories', getRecomendedCategories);
 }

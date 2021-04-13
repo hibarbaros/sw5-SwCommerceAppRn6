@@ -6,12 +6,13 @@ import ReactNative from 'react-native';
 import I18n from 'i18n-js';
 import en from '../localization/en.json';
 import de from '../localization/de.json';
+import {lang as fr} from '../localization/fr-FR';
 
 const DEFAULT_LANGUAGE = 'de';
 const APP_LANGUAGE = 'appLanguage';
 
 // Define the supported translations
-I18n.translations = {de, en};
+I18n.translations = {de, en, fr};
 
 export const languages = I18n.translations;
 

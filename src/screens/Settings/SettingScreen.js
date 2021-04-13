@@ -1,35 +1,28 @@
 import React, {useState, useContext} from 'react';
-import {Menu, MenuGroup, MenuItem, Text} from '@ui-kitten/components';
+import {Menu, MenuGroup, MenuItem} from '@ui-kitten/components';
 
 import {LocalizationContext} from '../../context/Translations';
 import {Container} from '../../themes/components';
 import AppContext from '../../context/AppContext';
 import {languages} from '../../localization/languages';
-import {useShopByShopId} from '../../utils/hooks/useApp';
 
 const SettingScreen = () => {
-  const {translations, appLanguage} = useContext(LocalizationContext);
+  const {translations, appLanguage, setAppLanguage} = useContext(
+    LocalizationContext,
+  );
   const {
     currency,
     setCurrency,
     setSelectedLanguageContext,
     selectedLanguage,
+    allCurrencies,
   } = useContext(AppContext);
 
-  const {isLoading, data} = useShopByShopId();
-
   const [selectedIndex, setSelectedIndex] = useState(appLanguage);
-  const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(
-    currency.id,
-  );
 
   function handleLanguage(lang) {
+    setAppLanguage(lang.locale);
     setSelectedLanguageContext(lang.id);
-  }
-
-  function handleCurrency(cur) {
-    setCurrency(cur);
-    setSelectedCurrencyIndex(cur.id);
   }
 
   return (
@@ -49,22 +42,18 @@ const SettingScreen = () => {
           ))}
         </MenuGroup>
       </Menu>
-      {isLoading ? (
-        <Text>Loading</Text>
-      ) : (
-        <Menu>
-          <MenuGroup title={translations.appCurrencies}>
-            {data.currencies.map((currencyItem, index) => (
-              <MenuItem
-                key={currencyItem.id}
-                selected={currencyItem.id === selectedCurrencyIndex}
-                title={currencyItem.name}
-                onPress={() => handleCurrency(currencyItem)}
-              />
-            ))}
-          </MenuGroup>
-        </Menu>
-      )}
+      <Menu>
+        <MenuGroup title={translations.appCurrencies}>
+          {allCurrencies.map((currencyItem, index) => (
+            <MenuItem
+              key={currencyItem.id}
+              selected={currencyItem.id === currency.id}
+              title={currencyItem.name}
+              onPress={() => setCurrency(currencyItem)}
+            />
+          ))}
+        </MenuGroup>
+      </Menu>
     </Container>
   );
 };

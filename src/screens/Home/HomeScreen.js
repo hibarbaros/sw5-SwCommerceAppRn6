@@ -9,34 +9,23 @@ import {Headline} from '../../themes/components';
 import Carousel from '../../components/Common/Carousel/Carousel';
 import VisitedProducts from '../../components/Common/VisitedProducts';
 // import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
-// import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';
+import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';
 
 import {Styled} from './styles';
 
 const HomeScreen = () => {
   const {translations} = useContext(LocalizationContext);
-  const {selectedLanguage, translations: lang} = useContext(AppContext);
+  const {selectedLanguage} = useContext(AppContext);
   const cache = useQueryClient();
 
   const [refreshing, setRefreshing] = useState(false);
 
-  console.log(
-    'translations.general.deliveryShippingFree :>> ',
-    lang?.general.deliveryShippingFree,
-  );
-
-  const wait = (timeout) => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, timeout);
-    });
-  };
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    wait(2000).then(() => {
+    setTimeout(() => {
       setRefreshing(false);
       cache.invalidateQueries('topSaleData');
-    });
+    }, 2000);
   }, []);
 
   return (
@@ -50,7 +39,6 @@ const HomeScreen = () => {
         <Styled.MainCarouselContainer marginV-s5>
           {/* <HomeMainCarousel refreshing={refreshing} /> */}
         </Styled.MainCarouselContainer>
-
         <Styled.Container>
           <Styled.CategoryTitleContainer>
             <Headline type="h3">{translations.recomendedProducts}</Headline>
@@ -81,7 +69,10 @@ const HomeScreen = () => {
           <Styled.CategoryTitleContainer>
             <Headline type="h3">{translations.recomendedCategories}</Headline>
           </Styled.CategoryTitleContainer>
-          {/* <HomeRecomendedCategories /> */}
+          <HomeRecomendedCategories
+            collection="homescreencategories"
+            doc={`mainCategory${selectedLanguage}`}
+          />
         </Styled.Container>
       </View>
     </ScrollView>

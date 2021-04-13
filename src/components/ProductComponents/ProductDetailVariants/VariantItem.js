@@ -27,39 +27,41 @@ export default function VariantItem({item, details, handleSetVariant}) {
           {item.name} - {selectedItemName}
         </Text>
       </Button>
-      <Dropdown
-        ref={dropdownRef}
-        title={
-          <Text mx="xl" color="gray500" pb="md">
-            {item.name}
-          </Text>
-        }
-        mt="md"
-        pb="2xl"
-        showSwipeIndicator={true}
-        roundedTop="xl">
-        {filtered.map((variant) => (
-          <Dropdown.Option
-            key={variant.id}
-            py="md"
-            px="xl"
-            block
-            underlayColor="gray100"
-            suffix={
-              selectedItem === variant.id && (
-                <Icon name="check" size={30} color="#900" />
-              )
-            }
-            disabled={selectedItem === variant.id}
-            onPress={() => {
-              handleSetVariant(variant);
-              setSelectedItem(variant.id);
-              setSelectedItemName(variant.name);
-            }}>
-            {variant.name}
-          </Dropdown.Option>
-        ))}
-      </Dropdown>
+      {filtered && (
+        <Dropdown
+          ref={dropdownRef}
+          title={
+            <Text mx="xl" color="gray500" pb="md">
+              {item.name}
+            </Text>
+          }
+          mt="md"
+          pb="2xl"
+          showSwipeIndicator={true}
+          roundedTop="xl">
+          {filtered.map((variant) => (
+            <Dropdown.Option
+              key={variant.id}
+              py="md"
+              px="xl"
+              block
+              underlayColor="gray100"
+              suffix={
+                selectedItem === variant.id && (
+                  <Icon name="check" size={30} color="#900" />
+                )
+              }
+              disabled={selectedItem === variant.id}
+              onPress={() => {
+                handleSetVariant(variant);
+                setSelectedItem(variant.id);
+                setSelectedItemName(variant.name);
+              }}>
+              {variant.name}
+            </Dropdown.Option>
+          ))}
+        </Dropdown>
+      )}
     </View>
   );
 }

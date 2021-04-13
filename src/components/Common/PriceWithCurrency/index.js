@@ -7,14 +7,18 @@ export default function PriceWithCurrency({price, product}) {
   const {currency} = useContext(AppContext);
   const parsedPrice = parseFloat(price);
 
+  if (!currency.currency) {
+    return null;
+  }
   const priceWith = product
     ? priceWithTax(parsedPrice, product.tax.tax)
     : parsedPrice;
 
-  const priceFormat = (priceWith * currency.factor).toLocaleString('de-DE', {
+  const priceFormat = new Intl.NumberFormat('de-DE', {
     style: 'currency',
     currency: currency.currency,
-    minimumFractionDigits: 2,
-  });
-  return currency ? <Text>{priceFormat}</Text> : null;
+    maximumSignificantDigits: 3,
+  }).format(priceWith);
+
+  return <Text>{priceFormat}</Text>;
 }

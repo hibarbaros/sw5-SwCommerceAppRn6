@@ -12,8 +12,6 @@ export default function Carousel({cardTheme, collection, doc}) {
     return <ProductCard theme={cardTheme} productId={item.id} product={item} />;
   };
 
-  // return null;
-
   return (
     <>
       {data && (

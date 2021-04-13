@@ -1,17 +1,12 @@
 import React from 'react';
-import {Text, View} from 'react-native-ui-lib';
+import {View} from 'react-native-ui-lib';
 
 import CategoryProducts from './CategoryProducts';
 import {Headline} from '../../../themes/components';
+import {useCollectionByCollectinName} from '../../../utils/hooks/useFirebase';
 
-import {useAllReacomendedCategories} from '../../../utils/hooks/useCategory';
-
-export default function HomeRecomendedCategories() {
-  const {isLoading, data} = useAllReacomendedCategories('homescreencategories');
-
-  if (isLoading) {
-    return <Text>Loading</Text>;
-  }
+export default function HomeRecomendedCategories({collection, doc}) {
+  const {data = []} = useCollectionByCollectinName(collection, doc);
 
   return data.map((category) => {
     const {id, name} = category;

@@ -5,7 +5,7 @@ import {setItem, getItem} from '../utils/storagehelper';
 const CartContext = createContext([{}, () => {}]);
 
 export const CartProvider = ({children}) => {
-  const [userCart, setUserCart] = useState(null);
+  const [userCart, setUserCart] = useState([]);
 
   const setInitialUserCart = (products) => {
     setUserCart(products);

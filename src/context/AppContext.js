@@ -1,9 +1,6 @@
 import React, {useState, useEffect, createContext} from 'react';
 
-// eslint-disable-next-line no-unused-vars
-import {setItem, getItem, removeItem, clearAll} from '../utils/storagehelper';
-
-import {languages} from '../localization/languages';
+import {setItem, getItem, removeItem} from '../utils/storagehelper';
 
 const AppContext = createContext([{}, () => {}]);
 
@@ -12,14 +9,18 @@ export const AppProvider = ({children}) => {
   const [sessionId, setSessionId] = useState(null);
   const [wishlist, setWishlist] = useState([]);
   const [currency, setCurrency] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState(3);
-  const [translations, setTranslations] = useState(3);
+  const [allCurrencies, setAllCurrencies] = useState(null);
   const [paymentMethods, setPaymentMethods] = useState(null);
   const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
   const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
   const [visitedProducts, setVisitedProducts] = useState([]);
   const [shippingPrice, setShippingPrice] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState(3);
 
+  const setSelectedLanguageContext = (langId) => {
+    setSelectedLanguage(langId);
+    setItem('selectedLanguage', langId);
+  };
   const setUserContext = (userId, userSessionId) => {
     if (userId) {
       setUser(userId);
@@ -36,18 +37,7 @@ export const AppProvider = ({children}) => {
     removeItem('sessionId');
   };
 
-  const setSelectedLanguageContext = (langId) => {
-    setSelectedLanguage(langId);
-    setItem('selectedLanguage', langId);
-  };
-
   useEffect(() => {
-    const find = languages.find((item) => item.id === selectedLanguage).locale;
-    setTranslations(find);
-  }, [selectedLanguage]);
-
-  useEffect(() => {
-    // clearAll();
     getItem('user').then((v) => v && setUser(v));
     getItem('wishlist').then((v) => v && setWishlist(v));
     getItem('visitedProducts').then((v) => v && setVisitedProducts(v));
@@ -78,10 +68,10 @@ export const AppProvider = ({children}) => {
         wishlist,
         setWishlist,
         setVisitedProducts,
-        selectedLanguage,
-        setSelectedLanguage,
-        translations,
         setSelectedLanguageContext,
+        selectedLanguage,
+        allCurrencies,
+        setAllCurrencies,
       }}>
       {children}
     </AppContext.Provider>

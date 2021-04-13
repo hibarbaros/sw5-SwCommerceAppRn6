@@ -44,7 +44,7 @@ export default function CountryDropDown({onPress, userAddress = null}) {
     <>
       <Styled.ButtonContainer>
         <Styled.StyledButton
-          buttonType="dropDownButton"
+          variant="dropDownButton"
           size="medium"
           accessoryRight={ArrowIcon}
           onPress={() => {

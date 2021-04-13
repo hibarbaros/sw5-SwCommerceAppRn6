@@ -1,30 +1,29 @@
 import {useContext} from 'react';
-import {useMutation} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 
 import {setItem} from '../storagehelper';
 import AppContext from '../../context/AppContext';
 
-export function useAddToVisitedlist() {
+function setHandleVisitedList(newList, setVisitedProducts) {
+  setVisitedProducts(newList);
+  setItem('visitedProducts', newList);
+}
+
+export function useAddToVisitedlist(productId) {
   const {visitedProducts, setVisitedProducts} = useContext(AppContext);
 
-  function setHandleVisitedList(newList) {
-    setVisitedProducts(newList);
-    setItem('visitedProducts', newList);
-  }
-
-  return useMutation((productId) => {
+  return useQuery('addVisitedList', () => {
     if (!visitedProducts) {
       let newList = [];
       newList.unshift(productId);
-      setHandleVisitedList(newList);
+      setHandleVisitedList(newList, setVisitedProducts);
     } else {
       let newList = [...visitedProducts];
       const finded = newList.some((x) => x === productId);
       if (!finded) {
         newList.unshift(productId);
-        setHandleVisitedList(newList);
+        setHandleVisitedList(newList, setVisitedProducts);
       }
     }
-    return true;
   });
 }

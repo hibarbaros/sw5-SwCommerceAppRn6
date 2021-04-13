@@ -26,8 +26,7 @@ const ProductDetail = ({route}) => {
 
   const {isLoading, data} = useProductByProductId(route.params.productId);
   const {mutate} = useAddToCart();
-  const {mutate: visitedMutate} = useAddToVisitedlist();
-  console.log(`data`, data);
+  useAddToVisitedlist(route.params.productId);
 
   if (isLoading) {
     return <Text>..Loading</Text>;
@@ -56,10 +55,6 @@ const ProductDetail = ({route}) => {
       }
     }
   }
-
-  // useEffect(() => {
-  //   visitedMutate(data.id);
-  // }, []);
 
   return (
     <>
@@ -99,6 +94,7 @@ const ProductDetail = ({route}) => {
               </Styled.ShipText>
             </Styled.ShipContainer>
           )}
+
           {/* Description */}
           <Styled.DescriptionContainer>
             <Styled.DescriptionTitle>
@@ -109,6 +105,7 @@ const ProductDetail = ({route}) => {
               TextComponent={(props) => <Styled.DescriptionText {...props} />}
             />
           </Styled.DescriptionContainer>
+
           {/* Categories */}
           <Styled.CategoryContainer>
             <Styled.DescriptionTitle>
@@ -119,6 +116,7 @@ const ProductDetail = ({route}) => {
               <Styled.GeneralText key={index}>{cat.name}</Styled.GeneralText>
             ))}
           </Styled.CategoryContainer>
+
           {/* Variants */}
           {data.configuratorSet && (
             <Div my={15}>
@@ -136,7 +134,13 @@ const ProductDetail = ({route}) => {
           )}
 
           {/* Property Groups */}
-          <ProductPropertyGroup product={data} />
+          {data.propertyGroup && (
+            <ProductPropertyGroup
+              groupId={data.propertyGroup.id}
+              propertyValues={data.propertyValues}
+            />
+          )}
+
           {/* Related Products */}
           {/* {productData.related && (
             <>
@@ -147,6 +151,7 @@ const ProductDetail = ({route}) => {
               <ProductDetailRelatedProducts product={productData} />
             </>
           )} */}
+
           {/* Similar products */}
           {/* {productData.similar && (
             <>

@@ -25,7 +25,7 @@ export default function GenderActionSheet({onPress}) {
     <>
       <Styled.ButtonContainer>
         <Styled.StyledButton
-          buttonType="dropDownButton"
+          variant="dropDownButton"
           text={buttonValue}
           size="medium"
           accessoryRight={ArrowIcon}

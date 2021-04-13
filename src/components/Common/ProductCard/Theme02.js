@@ -17,9 +17,11 @@ export default function ProductCardTheme02({navigation, product, thumbnail}) {
       <Styled.ImageContainer>
         {thumbnail && <ProductCardMedia thumbnail={thumbnail} />}
       </Styled.ImageContainer>
-      <Styled.ProductName numberOfLines={2}>{product.name}</Styled.ProductName>
+      <Styled.ProductName numberOfLines={2}>
+        {product.name} {product.id}
+      </Styled.ProductName>
       <Styled.CurrencyContainer>
-        {/* <PriceWithCurrency price={price.price} product={product} /> */}
+        <PriceWithCurrency price={price?.price} product={product} />
       </Styled.CurrencyContainer>
     </Styled.Card>
   );

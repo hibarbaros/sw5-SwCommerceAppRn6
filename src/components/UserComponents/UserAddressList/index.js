@@ -66,7 +66,7 @@ export default function UserAddressList({checkout = false}) {
       })}
       <View marginB-s5>
         <Button
-          buttonType="primary"
+          variant="primary"
           size="small"
           text="Add New Address"
           onPress={() =>
