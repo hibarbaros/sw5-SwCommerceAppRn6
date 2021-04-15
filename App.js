@@ -7,6 +7,7 @@ import * as eva from '@eva-design/eva';
 import Toast from 'react-native-toast-message';
 
 import Navigation from './src/navigation/Navigation';
+import MainNavigation from './src/navigation/MainNavigation';
 import {NavigationTheme} from './src/themes/variables';
 import {AppProvider} from './src/context/AppContext';
 import {CheckoutProvider} from './src/context/CheckoutContext';
@@ -42,7 +43,7 @@ const App = () => {
                 <CheckoutProvider>
                   <FilterProvider>
                     <NavigationContainer theme={NavigationTheme} ref={ref}>
-                      <Navigation />
+                      <MainNavigation />
                     </NavigationContainer>
                   </FilterProvider>
                 </CheckoutProvider>

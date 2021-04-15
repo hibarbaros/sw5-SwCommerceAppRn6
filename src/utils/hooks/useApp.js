@@ -6,6 +6,7 @@ import {
   shopData,
   shippingsDataByCountry,
   paymentsData,
+  countriesData,
 } from '../actions/appactions';
 
 import AppContext from '../../context/AppContext';
@@ -48,6 +49,15 @@ const getPaymentMethods = async () => {
 
 export function usePaymentMethods() {
   return useQuery('paymentMethodsData', () => getPaymentMethods());
+}
+
+const getCountries = async () => {
+  const data = await countriesData();
+  return data;
+};
+
+export function useCountries() {
+  return useQuery('countries', () => getCountries());
 }
 
 const getAddRemoveToWishList = async (productId, whislist, setWhislist) => {

@@ -1,5 +1,6 @@
 import React from 'react';
-import FormErrorLabel from '../FormErrorLabel/FormErrorLabel';
+
+import {FormErrorLabel} from '../';
 import {Styled} from './styles';
 
 export default function FormInput(props) {

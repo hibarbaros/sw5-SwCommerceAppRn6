@@ -78,7 +78,7 @@ const TabComponent = () => {
                 fill={focused ? colors.blue : colors.themeColor}
                 name="shopping-cart-outline"
               />
-              {userCart.length > 0 && (
+              {userCart && (
                 <Styled.CartIcon>
                   <Styled.CartIconText>{userCart?.length}</Styled.CartIconText>
                 </Styled.CartIcon>

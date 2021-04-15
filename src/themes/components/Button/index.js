@@ -1,8 +1,7 @@
 import React from 'react';
-import {Button, Icon} from 'react-native-magnus';
+import {Button, Icon, Text} from 'react-native-magnus';
 
 export default function ThemeButton({
-  onPress,
   text,
   variant = 'primary',
   disabled,
@@ -21,7 +20,9 @@ export default function ThemeButton({
           suffix={<Icon name={suffix} color="white" fontFamily="Feather" />}
           prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}
           mt="lg">
-          {text}
+          <Text color="white" mr={suffix && 'auto'} ml={prefix && 'auto'}>
+            {text}
+          </Text>
         </Button>
       );
     case 'secondary':

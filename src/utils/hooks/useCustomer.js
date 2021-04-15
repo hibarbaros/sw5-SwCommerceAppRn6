@@ -60,18 +60,19 @@ export function useCustomerLogin() {
 
   const mutate = useMutation((values) => getCustomerLogin(values), {
     onSuccess: async (data) => {
-      const {id, sessionId: dataSessionId} = data;
+      const {id, sessionId} = data;
+      console.log('data :>> ', data);
       if (data) {
         if (userCart) {
-          await migrateUserCart(data.id, userCart, data.sessionId);
+          await migrateUserCart(id, userCart, sessionId);
         }
         setTimeout(async () => {
-          const userResponse = await customerData(data.id);
+          const userResponse = await customerData(id);
           const {basket} = userResponse;
           setInitialUserCart(initialCartNormalize(basket));
         }, 1000);
 
-        setUserContext(id, dataSessionId);
+        setUserContext(id, sessionId);
       } else {
         Toast.show({
           type: 'error',
@@ -118,33 +119,31 @@ export function useCustomerCheckByMail() {
 //Check Customer By Mail
 
 //Register customer
-const getRegisterCustomer = async (values, sessionId) => {
-  const data = await customerRegister(values, sessionId);
+const getRegisterCustomer = async (values) => {
+  const data = await customerRegister(values);
   return data;
 };
 
 export function useRegisterCustomer() {
-  const {translations} = useContext(LocalizationContext);
-  const {sessionId} = useContext(AppContext);
+  // const {translations} = useContext(LocalizationContext);
+  const {setUserContext} = useContext(AppContext);
 
-  const mutate = useMutation(
-    (values) => getRegisterCustomer(values, sessionId),
-    {
-      onSuccess: (data) => {
-        if (data) {
-          setUserStorage(data.id);
-          return data;
-        }
-        if (!data) {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: translations.formularError,
-          });
-        }
-      },
+  const mutate = useMutation((values) => getRegisterCustomer(values), {
+    onSuccess: (data) => {
+      if (data) {
+        setUserContext(data.data.id, data.data.sessionId);
+        return true;
+      }
+      if (!data) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'This e-mail address is registered',
+        });
+        return false;
+      }
     },
-  );
+  });
 
   return mutate;
 }

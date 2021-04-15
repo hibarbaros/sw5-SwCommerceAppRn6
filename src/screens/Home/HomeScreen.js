@@ -6,7 +6,7 @@ import {useQueryClient} from 'react-query';
 import {LocalizationContext} from '../../context/Translations';
 import AppContext from '../../context/AppContext';
 import {Headline} from '../../themes/components';
-import Carousel from '../../components/Common/Carousel/Carousel';
+import Carousel from '../../components/Common/FirebaseCarousel';
 import VisitedProducts from '../../components/Common/VisitedProducts';
 // import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
 import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';

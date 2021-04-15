@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {Div, Text, Button} from 'react-native-magnus';
 import HTMLView from 'react-native-htmlview';
@@ -14,8 +14,7 @@ import ProductPropertyGroup from '../../components/ProductComponents/ProductProp
 import ProductWhislistButton from '../../components/ProductComponents/ProductWhislistButton';
 import ProductDetailVariants from '../../components/ProductComponents/ProductDetailVariants';
 import ProductDetailMedia from '../../components/ProductComponents/ProductDetailMedia';
-// import ProductDetailSimilarProducts from '../../components/ProductComponents/ProductDetailSimilarProducts';
-// import ProductDetailRelatedProducts from '../../components/ProductComponents/ProductDetailRelatedProducts';
+import ProductCarousel from '../../components/Common/ProductCarousel';
 
 import {Styled} from './styles';
 
@@ -84,12 +83,10 @@ const ProductDetail = ({route}) => {
           {data.mainDetail.inStock > 0 && (
             <Styled.ShipContainer>
               <Styled.ShipText>
-                {translations.readyToShipToday}
-                {': '}
+                {`${translations.readyToShipToday} :`}
               </Styled.ShipText>
               <Styled.ShipText>
-                {translations.deliverytime}
-                {': '}
+                {`${translations.deliverytime} :`}
                 {data.mainDetail.shippingTime} {translations.workdays}
               </Styled.ShipText>
             </Styled.ShipContainer>
@@ -109,8 +106,7 @@ const ProductDetail = ({route}) => {
           {/* Categories */}
           <Styled.CategoryContainer>
             <Styled.DescriptionTitle>
-              {'.'}
-              {translations.categories}
+              {`${translations.categories}.`}
             </Styled.DescriptionTitle>
             {data.categories.map((cat, index) => (
               <Styled.GeneralText key={index}>{cat.name}</Styled.GeneralText>
@@ -121,8 +117,7 @@ const ProductDetail = ({route}) => {
           {data.configuratorSet && (
             <Div my={15}>
               <Styled.DescriptionTitle>
-                {'.'}
-                {translations.variants}
+                {`${translations.variants}.`}
               </Styled.DescriptionTitle>
               <ProductDetailVariants
                 selectedVariants={selectedVariants}
@@ -142,26 +137,24 @@ const ProductDetail = ({route}) => {
           )}
 
           {/* Related Products */}
-          {/* {productData.related && (
+          {data.related && (
             <>
               <Styled.DescriptionTitle>
-                {'.'}
-                {translations.relatedProducts}
+                {`.${translations.relatedProducts}`}
               </Styled.DescriptionTitle>
-              <ProductDetailRelatedProducts product={productData} />
+              <ProductCarousel data={data.related} cardTheme="theme02" />
             </>
-          )} */}
+          )}
 
           {/* Similar products */}
-          {/* {productData.similar && (
+          {data.similar && (
             <>
               <Styled.DescriptionTitle>
-                {'.'}
-                {translations.similarProducts}
+                {`.${translations.similarProducts}`}
               </Styled.DescriptionTitle>
-              <ProductDetailSimilarProducts product={productData} />
+              <ProductCarousel data={data.similar} cardTheme="theme02" />
             </>
-          )} */}
+          )}
         </Styled.Wrapper>
       </ScrollView>
       <SafeAreaView>

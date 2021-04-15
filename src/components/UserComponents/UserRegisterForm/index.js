@@ -1,48 +1,41 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {View} from 'react-native-ui-lib';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
-
+//*components
 import {ForwardIcon} from '../../../themes/components/IconSet';
 import {
-  FormErrorLabel,
   KeyboardAwareScroll,
   Container,
   FormInput,
   Headline,
   CheckBox,
 } from '../../../themes/components';
-import AppContext from '../../../context/AppContext';
-import AppRoutes from '../../../utils/approutes';
 import GenderActionSheet from '../../Common/GenderActionSheet/GenderActionSheet';
 import CountryDropDown from '../../Common/CountryDropDown/CountryDropDown';
 import LoadSpinner from '../../Common/LoadSpinner';
-
+//*utils
+import AppRoutes from '../../../utils/approutes';
 import {useRegisterCustomer} from '../../../utils/hooks/useCustomer';
-
+import {validationSchema} from '../../../utils/validationSchema';
+//*self
 import {Styled} from './styles';
+import {initialValues} from './initialValues';
 
 export default function UserRegisterForm({modalVisible = false}) {
-  const {setUser} = useContext(AppContext);
   const navigation = useNavigation();
 
-  const {mutate, isLoading} = useRegisterCustomer();
+  const {mutateAsync, isLoading} = useRegisterCustomer();
 
-  function handlePress(value) {
-    mutate(value, {
-      onSuccess: (data) => {
-        if (data) {
-          setUser(data.data.id);
-          modalVisible
-            ? modalVisible()
-            : navigation.dispatch(StackActions.replace(AppRoutes.PROFILE));
-        }
-      },
-    });
+  async function handlePress(value) {
+    const mutate = await mutateAsync(value);
+    if (mutate) {
+      modalVisible
+        ? modalVisible()
+        : navigation.dispatch(StackActions.replace(AppRoutes.PROFILE));
+    }
   }
-
-  //TODO: datalarin degerlerini düzenle
 
   return (
     <>
@@ -50,110 +43,81 @@ export default function UserRegisterForm({modalVisible = false}) {
       <KeyboardAwareScroll>
         <Container>
           <Formik
-            initialValues={{
-              email: '',
-              password: '',
-              firstname: '',
-              lastname: '',
-              salutation: 'mr',
-              newsletter: false,
-              billingfirstname: '',
-              billinglastname: '',
-              billingsalutation: 'mr',
-              billingstreet: '',
-              billingcity: '',
-              billingstate: '',
-              billingzipcode: 0,
-              billingcountry: 0,
-              isShipping: false,
-              shippingfirstname: '',
-              shippinglastname: '',
-              shippingsalutation: '',
-              shippingstreet: '',
-              shippingcity: '',
-              shippingstate: '',
-              shippingzipcode: '',
-              shippingcountry: 0,
-              doubleOptinRegister: false,
-              sendOptinMail: false,
-            }}
+            initialValues={initialValues}
             onSubmit={(values) => handlePress(values)}
             validationSchema={yup.object().shape({
-              email: yup
-                .string()
-                .email()
-                .required('E-mail is a required filed'),
-              password: yup
-                .string()
-                .required('No password provided.')
-                .min(8, 'Password is too short - should be 8 chars minimum.')
-                .matches(
-                  /[a-zA-Z]/,
-                  'Password can only contain Latin letters.',
-                ),
-              confirmpassword: yup.string().when('password', {
-                is: (val) => (val && val.length > 0 ? true : false),
-                then: yup
-                  .string()
-                  .oneOf(
-                    [yup.ref('password')],
-                    'Both password need to be the same',
-                  ),
-              }),
-              firstname: yup.string().required(),
-              lastname: yup.string().required(),
-              salutation: yup.string().required(),
-              newsletter: yup.bool(),
-              billingfirstname: yup.string().required(),
-              billinglastname: yup.string().required(),
-              billingsalutation: yup.string().required(),
-              billingstreet: yup.string().required(),
-              billingstate: yup.string().required(),
-              billingzipcode: yup.number().required(),
-              billingcity: yup.string().required(),
-              billingcountry: yup.number().required(),
-              isShipping: yup.boolean(),
-              shippingfirstname: yup.string().when('isShipping', {
-                is: true,
-                then: yup.string().required(),
-              }),
-              shippinglastname: yup.string().when('isShipping', {
-                is: true,
-                then: yup.string().required(),
-              }),
-              shippingsalutation: yup.string().when('isShipping', {
-                is: true,
-                then: yup.string().required(),
-              }),
-              shippingstreet: yup.string().when('isShipping', {
-                is: true,
-                then: yup.string().required(),
-              }),
-              shippingstate: yup.string().when('isShipping', {
-                is: true,
-                then: yup.string().required(),
-              }),
-              shippingzipcode: yup.string().when('isShipping', {
-                is: true,
-                then: yup.string().required(),
-              }),
-              shippingcity: yup.string().when('isShipping', {
-                is: true,
-                then: yup.string().required(),
-              }),
-              shippingcountry: yup.string().when('isShipping', {
-                is: true,
-                then: yup.string().required(),
-              }),
+              email: validationSchema.emailValidation(
+                'E-mail is a required filed',
+              ),
+              password: validationSchema.passwordValidation(
+                'No password provided.',
+                'Password is too short - should be 8 chars minimum.',
+                'Password can only contain Latin letters.',
+              ),
+              confirmpassword: validationSchema.confirmpasswordValidation(
+                'Both password need to be the same',
+              ),
+              firstname: validationSchema.textValidation(
+                'Firstname is a required filed',
+              ),
+              lastname: validationSchema.textValidation(
+                'Lastname is a required filed',
+              ),
+              salutation: validationSchema.textValidation(
+                'Salutation is a required filed',
+              ),
+              newsletter: validationSchema.newsletterValidation,
+              billingfirstname: validationSchema.textValidation(
+                'Billing Firstname is a required filed',
+              ),
+              billinglastname: validationSchema.textValidation(
+                'Billing Lastname is a required filed',
+              ),
+              billingsalutation: validationSchema.textValidation(
+                'Billing Salutation is a required filed',
+              ),
+              billingstreet: validationSchema.textValidation(
+                'Billing Street is a required filed',
+              ),
+              billingstate: validationSchema.textValidation(
+                'Billing State is a required filed',
+              ),
+              billingzipcode: validationSchema.textValidation(
+                'Billing Zip Code is a required filed',
+              ),
+              billingcity: validationSchema.textValidation(
+                'Billing City is a required filed',
+              ),
+              billingcountry: validationSchema.textValidation(
+                'Billing Country is a required filed',
+              ),
+              isShipping: validationSchema.isShippingValidation,
+              shippingfirstname: validationSchema.isShippingTrue(
+                'Shipping Firstname is a required filed',
+              ),
+              shippinglastname: validationSchema.isShippingTrue(
+                'Shipping Lastname is a required filed',
+              ),
+              shippingsalutation: validationSchema.isShippingTrue(
+                'Shipping Salutation is a required filed',
+              ),
+              shippingstreet: validationSchema.isShippingTrue(
+                'Shipping Street is a required filed',
+              ),
+              shippingstate: validationSchema.isShippingTrue(
+                'Shipping State is a required filed',
+              ),
+              shippingzipcode: validationSchema.isShippingTrue(
+                'Shipping Zip Code is a required filed',
+              ),
+              shippingcity: validationSchema.isShippingTrue(
+                'Shipping City is a required filed',
+              ),
+              shippingcountry: validationSchema.isShippingTrue(
+                'Shipping Country is a required filed',
+              ),
             })}>
-            {({
-              errors,
-              touched,
-              isValid,
-              handleSubmit,
-              setFieldValue,
-              values,
-            }) => (
+            {({handleSubmit, setFieldValue, values}) => (
               <>
                 <View marginV-s2>
                   <Field
@@ -193,15 +157,12 @@ export default function UserRegisterForm({modalVisible = false}) {
                   />
                 </View>
                 <View marginV-s2>
-                  <GenderActionSheet
-                    onPress={(option) => {
-                      setFieldValue('salutation', option);
-                    }}
+                  <Field
+                    component={GenderActionSheet}
+                    name="salutation"
+                    placeholder="Gender Select"
                   />
                 </View>
-                {touched.salutation && errors.salutation && (
-                  <FormErrorLabel errorMessage={errors.salutation} />
-                )}
                 {/* BILLING ADDRESS */}
                 <View marginT-s5>
                   <Headline type="h3">Billing Address</Headline>
@@ -222,16 +183,12 @@ export default function UserRegisterForm({modalVisible = false}) {
                   />
                 </View>
                 <View marginV-s2>
-                  <GenderActionSheet
-                    onPress={(option) => {
-                      setFieldValue('billingsalutation', option);
-                    }}
+                  <Field
+                    component={GenderActionSheet}
+                    name="billingsalutation"
+                    placeholder="Gender Select"
                   />
-                  {touched.billingsalutation && errors.billingsalutation && (
-                    <FormErrorLabel errorMessage={errors.billingsalutation} />
-                  )}
                 </View>
-
                 <View marginV-s2>
                   <Field
                     component={FormInput}
@@ -261,14 +218,11 @@ export default function UserRegisterForm({modalVisible = false}) {
                   />
                 </View>
                 <View marginV-s2>
-                  <CountryDropDown
-                    onPress={(countryId) => {
-                      setFieldValue('billingcountry', countryId);
-                    }}
+                  <Field
+                    component={CountryDropDown}
+                    name="billingcountry"
+                    placeholder="Country Select"
                   />
-                  {touched.billingcountry && errors.billingcountry && (
-                    <FormErrorLabel errorMessage={errors.billingcountry} />
-                  )}
                 </View>
                 {/* BILLING ADDRESS */}
                 <View marginV-s2>
@@ -300,17 +254,11 @@ export default function UserRegisterForm({modalVisible = false}) {
                       />
                     </View>
                     <View marginV-s2>
-                      <GenderActionSheet
-                        onPress={(option) => {
-                          setFieldValue('shippingsalutation', option);
-                        }}
+                      <Field
+                        component={GenderActionSheet}
+                        name="shippingsalutation"
+                        placeholder="Gender Select"
                       />
-                      {touched.shippingsalutation &&
-                        errors.shippingsalutation && (
-                          <FormErrorLabel
-                            errorMessage={errors.shippingsalutation}
-                          />
-                        )}
                     </View>
                     <View marginV-s2>
                       <Field
@@ -341,14 +289,11 @@ export default function UserRegisterForm({modalVisible = false}) {
                       />
                     </View>
                     <View marginV-s2>
-                      <CountryDropDown
-                        onPress={(countryId) => {
-                          setFieldValue('shippingcountry', countryId);
-                        }}
+                      <Field
+                        component={CountryDropDown}
+                        name="shippingcountry"
+                        placeholder="Country Select"
                       />
-                      {touched.shippingcountry && errors.shippingcountry && (
-                        <FormErrorLabel errorMessage={errors.shippingcountry} />
-                      )}
                     </View>
                   </>
                 )}
@@ -356,9 +301,9 @@ export default function UserRegisterForm({modalVisible = false}) {
                 <View marginV-s2>
                   <CheckBox
                     label="Newsletter"
-                    // onPress={(isChecked) => {
-                    // 	setFieldValue('newsletter', isChecked);
-                    // }}
+                    onPress={(isChecked) =>
+                      setFieldValue('newsletter', isChecked)
+                    }
                   />
                 </View>
 
@@ -367,7 +312,7 @@ export default function UserRegisterForm({modalVisible = false}) {
                     status="primary"
                     size="medium"
                     onPress={handleSubmit}
-                    // disabled={!isValid}
+                    disabled={isLoading}
                     accessoryRight={ForwardIcon}>
                     Register
                   </Styled.RegisterButton>

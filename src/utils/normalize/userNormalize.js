@@ -63,6 +63,7 @@ export function customerRegisterNormalize(data, sessionId) {
     doubleOptinRegister,
     sendOptinMail,
   };
+
   const formData = JSON.stringify({
     ...allData,
   });

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import {Input} from '@ui-kitten/components';
-import {colors, fontSizes, fontFamilies} from '../../variables';
+import {colors, fontFamilies} from '../../variables';
 
 export const StyledTextInput = styled(Input).attrs({
   placeholderTextColor: colors.gray6,
@@ -9,7 +9,6 @@ export const StyledTextInput = styled(Input).attrs({
     padding: 5,
   },
 })`
-  font-size: ${fontSizes.small};
   font-family: ${fontFamilies.secondaryRegular};
 `;
 

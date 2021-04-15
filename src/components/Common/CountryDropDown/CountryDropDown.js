@@ -1,70 +1,66 @@
 import React, {createRef, useState} from 'react';
-import {useQuery} from 'react-query';
-import ActionSheet from 'react-native-actions-sheet';
-import {ListItem, Text} from '@ui-kitten/components';
-import * as Icon from 'react-native-feather';
+import {Dropdown, Text} from 'react-native-magnus';
 
-import {colors} from '../../../themes/variables';
-import {countriesData} from '../../../utils/actions/appactions';
+import {FormErrorLabel} from '../../../themes/components';
+import {Button} from '../../../themes/components';
+import {useCountries} from '../../../utils/hooks/useApp';
 
-import {Styled} from './styles';
+export default function CountryDropDown(props) {
+  const {
+    field: {name, onBlur, onChange},
+    form: {errors, touched, setFieldTouched, setFieldValue},
+    ...inputProps
+  } = props;
 
-const ArrowIcon = (props) => (
-  <Icon.ArrowDown stroke={colors.white} {...props} />
-);
+  const [initialValue, setinitialValue] = useState(inputProps.placeholder);
 
-export default function CountryDropDown({onPress, userAddress = null}) {
-  const actionSheetRef = createRef();
+  const hasError = errors[name] && touched[name];
+  const dropdownRef = createRef();
 
-  const [buttonValue, setButtonValue] = useState('Country Select');
-
-  const {isLoading, data} = useQuery('countries', () => countriesData(), {
-    onSuccess: (res) => {
-      if (userAddress) {
-        const finded = res.find(
-          (x) => x.id === parseInt(userAddress.country_id, 10),
-        );
-        setButtonValue(finded.name);
-        onPress(userAddress.country_id);
-      }
-    },
-  });
+  const {isLoading, data} = useCountries();
 
   if (isLoading) {
     return <Text>'Loading...'</Text>;
   }
 
-  function handleItem(countryId, countryName) {
-    onPress(countryId);
-    setButtonValue(countryName);
-    actionSheetRef.current.setModalVisible(false);
-  }
-
   return (
     <>
-      <Styled.ButtonContainer>
-        <Styled.StyledButton
-          variant="dropDownButton"
-          size="medium"
-          accessoryRight={ArrowIcon}
-          onPress={() => {
-            actionSheetRef.current.setModalVisible();
-          }}>
-          {buttonValue}
-        </Styled.StyledButton>
-      </Styled.ButtonContainer>
-
-      <ActionSheet ref={actionSheetRef}>
-        <Styled.ActionSheetContainer>
-          {data.map((country) => (
-            <ListItem
-              key={country.id}
-              onPress={() => handleItem(country.id, country.name)}
-              title={country.name}
-            />
-          ))}
-        </Styled.ActionSheetContainer>
-      </ActionSheet>
+      <Button
+        block
+        justifyContent="space-around"
+        textAlign="left"
+        text={initialValue}
+        onPress={() => dropdownRef.current.open()}
+        suffix="arrow-down"
+      />
+      {hasError && <FormErrorLabel errorMessage={errors[name]} />}
+      <Dropdown
+        ref={dropdownRef}
+        mt="md"
+        pb="2xl"
+        showSwipeIndicator={true}
+        roundedTop="xl">
+        {data.map((country) => (
+          <Dropdown.Option
+            key={country.id}
+            onPress={() => {
+              onChange(name)(country.name);
+              setinitialValue(country.name);
+              setFieldValue(name, country.id);
+            }}
+            py="md"
+            px="xl"
+            block>
+            <Text
+              onBlur={() => {
+                setFieldTouched(name);
+                onBlur(name);
+              }}>
+              {country.name}
+            </Text>
+          </Dropdown.Option>
+        ))}
+      </Dropdown>
     </>
   );
 }

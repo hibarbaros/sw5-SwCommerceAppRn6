@@ -1,3 +1,5 @@
+import uuid from 'react-uuid';
+
 import Api from '../api';
 import {removeItem, setItem} from '../../utils/storagehelper';
 import {checkMd5Pass, checkBcryptPass} from '../../utils/functions';
@@ -11,17 +13,18 @@ export const customerCheck = async (values) => {
   const response = await Api.get(
     `/ConnectorCustomers?filter[email]=${values.email}`,
   );
-  return response.total !== 0 ? true : values;
+  return response.total ? true : false;
 };
 
-export const customerRegister = async (data, sessionId) => {
+export const customerRegister = async (data) => {
+  const sessionId = uuid();
   const check = await customerCheck(data);
   if (check) {
-    // kullanici kayitli
-    return false;
+    return false; // kullanici kayitli
   } else {
     const formData = customerRegisterNormalize(data, sessionId);
     const response = await Api.post('/ConnectorCustomers', formData);
+    response.data.sessionId = sessionId;
     return response;
   }
 };

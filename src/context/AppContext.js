@@ -42,7 +42,9 @@ export const AppProvider = ({children}) => {
     getItem('wishlist').then((v) => v && setWishlist(v));
     getItem('visitedProducts').then((v) => v && setVisitedProducts(v));
     getItem('sessionId').then((v) => v && setSessionId(v));
-    getItem('selectedLanguage').then((v) => v && setSelectedLanguage(v));
+    getItem('selectedLanguage').then((v) =>
+      v ? setSelectedLanguage(v) : setSelectedLanguage(3),
+    );
   }, []);
 
   return (

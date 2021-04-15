@@ -11,16 +11,19 @@ export async function countriesData() {
   const active = _.filter(response.data, {active: true});
   return active;
 }
+
 export async function paymentsData() {
   const response = await Api.get('/ConnectorPaymentMethods');
   const active = _.filter(response.data, {active: true});
   return active;
 }
+
 export async function shippingsData() {
   const response = await Api.get('/ConnectorShippingMethods');
   const active = _.filter(response.data, {active: true});
   return active;
 }
+
 export async function shippingsDataByCountry(countryId) {
   const response = await Api.get('/ConnectorShippingMethods');
   const active = _.filter(response.data, {active: true});
@@ -35,9 +38,10 @@ export async function shippingsDataByCountry(countryId) {
     return null;
   }
 }
+
 export async function shopData() {
   const response = await Api.get('/ConnectorShops');
   const shop = _.filter(response.data, {active: true, position: 0});
-  const shop_default = await Api.get(`/ConnectorShops/${shop[0].id}`);
-  return shop_default.data;
+  const shopDefault = await Api.get(`/ConnectorShops/${shop[0].id}`);
+  return shopDefault.data;
 }

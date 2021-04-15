@@ -1,47 +1,71 @@
 import React, {createRef, useState} from 'react';
-import {ListItem} from '@ui-kitten/components';
-import ActionSheet from 'react-native-actions-sheet';
-import * as Icon from 'react-native-feather';
+import {Dropdown, Text} from 'react-native-magnus';
 
-import {colors} from '../../../themes/variables';
-import {Styled} from './styles';
+import {FormErrorLabel} from '../../../themes/components';
+import {Button} from '../../../themes/components';
 
-const ArrowIcon = (props) => (
-  <Icon.ArrowDown stroke={colors.white} {...props} />
-);
+export default function GenderActionSheet(props) {
+  const {
+    field: {name, onBlur, onChange},
+    form: {errors, touched, setFieldTouched},
+    ...inputProps
+  } = props;
 
-export default function GenderActionSheet({onPress}) {
-  const actionSheetRef = createRef();
+  const [initialValue, setinitialValue] = useState(inputProps.placeholder);
 
-  const [buttonValue, setButtonValue] = useState('Gender Select');
-
-  function handleItem(option) {
-    onPress(option);
-    setButtonValue(option);
-    actionSheetRef.current.setModalVisible(false);
-  }
+  const hasError = errors[name] && touched[name];
+  const dropdownRef = createRef();
 
   return (
     <>
-      <Styled.ButtonContainer>
-        <Styled.StyledButton
-          variant="dropDownButton"
-          text={buttonValue}
-          size="medium"
-          accessoryRight={ArrowIcon}
+      <Button
+        block
+        justifyContent="space-around"
+        textAlign="left"
+        text={initialValue}
+        onPress={() => dropdownRef.current.open()}
+        suffix="arrow-down"
+      />
+      {hasError && <FormErrorLabel errorMessage={errors[name]} />}
+      <Dropdown
+        ref={dropdownRef}
+        mt="md"
+        pb="2xl"
+        showSwipeIndicator={true}
+        roundedTop="xl">
+        <Dropdown.Option
           onPress={() => {
-            actionSheetRef.current.setModalVisible();
-          }}>
-          {buttonValue}
-        </Styled.StyledButton>
-      </Styled.ButtonContainer>
-
-      <ActionSheet ref={actionSheetRef}>
-        <Styled.ActionSheetContainer>
-          <ListItem onPress={() => handleItem('mr')} title="Mr." />
-          <ListItem onPress={() => handleItem('mrs')} title="Mrs." />
-        </Styled.ActionSheetContainer>
-      </ActionSheet>
+            onChange(name)('mr');
+            setinitialValue('Mr.');
+          }}
+          py="md"
+          px="xl"
+          block>
+          <Text
+            onBlur={() => {
+              setFieldTouched(name);
+              onBlur(name);
+            }}>
+            Mr.
+          </Text>
+        </Dropdown.Option>
+        <Dropdown.Option
+          onPress={() => {
+            onChange(name)('mrs');
+            setinitialValue('Mrs.');
+          }}
+          py="md"
+          px="xl"
+          block>
+          <Text
+            onBlur={() => {
+              setFieldTouched(name);
+              onBlur(name);
+            }}>
+            Mrs.
+          </Text>
+        </Dropdown.Option>
+      </Dropdown>
     </>
   );
 }

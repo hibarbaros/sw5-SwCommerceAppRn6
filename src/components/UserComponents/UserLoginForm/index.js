@@ -1,92 +1,66 @@
-import React, {useState, useContext} from 'react';
-import {TouchableWithoutFeedback} from 'react-native';
-import {Icon, Input, Button} from '@ui-kitten/components';
-
+import React from 'react';
+import {Button} from '@ui-kitten/components';
 import {View} from 'react-native-ui-lib';
 import {useNavigation} from '@react-navigation/native';
-import {Formik, getIn} from 'formik';
+import {Formik, Field} from 'formik';
 import * as yup from 'yup';
-
-import {LocalizationContext} from '../../../context/Translations';
-import {FormErrorLabel} from '../../../themes/components';
-import {EmailIcon, ForwardIcon} from '../../../themes/components/IconSet';
-import {useCustomerLogin} from '../../../utils/hooks/useCustomer';
-
+import {ForwardIcon} from '../../../themes/components/IconSet';
+//*components
+import {FormInput} from '../../../themes/components';
 import LoadSpinner from '../../Common/LoadSpinner';
+//*utils
+import {useCustomerLogin} from '../../../utils/hooks/useCustomer';
+import {validationSchema} from '../../../utils/validationSchema';
+
+import {initialValues} from './initialValues';
 
 export default function UserLoginForm({modalVisible = false}) {
   const navigation = useNavigation();
 
-  const {mutate, isLoading} = useCustomerLogin();
+  const {mutateAsync, isLoading} = useCustomerLogin();
 
-  const {translations} = useContext(LocalizationContext);
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  // const renderIcon = (props) => (
+  //   <TouchableWithoutFeedback
+  //     onPress={() => setSecureTextEntry(!secureTextEntry)}>
+  //     <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'} />
+  //   </TouchableWithoutFeedback>
+  // );
 
-  const renderIcon = (props) => (
-    <TouchableWithoutFeedback
-      onPress={() => setSecureTextEntry(!secureTextEntry)}>
-      <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'} />
-    </TouchableWithoutFeedback>
-  );
-
-  function handleLogin(values) {
-    mutate(values, {
-      onSuccess: () => {
-        modalVisible ? modalVisible() : navigation.goBack();
-      },
-    });
+  async function handleLogin(values) {
+    await mutateAsync(values);
+    modalVisible ? modalVisible() : navigation.goBack();
   }
 
   return (
     <>
       <LoadSpinner isVisible={isLoading} />
       <Formik
-        initialValues={{
-          email: 'pixtanbul@gmail.com',
-          password: '2003980016Bbb',
-        }}
+        initialValues={initialValues}
         onSubmit={(values) => handleLogin(values)}
         validationSchema={yup.object().shape({
-          email: yup.string().email().required(),
-          password: yup.string().required('No password provided.'),
+          email: validationSchema.emailValidation('E-mail is a required filed'),
+          password: validationSchema.passwordValidation(
+            'No password provided.',
+            'Password is too short - should be 8 chars minimum.',
+            'Password can only contain Latin letters.',
+          ),
         })}>
-        {({
-          values,
-          handleChange,
-          errors,
-          setFieldTouched,
-          touched,
-          handleSubmit,
-        }) => (
+        {({handleSubmit}) => (
           <>
             <View marginV-s2>
-              <Input
-                value={values.email}
-                onChangeText={handleChange('email')}
-                onBlur={() => setFieldTouched('email')}
-                accessoryRight={EmailIcon}
-                size="large"
-                placeholder="E-Mail"
-                label="E-Mail *"
+              <Field
+                component={FormInput}
+                name="email"
+                placeholder="E-Mail *"
               />
-              {getIn(errors, 'email') && getIn(touched, 'email') && (
-                <FormErrorLabel errorMessage={errors.email} />
-              )}
             </View>
             <View marginV-s2>
-              <Input
-                value={values.password}
-                accessoryRight={renderIcon}
-                size="large"
-                secureTextEntry={secureTextEntry}
-                onChangeText={handleChange('password')}
-                onBlur={() => setFieldTouched('password')}
-                placeholder={translations.passwordInput}
-                label="Password"
+              <Field
+                component={FormInput}
+                secureTextEntry={true}
+                name="password"
+                placeholder="Password *"
               />
-              {getIn(errors, 'password') && getIn(touched, 'password') && (
-                <FormErrorLabel errorMessage={errors.password} />
-              )}
             </View>
             <View marginV-s2>
               <Button
