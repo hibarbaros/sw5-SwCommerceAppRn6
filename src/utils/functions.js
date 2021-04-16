@@ -45,6 +45,10 @@ export function checkBcryptPass(password, hashPassword) {
   const check = bcrypt.compareSync(password, hashPassword);
   return check ? true : false;
 }
+export async function makeBcryptPass(password) {
+  const hash = bcrypt.hashSync(password, 12);
+  return hash;
+}
 
 //TODO: bu function gözden gecirilmeli
 export function findVariantProductOrderNumber(productData, selectedVariants) {

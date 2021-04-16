@@ -63,7 +63,6 @@ export function customerRegisterNormalize(data, sessionId) {
     doubleOptinRegister,
     sendOptinMail,
   };
-
   const formData = JSON.stringify({
     ...allData,
   });
@@ -76,16 +75,22 @@ export function customerEditNormalize(data) {
     lastname: data.lastname,
     salutation: data.salutation,
     email: data.email,
+    sendOptinMail: false,
   });
   return formData;
 }
 
-export function passwordEditNormalize(data) {
-  const {hashPassword} = data;
-
+export function passwordEditNormalize(customer, hash) {
+  const allData = {
+    firstname: customer.firstname,
+    lastname: customer.lastname,
+    salutation: customer.salutation,
+    email: customer.email,
+    hashPassword: hash,
+    sendOptinMail: false,
+  };
   const formData = JSON.stringify({
-    firstname: 'test',
-    hashPassword: hashPassword,
+    ...allData,
   });
   return formData;
 }

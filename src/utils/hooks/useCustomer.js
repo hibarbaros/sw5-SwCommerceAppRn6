@@ -1,11 +1,11 @@
 import {useContext} from 'react';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
 import Toast from 'react-native-toast-message';
-
+//*context
 import {LocalizationContext} from '../../context/Translations';
 import AppContext from '../../context/AppContext';
 import CartContext from '../../context/CartContext';
-
+//*actions
 import {
   customerData,
   customerRegister,
@@ -14,9 +14,10 @@ import {
   passwordEdit,
   userLogin,
 } from '../actions/useractions';
-
 import {migrateUserCart} from '../actions/cartactions';
+//*normalize
 import {initialCartNormalize} from '../normalize/cartNormalize';
+import {checkMd5Pass, checkBcryptPass} from '../../utils/functions';
 
 //!Get Customer by Id
 const getCustomerByCustomerId = async (userId) => {
@@ -219,7 +220,7 @@ export function useEditCustomerPassword() {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: translations.formularError,
+          text2: 'Old Password is false',
         });
       }
     },

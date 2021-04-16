@@ -2,7 +2,11 @@ import uuid from 'react-uuid';
 
 import Api from '../api';
 import {removeItem, setItem} from '../../utils/storagehelper';
-import {checkMd5Pass, checkBcryptPass} from '../../utils/functions';
+import {
+  checkMd5Pass,
+  checkBcryptPass,
+  makeBcryptPass,
+} from '../../utils/functions';
 import {
   customerRegisterNormalize,
   customerEditNormalize,
@@ -29,16 +33,33 @@ export const customerRegister = async (data) => {
   }
 };
 
-export async function customerEdit(values) {
-  const {customerId, data} = values;
-  const formData = customerEditNormalize(data);
+export async function customerEdit(data) {
+  const {customerId, values} = data;
+  const formData = customerEditNormalize(values);
   const response = await Api.put(`/ConnectorCustomers/${customerId}`, formData);
   return response.data.id ? true : false;
 }
-
-export async function passwordEdit(data) {
-  const formData = passwordEditNormalize(data);
-  const response = await Api.put(`/ConnectorCustomers/${data.id}`, formData);
+//TODO: sifre degistirmede problem var düzenle
+export async function passwordEdit(values) {
+  const {oldPassword, hashPassword, encoderName, customer, password} = values;
+  const hash = await makeBcryptPass(password);
+  if (encoderName === 'md5') {
+    const checked = checkMd5Pass(oldPassword);
+    if (!checked) {
+      return false;
+    }
+  }
+  if (encoderName === 'bcrypt') {
+    const checked = checkBcryptPass(oldPassword, hashPassword);
+    if (!checked) {
+      return false;
+    }
+  }
+  const formData = passwordEditNormalize(customer, hash);
+  const response = await Api.put(
+    `/ConnectorCustomers/${customer.id}`,
+    formData,
+  );
   return response.data.id ? true : false;
 }
 

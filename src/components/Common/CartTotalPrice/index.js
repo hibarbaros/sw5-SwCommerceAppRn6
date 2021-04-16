@@ -38,7 +38,8 @@ export default function CartTotalPrice() {
             <PriceWithCurrency
               price={
                 data?.netPrice +
-                (selectedShippingMethod && selectedShippingMethod.detail.value)
+                (selectedShippingMethod &&
+                  parseFloat(selectedShippingMethod.detail.value))
               }
             />
           </Styled.TextRight>
