@@ -1,7 +1,7 @@
-import React, {useState, useContext} from 'react';
-import {View, ActionSheet, Text} from 'react-native-ui-lib';
+import React, {useState, useContext, createRef} from 'react';
+import {View} from 'react-native-ui-lib';
 import {useNavigation} from '@react-navigation/native';
-import {useQueryClient} from 'react-query';
+import {Dropdown, Text} from 'react-native-magnus';
 
 import {Button} from '../../../themes/components';
 import UserAddressCard from '../UserAddressCard';
@@ -12,31 +12,22 @@ import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
 import {useDeleteAddress} from '../../../utils/hooks/useAddress';
 
 export default function UserAddressList({checkout = false}) {
+  const dropdownRef = createRef();
   const navigation = useNavigation();
   const {user} = useContext(AppContext);
-  const cache = useQueryClient();
 
-  const [isTooltip, setisTooltip] = useState(null);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
 
   const {data, isLoading} = useCustomerByCustomerId(user);
 
-  const {
-    mutate: deleteAddress,
-    isLoading: isDeleteAddress,
-  } = useDeleteAddress();
+  const {mutate, isLoading: mutateLoading} = useDeleteAddress();
 
   function handleDelete() {
-    deleteAddress(selectedAddressId, {
-      onSettled: () => {
-        cache.invalidateQueries('userData');
-      },
-      throwOnError: true,
-    });
+    mutate(selectedAddressId);
   }
 
   function handleSetTooltip(adressId) {
-    setisTooltip(true);
+    dropdownRef.current.open();
     setSelectedAddressId(adressId);
   }
 
@@ -48,17 +39,15 @@ export default function UserAddressList({checkout = false}) {
     );
   }
 
-  const {address} = data;
-
   return (
     <>
-      <LoadSpinner isVisible={isDeleteAddress} />
-      {address.map((item) => {
+      <LoadSpinner isVisible={mutateLoading} />
+      {data.address.map((item) => {
         return (
           <UserAddressCard
             key={item.id}
             checkout={checkout}
-            setisTooltip={handleSetTooltip}
+            handleSetTooltip={handleSetTooltip}
             userData={data}
             addressData={item}
           />
@@ -76,17 +65,30 @@ export default function UserAddressList({checkout = false}) {
           }
         />
       </View>
-      <ActionSheet
-        title="Are you sure?"
-        destructiveButtonIndex={0}
-        useNativeIOS={true}
-        options={[
-          {label: 'Delete', onPress: () => handleDelete()},
-          {label: 'Cancel', onPress: () => setisTooltip(false)},
-        ]}
-        visible={isTooltip}
-        onDismiss={() => setisTooltip(false)}
-      />
+      <Dropdown
+        ref={dropdownRef}
+        mt="md"
+        pb="2xl"
+        px="xl"
+        showSwipeIndicator={true}
+        roundedTop="xl">
+        <Dropdown.Option
+          bg="red900"
+          onPress={() => handleDelete()}
+          py="lg"
+          my="md"
+          block>
+          <Text color="white">Delete</Text>
+        </Dropdown.Option>
+        <Dropdown.Option
+          bg="green900"
+          onPress={() => dropdownRef.current.close()}
+          py="lg"
+          my="md"
+          block>
+          <Text color="white">Cancel</Text>
+        </Dropdown.Option>
+      </Dropdown>
     </>
   );
 }

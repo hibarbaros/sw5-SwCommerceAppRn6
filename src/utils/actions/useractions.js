@@ -31,25 +31,15 @@ export const customerRegister = async (data) => {
 
 export async function customerEdit(values) {
   const {customerId, data} = values;
-
   const formData = customerEditNormalize(data);
   const response = await Api.put(`/ConnectorCustomers/${customerId}`, formData);
-  if (response.data.id > 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return response.data.id ? true : false;
 }
 
 export async function passwordEdit(data) {
   const formData = passwordEditNormalize(data);
   const response = await Api.put(`/ConnectorCustomers/${data.id}`, formData);
-
-  if (response.data.id > 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return response.data.id ? true : false;
 }
 
 export async function userLogin(values) {

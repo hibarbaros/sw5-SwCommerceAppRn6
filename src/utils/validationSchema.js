@@ -14,6 +14,7 @@ export const validationSchema = {
       then: yup.string().oneOf([yup.ref('password')], text),
     }),
   textValidation: (text) => yup.string().required(text),
+  numberValidation: (text) => yup.number().required(text),
   newsletterValidation: yup.bool(),
   isShippingValidation: yup.boolean(),
   isShippingTrue: (text) =>

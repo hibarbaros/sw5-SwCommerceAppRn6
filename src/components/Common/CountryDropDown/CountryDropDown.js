@@ -7,6 +7,7 @@ import {useCountries} from '../../../utils/hooks/useApp';
 
 export default function CountryDropDown(props) {
   const {
+    countryId,
     field: {name, onBlur, onChange},
     form: {errors, touched, setFieldTouched, setFieldValue},
     ...inputProps
@@ -29,7 +30,11 @@ export default function CountryDropDown(props) {
         block
         justifyContent="space-around"
         textAlign="left"
-        text={initialValue}
+        text={
+          countryId
+            ? data.find((x) => x.id === parseInt(countryId, 10)).name
+            : initialValue
+        }
         onPress={() => dropdownRef.current.open()}
         suffix="arrow-down"
       />
@@ -53,8 +58,8 @@ export default function CountryDropDown(props) {
             block>
             <Text
               onBlur={() => {
-                setFieldTouched(name);
-                onBlur(name);
+                setFieldTouched(country.name);
+                onBlur(country.name);
               }}>
               {country.name}
             </Text>

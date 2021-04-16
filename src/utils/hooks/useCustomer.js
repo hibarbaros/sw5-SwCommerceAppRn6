@@ -9,7 +9,6 @@ import CartContext from '../../context/CartContext';
 import {
   customerData,
   customerRegister,
-  setUserStorage,
   customerEdit,
   checkUserForLogin,
   passwordEdit,
@@ -19,6 +18,7 @@ import {
 import {migrateUserCart} from '../actions/cartactions';
 import {initialCartNormalize} from '../normalize/cartNormalize';
 
+//!Get Customer by Id
 const getCustomerByCustomerId = async (userId) => {
   const data = await customerData(userId);
   return data;
@@ -31,8 +31,9 @@ export function useCustomerByCustomerId(userId, options) {
     options,
   );
 }
+//!Get Customer by Id
 
-//Customer logout
+//!Customer logout
 export function useCustomerLogout() {
   const {logoutUserContext} = useContext(AppContext);
   const {setInitialUserCart} = useContext(CartContext);
@@ -45,9 +46,9 @@ export function useCustomerLogout() {
 
   return mutate;
 }
-//Customer logout
+//!Customer logout
 
-//Customer login
+//!Customer login
 const getCustomerLogin = async (values) => {
   const response = await userLogin(values);
   return response;
@@ -85,9 +86,9 @@ export function useCustomerLogin() {
 
   return mutate;
 }
-//Customer login
+//!Customer login
 
-//Check Customer By Mail
+//!Check Customer By Mail
 const getCustomerCheckByCustomerMail = async (values) => {
   const data = await checkUserForLogin(values);
   return data;
@@ -116,16 +117,15 @@ export function useCustomerCheckByMail() {
 
   return mutate;
 }
-//Check Customer By Mail
+//!Check Customer By Mail
 
-//Register customer
+//!Register customer
 const getRegisterCustomer = async (values) => {
   const data = await customerRegister(values);
   return data;
 };
 
 export function useRegisterCustomer() {
-  // const {translations} = useContext(LocalizationContext);
   const {setUserContext} = useContext(AppContext);
 
   const mutate = useMutation((values) => getRegisterCustomer(values), {
@@ -147,9 +147,9 @@ export function useRegisterCustomer() {
 
   return mutate;
 }
-//Register customer
+//!Register customer
 
-//Edit customer
+//!Edit customer
 const getEditCustomer = async (values) => {
   const data = await customerEdit(values);
   return data;
@@ -187,9 +187,9 @@ export function useEditCustomer() {
 
   return mutate;
 }
-//Edit customer
+//!Edit customer
 
-//Edit customer password
+//!Edit customer password
 const getEditCustomerPassword = async (values) => {
   const data = await passwordEdit(values);
   return data;
@@ -227,4 +227,4 @@ export function useEditCustomerPassword() {
 
   return mutate;
 }
-//Edit customer password
+//!Edit customer password

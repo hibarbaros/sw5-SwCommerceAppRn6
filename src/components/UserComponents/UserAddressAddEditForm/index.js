@@ -1,108 +1,78 @@
 import React from 'react';
 import {Text} from '@ui-kitten/components';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import {View} from 'react-native-ui-lib';
-import {useQueryClient} from 'react-query';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 
 import {ForwardIcon} from '../../../themes/components/IconSet';
 import {
-  FormErrorLabel,
   KeyboardAwareScroll,
   Button,
   FormInput,
 } from '../../../themes/components';
 import CountryDropDown from '../../Common/CountryDropDown/CountryDropDown';
+import GenderActionSheet from '../../Common/GenderActionSheet/GenderActionSheet';
 import LoadSpinner from '../../Common/LoadSpinner';
-import {useAddAddress, useEditAddress} from '../../../utils/hooks/useAddress';
+import {useAddEditAddress} from '../../../utils/hooks/useAddress';
+import {validationSchema} from '../../../utils/validationSchema';
 
-export default function UserAddressAddForm() {
-  const navigation = useNavigation();
+import {initialValues} from './initialValues';
+
+export default function UserAddressAddEditForm() {
   const route = useRoute();
   const {userData, userAddress} = route.params;
-  const cache = useQueryClient();
 
-  const {mutate: addAddress, isLoading: isAddAddressLoading} = useAddAddress();
-  const {
-    mutate: editAddress,
-    isLoading: isEditAddressLoading,
-  } = useEditAddress();
-
-  function handleEditAddress(values) {
-    editAddress(values, {
-      onSettled: () => {
-        cache.invalidateQueries('userData');
-      },
-      onSuccess: (data) => {
-        if (data) {
-          cache.invalidateQueries('userData');
-          navigation.goBack();
-        }
-      },
-      throwOnError: true,
-    });
-  }
-
-  function handleAddAddress(values) {
-    addAddress(values, {
-      onSettled: () => {
-        cache.invalidateQueries('userData');
-      },
-      onSuccess: (data) => {
-        if (data) {
-          cache.invalidateQueries('userData');
-          navigation.goBack();
-        }
-      },
-      throwOnError: true,
-    });
-  }
+  const {mutate, isLoading} = useAddEditAddress();
 
   function handleForm(values) {
+    values.customer = userData.id;
     if (userAddress) {
-      handleEditAddress({values, userAddress});
-    } else {
-      values.customer = userData.id;
-      userAddress ? handleEditAddress(values) : handleAddAddress(values);
+      values.userAddressId = parseFloat(userAddress.id);
     }
+    mutate(values);
   }
 
   return (
     <>
-      <LoadSpinner isVisible={isAddAddressLoading || isEditAddressLoading} />
+      <LoadSpinner isVisible={isLoading} />
       <KeyboardAwareScroll>
         <>
           <Text>Address Add Form</Text>
           <Formik
             initialValues={{
-              firstname: userAddress ? userAddress.firstname : '',
-              lastname: userAddress ? userAddress.lastname : '',
-              street: userAddress ? userAddress.street : '',
-              zipcode: userAddress ? userAddress.zipcode : '',
-              city: userAddress ? userAddress.city : '',
-              state: userAddress ? userAddress.state : '',
-              country: userAddress ? userAddress.country : '',
+              firstname: initialValues.firstname(userAddress),
+              lastname: initialValues.lastname(userAddress),
+              street: initialValues.street(userAddress),
+              salutation: initialValues.salutation(userAddress),
+              zipcode: initialValues.zipcode(userAddress),
+              city: initialValues.city(userAddress),
+              state: initialValues.state(userAddress),
+              country: initialValues.country(userAddress?.country_id),
             }}
             onSubmit={(values) => handleForm(values)}
             validationSchema={yup.object().shape({
-              firstname: yup.string().required(),
-              lastname: yup.string().required(),
-              street: yup.string().required(),
-              zipcode: yup.number().required(),
-              city: yup.string().required(),
-              country: yup.string().required(),
+              firstname: validationSchema.textValidation(
+                'Firstname is a required filed',
+              ),
+              lastname: validationSchema.textValidation(
+                'Lastname is a required filed',
+              ),
+              salutation: validationSchema.textValidation(
+                'Salutation is a required filed',
+              ),
+              street: validationSchema.textValidation(
+                'street is a required filed',
+              ),
+              zipcode: validationSchema.textValidation(
+                'zipcode is a required filed',
+              ),
+              city: validationSchema.textValidation('City is a required filed'),
+              country: validationSchema.textValidation(
+                'Country is a required filed',
+              ),
             })}>
-            {({
-              values,
-              handleChange,
-              errors,
-              setFieldTouched,
-              touched,
-              isValid,
-              handleSubmit,
-              setFieldValue,
-            }) => (
+            {({handleSubmit}) => (
               <>
                 <View marginV-s2>
                   <Field
@@ -116,6 +86,14 @@ export default function UserAddressAddForm() {
                     component={FormInput}
                     name="lastname"
                     placeholder="Lastname *"
+                  />
+                </View>
+                <View marginV-s2>
+                  <Field
+                    component={GenderActionSheet}
+                    name="salutation"
+                    salutationValue={userAddress?.salutation}
+                    placeholder="Gender Select"
                   />
                 </View>
                 <View marginV-s2>
@@ -147,15 +125,12 @@ export default function UserAddressAddForm() {
                   />
                 </View>
                 <View marginV-s2>
-                  <CountryDropDown
-                    userAddress={userAddress}
-                    onPress={(countryId) => {
-                      setFieldValue('country', countryId);
-                    }}
+                  <Field
+                    component={CountryDropDown}
+                    countryId={userAddress?.country_id}
+                    name="country"
+                    placeholder="Select Country"
                   />
-                  {touched.country && errors.country && (
-                    <FormErrorLabel errorMessage={errors.country} />
-                  )}
                 </View>
                 <View marginV-s2>
                   <Button

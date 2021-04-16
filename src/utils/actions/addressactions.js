@@ -2,33 +2,25 @@ import Api from '../api';
 import {
   addressAddNormalize,
   addressEditNormalize,
-} from '../normalize/address-normalize';
+} from '../normalize/addressNormalize';
 
 export async function addressDetail(addressId) {
   const address = await Api.get(`/addresses/${addressId}`);
   return address.data;
 }
 
-export async function addressAdd(data) {
-  const formData = addressAddNormalize(data);
-  const response = await Api.post('/addresses', formData);
-  if (response.data.id > 0) {
-    return true;
+export async function addressAddEdit(values) {
+  if (values.userAddressId) {
+    const formData = addressEditNormalize(values);
+    const response = await Api.put(
+      `/ConnectorAddress/${values.userAddressId}`,
+      formData,
+    );
+    return response.data?.id ? true : false;
   } else {
-    return false;
-  }
-}
-
-export async function addressEdit(data) {
-  const formData = addressEditNormalize(data);
-  const response = await Api.put(
-    `/ConnectorAddress/${data.userAddress.id}`,
-    formData,
-  );
-  if (response.data.id > 0) {
-    return true;
-  } else {
-    return false;
+    const formData = addressAddNormalize(values);
+    const response = await Api.post('/addresses', formData);
+    return response.data?.id ? true : false;
   }
 }
 
@@ -40,10 +32,3 @@ export async function addressDelete(addressId) {
     return false;
   }
 }
-
-export default {
-  addressDetail,
-  addressDelete,
-  addressAdd,
-  addressEdit,
-};

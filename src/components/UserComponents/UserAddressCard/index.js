@@ -7,7 +7,11 @@ import {TrashIcon} from '../../../themes/components/IconSet';
 
 import {Styled} from './styles';
 
-export default function UserAddressCard({setisTooltip, userData, addressData}) {
+export default function UserAddressCard({
+  handleSetTooltip,
+  userData,
+  addressData,
+}) {
   const navigation = useNavigation();
 
   const parsedId = parseInt(addressData.id, 10);
@@ -35,7 +39,7 @@ export default function UserAddressCard({setisTooltip, userData, addressData}) {
           <Button
             status="danger"
             accessoryLeft={TrashIcon}
-            onPress={() => setisTooltip(addressData.id)}
+            onPress={() => handleSetTooltip(addressData.id)}
           />
           <Styled.EditButton
             status="info"

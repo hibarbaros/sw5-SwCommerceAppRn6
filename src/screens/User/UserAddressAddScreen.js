@@ -1,11 +1,11 @@
 import React from 'react';
 import {Container} from '../../themes/components';
-import UserAddressAddForm from '../../components/UserComponents/UserAddressAddForm';
+import UserAddressAddEditForm from '../../components/UserComponents/UserAddressAddEditForm';
 
 export default function UserAddressAddScreen() {
   return (
     <Container>
-      <UserAddressAddForm />
+      <UserAddressAddEditForm />
     </Container>
   );
 }

@@ -1,37 +1,38 @@
 import {useContext} from 'react';
-import {useQuery, useMutation} from 'react-query';
+import {useQuery, useMutation, useQueryClient} from 'react-query';
 import {LocalizationContext} from '../../context/Translations';
 import Toast from 'react-native-toast-message';
 
 import {
   addressDetail,
   addressDelete,
-  addressAdd,
-  addressEdit,
+  addressAddEdit,
 } from '../actions/addressactions';
 import {customerData} from '../actions/useractions';
 
+//!Get Address
 const getAddressById = async (addressId) => {
   const data = await addressDetail(addressId);
   return data;
 };
-
 export function useAddress(addressId) {
   return useQuery(['addressData', addressId], () => getAddressById(addressId));
 }
+//!Get Address
 
+//!Get User Address
 const getUserAddressByUserId = async (userId) => {
   const data = await customerData(userId);
   return data.address;
 };
-
 export function useAddressesByUserId(userId) {
   return useQuery(['userAddressesData', userId], () =>
     getUserAddressByUserId(userId),
   );
 }
+//!Get User Address
 
-//Delete Address
+//!Delete Address
 const getDeleteAddress = async (addressId) => {
   const data = await addressDelete(addressId);
   return data;
@@ -39,6 +40,8 @@ const getDeleteAddress = async (addressId) => {
 
 export function useDeleteAddress() {
   const {translations} = useContext(LocalizationContext);
+  const cache = useQueryClient();
+
   const mutate = useMutation((addressId) => getDeleteAddress(addressId), {
     onError: (e) => {
       Toast.show({
@@ -47,8 +50,16 @@ export function useDeleteAddress() {
         text2: e.message,
       });
     },
+    onSettled: () => {
+      cache.invalidateQueries('userData');
+    },
     onSuccess: (data) => {
       if (data) {
+        cache.invalidateQueries('userData');
+        Toast.show({
+          text1: 'Success',
+          text2: translations.formularSuccess,
+        });
         return data;
       }
       if (!data) {
@@ -63,17 +74,20 @@ export function useDeleteAddress() {
 
   return mutate;
 }
-//Delete Address
+//!Delete Address
 
-//Add Address
-const getAddAddress = async (values) => {
-  const data = await addressAdd(values);
+//!Add-Edit Address
+const getAddEditAddress = async (values) => {
+  const data = await addressAddEdit(values);
   return data;
 };
 
-export function useAddAddress() {
+export function useAddEditAddress() {
   const {translations} = useContext(LocalizationContext);
-  const mutate = useMutation((values) => getAddAddress(values), {
+
+  const cache = useQueryClient();
+
+  const mutate = useMutation((values) => getAddEditAddress(values), {
     onError: (e) => {
       Toast.show({
         type: 'error',
@@ -81,11 +95,18 @@ export function useAddAddress() {
         text2: e.message,
       });
     },
-    onSuccess: (data) => {
-      if (data) {
-        return true;
+    onSettled: () => {
+      cache.invalidateQueries('userData');
+    },
+    onSuccess: (res) => {
+      if (res) {
+        cache.invalidateQueries('userData');
+        Toast.show({
+          text1: 'Success',
+          text2: translations.formularSuccess,
+        });
       }
-      if (!data) {
+      if (!res) {
         Toast.show({
           type: 'error',
           text1: 'Error',
@@ -97,38 +118,4 @@ export function useAddAddress() {
 
   return mutate;
 }
-//Add Address
-
-//Edit Address
-const getEditAddress = async (values) => {
-  const data = await addressEdit(values);
-  return data;
-};
-
-export function useEditAddress() {
-  const {translations} = useContext(LocalizationContext);
-  const mutate = useMutation((values) => getEditAddress(values), {
-    onError: (e) => {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: e.message,
-      });
-    },
-    onSuccess: (data) => {
-      if (data) {
-        return true;
-      }
-      if (!data) {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: translations.formularError,
-        });
-      }
-    },
-  });
-
-  return mutate;
-}
-//Edit Address
+//!Add-Edit Address

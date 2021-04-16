@@ -4,8 +4,21 @@ import {Dropdown, Text} from 'react-native-magnus';
 import {FormErrorLabel} from '../../../themes/components';
 import {Button} from '../../../themes/components';
 
+const genderList = [
+  {
+    name: 'Mr.',
+    value: 'mr',
+  },
+  {
+    name: 'Mrs.',
+    value: 'mrs',
+  },
+];
+
 export default function GenderActionSheet(props) {
+  const dropdownRef = createRef();
   const {
+    salutationValue,
     field: {name, onBlur, onChange},
     form: {errors, touched, setFieldTouched},
     ...inputProps
@@ -14,7 +27,6 @@ export default function GenderActionSheet(props) {
   const [initialValue, setinitialValue] = useState(inputProps.placeholder);
 
   const hasError = errors[name] && touched[name];
-  const dropdownRef = createRef();
 
   return (
     <>
@@ -22,7 +34,11 @@ export default function GenderActionSheet(props) {
         block
         justifyContent="space-around"
         textAlign="left"
-        text={initialValue}
+        text={
+          salutationValue
+            ? genderList.find((x) => x.value === salutationValue).name
+            : initialValue
+        }
         onPress={() => dropdownRef.current.open()}
         suffix="arrow-down"
       />
@@ -33,38 +49,25 @@ export default function GenderActionSheet(props) {
         pb="2xl"
         showSwipeIndicator={true}
         roundedTop="xl">
-        <Dropdown.Option
-          onPress={() => {
-            onChange(name)('mr');
-            setinitialValue('Mr.');
-          }}
-          py="md"
-          px="xl"
-          block>
-          <Text
-            onBlur={() => {
-              setFieldTouched(name);
-              onBlur(name);
-            }}>
-            Mr.
-          </Text>
-        </Dropdown.Option>
-        <Dropdown.Option
-          onPress={() => {
-            onChange(name)('mrs');
-            setinitialValue('Mrs.');
-          }}
-          py="md"
-          px="xl"
-          block>
-          <Text
-            onBlur={() => {
-              setFieldTouched(name);
-              onBlur(name);
-            }}>
-            Mrs.
-          </Text>
-        </Dropdown.Option>
+        {genderList.map((item) => (
+          <Dropdown.Option
+            key={item.value}
+            onPress={() => {
+              onChange(name)(item.value);
+              setinitialValue(item.name);
+            }}
+            py="md"
+            px="xl"
+            block>
+            <Text
+              onBlur={() => {
+                setFieldTouched(name);
+                onBlur(name);
+              }}>
+              {item.name}
+            </Text>
+          </Dropdown.Option>
+        ))}
       </Dropdown>
     </>
   );
