@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Icon, Badge} from 'react-native-magnus';
+
 import AppRoute from '../utils/approutes';
-import {colors} from '../themes/variables';
+import {theme} from '../themes/theme';
 import AppContext from '../context/AppContext';
 import CartContext from '../context/CartContext';
-
-import {Styled} from './styles';
 
 //Screens
 import {
@@ -34,9 +34,11 @@ const TabComponent = () => {
           cardStyle: {backgroundColor: 'white'},
           tabBarLabel: () => null,
           tabBarIcon: ({focused}) => (
-            <Styled.StyledIcon
-              fill={focused ? colors.blue : colors.themeColor}
-              name="home-outline"
+            <Icon
+              name="home"
+              color={focused ? theme.colors.red : theme.colors.primary}
+              fontSize="6xl"
+              fontFamily="AntDesign"
             />
           ),
         }}
@@ -47,9 +49,11 @@ const TabComponent = () => {
         options={{
           tabBarLabel: () => null,
           tabBarIcon: ({focused}) => (
-            <Styled.StyledIcon
-              fill={focused ? colors.blue : colors.themeColor}
-              name="book-open-outline"
+            <Icon
+              name="bars"
+              color={focused ? theme.colors.red : theme.colors.primary}
+              fontSize="6xl"
+              fontFamily="AntDesign"
             />
           ),
         }}
@@ -60,9 +64,11 @@ const TabComponent = () => {
         options={{
           tabBarLabel: () => null,
           tabBarIcon: ({focused}) => (
-            <Styled.StyledIcon
-              fill={focused ? colors.blue : colors.themeColor}
-              name="search-outline"
+            <Icon
+              name="search1"
+              color={focused ? theme.colors.red : theme.colors.primary}
+              fontSize="6xl"
+              fontFamily="AntDesign"
             />
           ),
         }}
@@ -74,15 +80,18 @@ const TabComponent = () => {
           tabBarLabel: () => null,
           tabBarIcon: ({focused}) => (
             <>
-              <Styled.StyledIcon
-                fill={focused ? colors.blue : colors.themeColor}
-                name="shopping-cart-outline"
-              />
-              {userCart && (
-                <Styled.CartIcon>
-                  <Styled.CartIconText>{userCart?.length}</Styled.CartIconText>
-                </Styled.CartIcon>
-              )}
+              <Badge
+                fontSize={8}
+                p={4}
+                bg={userCart.length ? 'red' : 'transparent'}
+                zIndex={999}>
+                <Icon
+                  name="shoppingcart"
+                  color={focused ? theme.colors.red : theme.colors.primary}
+                  fontSize="6xl"
+                  fontFamily="AntDesign"
+                />
+              </Badge>
             </>
           ),
         }}
@@ -93,9 +102,11 @@ const TabComponent = () => {
         options={{
           tabBarLabel: () => null,
           tabBarIcon: ({focused}) => (
-            <Styled.StyledIcon
-              fill={focused ? colors.blue : colors.themeColor}
-              name="person-outline"
+            <Icon
+              name="user"
+              color={focused ? theme.colors.red : theme.colors.primary}
+              fontSize="6xl"
+              fontFamily="AntDesign"
             />
           ),
         }}

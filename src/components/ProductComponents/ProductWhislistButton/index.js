@@ -4,19 +4,19 @@ import {useAddToWhislist} from '../../../utils/hooks/useWishlist';
 
 import {Styled} from './styles';
 
-export default function ProductWhislistButton({product}) {
+export default function ProductWhislistButton({productId}) {
   const {wishlist} = useContext(AppContext);
   const [checkWishList, setCheckWishList] = useState(false);
 
   const {mutate} = useAddToWhislist();
 
   function handleWhislist() {
-    mutate(product.id);
+    mutate(productId);
   }
 
   useEffect(() => {
     if (wishlist || wishlist.length !== 0) {
-      const finded = wishlist.some((x) => x === product.id);
+      const finded = wishlist.some((x) => x === productId);
       finded ? setCheckWishList(true) : setCheckWishList(false);
     }
   }, [wishlist]);

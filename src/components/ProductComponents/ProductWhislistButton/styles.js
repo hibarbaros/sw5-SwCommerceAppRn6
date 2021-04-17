@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 import {Icon} from '@ui-kitten/components';
 
-import {colors} from '../../../themes/variables';
+import {theme} from '../../../themes/theme';
 
 const FavoriteIcon = styled(Icon).attrs((props) => ({
-  fill: props.isSelected ? colors.red : colors.themeColor,
+  fill: props.isSelected ? theme.colors.secondary : theme.colors.primary,
 }))``;
 
 export const Styled = {

@@ -17,9 +17,11 @@ export default function VisitedProducts() {
 
   return (
     visitedProducts.length > 0 && (
-      <Styled.Container>
+      <>
         <Styled.CategoryTitleContainer>
-          <Headline type="h3">{translations.visitedProducts}</Headline>
+          <Headline variant="h1" my="md">
+            {translations.visitedProducts}
+          </Headline>
         </Styled.CategoryTitleContainer>
         <Styled.StyledCarousel
           horizontal
@@ -31,7 +33,7 @@ export default function VisitedProducts() {
           renderItem={(item) => renderCarouselItem(item)}
           keyExtractor={(item, index) => index.toString()}
         />
-      </Styled.Container>
+      </>
     )
   );
 }

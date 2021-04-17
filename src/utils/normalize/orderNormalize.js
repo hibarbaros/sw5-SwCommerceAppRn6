@@ -38,8 +38,6 @@ export function orderNormalize(mutateVariables) {
     esdArticle: 0,
   }));
 
-  //TODO stateId incelenemeli
-
   const allData = {
     customerId: user,
     paymentId: paymentMethodId,

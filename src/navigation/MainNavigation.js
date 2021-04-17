@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
-import {Text} from 'react-native';
 import {useQuery} from 'react-query';
+import {Image, Div} from 'react-native-magnus';
+import {useSpring, animated} from 'react-spring';
 
 import Navigation from './Navigation';
 import AppContext from '../context/AppContext';
@@ -10,8 +11,13 @@ import {customerData} from '../utils/actions/useractions';
 import {shopData, paymentsData} from '../utils/actions/appactions';
 import {initialCartNormalize} from '../utils/normalize/cartNormalize';
 
+import Logo from '../assets/images/lemken-logo.png';
+const AnimatedView = animated(Div);
+
 export default function MainScreen() {
+  const [isLoading, setIsLoading] = React.useState(true);
   const {setInitialUserCart} = useContext(CartContext);
+
   const {
     user,
     setUserContext,
@@ -42,10 +48,29 @@ export default function MainScreen() {
     onSuccess: (data) => setPaymentMethods(data),
   });
 
+  const [props] = useSpring(() => ({
+    opacity: 1,
+    from: {opacity: 0},
+  }));
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      // set({opacity: 0});
+      setIsLoading(false);
+    }, 2000);
+  }, [paymentContext.isLoading, shopContext.isLoading]);
+
   return (
     <>
-      {paymentContext.isLoading && shopContext.isLoading ? (
-        <Text>Loading</Text>
+      {isLoading ? (
+        <AnimatedView
+          style={props}
+          w="100%"
+          height="100%"
+          justifyContent="center"
+          alignItems="center">
+          <Image h={70} w={300} source={Logo} />
+        </AnimatedView>
       ) : (
         <Navigation />
       )}

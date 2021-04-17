@@ -14,12 +14,10 @@ export default function ThemeButton({
       return (
         <Button
           {...rest}
-          bg="blue600"
+          bg="primary"
           p={12}
-          color="white"
           suffix={<Icon name={suffix} color="white" fontFamily="Feather" />}
-          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}
-          mt="lg">
+          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}>
           <Text color="white" mr={suffix && 'auto'} ml={prefix && 'auto'}>
             {text}
           </Text>
@@ -29,25 +27,23 @@ export default function ThemeButton({
       return (
         <Button
           {...rest}
-          bg="blue900"
+          bg="secondary"
           p={12}
           color="white"
           suffix={<Icon name={suffix} color="white" fontFamily="Feather" />}
-          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}
-          mt="lg">
+          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}>
           {text}
         </Button>
       );
-    case 'dropDownButton':
+    case 'red':
       return (
         <Button
           {...rest}
-          bg="blue600"
+          bg="red"
           p={12}
           color="white"
           suffix={<Icon name={suffix} color="white" fontFamily="Feather" />}
-          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}
-          mt="lg">
+          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}>
           {text}
         </Button>
       );

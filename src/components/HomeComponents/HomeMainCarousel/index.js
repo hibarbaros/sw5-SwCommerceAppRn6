@@ -2,10 +2,9 @@ import React, {useRef, useState} from 'react';
 import {ActivityIndicator} from 'react-native';
 import {View, Text} from 'react-native-ui-lib';
 import Carousel from 'react-native-snap-carousel';
-import {useQuery} from 'react-query';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {getReferenceFromFirebase} from '../../../utils/actions/firebaseactions';
+import {useCollectionByCollectinName} from '../../../utils/hooks/useFirebase';
 import {GlobalStyled} from '../../../themes/styled/GlobalStyled';
 
 import {Styled} from './styles';
@@ -14,8 +13,9 @@ export default function HomeMainCarousel() {
   const snapCarousel = useRef(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
-  const {isLoading, data: homepageBannerData} = useQuery('homepageBanner', () =>
-    getReferenceFromFirebase('homepageBanner'),
+  const {data, isLoading} = useCollectionByCollectinName(
+    'images',
+    'homepageBanner',
   );
 
   if (isLoading) {
@@ -26,13 +26,13 @@ export default function HomeMainCarousel() {
     );
   }
 
-  const renderCarouselItem = (data) => {
+  const renderCarouselItem = (item) => {
     return (
       <Styled.StyledAnimatedImage
-        source={{uri: data.item.url}}
+        source={{uri: item.item.url}}
         loader={<ActivityIndicator />}
-        key={data.index}
-        animationDuration={data.index === 0 ? 300 : 800}
+        key={item.index}
+        animationDuration={item.index === 0 ? 300 : 800}
       />
     );
   };
@@ -47,7 +47,7 @@ export default function HomeMainCarousel() {
         <Carousel
           activeSlideAlignment={'start'}
           ref={snapCarousel}
-          data={homepageBannerData}
+          data={data}
           renderItem={renderCarouselItem}
           onBeforeSnapToItem={handleIndexChange}
           onSnapToIndex={(index) => handleIndexChange(index)}
@@ -58,7 +58,7 @@ export default function HomeMainCarousel() {
         />
       </View>
       <View flex row marginH-s5>
-        {homepageBannerData.map((element, i) => {
+        {data.map((element, i) => {
           return (
             <GlobalStyled.Bullet
               key={i}

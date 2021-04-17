@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 import {sanFranciscoWeights} from 'react-native-typography';
 import {SimpleStepper as unStyledSimpleStepper} from 'react-native-simple-stepper';
 
-import {colors} from '../../themes/variables';
+import {theme} from '../../themes/theme';
 
 const ImageContainer = styled.View`
   height: 440px;
@@ -44,7 +44,7 @@ const ShipContainer = styled.View`
 `;
 
 const ShipText = styled.Text`
-  color: ${colors.green};
+  color: ${theme.colors.secondary};
   ${sanFranciscoWeights.regular};
   margin-bottom: 10px;
 `;
@@ -80,13 +80,8 @@ const Wrapper = styled.View`
   top: -30px;
 `;
 
-const StyledSafeView = styled.View`
-  background-color: ${(props) =>
-    props.noStock ? colors.red : colors.themeColor};
-`;
-
 const NoStockText = styled.Text`
-  color: ${colors.white};
+  color: ${theme.colors.white};
   text-align: center;
   margin-top: 20px;
   font-weight: bold;
@@ -95,33 +90,30 @@ const NoStockText = styled.Text`
 const SimpleStepper = styled(unStyledSimpleStepper).attrs({
   textStyle: {
     fontSize: 14,
-    width: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: 50,
     textAlign: 'center',
   },
   containerStyle: {
     flexDirection: 'row',
-    borderWidth: 2,
-    borderRadius: 4,
+    borderWidth: 1,
     overflow: 'hidden',
     alignItems: 'center',
-    borderColor: colors.neutralLight,
-    width: '100%',
     justifyContent: 'center',
+    display: 'flex',
+    borderColor: theme.colors.light,
+    width: '100%',
+    height: '100%',
   },
   incrementImageStyle: {
-    height: 10,
-    width: 10,
-    justifyContent: 'center',
+    height: 16,
+    width: 16,
   },
   decrementImageStyle: {
-    height: 10,
-    width: 10,
-    justifyContent: 'center',
+    height: 16,
+    width: 16,
   },
   separatorStyle: {
-    borderColor: colors.neutralLight,
+    borderColor: theme.colors.light,
     borderWidth: 1,
     height: '100%',
   },
@@ -146,6 +138,5 @@ export const Styled = {
   DescriptionText,
   CategoryContainer,
   GeneralText,
-  StyledSafeView,
   NoStockText,
 };

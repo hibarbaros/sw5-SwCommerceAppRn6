@@ -1,17 +1,15 @@
 import React, {useState, useCallback, useContext} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
-import {View} from 'react-native-ui-lib';
 import {useQueryClient} from 'react-query';
+import {Div} from 'react-native-magnus';
 
 import {LocalizationContext} from '../../context/Translations';
 import AppContext from '../../context/AppContext';
 import {Headline} from '../../themes/components';
 import Carousel from '../../components/Common/FirebaseCarousel';
 import VisitedProducts from '../../components/Common/VisitedProducts';
-// import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
+import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
 import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';
-
-import {Styled} from './styles';
 
 const HomeScreen = () => {
   const {translations} = useContext(LocalizationContext);
@@ -35,46 +33,47 @@ const HomeScreen = () => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
-      <View>
-        <Styled.MainCarouselContainer marginV-s5>
-          {/* <HomeMainCarousel refreshing={refreshing} /> */}
-        </Styled.MainCarouselContainer>
-        <Styled.Container>
-          <Styled.CategoryTitleContainer>
-            <Headline type="h3">{translations.recomendedProducts}</Headline>
-          </Styled.CategoryTitleContainer>
-          <Carousel
-            collection="homescreenrecomended"
-            doc={`mainCategory${selectedLanguage}`}
-            cardTheme="theme02"
-            cardWidth={160}
-          />
-        </Styled.Container>
+      <Div my={20}>
+        <HomeMainCarousel refreshing={refreshing} />
+      </Div>
 
-        <Styled.Container>
-          <Styled.CategoryTitleContainer>
-            <Headline type="h3">{translations.topSale}</Headline>
-          </Styled.CategoryTitleContainer>
+      <Div mt={20}>
+        <Headline my="md" variant="h1" ml={10}>
+          {translations.recomendedProducts}
+        </Headline>
+        <Carousel
+          collection="homescreenrecomended"
+          doc={`mainCategory${selectedLanguage}`}
+          cardTheme="theme02"
+          cardWidth={160}
+        />
+      </Div>
 
-          <Carousel
-            collection="homescreentopsale"
-            doc={`mainCategory${selectedLanguage}`}
-            cardTheme="theme02"
-            cardWidth={160}
-          />
-        </Styled.Container>
+      <Div mt={20}>
+        <Headline my="md" variant="h1" ml={10}>
+          {translations.topSale}
+        </Headline>
+        <Carousel
+          collection="homescreentopsale"
+          doc={`mainCategory${selectedLanguage}`}
+          cardTheme="theme02"
+          cardWidth={160}
+        />
+      </Div>
+
+      <Div mt={20}>
         <VisitedProducts />
+      </Div>
 
-        <Styled.Container>
-          <Styled.CategoryTitleContainer>
-            <Headline type="h3">{translations.recomendedCategories}</Headline>
-          </Styled.CategoryTitleContainer>
-          <HomeRecomendedCategories
-            collection="homescreencategories"
-            doc={`mainCategory${selectedLanguage}`}
-          />
-        </Styled.Container>
-      </View>
+      <Div mt={20}>
+        <Headline my="md" variant="h1" ml={10}>
+          {translations.recomendedCategories}
+        </Headline>
+        <HomeRecomendedCategories
+          collection="homescreencategories"
+          doc={`mainCategory${selectedLanguage}`}
+        />
+      </Div>
     </ScrollView>
   );
 };

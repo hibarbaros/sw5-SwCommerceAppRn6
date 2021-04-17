@@ -39,7 +39,7 @@ export async function customerEdit(data) {
   const response = await Api.put(`/ConnectorCustomers/${customerId}`, formData);
   return response.data.id ? true : false;
 }
-//TODO: sifre degistirmede problem var düzenle
+//TODO: sifre degistirmede problem var
 export async function passwordEdit(values) {
   const {oldPassword, hashPassword, encoderName, customer, password} = values;
   const hash = await makeBcryptPass(password);

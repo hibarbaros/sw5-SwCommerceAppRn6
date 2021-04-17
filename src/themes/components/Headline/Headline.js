@@ -1,26 +1,56 @@
 import React from 'react';
-import {Styled} from './styles';
+import {Text} from 'react-native-magnus';
+import {sanFranciscoWeights} from 'react-native-typography';
 
-const headlines = {
-  h1: Styled.H1,
-  h2: Styled.H2,
-  h3: Styled.H3,
-  h4: Styled.H4,
-  h5: Styled.H5,
-  h6: Styled.H6,
-};
+import {fontFamilies} from '../../theme';
 
-const Headline = ({children, type = 'h4', hideTopMargin}) => {
-  const SelectedHeadline = headlines[type];
-  if (!SelectedHeadline) {
-    return null;
+const Headline = ({children, variant = 'h1', ...rest}) => {
+  switch (variant) {
+    case 'h1':
+      return (
+        <Text
+          {...rest}
+          color="primary"
+          fontSize={20}
+          style={sanFranciscoWeights.bold}>
+          {children}
+        </Text>
+      );
+    case 'h2':
+      return (
+        <Text
+          {...rest}
+          color="primary"
+          fontSize={16}
+          fontFamily={fontFamilies.primaryRegular}>
+          {children}
+        </Text>
+      );
+    case 'h5':
+      return (
+        <Text
+          {...rest}
+          color="dark"
+          fontSize={22}
+          style={sanFranciscoWeights.light}>
+          {children}
+        </Text>
+      );
+    case 'primarytext':
+      return (
+        <Text {...rest} style={sanFranciscoWeights.light}>
+          {children}
+        </Text>
+      );
+    case 'secondarytext':
+      return (
+        <Text {...rest} fontFamily={fontFamilies.secondary}>
+          {children}
+        </Text>
+      );
+    default:
+      return null;
   }
-
-  return (
-    <SelectedHeadline hideTopMargin={hideTopMargin}>
-      {children}
-    </SelectedHeadline>
-  );
 };
 
 export default Headline;

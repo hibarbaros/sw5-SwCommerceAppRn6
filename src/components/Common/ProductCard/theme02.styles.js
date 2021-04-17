@@ -7,6 +7,7 @@ const Card = styled.TouchableOpacity`
   border: 1px solid ${colors.light};
   border-radius: 6px;
   min-width: 200px;
+  max-width: 200px;
   margin: 5px;
   padding-bottom: 20px;
   display: flex;

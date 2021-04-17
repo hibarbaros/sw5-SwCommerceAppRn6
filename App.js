@@ -4,9 +4,9 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {NavigationContainer} from '@react-navigation/native';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
+import {ThemeProvider} from 'react-native-magnus';
 import Toast from 'react-native-toast-message';
 
-import Navigation from './src/navigation/Navigation';
 import MainNavigation from './src/navigation/MainNavigation';
 import {NavigationTheme} from './src/themes/variables';
 import {AppProvider} from './src/context/AppContext';
@@ -14,6 +14,8 @@ import {CheckoutProvider} from './src/context/CheckoutContext';
 import {CartProvider} from './src/context/CartContext';
 import FilterProvider from './src/context/FilterProvider';
 import {LocalizationProvider} from './src/context/Translations';
+
+import {theme} from './src/themes/theme';
 
 const queryClient = new QueryClient();
 
@@ -37,19 +39,21 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={{...eva.light}}>
-          <LocalizationProvider>
-            <AppProvider>
-              <CartProvider>
-                <CheckoutProvider>
-                  <FilterProvider>
-                    <NavigationContainer theme={NavigationTheme} ref={ref}>
-                      <MainNavigation />
-                    </NavigationContainer>
-                  </FilterProvider>
-                </CheckoutProvider>
-              </CartProvider>
-            </AppProvider>
-          </LocalizationProvider>
+          <ThemeProvider theme={theme}>
+            <LocalizationProvider>
+              <AppProvider>
+                <CartProvider>
+                  <CheckoutProvider>
+                    <FilterProvider>
+                      <NavigationContainer theme={NavigationTheme} ref={ref}>
+                        <MainNavigation />
+                      </NavigationContainer>
+                    </FilterProvider>
+                  </CheckoutProvider>
+                </CartProvider>
+              </AppProvider>
+            </LocalizationProvider>
+          </ThemeProvider>
         </ApplicationProvider>
       </QueryClientProvider>
       <Toast ref={(e) => Toast.setRef(e)} />

@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
-import {Div, Text, Button} from 'react-native-magnus';
+import {Div, Text} from 'react-native-magnus';
 import HTMLView from 'react-native-htmlview';
 import Toast from 'react-native-toast-message';
 
@@ -17,6 +17,8 @@ import ProductDetailMedia from '../../components/ProductComponents/ProductDetail
 import ProductCarousel from '../../components/Common/ProductCarousel';
 
 import {Styled} from './styles';
+
+import {Button} from '../../themes/components';
 
 const ProductDetail = ({route}) => {
   const {translations} = useContext(LocalizationContext);
@@ -76,7 +78,7 @@ const ProductDetail = ({route}) => {
               </Styled.ProductPrice>
             </Styled.TextContainer>
             <Styled.FavoriteIconContainer>
-              <ProductWhislistButton product={data} />
+              <ProductWhislistButton productId={data.id} />
             </Styled.FavoriteIconContainer>
           </Styled.TopContainer>
 
@@ -157,27 +159,39 @@ const ProductDetail = ({route}) => {
           )}
         </Styled.Wrapper>
       </ScrollView>
-      <SafeAreaView>
-        {data.mainDetail.inStock > 0 ? (
-          <Div row>
-            <Button w="50%" onPress={() => handleAddToCart()}>
-              {translations.addToCart}
-            </Button>
-            <Styled.SimpleStepper
-              showText
-              minimumValue={1}
-              initialValue={initialQuantity}
-              valueChanged={(value) => setInitialQuantity(value)}
-            />
+      {data.mainDetail.inStock > 0 ? (
+        <SafeAreaView>
+          <Div row h={50} alignItems="center">
+            <Div w="60%">
+              <Button
+                h="100%"
+                rounded={0}
+                m={0}
+                block
+                onPress={() => handleAddToCart()}
+                text={translations.addToCart}
+              />
+            </Div>
+            <Div w="40%">
+              <Styled.SimpleStepper
+                textPosition="center"
+                incrementImage={require('../../assets/images/icon-plus.png')}
+                decrementImage={require('../../assets/images/icon-minus.png')}
+                showText
+                minimumValue={1}
+                initialValue={initialQuantity}
+                valueChanged={(value) => setInitialQuantity(value)}
+              />
+            </Div>
           </Div>
-        ) : (
-          <Styled.StyledSafeView noStock>
-            <Styled.NoStockText>
-              {translations.productNotAvailable}
-            </Styled.NoStockText>
-          </Styled.StyledSafeView>
-        )}
-      </SafeAreaView>
+        </SafeAreaView>
+      ) : (
+        <SafeAreaView>
+          <Div bg="red" p={20}>
+            <Text color="white">{translations.productNotAvailable}</Text>
+          </Div>
+        </SafeAreaView>
+      )}
     </>
   );
 };
