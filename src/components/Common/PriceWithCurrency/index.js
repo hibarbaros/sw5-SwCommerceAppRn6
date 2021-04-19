@@ -1,7 +1,8 @@
 import React, {useContext} from 'react';
-import {Text} from 'react-native';
+
 import AppContext from '../../../context/AppContext';
 import {priceWithTax} from '../../../utils/functions';
+import {Headline} from '../../../themes/components';
 
 export default function PriceWithCurrency({price, product}) {
   const {currency} = useContext(AppContext);
@@ -17,8 +18,12 @@ export default function PriceWithCurrency({price, product}) {
   const priceFormat = new Intl.NumberFormat('de-DE', {
     style: 'currency',
     currency: currency.currency,
-    maximumSignificantDigits: 3,
+    maximumSignificantDigits: 2,
   }).format(priceWith);
 
-  return <Text>{priceFormat}</Text>;
+  return (
+    <Headline variant="primarytext" color="red" bold fontSize="3xl" mt={10}>
+      {priceFormat}
+    </Headline>
+  );
 }

@@ -3,25 +3,28 @@ import {SafeAreaView, ScrollView} from 'react-native';
 import {Div, Text} from 'react-native-magnus';
 import HTMLView from 'react-native-htmlview';
 import Toast from 'react-native-toast-message';
-
+//*context
 import {LocalizationContext} from '../../context/Translations';
+import AppContext from '../../context/AppContext';
+//*utils
 import {useProductByProductId} from '../../utils/hooks/useProduct';
 import {useAddToCart} from '../../utils/hooks/useCart';
 import {useAddToVisitedlist} from '../../utils/hooks/useVisitedProduct';
-
+//*components
 import PriceWithCurrency from '../../components/Common/PriceWithCurrency';
 import ProductPropertyGroup from '../../components/ProductComponents/ProductPropertyGroup';
 import ProductWhislistButton from '../../components/ProductComponents/ProductWhislistButton';
 import ProductDetailVariants from '../../components/ProductComponents/ProductDetailVariants';
 import ProductDetailMedia from '../../components/ProductComponents/ProductDetailMedia';
 import ProductCarousel from '../../components/Common/ProductCarousel';
+import {Button} from '../../themes/components';
+import LoadSpinner from '../../components/Common/LoadSpinner';
 
 import {Styled} from './styles';
 
-import {Button} from '../../themes/components';
-
 const ProductDetail = ({route}) => {
   const {translations} = useContext(LocalizationContext);
+  const {selectedTranslate} = useContext(AppContext);
   const [selectedVariants, setSelectedVariants] = useState([]);
   const [initialQuantity, setInitialQuantity] = useState(1);
 
@@ -30,7 +33,7 @@ const ProductDetail = ({route}) => {
   useAddToVisitedlist(route.params.productId);
 
   if (isLoading) {
-    return <Text>..Loading</Text>;
+    return <LoadSpinner isVisible={true} />;
   }
 
   function handleAddToCart() {
@@ -57,6 +60,15 @@ const ProductDetail = ({route}) => {
     }
   }
 
+  const translation = data.translations.find(
+    (x) => x.languageID === selectedTranslate.toString(),
+  );
+
+  const name = translation ? translation.name : data.name;
+  const description = translation
+    ? translation.description_long
+    : data.descriptionLong;
+
   return (
     <>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
@@ -66,7 +78,9 @@ const ProductDetail = ({route}) => {
         <Styled.Wrapper>
           <Styled.TopContainer>
             <Styled.TextContainer>
-              <Styled.ProductName>{data.name}</Styled.ProductName>
+              <Styled.ProductName>
+                {name} {data.id}
+              </Styled.ProductName>
               <Styled.ProductPrice>
                 {data.mainDetail.prices.map((price, index) => {
                   return (
@@ -100,7 +114,7 @@ const ProductDetail = ({route}) => {
               Products Description
             </Styled.DescriptionTitle>
             <HTMLView
-              value={data.descriptionLong}
+              value={description}
               TextComponent={(props) => <Styled.DescriptionText {...props} />}
             />
           </Styled.DescriptionContainer>

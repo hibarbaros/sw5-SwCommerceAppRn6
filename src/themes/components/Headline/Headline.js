@@ -38,7 +38,11 @@ const Headline = ({children, variant = 'h1', ...rest}) => {
       );
     case 'primarytext':
       return (
-        <Text {...rest} style={sanFranciscoWeights.light}>
+        <Text
+          {...rest}
+          style={
+            rest.bold ? sanFranciscoWeights.bold : sanFranciscoWeights.light
+          }>
           {children}
         </Text>
       );

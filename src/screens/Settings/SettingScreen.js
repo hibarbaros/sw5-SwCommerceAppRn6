@@ -14,6 +14,7 @@ const SettingScreen = () => {
     currency,
     setCurrency,
     setSelectedLanguageContext,
+    setSelectedTranslateContext,
     selectedLanguage,
     allCurrencies,
   } = useContext(AppContext);
@@ -23,6 +24,7 @@ const SettingScreen = () => {
   function handleLanguage(lang) {
     setAppLanguage(lang.locale);
     setSelectedLanguageContext(lang.id);
+    setSelectedTranslateContext(lang.translateId);
   }
 
   return (

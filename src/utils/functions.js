@@ -4,19 +4,20 @@ import bcrypt from 'react-native-bcrypt';
 
 import vars from '../utils/vars';
 
-//German categories id = 3
-
 function setSubCategories(data, categoryId) {
   const categories = _.filter(data, {parentId: categoryId});
   return categories;
 }
 
 export function setProductCategories(allCategories, selectedLanguage) {
-  const mainCategories = _.filter(allCategories, {id: selectedLanguage});
+  const mainCategory = _.find(allCategories, {id: selectedLanguage});
   let categoriesTree = [];
   for (const category of allCategories) {
     const dataSubCategories = setSubCategories(allCategories, category.id);
-    if (dataSubCategories.length === 0 && category.parentId === 3) {
+    if (
+      dataSubCategories.length === 0 &&
+      category.parentId === selectedLanguage
+    ) {
       const element = category;
       categoriesTree.push(element);
     }
@@ -26,7 +27,7 @@ export function setProductCategories(allCategories, selectedLanguage) {
       categoriesTree.push(element);
     }
   }
-  categoriesTree = _.filter(categoriesTree, {parentId: mainCategories[0].id});
+  categoriesTree = _.filter(categoriesTree, {parentId: mainCategory.id});
   return _.orderBy(categoriesTree, ['id'], ['asc']);
 }
 

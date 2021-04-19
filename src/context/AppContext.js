@@ -16,10 +16,15 @@ export const AppProvider = ({children}) => {
   const [visitedProducts, setVisitedProducts] = useState([]);
   const [shippingPrice, setShippingPrice] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState(3);
+  const [selectedTranslate, setSelectedTranslate] = useState(0);
 
   const setSelectedLanguageContext = (langId) => {
     setSelectedLanguage(langId);
     setItem('selectedLanguage', langId);
+  };
+  const setSelectedTranslateContext = (translateId) => {
+    setSelectedTranslate(translateId);
+    setItem('selectedTranslate', translateId);
   };
   const setUserContext = (userId, userSessionId) => {
     if (userId) {
@@ -44,6 +49,9 @@ export const AppProvider = ({children}) => {
     getItem('sessionId').then((v) => v && setSessionId(v));
     getItem('selectedLanguage').then((v) =>
       v ? setSelectedLanguage(v) : setSelectedLanguage(3),
+    );
+    getItem('selectedTranslate').then((v) =>
+      v ? setSelectedTranslate(v) : setSelectedTranslate(0),
     );
   }, []);
 
@@ -74,6 +82,8 @@ export const AppProvider = ({children}) => {
         selectedLanguage,
         allCurrencies,
         setAllCurrencies,
+        setSelectedTranslateContext,
+        selectedTranslate,
       }}>
       {children}
     </AppContext.Provider>

@@ -1,18 +1,22 @@
 import React, {useState, useRef, useContext, useEffect} from 'react';
 import {FlatList, Modal, SafeAreaView} from 'react-native';
-import {Button, Icon} from 'react-native-magnus';
+import {Div} from 'react-native-magnus';
 import _ from 'lodash';
-
+//*components
 import {CloseIcon} from '../../themes/components/IconSet';
 import TopNavigationModal from '../../components/Common/TopNavigationModal';
-import {useCategoryByCategoryId} from '../../utils/hooks/useCategory';
 import ProductCard from '../../components/Common/ProductCard';
 import LoadSpinner from '../../components/Common/LoadSpinner';
 import ProductAttributes from '../../components/ProductComponents/ProductAttributes';
 import CategoriesProductOrder from '../../components/ProductComponents/CategoriesProductOrder';
-import {Styled} from './styles';
-
+//*utils
+import {useCategoryByCategoryId} from '../../utils/hooks/useCategory';
+//*themes
+import {Button, Headline} from '../../themes/components';
+//*context
 import FilterContext from '../../context/FilterContext';
+
+import {Styled} from './styles';
 
 export default function CategoriesProducts({route}) {
   const {category} = route.params;
@@ -54,17 +58,17 @@ export default function CategoriesProducts({route}) {
   return (
     <>
       <LoadSpinner isVisible={isLoading} />
-      <Styled.TopContainer>
-        <Styled.CategoryTitle>{category.name}</Styled.CategoryTitle>
-        <Styled.TopIconContainer>
-          <Button onPress={() => setIsModalOpen(true)}>
-            <Icon name="filter" fontFamily="FontAwesome" color="white" />
-          </Button>
-          <Button onPress={() => actionSheetRef.current.setModalVisible()}>
-            <Icon name="sort" fontFamily="FontAwesome" color="white" />
-          </Button>
-        </Styled.TopIconContainer>
-      </Styled.TopContainer>
+      <Div row p={10}>
+        <Headline>{category.name}</Headline>
+        <Div ml="auto" row>
+          <Button suffix="filter" onPress={() => setIsModalOpen(true)} />
+          <Button
+            ml={10}
+            suffix="bar-chart"
+            onPress={() => actionSheetRef.current.setModalVisible()}
+          />
+        </Div>
+      </Div>
       <Styled.SelectContainer>
         <CategoriesProductOrder
           actionSheetRef={actionSheetRef}
@@ -96,25 +100,30 @@ export default function CategoriesProducts({route}) {
 								</Text>
 							</>
 						)}
-					</Styled.RangeContainer> */}
-      <FlatList
-        contentInsetAdjustmentBehavior="automatic"
-        scrollEnabled={true}
-        data={filteredProducts}
-        keyExtractor={(item) => item.articleID}
-        numColumns={2}
-        renderItem={({item}) => (
-          <Styled.ProductCardContainer key={item.articleID}>
-            <ProductCard productId={item.articleID} theme="theme03" />
-          </Styled.ProductCardContainer>
-        )}
-      />
-      <Button
-        bg="blue500"
-        rounded="circle"
-        onPress={() => setPage(page + pageSize)}>
-        Load More
-      </Button>
+			</Styled.RangeContainer> */}
+      {data && (
+        <FlatList
+          contentInsetAdjustmentBehavior="automatic"
+          scrollEnabled={true}
+          data={filteredProducts}
+          keyExtractor={(item) => item.articleID}
+          numColumns={2}
+          renderItem={({item}) => (
+            <Styled.ProductCardContainer key={item.articleID}>
+              <ProductCard productId={item.articleID} theme="theme02" />
+            </Styled.ProductCardContainer>
+          )}
+        />
+      )}
+      <SafeAreaView>
+        <Div justifyContent="center">
+          <Button
+            block
+            text="Load More"
+            onPress={() => setPage(page + pageSize)}
+          />
+        </Div>
+      </SafeAreaView>
       {/* Modal Start */}
       <Modal animationType="slide" transparent={false} visible={isModalOpen}>
         <SafeAreaView>
