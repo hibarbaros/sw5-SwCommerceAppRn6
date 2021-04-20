@@ -111,7 +111,7 @@ export default function CategoriesProducts({route}) {
           keyExtractor={(item) => item.articleID}
           numColumns={2}
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={1}
           renderItem={({item}) => (
             <Styled.ProductCardContainer key={item.articleID}>
               <ProductCard productId={item.articleID} theme="theme02" />
