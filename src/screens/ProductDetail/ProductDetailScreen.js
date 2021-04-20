@@ -28,8 +28,8 @@ const ProductDetail = ({route}) => {
   const [selectedVariants, setSelectedVariants] = useState([]);
   const [initialQuantity, setInitialQuantity] = useState(1);
 
-  const {isLoading, data} = useProductByProductId(route.params.productId);
-  const {mutate} = useAddToCart();
+  const {data, isLoading} = useProductByProductId(route.params.productId);
+  const {mutate, isLoading: mutateLoading} = useAddToCart();
   useAddToVisitedlist(route.params.productId);
 
   if (isLoading) {
@@ -71,6 +71,7 @@ const ProductDetail = ({route}) => {
 
   return (
     <>
+      <LoadSpinner isVisible={mutateLoading} />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Styled.ImageContainer>
           <ProductDetailMedia images={data?.images} />

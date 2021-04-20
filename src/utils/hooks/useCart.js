@@ -17,11 +17,12 @@ import {
   addInitialUserCart,
   removeInitialUserCart,
   migrateUserCart,
+  findProductVariant,
 } from '../actions/cartactions';
 
 import {productsWithFilter} from '../actions/articleactions';
 
-//Get Customer Cart
+//!Get Customer Cart
 const getUserCart = async (user, sessionId) => {
   if (user) {
     const data = await getCartByUserId(user);
@@ -42,9 +43,9 @@ export function useUserCart() {
     return useQuery('initialUserCart', () => userCart);
   }
 }
-//Get Customer Cart
+//!Get Customer Cart
 
-//Cart Total Price
+//!Cart Total Price
 const getUserCartTotalPrice = async (userCart) => {
   let netPrice = 0;
   let taxPrice = 0;
@@ -79,26 +80,15 @@ export function useUserCartTotalPrice() {
     getUserCartTotalPrice(userCart, priceTotal),
   );
 }
-//Cart Total Price
+//!Cart Total Price
 
-//Add to Cart
+//!Add to Cart
 const getAddToCart = async (mutateVariables, userCart, user, sessionId) => {
-  const {productData, selectedVariants} = mutateVariables;
-
-  if (selectedVariants) {
-    const filteredVariants = _.filter(productData.details, {
-      configuratorOptions: selectedVariants,
-    });
-    const [variantProduct] = filteredVariants;
-    mutateVariables.number = variantProduct.number;
-  } else {
-    mutateVariables.number = productData.number;
-    mutateVariables.variantId = productData.mainDetail.id;
-  }
+  const foundVariant = await findProductVariant(mutateVariables);
   if (user) {
-    await addFromCart(mutateVariables, user, sessionId);
+    await addFromCart(foundVariant, user, sessionId);
   }
-  const response = addInitialUserCart(userCart, mutateVariables);
+  const response = addInitialUserCart(userCart, foundVariant);
   return response;
 };
 
@@ -121,12 +111,11 @@ export function useAddToCart() {
       },
     },
   );
-
   return mutate;
 }
-//Add to Cart
+//!Add to Cart
 
-//Remove to Cart
+//!Remove to Cart
 const getRemoveToCart = async (productNumber, user, userCart) => {
   if (user) {
     await removeFromCart(productNumber, user);
@@ -147,12 +136,11 @@ export function useRemoveToCart() {
       },
     },
   );
-
   return mutate;
 }
-//Remove to Cart
+//!Remove to Cart
 
-//Migrate User Cart
+//!Migrate User Cart
 const getMigrateUserCart = async (user, userCart, sessionId) => {
   const response = migrateUserCart(user, userCart, sessionId);
   return response;
@@ -170,7 +158,6 @@ export function useMigrateUserCart() {
       },
     },
   );
-
   return mutate;
 }
-//Migrate User Cart
+//!Migrate User Cart

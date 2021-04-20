@@ -37,7 +37,7 @@ export async function getFindCartBySessionId(sessionId, orderNumber) {
   }
 }
 
-//Database cart fonksiyonlari: Kullanici login ise kullaniliyor
+//!Database cart fonksiyonlari: Kullanici login ise kullaniliyor
 export async function removeFromCart(productNumber, user) {
   const checktoBasket = await getCartByUserId(user);
   const finded = checktoBasket.find((x) => x.orderNumber === productNumber);
@@ -46,22 +46,19 @@ export async function removeFromCart(productNumber, user) {
 }
 
 export async function addFromCart(mutateVariables, user, sessionId) {
+  const {productData, quantity, number} = mutateVariables;
   const checktoBasket = await getCartByUserId(user);
-  const finded = checktoBasket.find(
-    (x) => x.orderNumber === mutateVariables.number,
-  );
+  const finded = checktoBasket.find((x) => x.orderNumber === number);
   if (finded) {
-    const formDataPut = {
-      quantity: finded.quantity + mutateVariables.quantity,
+    const formDataUpdate = {
+      quantity: finded.quantity + quantity,
     };
-    Api.put(`/ConnectorBasket/${finded.id}`, formDataPut);
+    Api.put(`/ConnectorBasket/${finded.id}`, formDataUpdate);
   } else {
-    const productGet = await Api.get(
-      `/ConnectorArticles/${mutateVariables.productData.id}`,
-    );
     const formDataPost = cartNormalize(
-      productGet.data,
-      mutateVariables.quantity,
+      productData,
+      quantity,
+      number,
       user,
       sessionId,
     );
@@ -69,9 +66,9 @@ export async function addFromCart(mutateVariables, user, sessionId) {
   }
   return true;
 }
-//Database cart fonksiyonlari: Kullanici login ise kullaniliyor
+//!Database cart fonksiyonlari: Kullanici login ise kullaniliyor
 
-//Context Api cart fonksiyonlari
+//!Context Api cart fonksiyonlari
 export async function addInitialUserCart(userCart, mutateVariables) {
   const newList = userCart ? userCart : [];
   const finded = newList.find(
@@ -98,9 +95,9 @@ export async function removeInitialUserCart(userCart, productNumber) {
   });
   return newList;
 }
-//Context Api cart fonksiyonlari
+//!Context Api cart fonksiyonlari
 
-//Kullanici login olduktan sonra cart migrate fonksiyonu
+//!Kullanici login olduktan sonra cart migrate fonksiyonu
 export async function migrateUserCart(user, userCart, sessionId) {
   const response = await Api.get(`/ConnectorBasket?filter[customerId]=${user}`);
   const {data} = response;
@@ -122,30 +119,22 @@ export async function migrateUserCart(user, userCart, sessionId) {
       Api.post('/ConnectorBasket', formDataPost);
     }
   }
-
-  // const migratePromise = await Promise.all(
-  //   userCart.map(async (n) => {
-  //     const finded = _.find(data, {orderNumber: n.number});
-  //     if (finded) {
-  //       const formDataPut = {
-  //         quantity: finded.quantity + n.quantity,
-  //       };
-  //       Api.put(`/ConnectorBasket/${finded.id}`, formDataPut);
-  //       return true;
-  //     } else {
-  //       const productGet = await Api.get(`/ConnectorArticles/${n.id}`);
-  //       const formDataPost = cartNormalize(
-  //         productGet.data,
-  //         n.quantity,
-  //         user,
-  //         sessionId,
-  //       );
-  //       Api.post('/ConnectorBasket', formDataPost);
-  //       return true;
-  //     }
-  //   }),
-  // );
-
   return true;
 }
-//Kullanici login olduktan sonra cart migrate fonksiyonu
+//!Kullanici login olduktan sonra cart migrate fonksiyonu
+
+//!variant varsa bulunuyor yoksa sadece ürün numarasi ekleniyor
+export async function findProductVariant(mutateVariables) {
+  const {productData, selectedVariants} = mutateVariables;
+  if (selectedVariants) {
+    const variantProduct = _.find(productData.details, {
+      configuratorOptions: selectedVariants,
+    });
+    mutateVariables.number = variantProduct.number;
+  } else {
+    mutateVariables.number = productData.number;
+    mutateVariables.variantId = productData.mainDetail.id;
+  }
+  return mutateVariables;
+}
+//!variant varsa bulunuyor yoksa sadece ürün numarasi ekleniyor

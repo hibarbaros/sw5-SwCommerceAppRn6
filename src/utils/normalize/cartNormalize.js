@@ -1,15 +1,21 @@
 import DeviceInfo from 'react-native-device-info';
 import moment from 'moment';
 
-export function cartNormalize(productData, quantity, user, sessionId) {
+export function cartNormalize(
+  productData,
+  quantity,
+  orderNumber,
+  user,
+  sessionId,
+) {
   const deviceId = DeviceInfo.getDeviceId();
   const taxInt = parseInt(productData.tax.tax, 10);
   const [price] = productData.mainDetail.prices;
   const articleName = productData.name;
-  const formData = {
+  const allData = {
     customerId: user,
     articleId: productData.id,
-    orderNumber: productData.mainDetail.number,
+    orderNumber,
     taxRate: taxInt,
     sessionId,
     partnerId: '',
@@ -26,6 +32,11 @@ export function cartNormalize(productData, quantity, user, sessionId) {
     config: '',
     currencyFactor: 1,
   };
+
+  console.log('allData :>> ', allData);
+  const formData = JSON.stringify({
+    ...allData,
+  });
   return formData;
 }
 
