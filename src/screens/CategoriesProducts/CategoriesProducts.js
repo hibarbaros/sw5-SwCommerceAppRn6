@@ -40,6 +40,10 @@ export default function CategoriesProducts({route}) {
     data && setFilteredProducts(_.slice(data?.products, 0, page));
   }, [data, page]);
 
+  const handleLoadMore = () => {
+    setPage(page + pageSize);
+  };
+
   // function handleProductsPriceFilter() {
   // 	var listOfvalues = [];
   // 	for (var i = 0; i < products.length; i++) {
@@ -52,8 +56,6 @@ export default function CategoriesProducts({route}) {
   // 	}
   // 	setProducts(listOfvalues);
   // }
-
-  // return null;
 
   return (
     <>
@@ -108,6 +110,8 @@ export default function CategoriesProducts({route}) {
           data={filteredProducts}
           keyExtractor={(item) => item.articleID}
           numColumns={2}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.1}
           renderItem={({item}) => (
             <Styled.ProductCardContainer key={item.articleID}>
               <ProductCard productId={item.articleID} theme="theme02" />
@@ -115,15 +119,6 @@ export default function CategoriesProducts({route}) {
           )}
         />
       )}
-      <SafeAreaView>
-        <Div justifyContent="center">
-          <Button
-            block
-            text="Load More"
-            onPress={() => setPage(page + pageSize)}
-          />
-        </Div>
-      </SafeAreaView>
       {/* Modal Start */}
       <Modal animationType="slide" transparent={false} visible={isModalOpen}>
         <SafeAreaView>
