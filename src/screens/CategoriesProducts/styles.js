@@ -1,29 +1,15 @@
 import styled from 'styled-components/native';
 import ActionSheet from 'react-native-actions-sheet';
-import {View} from 'react-native';
 import {Button} from '@ui-kitten/components';
 
 import {Icon} from '@ui-kitten/components';
 import RangeSlider from 'rn-range-slider';
-import {animated} from 'react-spring';
 
 import {colors} from '../../themes/variables';
 import {sanFranciscoWeights} from 'react-native-typography';
 
-const AnimatedView = animated(View);
-
 const Container = styled.View`
   padding: 20px;
-`;
-
-const StyledAnimatedView = styled(AnimatedView)`
-  padding: 20px;
-  position: absolute;
-  z-index: 999;
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  top: 50px;
 `;
 
 const TopContainer = styled.View`
@@ -114,7 +100,6 @@ export const Styled = {
   TopIconContainer,
   StyledRangeSlider,
   ProductCardContainer,
-  StyledAnimatedView,
   StyledActionSheet,
   ModalWrapper,
   ClearFilterButton,

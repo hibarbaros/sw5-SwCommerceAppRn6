@@ -1,34 +1,50 @@
 {
   "project_info": {
-    "project_number": "1082668086835",
-    "project_id": "swapp6-5d7ec",
-    "storage_bucket": "swapp6-5d7ec.appspot.com"
+    "project_number": "338477165318",
+    "firebase_url": "https://swapp-eec92.firebaseio.com",
+    "project_id": "swapp-eec92",
+    "storage_bucket": "swapp-eec92.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1082668086835:android:e7d4340ec76c4eeed59546",
+        "mobilesdk_app_id": "1:338477165318:android:644fd62651c7c547c34c87",
         "android_client_info": {
-          "package_name": "com.swcommerceapprn6"
+          "package_name": "com.swcommerce"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1082668086835-j2nlsj8e2hvennduhd1t9jpaih6rkj01.apps.googleusercontent.com",
+          "client_id": "338477165318-eosi9s1igldgkdvte5447qeiap2k9as0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swcommerce",
+            "certificate_hash": "a53307727e17315137a75dcc1655e25042ed43af"
+          }
+        },
+        {
+          "client_id": "338477165318-hulre1oqojovjlcp9lsq6obm5aeimrb0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA6lCmAeBB1fy1Kfo_oofqfVnPCtld1nRM"
+          "current_key": "AIzaSyCVBjdlaBqITFBc_hm5uE76gy2iAKHnr3k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1082668086835-j2nlsj8e2hvennduhd1t9jpaih6rkj01.apps.googleusercontent.com",
+              "client_id": "338477165318-hulre1oqojovjlcp9lsq6obm5aeimrb0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "338477165318-masr9ivepi1ps8fgc2f4fi2ntvr1emlu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.swcommerce.swcommerce"
+              }
             }
           ]
         }

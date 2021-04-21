@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import FastImage from 'react-native-fast-image';
 import {Skeleton} from 'react-native-magnus';
 
-import {Styled} from './styles';
+import {MediaImage} from './styles';
 
 import {makeImageUrl} from '../../../utils/functions';
 
@@ -14,7 +14,7 @@ export default function Media({thumbnail}) {
   return (
     <>
       {isLoading && <Skeleton.Box h="100%" w="100%" />}
-      <Styled.MediaImage
+      <MediaImage
         onLoadEnd={() => setIsLoading(false)}
         source={{
           uri: image,

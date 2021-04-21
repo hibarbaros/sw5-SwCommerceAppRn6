@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {useQuery} from 'react-query';
 import {Image, Div} from 'react-native-magnus';
-import {useSpring, animated} from 'react-spring';
+import {motion, useTransform} from 'framer-motion';
 
 import Navigation from './Navigation';
 import AppContext from '../context/AppContext';
@@ -12,7 +12,7 @@ import {shopData, paymentsData} from '../utils/actions/appactions';
 import {initialCartNormalize} from '../utils/normalize/cartNormalize';
 
 import Logo from '../assets/images/lemken-logo.png';
-const AnimatedView = animated(Div);
+// const AnimatedView = motion(Div);
 
 export default function MainScreen() {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -48,10 +48,10 @@ export default function MainScreen() {
     onSuccess: (data) => setPaymentMethods(data),
   });
 
-  const [props] = useSpring(() => ({
-    opacity: 1,
-    from: {opacity: 0},
-  }));
+  // const opacity = useTransform(() => ({
+  //   opacity: 1,
+  //   from: {opacity: 0},
+  // }));
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -63,14 +63,14 @@ export default function MainScreen() {
   return (
     <>
       {isLoading ? (
-        <AnimatedView
-          style={props}
+        <Div
+          // style={opacity}
           w="100%"
           height="100%"
           justifyContent="center"
           alignItems="center">
           <Image h={70} w={300} source={Logo} />
-        </AnimatedView>
+        </Div>
       ) : (
         <Navigation />
       )}

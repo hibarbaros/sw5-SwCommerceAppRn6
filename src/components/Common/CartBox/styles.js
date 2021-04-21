@@ -1,18 +1,9 @@
 import styled from 'styled-components/native';
-import {View} from 'react-native';
 
 import {SimpleStepper as unStyledSimpleStepper} from 'react-native-simple-stepper';
 import {colors} from '../../../themes/variables';
 
-const CardContainer = styled(View)`
-  border-color: ${colors.neutralLight};
-  border-radius: 8px;
-  border-width: 1px;
-  margin-bottom: 10px;
-  padding: 20px;
-`;
-
-const SimpleStepper = styled(unStyledSimpleStepper).attrs({
+export const SimpleStepper = styled(unStyledSimpleStepper).attrs({
   textStyle: {
     fontSize: 14,
     width: 30,
@@ -26,9 +17,9 @@ const SimpleStepper = styled(unStyledSimpleStepper).attrs({
     borderRadius: 4,
     overflow: 'hidden',
     alignItems: 'center',
+    justifyContent: 'center',
     borderColor: colors.neutralLight,
     width: 100,
-    justifyContent: 'center',
   },
   incrementImageStyle: {
     height: 10,
@@ -51,6 +42,5 @@ const SimpleStepper = styled(unStyledSimpleStepper).attrs({
 `;
 
 export const Styled = {
-  CardContainer,
   SimpleStepper,
 };

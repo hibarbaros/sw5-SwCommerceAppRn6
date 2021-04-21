@@ -4,7 +4,7 @@ import AppContext from '../../../context/AppContext';
 import {priceWithTax} from '../../../utils/functions';
 import {Headline} from '../../../themes/components';
 
-export default function PriceWithCurrency({price, product}) {
+export default function PriceWithCurrency({price, product, color}) {
   const {currency} = useContext(AppContext);
   const parsedPrice = parseFloat(price);
 
@@ -22,7 +22,12 @@ export default function PriceWithCurrency({price, product}) {
   }).format(priceWith);
 
   return (
-    <Headline variant="primarytext" color="red" bold fontSize="3xl" mt={10}>
+    <Headline
+      variant="primarytext"
+      color={color ? color : 'red'}
+      bold
+      fontSize="3xl"
+      mt={10}>
       {priceFormat}
     </Headline>
   );

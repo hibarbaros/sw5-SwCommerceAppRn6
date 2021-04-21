@@ -26,6 +26,18 @@ const Headline = ({children, variant = 'h1', ...rest}) => {
           {children}
         </Text>
       );
+    case 'h3':
+      return (
+        <Text
+          {...rest}
+          color="dark"
+          fontSize={20}
+          style={
+            rest.bold ? sanFranciscoWeights.bold : sanFranciscoWeights.light
+          }>
+          {children}
+        </Text>
+      );
     case 'h5':
       return (
         <Text

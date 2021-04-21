@@ -1,15 +1,16 @@
 import React, {useRef, useState, useCallback, useContext} from 'react';
 import {ScrollView} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-import {Text, Div, Button} from 'react-native-magnus';
+import {Div} from 'react-native-magnus';
 import Wizard from 'react-native-wizard';
-
+//*components
 import CartTotalPrice from '../../components/Common/CartTotalPrice';
-import {Container} from '../../themes/components';
-import AppContext from '../../context/AppContext';
-import CartContext from '../../context/CartContext';
-import CheckoutContext from '../../context/CheckoutContext';
+import {Container, Button, Headline} from '../../themes/components';
 import CartDropdown from './CartDropdown';
+//*context
+import CheckoutContext from '../../context/CheckoutContext';
+import CartContext from '../../context/CartContext';
+import AppContext from '../../context/AppContext';
 
 import Titles from './Titles';
 import Step01 from './Step01';
@@ -19,6 +20,7 @@ import Step04 from './Step04';
 
 const CartScreen = () => {
   const wizardRef = useRef();
+  const scrollRef = useRef();
   const {userCart} = useContext(CartContext);
   const {user} = useContext(AppContext);
   const {selectedShippingMethod, selectedPaymentMethod} = useContext(
@@ -68,32 +70,36 @@ const CartScreen = () => {
     <>
       <Titles handleGoTo={handleGoTo} currentStep={currentStep} />
       {userCart.length ? (
-        <>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <Wizard
-              ref={wizardRef}
-              steps={stepList}
-              isLastStep={(val) => setIsLastStep(val)}
-            />
-            {currentStep < 2 && <CartTotalPrice userCart={userCart} />}
-            <Div bg="white">
-              {!isLastStep && (
-                <Button
-                  onPress={() =>
-                    user ? handleGoTo(currentStep + 1) : setModalVisible(true)
-                  }
-                  disabled={isNextDisabled()}
-                  w="100%"
-                  rounded={0}>
-                  Weiter
-                </Button>
-              )}
+        <ScrollView ref={scrollRef} contentInsetAdjustmentBehavior="automatic">
+          <Wizard
+            ref={wizardRef}
+            steps={stepList}
+            isLastStep={(val) => setIsLastStep(val)}
+          />
+          {currentStep < 2 && <CartTotalPrice userCart={userCart} />}
+
+          {!isLastStep && (
+            <Div row justifyContent="center" mb={20}>
+              <Button
+                w="60%"
+                text="Weiter"
+                onPress={() => {
+                  user ? handleGoTo(currentStep + 1) : setModalVisible(true);
+                  scrollRef.current?.scrollTo({
+                    y: 0,
+                  });
+                }}
+                disabled={isNextDisabled()}
+                rounded={0}
+              />
             </Div>
-          </ScrollView>
-        </>
+          )}
+        </ScrollView>
       ) : (
         <Container>
-          <Text>In Ihrem Warenkorb befinden sich keine Artikel</Text>
+          <Headline variant="h1">
+            In Ihrem Warenkorb befinden sich keine Artikel
+          </Headline>
         </Container>
       )}
       <CartDropdown
