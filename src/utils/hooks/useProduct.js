@@ -19,7 +19,9 @@ const getSearchByString = async (string) => {
 };
 
 export function useSearchByString(string) {
-  return useQuery(['productSearch', string], () => getSearchByString(string));
+  return useQuery(['productSearch', string], () => getSearchByString(string), {
+    enabled: !!string,
+  });
 }
 
 const getProductByProductId = async (articleId) => {

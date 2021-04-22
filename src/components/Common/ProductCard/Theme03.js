@@ -31,7 +31,7 @@ export default function ProductCardTheme02({navigation, product, thumbnail}) {
       borderRadius={5}
       borderWidth={1}
       p={10}
-      mx={5}
+      mx={2}
       column
       onPress={() => {
         navigation.navigate(AppRoutes.PRODUCT_DETAIL, {

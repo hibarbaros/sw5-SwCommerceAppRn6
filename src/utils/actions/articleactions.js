@@ -41,12 +41,16 @@ export async function articles() {
 }
 
 export async function articlesSearch(string) {
-  const response = await Api.get(
-    `/ConnectorArticles?filter[name][property]=${string}%`,
-  );
-  if (response.data) {
-    const active = _.filter(response.data, {active: true});
-    return active;
+  if (string !== '') {
+    const response = await Api.get(
+      `ConnectorArticles?filter[name]=%${string}%`,
+    );
+    if (response.data) {
+      const active = _.filter(response.data, {active: true});
+      return active;
+    }
+  } else {
+    return false;
   }
 }
 
