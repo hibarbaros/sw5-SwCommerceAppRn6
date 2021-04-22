@@ -83,7 +83,7 @@ const TabComponent = () => {
               <Badge
                 fontSize={8}
                 p={4}
-                bg={userCart.length ? 'red' : 'transparent'}
+                bg={userCart?.length ? 'red' : 'transparent'}
                 zIndex={999}>
                 <Icon
                   name="shoppingcart"

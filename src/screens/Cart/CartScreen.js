@@ -69,7 +69,7 @@ const CartScreen = () => {
   return (
     <>
       <Titles handleGoTo={handleGoTo} currentStep={currentStep} />
-      {userCart.length ? (
+      {userCart?.length ? (
         <ScrollView ref={scrollRef} contentInsetAdjustmentBehavior="automatic">
           <Wizard
             ref={wizardRef}

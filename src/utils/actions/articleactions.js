@@ -42,7 +42,7 @@ export async function articles() {
 
 export async function articlesSearch(string) {
   const response = await Api.get(
-    `/ConnectorArticles?filter[0][property]=name&filter[0][value]=${string}%`,
+    `/ConnectorArticles?filter[name][property]=${string}%`,
   );
   if (response.data) {
     const active = _.filter(response.data, {active: true});
