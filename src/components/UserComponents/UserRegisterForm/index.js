@@ -4,13 +4,13 @@ import {View} from 'react-native-ui-lib';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 //*components
-import {ForwardIcon} from '../../../themes/components/IconSet';
 import {
   KeyboardAwareScroll,
   Container,
   FormInput,
   Headline,
   CheckBox,
+  Button,
 } from '../../../themes/components';
 import GenderActionSheet from '../../Common/GenderActionSheet/GenderActionSheet';
 import CountryDropDown from '../../Common/CountryDropDown/CountryDropDown';
@@ -20,7 +20,6 @@ import AppRoutes from '../../../utils/approutes';
 import {useRegisterCustomer} from '../../../utils/hooks/useCustomer';
 import {validationSchema} from '../../../utils/validationSchema';
 //*self
-import {Styled} from './styles';
 import {initialValues} from './initialValues';
 
 export default function UserRegisterForm({modalVisible = false}) {
@@ -308,14 +307,14 @@ export default function UserRegisterForm({modalVisible = false}) {
                 </View>
 
                 <View marginV-s2>
-                  <Styled.RegisterButton
-                    status="primary"
-                    size="medium"
+                  <Button
+                    block
+                    text="Register"
                     onPress={handleSubmit}
+                    suffix="save"
+                    mr={20}
                     disabled={isLoading}
-                    accessoryRight={ForwardIcon}>
-                    Register
-                  </Styled.RegisterButton>
+                  />
                 </View>
               </>
             )}

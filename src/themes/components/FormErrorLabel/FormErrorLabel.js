@@ -1,6 +1,10 @@
 import React from 'react';
-import {Styled} from './styles';
+import {Text} from 'react-native-magnus';
 
 export default function FormErrorLabel({errorMessage}) {
-  return <Styled.StyledErrorText>{errorMessage}</Styled.StyledErrorText>;
+  return (
+    <Text color="red" mt={5} fontSize={10}>
+      {errorMessage}
+    </Text>
+  );
 }

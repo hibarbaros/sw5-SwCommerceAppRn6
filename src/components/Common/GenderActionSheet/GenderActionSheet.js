@@ -32,8 +32,7 @@ export default function GenderActionSheet(props) {
     <>
       <Button
         block
-        justifyContent="space-around"
-        textAlign="left"
+        mr="auto"
         text={
           salutationValue
             ? genderList.find((x) => x.value === salutationValue).name

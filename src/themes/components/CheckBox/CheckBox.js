@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-
-import {Styled} from './styles';
+import {Checkbox, Text} from 'react-native-magnus';
 
 export default function CheckBox({label, onPress}) {
   const [isChecked, setIsChecked] = useState(false);
@@ -11,11 +10,11 @@ export default function CheckBox({label, onPress}) {
   };
 
   return (
-    <Styled.Container onPress={handleChecked}>
-      <Styled.Box onPress={handleChecked}>
-        <Styled.CheckIcon isChecked={isChecked} />
-      </Styled.Box>
-      <Styled.Label>{label}</Styled.Label>
-    </Styled.Container>
+    <Checkbox
+      suffix={<Text flex={1}>{label}</Text>}
+      checked={isChecked}
+      onChange={handleChecked}
+      activeColor="primary"
+    />
   );
 }

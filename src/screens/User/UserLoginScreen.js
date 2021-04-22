@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native-ui-lib';
+import {Div} from 'react-native-magnus';
 
 import {Container} from '../../themes/components';
 import UserLoginForm from '../../components/UserComponents/UserLoginForm';
@@ -9,9 +9,8 @@ export default function UserLoginScreen() {
   return (
     <Container>
       <UserLoginForm />
-      <View margin-s5>
-        <RegisterButton />
-      </View>
+      <Div borderTopColor="grey" borderTopWidth={1} h={1} my={20} />
+      <RegisterButton />
     </Container>
   );
 }

@@ -1,12 +1,10 @@
-import React from 'react';
-import {Button} from '@ui-kitten/components';
-import {View} from 'react-native-ui-lib';
+import React, {useState} from 'react';
+import {Div} from 'react-native-magnus';
 import {useNavigation} from '@react-navigation/native';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
-import {ForwardIcon} from '../../../themes/components/IconSet';
 //*components
-import {FormInput} from '../../../themes/components';
+import {FormInput, Button, TextButton} from '../../../themes/components';
 import LoadSpinner from '../../Common/LoadSpinner';
 //*utils
 import {useCustomerLogin} from '../../../utils/hooks/useCustomer';
@@ -16,6 +14,7 @@ import {initialValues} from './initialValues';
 
 export default function UserLoginForm({modalVisible = false}) {
   const navigation = useNavigation();
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const {mutateAsync, isLoading} = useCustomerLogin();
 
@@ -47,29 +46,30 @@ export default function UserLoginForm({modalVisible = false}) {
         })}>
         {({handleSubmit}) => (
           <>
-            <View marginV-s2>
+            <Div my={10}>
               <Field
                 component={FormInput}
                 name="email"
                 placeholder="E-Mail *"
+                suffix="envelope"
               />
-            </View>
-            <View marginV-s2>
+            </Div>
+            <Div my={10}>
               <Field
                 component={FormInput}
-                secureTextEntry={true}
+                secureTextEntry={secureTextEntry}
                 name="password"
                 placeholder="Password *"
               />
-            </View>
-            <View marginV-s2>
-              <Button
-                appearance="outline"
-                onPress={handleSubmit}
-                accessoryRight={ForwardIcon}>
-                Login
-              </Button>
-            </View>
+            </Div>
+            <TextButton
+              mb={10}
+              onPress={() => setSecureTextEntry(!secureTextEntry)}>
+              Show Password
+            </TextButton>
+            <Div mT={10}>
+              <Button block text="Login" onPress={handleSubmit} />
+            </Div>
           </>
         )}
       </Formik>

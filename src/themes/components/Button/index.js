@@ -7,6 +7,8 @@ export default function ThemeButton({
   disabled,
   suffix,
   prefix,
+  mr,
+  ml,
   ...rest
 }) {
   switch (variant) {
@@ -16,9 +18,23 @@ export default function ThemeButton({
           {...rest}
           bg="primary"
           p={12}
-          suffix={<Icon name={suffix} color="white" fontFamily="Feather" />}
-          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}>
-          <Text color="white" mr={suffix && 'auto'} ml={prefix && 'auto'}>
+          suffix={
+            <Icon
+              name={suffix}
+              color="white"
+              fontSize={18}
+              fontFamily="Feather"
+            />
+          }
+          prefix={
+            <Icon
+              name={prefix}
+              fontSize={18}
+              color="white"
+              fontFamily="Feather"
+            />
+          }>
+          <Text color="white" mr={mr} ml={ml} fontSize={18}>
             {text}
           </Text>
         </Button>
@@ -30,9 +46,25 @@ export default function ThemeButton({
           bg="secondary"
           p={12}
           color="white"
-          suffix={<Icon name={suffix} color="white" fontFamily="Feather" />}
-          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}>
-          {text}
+          suffix={
+            <Icon
+              name={suffix}
+              color="white"
+              fontSize={18}
+              fontFamily="Feather"
+            />
+          }
+          prefix={
+            <Icon
+              name={prefix}
+              color="white"
+              fontSize={18}
+              fontFamily="Feather"
+            />
+          }>
+          <Text color="white" mr={mr} ml={ml} fontSize={16}>
+            {text}
+          </Text>
         </Button>
       );
     case 'red':
@@ -42,8 +74,22 @@ export default function ThemeButton({
           bg="red"
           p={12}
           color="white"
-          suffix={<Icon name={suffix} color="white" fontFamily="Feather" />}
-          prefix={<Icon name={prefix} color="white" fontFamily="Feather" />}>
+          suffix={
+            <Icon
+              name={suffix}
+              color="white"
+              fontSize={18}
+              fontFamily="Feather"
+            />
+          }
+          prefix={
+            <Icon
+              name={prefix}
+              color="white"
+              fontSize={18}
+              fontFamily="Feather"
+            />
+          }>
           {text}
         </Button>
       );

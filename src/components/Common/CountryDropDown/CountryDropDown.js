@@ -1,8 +1,7 @@
 import React, {createRef, useState} from 'react';
 import {Dropdown, Text} from 'react-native-magnus';
 
-import {FormErrorLabel} from '../../../themes/components';
-import {Button} from '../../../themes/components';
+import {Button, FormErrorLabel} from '../../../themes/components';
 import {useCountries} from '../../../utils/hooks/useApp';
 
 export default function CountryDropDown(props) {
@@ -28,8 +27,7 @@ export default function CountryDropDown(props) {
     <>
       <Button
         block
-        justifyContent="space-around"
-        textAlign="left"
+        mr="auto"
         text={
           countryId
             ? data.find((x) => x.id === parseInt(countryId, 10)).name
@@ -38,6 +36,11 @@ export default function CountryDropDown(props) {
         onPress={() => dropdownRef.current.open()}
         suffix="arrow-down"
       />
+      {hasError && (
+        <Text color="red" mt={5}>
+          {errors[name]}
+        </Text>
+      )}
       {hasError && <FormErrorLabel errorMessage={errors[name]} />}
       <Dropdown
         ref={dropdownRef}

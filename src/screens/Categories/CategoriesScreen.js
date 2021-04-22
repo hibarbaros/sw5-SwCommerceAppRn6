@@ -42,13 +42,12 @@ export default function CategoriesScreen({navigation}) {
               />
             </>
           )}
-          <Text disabled pl={paddingLeft}>
+          <Text disabled pl={paddingLeft} mr="auto">
             {node.name} {node.id}
           </Text>
           <Button
             text="All Products"
             suffix="arrow-right"
-            ml="auto"
             onPress={() =>
               navigation.navigate(AppRoute.CATEGORIES_PRODUCTS, {
                 category: node,
