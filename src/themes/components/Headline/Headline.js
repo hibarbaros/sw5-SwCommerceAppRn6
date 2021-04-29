@@ -44,7 +44,9 @@ const Headline = ({children, variant = 'h1', ...rest}) => {
           {...rest}
           color="dark"
           fontSize={22}
-          style={sanFranciscoWeights.light}>
+          style={
+            rest.bold ? sanFranciscoWeights.bold : sanFranciscoWeights.light
+          }>
           {children}
         </Text>
       );

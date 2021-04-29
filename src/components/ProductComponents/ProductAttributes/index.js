@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Div} from 'react-native-magnus';
+import {Div} from 'react-native-magnus';
 import StickyHeaderFooterScrollView from 'react-native-sticky-header-footer-scroll-view';
 import _ from 'lodash';
 
@@ -21,14 +21,14 @@ export default function ProductAttributes({
   const {data, isLoading} = useAttributesOptions();
 
   if (isLoading) {
-    return <Text>Loading</Text>;
+    return null;
   }
 
   const filterList = categoryFilterList(products, data);
 
-  const handleFilterCheck = (e, option) => {
+  const handleFilterCheck = (toggle, option) => {
     let list = [...selectedFilter];
-    if (e) {
+    if (toggle) {
       list.push(option);
     } else {
       _.remove(list, {valueID: option.valueID});
@@ -51,7 +51,6 @@ export default function ProductAttributes({
   return (
     <StickyHeaderFooterScrollView
       makeScrollable={true}
-      additionalHeightReserve={500}
       fitToScreen={true}
       renderStickyHeader={() => (
         <TopNavigation
@@ -61,34 +60,48 @@ export default function ProductAttributes({
         />
       )}
       renderStickyFooter={() => (
-        <>
-          <Button
-            text="Clear Filter"
-            block
-            mt={20}
-            onPress={() => {
-              setSelectedFilter([]);
-              setFilteredProducts(products);
-            }}
-          />
-          <Button text="Filter" my={10} block onPress={handleProductFilter} />
-        </>
+        <Div row px={10} py={5}>
+          <Div w="50%">
+            <Button
+              variant="secondary"
+              mx={5}
+              text="Clear Filter"
+              block
+              onPress={() => {
+                setSelectedFilter([]);
+                setFilteredProducts(products);
+              }}
+            />
+          </Div>
+          <Div w="50%">
+            <Button
+              text="Apply"
+              mx={5}
+              block
+              onPress={handleProductFilter}
+              variant="secondary"
+            />
+          </Div>
+        </Div>
       )}>
-      <Div px={20} py={100}>
+      <Div px={20}>
         {filterList.map(
           (item) =>
             item.options.length > 0 && (
-              <Div key={item.id} my={10}>
-                <Headline my={5}>{item.name}</Headline>
-                {item.options.map((option) => (
-                  <Div key={option.valueID}>
+              <Div key={item.id} my={5}>
+                <Headline my={5} variant="h5" bold>
+                  {item.name}
+                </Headline>
+                <Div row flexWrap="wrap">
+                  {item.options.map((option) => (
                     <CheckItem
+                      key={option.valueID}
                       option={option}
-                      onPress={(e) => handleFilterCheck(e, option)}
+                      onPress={(toggle) => handleFilterCheck(toggle, option)}
                       selectedFilter={selectedFilter}
                     />
-                  </Div>
-                ))}
+                  ))}
+                </Div>
               </Div>
             ),
         )}

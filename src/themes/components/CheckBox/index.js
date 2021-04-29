@@ -19,7 +19,11 @@ export default function FormCheckBox({
 
   return (
     <Check
-      suffix={<Text flex={1}>{label}</Text>}
+      suffix={
+        <Text flex={1} ml={5} fontSize={16}>
+          {label}
+        </Text>
+      }
       checked={isChecked}
       onChange={handleChecked}
       activeColor="primary"

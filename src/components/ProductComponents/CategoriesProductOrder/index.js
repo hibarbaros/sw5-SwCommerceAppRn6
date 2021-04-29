@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Dropdown, Text, Icon} from 'react-native-magnus';
 import _ from 'lodash';
-
-import {Styled} from './styles';
 
 const data = [
   'Name A-Z',
@@ -15,9 +14,9 @@ export default function CategoriesProductOrder({
   setProducts,
   actionSheetRef,
 }) {
-  function handleProductsOrder(index) {
-    console.log('products', products);
+  const [isIndex, setIsIndex] = useState(null);
 
+  function handleProductsOrder(index) {
     let orderedproducts = [];
     if (index === 0) {
       orderedproducts = _.orderBy(products, ['name'], ['asc']);
@@ -26,10 +25,18 @@ export default function CategoriesProductOrder({
       orderedproducts = _.orderBy(products, ['name'], ['desc']);
     }
     if (index === 2) {
-      orderedproducts = _.orderBy(products, ['price'], ['asc']);
+      orderedproducts = _.orderBy(
+        products,
+        ['mainDetail.prices[0].price'],
+        ['asc'],
+      );
     }
     if (index === 3) {
-      orderedproducts = _.orderBy(products, ['price'], ['desc']);
+      orderedproducts = _.orderBy(
+        products,
+        ['mainDetail.prices[0].price'],
+        ['desc'],
+      );
     }
 
     setProducts(orderedproducts);
@@ -37,24 +44,44 @@ export default function CategoriesProductOrder({
 
   function handleSheet(index) {
     handleProductsOrder(index);
-    actionSheetRef.current.setModalVisible();
+    setIsIndex(index);
+    actionSheetRef.current.close();
   }
 
   return (
-    <Styled.StyledActionSheet ref={actionSheetRef}>
-      <Styled.ActionSheetWrapper>
-        {data.map((item, index) => {
-          return (
-            <Styled.Item
-              key={index}
-              onPress={() => {
-                handleSheet(index);
-              }}>
-              <Styled.ItemText>{item}</Styled.ItemText>
-            </Styled.Item>
-          );
-        })}
-      </Styled.ActionSheetWrapper>
-    </Styled.StyledActionSheet>
+    <Dropdown
+      ref={actionSheetRef}
+      title={
+        <Text fontSize="3xl" fontWeight="bold" mx="xl" color="primary" pb="md">
+          Products Order
+        </Text>
+      }
+      mt="md"
+      pb="2xl"
+      showSwipeIndicator={true}
+      roundedTop="xl">
+      {data.map((item, index) => (
+        <Dropdown.Option
+          key={index}
+          py="md"
+          px="xl"
+          block
+          prefix={
+            isIndex === index && (
+              <Icon
+                name="chevron-right"
+                color="primary"
+                fontSize="xl"
+                fontFamily="Feather"
+              />
+            )
+          }
+          onPress={() => {
+            handleSheet(index);
+          }}>
+          {item}
+        </Dropdown.Option>
+      ))}
+    </Dropdown>
   );
 }

@@ -17,7 +17,8 @@ export default function ThemeButton({
         <Button
           {...rest}
           bg="primary"
-          p={12}
+          px={24}
+          py={16}
           suffix={
             <Icon
               name={suffix}
@@ -34,7 +35,7 @@ export default function ThemeButton({
               fontFamily="Feather"
             />
           }>
-          <Text color="white" mr={mr} ml={ml} fontSize={18}>
+          <Text color="white" mr={mr} ml={ml} fontSize={18} fontWeight="bold">
             {text}
           </Text>
         </Button>
@@ -44,7 +45,8 @@ export default function ThemeButton({
         <Button
           {...rest}
           bg="secondary"
-          p={12}
+          px={24}
+          py={16}
           color="white"
           suffix={
             <Icon
@@ -62,7 +64,7 @@ export default function ThemeButton({
               fontFamily="Feather"
             />
           }>
-          <Text color="white" mr={mr} ml={ml} fontSize={16}>
+          <Text color="white" mr={mr} ml={ml} fontSize={18} fontWeight="bold">
             {text}
           </Text>
         </Button>

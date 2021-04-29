@@ -7,10 +7,10 @@ export default function TopNavigation({onPress, title, icon}) {
       p={5}
       borderWidth={0}
       shadow={0}
-      alignment="center"
+      alignment="left"
       prefix={
         <Button bg="transparent" onPress={onPress}>
-          <Icon name={icon} fontFamily="Feather" fontSize="2xl" />
+          <Icon name={icon} fontFamily="Feather" fontSize="4xl" color="black" />
         </Button>
       }>
       {title}

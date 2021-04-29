@@ -2,9 +2,8 @@ import React, {useContext, useState} from 'react';
 import {SafeAreaView, Modal, ScrollView, Text} from 'react-native';
 import {TopNavigation, TopNavigationAction} from '@ui-kitten/components';
 import {View} from 'react-native-ui-lib';
-import {useQuery} from 'react-query';
 
-import {customerData} from '../../../utils/actions/useractions';
+import {getCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
 
 import AppContext from '../../../context/AppContext';
 import {LocalizationContext} from '../../../context/Translations';
@@ -23,19 +22,16 @@ export default function Address() {
     selectedShippingAddress,
     setselectedShippingAddress,
   } = useContext(CheckoutContext);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
 
-  const {isLoading, data: userData} = useQuery(
-    ['checkoutAddress'],
-    () => customerData(user),
-    {
-      onSuccess: (res) => {
-        setselectedBilllingAddress(res.defaultBillingAddress);
-        setselectedShippingAddress(res.defaultShippingAddress);
-      },
+  const {data, isLoading} = getCustomerByCustomerId(user, {
+    onSuccess: (res) => {
+      setselectedBilllingAddress(res.defaultBillingAddress);
+      setselectedShippingAddress(res.defaultShippingAddress);
     },
-  );
+  });
 
   if (isLoading) {
     return <Text>Loading</Text>;
@@ -52,45 +48,43 @@ export default function Address() {
 
   return (
     <>
-      {userData && (
-        <Container>
-          {selectedBilllingAddress && (
-            <AddressCard addressId={selectedBilllingAddress.id} />
+      <Container>
+        {selectedBilllingAddress && (
+          <AddressCard addressId={selectedBilllingAddress.id} />
+        )}
+        <View marginB-s5 center flex>
+          <Button
+            onPress={() => {
+              setModalVisible(true);
+              setSelectedAddress(1);
+            }}
+            size="tiny"
+            text={translations.CheckoutSelectBillingAddress}
+          />
+        </View>
+        <View marginT-s5>
+          {selectedShippingAddress && (
+            <AddressCard addressId={selectedShippingAddress.id} />
           )}
-          <View marginB-s5 center flex>
-            <Button
-              onPress={() => {
-                setModalVisible(true);
-                setSelectedAddress(1);
-              }}
-              size="tiny"
-              text={translations.CheckoutSelectBillingAddress}
-            />
-          </View>
-          <View marginT-s5>
-            {selectedShippingAddress && (
-              <AddressCard addressId={selectedShippingAddress.id} />
-            )}
-          </View>
-          <View marginB-s5 center flex>
-            <Button
-              onPress={() => {
-                setModalVisible(true);
-                setSelectedAddress(2);
-              }}
-              size="tiny"
-              text={translations.CheckoutSelectShippingAddress}
-            />
-          </View>
-        </Container>
-      )}
+        </View>
+        <View marginB-s5 center flex>
+          <Button
+            onPress={() => {
+              setModalVisible(true);
+              setSelectedAddress(2);
+            }}
+            size="tiny"
+            text={translations.CheckoutSelectShippingAddress}
+          />
+        </View>
+      </Container>
       <SafeAreaView>
         <Modal animationType="slide" transparent={false} visible={modalVisible}>
           <SafeAreaView>
             <TopNavigationModal />
             <ScrollView>
               <Container>
-                {userData.address.map((address, i) => {
+                {data.address.map((address, i) => {
                   return (
                     <AddressCard
                       key={i}

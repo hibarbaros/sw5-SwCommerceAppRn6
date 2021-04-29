@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {FlatList, Modal, SafeAreaView, ScrollView} from 'react-native';
+import {FlatList, Modal, SafeAreaView} from 'react-native';
 import {Div} from 'react-native-magnus';
 import _ from 'lodash';
 //*components
@@ -64,7 +64,7 @@ function CategoriesProducts({data, category}) {
             ml={10}
             variant="icon"
             suffix="bar-chart"
-            onPress={() => actionSheetRef.current.setModalVisible()}
+            onPress={() => actionSheetRef.current.open()}
           />
         </Div>
       </Div>

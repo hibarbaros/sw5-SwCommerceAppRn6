@@ -17,7 +17,6 @@ import {
 import {migrateUserCart} from '../actions/cartactions';
 //*normalize
 import {initialCartNormalize} from '../normalize/cartNormalize';
-import {checkMd5Pass, checkBcryptPass} from '../../utils/functions';
 
 //!Get Customer by Id
 const getCustomerByCustomerId = async (userId) => {
