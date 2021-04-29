@@ -93,6 +93,33 @@ export default function ThemeButton({
           {text}
         </Button>
       );
+    case 'icon':
+      return (
+        <Button
+          {...rest}
+          ml={ml}
+          mr={mr}
+          bg="primary"
+          p={8}
+          color="white"
+          suffix={
+            <Icon
+              name={suffix}
+              color="white"
+              fontSize={18}
+              fontFamily="Feather"
+            />
+          }
+          prefix={
+            <Icon
+              name={prefix}
+              color="white"
+              fontSize={18}
+              fontFamily="Feather"
+            />
+          }
+        />
+      );
     default:
       return null;
   }

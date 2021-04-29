@@ -13,7 +13,7 @@ import {Headline} from '../../../themes/components';
 export default function ProductCardTheme02({navigation, product, thumbnail}) {
   const {selectedTranslate} = useContext(AppContext);
 
-  const [price] = product.mainDetail.prices;
+  const [price] = product?.mainDetail?.prices;
 
   const translation = product.translations.find(
     (x) => x.languageID === selectedTranslate.toString(),

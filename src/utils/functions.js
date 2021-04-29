@@ -76,3 +76,19 @@ export function findVariantProductOrderNumber(productData, selectedVariants) {
 export const makeImageUrl = (thumbnail) => {
   return `${vars.imageUrl}/media/image/${thumbnail.path}.${thumbnail.extension}`;
 };
+
+export const categoryFilterList = (categoryProducts, attributesOptions) => {
+  const filterList = _.map(categoryProducts, 'filters');
+  const flatted = _.flatten(filterList);
+  const uniqueFilterList = _.uniqBy(flatted, 'valueID');
+
+  const filteredData = attributesOptions.map((item) => ({
+    id: item.id,
+    name: item.name,
+    options: uniqueFilterList.filter(
+      (x) => parseInt(x.optionID, 10) === item.id,
+    ),
+  }));
+
+  return filteredData;
+};

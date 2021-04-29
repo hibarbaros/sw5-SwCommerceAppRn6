@@ -43,6 +43,7 @@ export const AppProvider = ({children}) => {
   };
 
   useEffect(() => {
+    // removeItem('visitedProducts');
     getItem('user').then((v) => v && setUser(v));
     getItem('wishlist').then((v) => v && setWishlist(v));
     getItem('visitedProducts').then((v) => v && setVisitedProducts(v));

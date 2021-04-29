@@ -7,5 +7,6 @@ export {default as ButtonIcon} from './ButtonIcon/ButtonIcon';
 export {default as TextButton} from './TextButton';
 export {default as FormInput} from './FormInput/FormInput';
 export {default as Headline} from './Headline/Headline';
-export {default as CheckBox} from './CheckBox/CheckBox';
+export {default as CheckBox} from './CheckBox';
+export {default as TopNavigation} from './TopNavigation';
 export {default as KeyboardAwareScroll} from './KeyboardAwareScroll/KeyboardAwareScroll';

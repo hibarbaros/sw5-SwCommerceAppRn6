@@ -7,7 +7,7 @@ import {LocalizationContext} from '../../context/Translations';
 import AppContext from '../../context/AppContext';
 import {Headline} from '../../themes/components';
 import Carousel from '../../components/Common/FirebaseCarousel';
-import VisitedProducts from '../../components/Common/VisitedProducts';
+// import VisitedProducts from '../../components/Common/VisitedProducts';
 import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
 import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';
 
@@ -34,7 +34,7 @@ const HomeScreen = () => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
       <Div my={20}>
-        <HomeMainCarousel refreshing={refreshing} />
+        <HomeMainCarousel />
       </Div>
 
       <Div mt={20}>
@@ -61,11 +61,11 @@ const HomeScreen = () => {
         />
       </Div>
 
-      <Div mt={20}>
+      {/* <Div mt={20}>
         <VisitedProducts />
-      </Div>
+      </Div> */}
 
-      <Div mt={20}>
+      {/* <Div mt={20}>
         <Headline my="md" variant="h1" ml={10}>
           {translations.recomendedCategories}
         </Headline>
@@ -73,7 +73,7 @@ const HomeScreen = () => {
           collection="homescreencategories"
           doc={`mainCategory${selectedLanguage}`}
         />
-      </Div>
+      </Div> */}
     </ScrollView>
   );
 };

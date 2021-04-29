@@ -13,6 +13,9 @@ export function useAddToWhislist() {
   }
 
   return useMutation((productId) => {
+    if (!productId) {
+      return null;
+    }
     if (!wishlist) {
       let newList = [];
       newList.push(productId);

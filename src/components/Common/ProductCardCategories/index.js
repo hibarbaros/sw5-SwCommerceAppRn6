@@ -1,8 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {useProductByProductId} from '../../../utils/hooks/useProduct';
-
 import Theme01 from '../ProductCardThemes/Theme01';
 import Theme02 from '../ProductCardThemes/Theme02';
 import Theme03 from '../ProductCardThemes/Theme03';
@@ -13,19 +11,16 @@ export const themes = {
   theme03: Theme03,
 };
 
-const ProductCard = ({productId, theme = 'theme01'}) => {
+const ProductCardCategories = ({product, theme = 'theme01'}) => {
   const navigation = useNavigation();
-
-  const {isLoading, data} = useProductByProductId(productId);
   const Theme = themes[theme];
 
-  if (isLoading) {
-    return null;
-  }
+  const thumbnail = product?.images.find((x) => x.main === '1');
+  thumbnail.path = thumbnail.img;
 
-  const thumbnail = data?.images.find((x) => x.main === 1);
-
-  return <Theme navigation={navigation} product={data} thumbnail={thumbnail} />;
+  return (
+    <Theme navigation={navigation} product={product} thumbnail={thumbnail} />
+  );
 };
 
-export default ProductCard;
+export default ProductCardCategories;

@@ -8,7 +8,6 @@ import {makeImageUrl} from '../../../utils/functions';
 
 export default function ProductCardMedia({thumbnail}) {
   const image = makeImageUrl(thumbnail);
-
   const [isLoading, setIsLoading] = useState(true);
 
   return (

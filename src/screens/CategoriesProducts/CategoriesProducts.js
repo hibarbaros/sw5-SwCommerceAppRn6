@@ -1,11 +1,9 @@
-import React, {useState, useRef, useContext, useEffect} from 'react';
-import {FlatList, Modal, SafeAreaView} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {FlatList, Modal, SafeAreaView, ScrollView} from 'react-native';
 import {Div} from 'react-native-magnus';
 import _ from 'lodash';
 //*components
-import {CloseIcon} from '../../themes/components/IconSet';
-import TopNavigationModal from '../../components/Common/TopNavigationModal';
-import ProductCard from '../../components/Common/ProductCard';
+import ProductCardCategories from '../../components/Common/ProductCardCategories';
 import LoadSpinner from '../../components/Common/LoadSpinner';
 import ProductAttributes from '../../components/ProductComponents/ProductAttributes';
 import CategoriesProductOrder from '../../components/ProductComponents/CategoriesProductOrder';
@@ -13,32 +11,27 @@ import CategoriesProductOrder from '../../components/ProductComponents/Categorie
 import {useCategoryByCategoryId} from '../../utils/hooks/useCategory';
 //*themes
 import {Button, Headline} from '../../themes/components';
-//*context
-import FilterContext from '../../context/FilterContext';
 
-import {Styled} from './styles';
-
-export default function CategoriesProducts({route}) {
-  const {category} = route.params;
+function CategoriesProducts({data, category}) {
   const actionSheetRef = useRef();
-  const {
-    setSelectedOptions,
-    filteredProducts,
-    setFilteredProducts,
-  } = useContext(FilterContext);
+  const pageSize = 6;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const pageSize = 6;
   const [page, setPage] = useState(pageSize);
+  const [initialProducts, setInitialProducts] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState([]);
+
   // const [multiSliderValue, setMultiSliderValue] = useState([0, 0]);
   // const [highestPrice, setHighestPrice] = useState(null);
 
-  const {data, isLoading} = useCategoryByCategoryId(category.id);
-
   useEffect(() => {
-    data && setFilteredProducts(_.slice(data?.products, 0, page));
-  }, [data, page]);
+    if (filteredProducts) {
+      setInitialProducts(_.slice(filteredProducts, 0, page));
+    } else {
+      setInitialProducts(_.slice(data.products, 0, page));
+    }
+  }, [filteredProducts, page]);
 
   const handleLoadMore = () => {
     setPage(page + pageSize);
@@ -59,25 +52,22 @@ export default function CategoriesProducts({route}) {
 
   return (
     <>
-      <LoadSpinner isVisible={isLoading} />
       <Div row p={10}>
         <Headline>{category.name}</Headline>
         <Div ml="auto" row>
-          <Button suffix="filter" onPress={() => setIsModalOpen(true)} />
+          <Button
+            variant="icon"
+            suffix="filter"
+            onPress={() => setIsModalOpen(true)}
+          />
           <Button
             ml={10}
+            variant="icon"
             suffix="bar-chart"
             onPress={() => actionSheetRef.current.setModalVisible()}
           />
         </Div>
       </Div>
-      <Styled.SelectContainer>
-        <CategoriesProductOrder
-          actionSheetRef={actionSheetRef}
-          products={filteredProducts}
-          setProducts={setFilteredProducts}
-        />
-      </Styled.SelectContainer>
       {/* <Styled.RangeContainer>
 						<Styled.RangeTitle>Price Filter</Styled.RangeTitle>
 						{highestPrice && (
@@ -105,44 +95,49 @@ export default function CategoriesProducts({route}) {
 			</Styled.RangeContainer> */}
       {data && (
         <FlatList
-          contentInsetAdjustmentBehavior="automatic"
           scrollEnabled={true}
-          data={filteredProducts}
-          keyExtractor={(item) => item.articleID}
+          data={initialProducts}
+          keyExtractor={(item, index) => index}
           numColumns={2}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={1}
           renderItem={({item}) => (
-            <Styled.ProductCardContainer key={item.articleID}>
-              <ProductCard productId={item.articleID} theme="theme02" />
-            </Styled.ProductCardContainer>
+            <Div h={300} mb={10} key={item.articleID}>
+              <ProductCardCategories product={item} theme="theme02" />
+            </Div>
           )}
         />
       )}
+      <CategoriesProductOrder
+        actionSheetRef={actionSheetRef}
+        products={initialProducts}
+        setProducts={setInitialProducts}
+      />
       {/* Modal Start */}
       <Modal animationType="slide" transparent={false} visible={isModalOpen}>
         <SafeAreaView>
-          <TopNavigationModal
-            modalTitle="Products Filter"
-            icon={CloseIcon}
-            onPress={() => setIsModalOpen(false)}
+          <ProductAttributes
+            products={data.products}
+            setFilteredProducts={setFilteredProducts}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            setIsModalOpen={setIsModalOpen}
           />
-          <Styled.ModalWrapper>
-            <ProductAttributes
-              products={data?.products}
-              filteredProducts={filteredProducts}
-              setFilteredProducts={setFilteredProducts}
-            />
-            <Styled.ClearFilterButton
-              onPress={() => {
-                setSelectedOptions([]);
-                setFilteredProducts(data?.products);
-              }}>
-              Clear Filter
-            </Styled.ClearFilterButton>
-          </Styled.ModalWrapper>
         </SafeAreaView>
       </Modal>
+    </>
+  );
+}
+
+export default function ConnectedCategoriesProducts({route}) {
+  const {category} = route.params;
+
+  const {data, isLoading} = useCategoryByCategoryId(category.id);
+
+  return (
+    <>
+      <LoadSpinner isVisible={isLoading} />
+      {data && <CategoriesProducts data={data} category={category} />}
     </>
   );
 }
