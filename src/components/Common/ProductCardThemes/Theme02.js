@@ -23,8 +23,6 @@ export default function ProductCardTheme02({navigation, product, thumbnail}) {
 
   return (
     <Button
-      minW={200}
-      maxW={200}
       h="100%"
       bg="transparent"
       borderColor="light"

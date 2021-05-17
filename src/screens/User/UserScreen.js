@@ -1,15 +1,14 @@
 import React, {useContext} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
-import {View} from 'react-native-ui-lib';
-import {Button} from '@ui-kitten/components';
 import {useNavigation} from '@react-navigation/native';
+import {Div} from 'react-native-magnus';
 
 import {LocalizationContext} from '../../context/Translations';
 
 import {Container} from '../../themes/components';
 import UserProfile from '../../components/UserComponents/UserProfile';
 import UserAddressList from '../../components/UserComponents/UserAddressList';
-import {EditIcon} from '../../themes/components/IconSet';
+import {Button} from '../../themes/components';
 import AppRoute from '../../utils/approutes';
 
 export default function UserScreen({customerData}) {
@@ -21,22 +20,25 @@ export default function UserScreen({customerData}) {
       <ScrollView>
         <Container>
           <UserProfile />
-          <View row marginT-s3>
+          <Div column>
             <Button
-              size="tiny"
+              variant="block"
+              fontSize={12}
+              block
               onPress={() => navigation.navigate(AppRoute.PROFILE_EDIT)}
-              accessoryLeft={EditIcon}>
-              {translations.edit}
-            </Button>
+              text={translations.edit}
+            />
             <Button
-              size="tiny"
-              status="danger"
+              variant="block"
+              fontSize={12}
+              block
               onPress={() => navigation.navigate(AppRoute.PASSWORD_EDIT)}
-              accessoryLeft={EditIcon}>
-              Password Change
-            </Button>
-          </View>
-          <UserAddressList />
+              text="Password Change"
+            />
+          </Div>
+          <Div my={10}>
+            <UserAddressList />
+          </Div>
         </Container>
       </ScrollView>
     </SafeAreaView>

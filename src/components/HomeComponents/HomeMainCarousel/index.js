@@ -52,8 +52,8 @@ export default function HomeMainCarousel() {
           onBeforeSnapToItem={handleIndexChange}
           onSnapToIndex={(index) => handleIndexChange(index)}
           firstItem={0}
-          sliderWidth={wp('100%')}
-          itemWidth={wp('100%')}
+          sliderWidth="100%"
+          itemWidth="100%"
           layout={'default'}
         />
       </View>

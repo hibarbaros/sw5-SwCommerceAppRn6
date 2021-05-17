@@ -1,52 +1,35 @@
-import React, {useContext} from 'react';
-import {Text} from 'react-native-ui-lib';
-import {useQuery} from 'react-query';
+import React from 'react';
+import {Div} from 'react-native-magnus';
 
-import CheckoutContext from '../../../context/CheckoutContext';
+import {useAddress} from '../../../utils/hooks/useAddress';
+import {Card, Headline, Text} from '../../../themes/components';
 
-import {addressDetail} from '../../../utils/actions/addressactions';
-import {Styled} from './styles';
-
-export default function AddressCard({
-  addressId,
-  selectable = false,
-  setModalVisible,
-  selectedAddress,
-}) {
-  const {
-    setselectedBilllingAddress,
-    setselectedShippingAddress,
-    setselectedShippingMethod,
-  } = useContext(CheckoutContext);
-
-  const {isLoading, data: addressData} = useQuery(
-    ['userAddressCard', addressId],
-    () => addressDetail(addressId),
-  );
+export default function Address({addressId, onPress}) {
+  const {isLoading, data} = useAddress(addressId);
 
   if (isLoading) {
     return <Text>Loading</Text>;
   }
 
-  const handleCard = (address) => {
-    setModalVisible(false);
-    selectedAddress === 2 && setselectedShippingMethod(null);
-    selectedAddress === 1
-      ? setselectedBilllingAddress(address)
-      : setselectedShippingAddress(address);
-  };
-
   return (
-    <Styled.Card onPress={() => handleCard(addressData)} disabled={!selectable}>
-      <Styled.AddressText>
-        {addressData.firstname} {addressData.lastname}
-      </Styled.AddressText>
-      <Styled.AddressText>Straße : {addressData.street}</Styled.AddressText>
-      <Styled.AddressText>{addressData.city}</Styled.AddressText>
-      <Styled.AddressText>{addressData.zipcode}</Styled.AddressText>
-      {addressData.country && (
-        <Styled.AddressText>{addressData.country.name}</Styled.AddressText>
-      )}
-    </Styled.Card>
+    <Card onPress={onPress}>
+      <Headline mb={10} variant="h3" bold>
+        {data.firstname} {data.lastname}
+      </Headline>
+      <Div row>
+        <Div mr={10}>
+          <Text bold>Street</Text>
+          <Text>City</Text>
+          <Text>Zipcode</Text>
+          {data.country && <Text>Country</Text>}
+        </Div>
+        <Div>
+          <Text>: {data.street}</Text>
+          <Text>: {data.city}</Text>
+          <Text>: {data.zipcode}</Text>
+          {data.country && <Text>: {data.country.name}</Text>}
+        </Div>
+      </Div>
+    </Card>
   );
 }

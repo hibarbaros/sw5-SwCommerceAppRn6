@@ -49,8 +49,12 @@ export function useCustomerLogout() {
 //!Customer logout
 
 //!Customer login
-const getCustomerLogin = async (values) => {
+const getCustomerLogin = async (values, userCart) => {
   const response = await userLogin(values);
+  const {id, sessionId} = response;
+  if (userCart) {
+    await migrateUserCart(id, userCart, sessionId);
+  }
   return response;
 };
 
@@ -59,20 +63,14 @@ export function useCustomerLogin() {
   const {setUserContext} = useContext(AppContext);
   const {userCart, setInitialUserCart} = useContext(CartContext);
 
-  const mutate = useMutation((values) => getCustomerLogin(values), {
-    onSuccess: async (data) => {
-      const {id, sessionId} = data;
-      console.log('data :>> ', data);
-      if (data) {
-        if (userCart) {
-          await migrateUserCart(id, userCart, sessionId);
-        }
-        setTimeout(async () => {
-          const userResponse = await customerData(id);
-          const {basket} = userResponse;
-          setInitialUserCart(initialCartNormalize(basket));
-        }, 1000);
-
+  const mutate = useMutation((values) => getCustomerLogin(values, userCart), {
+    onSuccess: async (response) => {
+      console.log('response :>> ', response);
+      const {id, sessionId} = response;
+      if (response) {
+        const userResponse = await customerData(id);
+        const {basket} = userResponse;
+        setInitialUserCart(initialCartNormalize(basket));
         setUserContext(id, sessionId);
       } else {
         Toast.show({

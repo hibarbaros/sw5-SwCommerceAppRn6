@@ -1,18 +1,13 @@
 import React from 'react';
-import {Text} from 'react-native-magnus';
 
-import {Container} from '../../themes/components';
-import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods';
+import {Container, Headline} from '../../themes/components';
+import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods';
 
-export default function Step03() {
+export default function Step02() {
   return (
-    <>
-      <Container>
-        <Text text60 marginB-s5>
-          Payments Methods
-        </Text>
-        <PaymentMethods />
-      </Container>
-    </>
+    <Container>
+      <Headline>Shipping Methods</Headline>
+      <ShippingMethods />
+    </Container>
   );
 }

@@ -1,5 +1,5 @@
 export {default as Container} from './Container/Container';
-export {default as Card} from './Card/Card';
+export {default as Card} from './Card';
 export {default as FormErrorLabel} from './FormErrorLabel/FormErrorLabel';
 export {default as Button} from './Button';
 export {default as Text} from './Text';
@@ -10,3 +10,4 @@ export {default as Headline} from './Headline/Headline';
 export {default as CheckBox} from './CheckBox';
 export {default as TopNavigation} from './TopNavigation';
 export {default as KeyboardAwareScroll} from './KeyboardAwareScroll/KeyboardAwareScroll';
+export {default as ModalHeader} from './ModalHeader';

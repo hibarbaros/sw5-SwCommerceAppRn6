@@ -25,7 +25,11 @@ const ProductCard = ({productId, theme = 'theme01'}) => {
 
   const thumbnail = data?.images.find((x) => x.main === 1);
 
-  return <Theme navigation={navigation} product={data} thumbnail={thumbnail} />;
+  return (
+    data && (
+      <Theme navigation={navigation} product={data} thumbnail={thumbnail} />
+    )
+  );
 };
 
 export default ProductCard;

@@ -20,7 +20,7 @@ export default function componentName({onPress, option, selectedFilter}) {
       text={option.optionValue}
       m={3}
       onPress={handleCheck}
-      variant={checked ? 'secondary' : 'primary'}
+      variant={checked ? 'primary' : 'outline'}
     />
   );
 }

@@ -13,14 +13,7 @@ export default function ThemeText({
   switch (variant) {
     case 'primary':
       return (
-        <Text
-          {...rest}
-          fontSize="lg"
-          fontWeight="bold"
-          textTransform="uppercase"
-          color="red400"
-          letterSpacing={2}
-          mt="lg">
+        <Text {...rest} fontSize={12} my={2}>
           {children}
         </Text>
       );

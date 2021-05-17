@@ -10,12 +10,14 @@ export default function CategoryProducts({categoryId}) {
   const {isLoading, data} = useProducstByCategoryId(categoryId);
 
   const renderCarouselItem = ({item}) => {
-    return <ProductCard theme="theme02" productId={item.articleID} />;
+    return <ProductCard theme="theme01" productId={item.id} />;
   };
 
   if (isLoading) {
     return null;
   }
+
+  const takedData = _.take(data, 5);
 
   return (
     <Styled.StyledCarousel
@@ -24,7 +26,7 @@ export default function CategoryProducts({categoryId}) {
       automaticallyAdjustContentInsets={true}
       removeClippedSubviews={true}
       enableEmptySections={true}
-      data={_.take(data, 5)}
+      data={takedData}
       renderItem={(item) => renderCarouselItem(item)}
       keyExtractor={(item, index) => index.toString()}
     />

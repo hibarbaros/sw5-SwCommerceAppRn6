@@ -46,6 +46,9 @@ export async function removeFromCart(productNumber, user) {
 }
 
 export async function addFromCart(mutateVariables, user, sessionId) {
+  console.log(
+    '🚀 ~ file: cartactions.js ~ line 49 ~ addFromCart ~ addFromCart',
+  );
   const {productData, quantity, number} = mutateVariables;
   const checktoBasket = await getCartByUserId(user);
   const finded = checktoBasket.find((x) => x.orderNumber === number);
@@ -118,7 +121,9 @@ export async function migrateUserCart(user, userCart, sessionId) {
       );
       Api.post('/ConnectorBasket', formDataPost);
     }
+    console.log('cartProduct :>> ', cartProduct);
   }
+  console.log('object');
   return true;
 }
 //!Kullanici login olduktan sonra cart migrate fonksiyonu

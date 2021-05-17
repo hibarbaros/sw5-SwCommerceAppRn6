@@ -1,7 +1,13 @@
 import React from 'react';
 import {Div, Button, Text, Avatar} from 'react-native-magnus';
 
-const stepTitles = ['Kasse', 'Adresse', 'Zahlungsart', 'Bestätigen'];
+const stepTitles = [
+  'Kasse',
+  'Adresse',
+  'Shipping',
+  'Zahlungsart',
+  'Bestätigen',
+];
 
 export default function Titles({handleGoTo, currentStep}) {
   return (

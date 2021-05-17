@@ -1,11 +1,7 @@
 import React from 'react';
-import {View} from 'react-native-ui-lib';
+import {Div} from 'react-native-magnus';
 
 export default function Container(props) {
   const {children} = props;
-  return (
-    <View marginV-s5 marginH-s5>
-      {children}
-    </View>
-  );
+  return <Div m={10}>{children}</Div>;
 }

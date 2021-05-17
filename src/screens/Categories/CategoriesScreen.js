@@ -48,6 +48,7 @@ export default function CategoriesScreen({navigation}) {
           <Button
             text="All Products"
             suffix="arrow-right"
+            fontSize={12}
             onPress={() =>
               navigation.navigate(AppRoute.CATEGORIES_PRODUCTS, {
                 category: node,

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StackActions, useNavigation} from '@react-navigation/native';
-import {View} from 'react-native-ui-lib';
+import {Div} from 'react-native-magnus';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 //*components
@@ -118,204 +118,203 @@ export default function UserRegisterForm({modalVisible = false}) {
             })}>
             {({handleSubmit, setFieldValue, values}) => (
               <>
-                <View marginV-s2>
+                <Div>
                   <Field
                     component={FormInput}
                     name="email"
                     placeholder="E-Mail *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     secureTextEntry={true}
                     component={FormInput}
                     name="password"
                     placeholder="Password *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     secureTextEntry={true}
                     component={FormInput}
                     name="confirmpassword"
                     placeholder="Confirm password *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={FormInput}
                     name="firstname"
                     placeholder="Firstname *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={FormInput}
                     name="lastname"
                     placeholder="Lastname *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={GenderActionSheet}
                     name="salutation"
                     placeholder="Gender Select"
                   />
-                </View>
-                {/* BILLING ADDRESS */}
-                <View marginT-s5>
+                </Div>
+                {/* ANCHOR BILLING ADDRESS */}
+                <Div marginT-s5>
                   <Headline type="h3">Billing Address</Headline>
-                </View>
+                </Div>
 
-                <View marginV-s2>
+                <Div>
                   <Field
                     component={FormInput}
                     name="billingfirstname"
                     placeholder="Billing Addresse Firstname *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={FormInput}
                     name="billinglastname"
                     placeholder="Billing Addresse Lastname *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={GenderActionSheet}
                     name="billingsalutation"
                     placeholder="Gender Select"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={FormInput}
                     name="billingstreet"
                     placeholder="Street *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={FormInput}
                     name="billingzipcode"
                     placeholder="Zipcode *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={FormInput}
                     name="billingcity"
                     placeholder="City *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={FormInput}
                     name="billingstate"
                     placeholder="State *"
                   />
-                </View>
-                <View marginV-s2>
+                </Div>
+                <Div>
                   <Field
                     component={CountryDropDown}
                     name="billingcountry"
                     placeholder="Country Select"
                   />
-                </View>
-                {/* BILLING ADDRESS */}
-                <View marginV-s2>
+                </Div>
+                {/* ANCHOR BILLING ADDRESS */}
+                <Div>
                   <CheckBox
                     label="The shipping address does not match the billing address"
                     onPress={(isChecked) => {
                       setFieldValue('isShipping', isChecked);
                     }}
                   />
-                </View>
-                {/* SHIPPING ADDRESS */}
+                </Div>
+                {/* ANCHOR SHIPPING ADDRESS */}
                 {values.isShipping && (
                   <>
-                    <View marginT-s5>
+                    <Div marginT-s5>
                       <Headline type="h3">Shipping Address</Headline>
-                    </View>
-                    <View marginV-s2>
+                    </Div>
+                    <Div>
                       <Field
                         component={FormInput}
                         name="shippingfirstname"
                         placeholder="Shipping Address Firstname *"
                       />
-                    </View>
-                    <View marginV-s2>
+                    </Div>
+                    <Div>
                       <Field
                         component={FormInput}
                         name="shippinglastname"
                         placeholder="Shipping Address Lastname *"
                       />
-                    </View>
-                    <View marginV-s2>
+                    </Div>
+                    <Div>
                       <Field
                         component={GenderActionSheet}
                         name="shippingsalutation"
                         placeholder="Gender Select"
                       />
-                    </View>
-                    <View marginV-s2>
+                    </Div>
+                    <Div>
                       <Field
                         component={FormInput}
                         name="shippingstreet"
                         placeholder="Shipping Address Street *"
                       />
-                    </View>
-                    <View marginV-s2>
+                    </Div>
+                    <Div>
                       <Field
                         component={FormInput}
                         name="shippingzipcode"
                         placeholder="Shipping Address Zipcode *"
                       />
-                    </View>
-                    <View marginV-s2>
+                    </Div>
+                    <Div>
                       <Field
                         component={FormInput}
                         name="shippingcity"
                         placeholder="Shipping Address City *"
                       />
-                    </View>
-                    <View marginV-s2>
+                    </Div>
+                    <Div>
                       <Field
                         component={FormInput}
                         name="shippingstate"
                         placeholder="Shipping Address State *"
                       />
-                    </View>
-                    <View marginV-s2>
+                    </Div>
+                    <Div>
                       <Field
                         component={CountryDropDown}
                         name="shippingcountry"
                         placeholder="Country Select"
                       />
-                    </View>
+                    </Div>
                   </>
                 )}
-                {/* SHIPPING ADDRESS */}
-                <View marginV-s2>
+                {/* ANCHOR SHIPPING ADDRESS */}
+                <Div my={10}>
                   <CheckBox
                     label="Newsletter"
                     onPress={(isChecked) =>
                       setFieldValue('newsletter', isChecked)
                     }
                   />
-                </View>
+                </Div>
 
-                <View marginV-s2>
+                <Div my={10}>
                   <Button
                     block
                     text="Register"
                     onPress={handleSubmit}
-                    suffix="save"
                     mr={20}
                     disabled={isLoading}
                   />
-                </View>
+                </Div>
               </>
             )}
           </Formik>

@@ -1,32 +1,29 @@
 import React, {useContext, useState} from 'react';
-import {SafeAreaView, Modal, ScrollView, Text} from 'react-native';
-import {TopNavigation, TopNavigationAction} from '@ui-kitten/components';
-import {View} from 'react-native-ui-lib';
+import {SafeAreaView, ScrollView, Text} from 'react-native';
+import {Modal, Div} from 'react-native-magnus';
 
-import {getCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
+import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
 
 import AppContext from '../../../context/AppContext';
-import {LocalizationContext} from '../../../context/Translations';
 import CheckoutContext from '../../../context/CheckoutContext';
-import {Container, Button} from '../../../themes/components';
-import {CloseIcon} from '../../../themes/components/IconSet';
+import {Container, Button, ModalHeader} from '../../../themes/components';
 import AddressCard from '../AddressCard';
 
 export default function Address() {
   const {user} = useContext(AppContext);
-  const {translations} = useContext(LocalizationContext);
 
   const {
     selectedBilllingAddress,
     setselectedBilllingAddress,
     selectedShippingAddress,
     setselectedShippingAddress,
+    setselectedShippingMethod,
   } = useContext(CheckoutContext);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isBillingAddress, setIsBillingAddress] = useState(null);
 
-  const {data, isLoading} = getCustomerByCustomerId(user, {
+  const {data, isLoading} = useCustomerByCustomerId(user, {
     onSuccess: (res) => {
       setselectedBilllingAddress(res.defaultBillingAddress);
       setselectedShippingAddress(res.defaultShippingAddress);
@@ -37,61 +34,59 @@ export default function Address() {
     return <Text>Loading</Text>;
   }
 
-  const BackAction = () => (
-    <TopNavigationAction
-      icon={CloseIcon}
-      onPress={() => setModalVisible(false)}
-    />
-  );
-
-  const TopNavigationModal = () => <TopNavigation accessoryLeft={BackAction} />;
+  const handleCard = (address) => {
+    setModalVisible(false);
+    isBillingAddress
+      ? setselectedBilllingAddress(address)
+      : setselectedShippingAddress(address);
+  };
 
   return (
     <>
-      <Container>
-        {selectedBilllingAddress && (
-          <AddressCard addressId={selectedBilllingAddress.id} />
+      {selectedBilllingAddress && (
+        <AddressCard addressId={selectedBilllingAddress.id} />
+      )}
+      <Div mb={20}>
+        <Button
+          block
+          onPress={() => {
+            setModalVisible(true);
+            setIsBillingAddress(true);
+          }}
+          text="Change Billing Address"
+        />
+      </Div>
+      <Div>
+        {selectedShippingAddress && (
+          <AddressCard addressId={selectedShippingAddress.id} />
         )}
-        <View marginB-s5 center flex>
-          <Button
-            onPress={() => {
-              setModalVisible(true);
-              setSelectedAddress(1);
-            }}
-            size="tiny"
-            text={translations.CheckoutSelectBillingAddress}
-          />
-        </View>
-        <View marginT-s5>
-          {selectedShippingAddress && (
-            <AddressCard addressId={selectedShippingAddress.id} />
-          )}
-        </View>
-        <View marginB-s5 center flex>
-          <Button
-            onPress={() => {
-              setModalVisible(true);
-              setSelectedAddress(2);
-            }}
-            size="tiny"
-            text={translations.CheckoutSelectShippingAddress}
-          />
-        </View>
-      </Container>
+      </Div>
+      <Div>
+        <Button
+          block
+          onPress={() => {
+            setModalVisible(true);
+            setIsBillingAddress(false);
+          }}
+          text="Change Shipping Address"
+        />
+      </Div>
       <SafeAreaView>
-        <Modal animationType="slide" transparent={false} visible={modalVisible}>
+        <Modal animationType="slide" visible={modalVisible}>
           <SafeAreaView>
-            <TopNavigationModal />
+            <ModalHeader
+              title="Address"
+              onPress={() => setModalVisible(false)}
+            />
             <ScrollView>
               <Container>
                 {data.address.map((address, i) => {
                   return (
                     <AddressCard
                       key={i}
-                      selectable={true}
                       addressId={address.id}
                       setModalVisible={setModalVisible}
-                      selectedAddress={selectedAddress}
+                      onPress={() => handleCard(address)}
                     />
                   );
                 })}

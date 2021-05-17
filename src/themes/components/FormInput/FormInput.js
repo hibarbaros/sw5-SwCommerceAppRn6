@@ -22,6 +22,7 @@ export default function FormInput(props) {
         label="test"
         onChangeText={(text) => onChange(name)(text)}
         p={10}
+        my={10}
         fontSize={18}
         focusBorderColor="blue700"
         onBlur={() => {

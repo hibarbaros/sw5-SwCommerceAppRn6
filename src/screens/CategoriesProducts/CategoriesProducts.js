@@ -51,7 +51,7 @@ function CategoriesProducts({data, category}) {
   // }
 
   return (
-    <>
+    <Div maxW="100%">
       <Div row p={10}>
         <Headline>{category.name}</Headline>
         <Div ml="auto" row>
@@ -102,7 +102,12 @@ function CategoriesProducts({data, category}) {
           onEndReached={handleLoadMore}
           onEndReachedThreshold={1}
           renderItem={({item}) => (
-            <Div h={300} mb={10} key={item.articleID}>
+            <Div
+              h={300}
+              w="50%"
+              background="green"
+              mb={10}
+              key={item.articleID}>
               <ProductCardCategories product={item} theme="theme02" />
             </Div>
           )}
@@ -125,7 +130,7 @@ function CategoriesProducts({data, category}) {
           />
         </SafeAreaView>
       </Modal>
-    </>
+    </Div>
   );
 }
 

@@ -1,30 +1,44 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {Div} from 'react-native-magnus';
 
 import {useCollectionByCollectinName} from '../../../utils/hooks/useFirebase';
 import ProductCard from '../ProductCard';
+import {Headline} from '../../../themes/components';
 
-export default function Carousel({cardTheme, collection, doc}) {
+export default function Carousel({cardTheme, collection, doc, title}) {
   const {isLoading, data} = useCollectionByCollectinName(collection, doc);
 
   if (isLoading) {
     return null;
   }
+
   const renderCarouselItem = ({item}) => {
-    return <ProductCard theme={cardTheme} productId={item.id} product={item} />;
+    return (
+      <Div maxW={200} minW={200}>
+        <ProductCard theme={cardTheme} productId={item.id} product={item} />
+      </Div>
+    );
   };
 
   return (
-    <StyledCarousel
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      automaticallyAdjustContentInsets={true}
-      removeClippedSubviews={true}
-      enableEmptySections={true}
-      data={data}
-      renderItem={(item) => renderCarouselItem(item)}
-      keyExtractor={(item, index) => index.toString()}
-    />
+    data && (
+      <>
+        <Headline variant="h1" my="md" ml={10}>
+          {title}
+        </Headline>
+        <StyledCarousel
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          automaticallyAdjustContentInsets={true}
+          removeClippedSubviews={true}
+          enableEmptySections={true}
+          data={data}
+          renderItem={(item) => renderCarouselItem(item)}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </>
+    )
   );
 }
 

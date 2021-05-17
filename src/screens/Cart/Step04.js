@@ -1,33 +1,18 @@
 import React from 'react';
-import {Text, Button} from 'react-native-magnus';
+import {Text} from 'react-native-magnus';
 
-import {useCreateOrder, useOrderByOrderId} from '../../utils/hooks/useOrder';
+import {Container} from '../../themes/components';
+import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods';
 
-import LoadSpinner from '../../components/Common/LoadSpinner';
-
-export default function Step04() {
-  const {mutate, isLoading, data = null} = useCreateOrder();
-
-  const {data: orderData} = useOrderByOrderId(data);
-
-  console.log(`orderData`, orderData);
-  console.log(`data`, data);
-
+export default function Step03() {
   return (
     <>
-      <LoadSpinner isVisible={isLoading} />
-      <Text>Order</Text>
-      <Button onPress={() => mutate()}>Order</Button>
-      {orderData && (
-        <>
-          <Text>Order number : {orderData.number}</Text>
-          <Text>Order Date : {orderData.orderTime}</Text>
-          <Text>Invoice Amount Net : {orderData.invoiceAmountNet}</Text>
-          <Text>Invoice Amount : {orderData.invoiceAmount}</Text>
-          <Text>Invoice Shipping : {orderData.invoiceShipping}</Text>
-          <Text>Invoice Shipping : {orderData.invoiceShipping}</Text>
-        </>
-      )}
+      <Container>
+        <Text text60 marginB-s5>
+          Payments Methods
+        </Text>
+        <PaymentMethods />
+      </Container>
     </>
   );
 }

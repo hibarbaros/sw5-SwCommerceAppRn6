@@ -1,8 +1,8 @@
 import React, {useRef, useState, useCallback, useContext} from 'react';
-import {ScrollView} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {Div} from 'react-native-magnus';
 import Wizard from 'react-native-wizard';
+import StickyHeaderFooterScrollView from 'react-native-sticky-header-footer-scroll-view';
 //*components
 import CartTotalPrice from '../../components/Common/CartTotalPrice';
 import {Container, Button, Headline} from '../../themes/components';
@@ -17,6 +17,7 @@ import Step01 from './Step01';
 import Step02 from './Step02';
 import Step03 from './Step03';
 import Step04 from './Step04';
+import Step05 from './Step04';
 
 const CartScreen = () => {
   const wizardRef = useRef();
@@ -43,6 +44,9 @@ const CartScreen = () => {
     {
       content: <Step04 />,
     },
+    {
+      content: <Step05 />,
+    },
   ];
 
   const handleGoTo = (step) => {
@@ -68,40 +72,51 @@ const CartScreen = () => {
 
   return (
     <>
-      <Titles handleGoTo={handleGoTo} currentStep={currentStep} />
-      {userCart?.length ? (
-        <ScrollView ref={scrollRef} contentInsetAdjustmentBehavior="automatic">
-          <Wizard
-            ref={wizardRef}
-            steps={stepList}
-            isLastStep={(val) => setIsLastStep(val)}
-          />
-          {currentStep < 2 && <CartTotalPrice userCart={userCart} />}
-
-          {!isLastStep && (
-            <Div row justifyContent="center" mb={20}>
-              <Button
-                w="60%"
-                text="Weiter"
-                onPress={() => {
-                  user ? handleGoTo(currentStep + 1) : setModalVisible(true);
-                  scrollRef.current?.scrollTo({
-                    y: 0,
-                  });
-                }}
-                disabled={isNextDisabled()}
-                rounded={0}
-              />
-            </Div>
-          )}
-        </ScrollView>
-      ) : (
-        <Container>
-          <Headline variant="h1">
-            In Ihrem Warenkorb befinden sich keine Artikel
-          </Headline>
-        </Container>
-      )}
+      <StickyHeaderFooterScrollView
+        makeScrollable={true}
+        fitToScreen={false}
+        renderStickyHeader={() => (
+          <Div backgroundColor="white" py={5}>
+            <Titles handleGoTo={handleGoTo} currentStep={currentStep} />
+          </Div>
+        )}
+        renderStickyFooter={() => (
+          <Div backgroundColor="white">
+            {currentStep < 3 && <CartTotalPrice userCart={userCart} />}
+            {!isLastStep && (
+              <Div row justifyContent="center">
+                <Button
+                  block
+                  text="Weiter"
+                  onPress={() => {
+                    user ? handleGoTo(currentStep + 1) : setModalVisible(true);
+                    scrollRef.current?.scrollTo({
+                      y: 0,
+                    });
+                  }}
+                  disabled={isNextDisabled()}
+                  rounded={0}
+                />
+              </Div>
+            )}
+          </Div>
+        )}>
+        {userCart?.length ? (
+          <Container>
+            <Wizard
+              ref={wizardRef}
+              steps={stepList}
+              isLastStep={(val) => setIsLastStep(val)}
+            />
+          </Container>
+        ) : (
+          <Container>
+            <Headline variant="h1">
+              In Ihrem Warenkorb befinden sich keine Artikel
+            </Headline>
+          </Container>
+        )}
+      </StickyHeaderFooterScrollView>
       <CartDropdown
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}

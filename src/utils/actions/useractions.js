@@ -39,7 +39,7 @@ export async function customerEdit(data) {
   const response = await Api.put(`/ConnectorCustomers/${customerId}`, formData);
   return response.data.id ? true : false;
 }
-//TODO: sifre degistirmede problem var
+//TODO: sifre degistirmede problem var. sifre degistirmek icin bir api yapilabilir
 export async function passwordEdit(values) {
   const {oldPassword, hashPassword, encoderName, customer, password} = values;
   const hash = await makeBcryptPass(password);
@@ -67,13 +67,13 @@ export async function userLogin(values) {
   const {email, password} = values;
   const response = await Api.get(`/ConnectorCustomers?filter[email]=${email}`);
   const [user] = response.data;
-  const hash = user.hashPassword;
   if (user) {
     if (user.encoderName === 'md5') {
       const checked = checkMd5Pass(password);
       return checked ? user : false;
     }
     if (user.encoderName === 'bcrypt') {
+      const hash = user.hashPassword;
       const checked = checkBcryptPass(password, hash);
       return checked ? user : false;
     }

@@ -4,7 +4,12 @@ import {useNavigation} from '@react-navigation/native';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 //*components
-import {FormInput, Button, TextButton} from '../../../themes/components';
+import {
+  FormInput,
+  Button,
+  TextButton,
+  Container,
+} from '../../../themes/components';
 import LoadSpinner from '../../Common/LoadSpinner';
 //*utils
 import {useCustomerLogin} from '../../../utils/hooks/useCustomer';
@@ -17,13 +22,6 @@ export default function UserLoginForm({modalVisible = false}) {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const {mutateAsync, isLoading} = useCustomerLogin();
-
-  // const renderIcon = (props) => (
-  //   <TouchableWithoutFeedback
-  //     onPress={() => setSecureTextEntry(!secureTextEntry)}>
-  //     <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'} />
-  //   </TouchableWithoutFeedback>
-  // );
 
   async function handleLogin(values) {
     await mutateAsync(values);
@@ -45,8 +43,8 @@ export default function UserLoginForm({modalVisible = false}) {
           ),
         })}>
         {({handleSubmit}) => (
-          <>
-            <Div my={10}>
+          <Container>
+            <Div>
               <Field
                 component={FormInput}
                 name="email"
@@ -54,7 +52,7 @@ export default function UserLoginForm({modalVisible = false}) {
                 suffix="envelope"
               />
             </Div>
-            <Div my={10}>
+            <Div>
               <Field
                 component={FormInput}
                 secureTextEntry={secureTextEntry}
@@ -70,7 +68,7 @@ export default function UserLoginForm({modalVisible = false}) {
             <Div mT={10}>
               <Button block text="Login" onPress={handleSubmit} />
             </Div>
-          </>
+          </Container>
         )}
       </Formik>
     </>

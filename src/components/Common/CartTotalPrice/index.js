@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Div} from 'react-native-magnus';
 //*components
 import PriceWithCurrency from '../PriceWithCurrency';
-import {Headline, Container} from '../../../themes/components';
+import {Headline} from '../../../themes/components';
 //*utils
 import {useUserCartTotalPrice} from '../../../utils/hooks/useCart';
 //*context
@@ -17,16 +17,16 @@ export default function CartTotalPrice() {
     : 0;
 
   return (
-    <Container>
+    <>
       <Div borderColor="light" borderRadius={5} borderWidth={1} p={10}>
         <Div row justifyContent="space-between" alignItems="flex-end">
-          <Headline variant="h5" bold>
+          <Headline variant="h4" bold>
             Summe
           </Headline>
           <PriceWithCurrency price={data?.netPrice} />
         </Div>
         <Div row justifyContent="space-between" alignItems="flex-end">
-          <Headline variant="h5" bold>
+          <Headline variant="h4" bold>
             Versandkosten
           </Headline>
           <PriceWithCurrency
@@ -36,13 +36,13 @@ export default function CartTotalPrice() {
           />
         </Div>
         <Div row justifyContent="space-between" alignItems="flex-end">
-          <Headline variant="h5" bold>
+          <Headline variant="h4" bold>
             Gesamtsumme
           </Headline>
           <PriceWithCurrency price={data?.netPrice + shippingPrice} />
         </Div>
         <Div row justifyContent="space-between" alignItems="flex-end">
-          <Headline variant="h5" bold>
+          <Headline variant="h4" bold>
             Tax
           </Headline>
           <PriceWithCurrency price={data?.taxPrice} />
@@ -62,6 +62,6 @@ export default function CartTotalPrice() {
           />
         </Div>
       </Div>
-    </Container>
+    </>
   );
 }

@@ -1,45 +1,65 @@
 import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
-import {Modal, Div, Button, Icon} from 'react-native-magnus';
+import {Modal, Div, Header} from 'react-native-magnus';
+import StickyHeaderFooterScrollView from 'react-native-sticky-header-footer-scroll-view';
 
 import UserLoginForm from '../../components/UserComponents/UserLoginForm';
 import UserRegisterForm from '../../components/UserComponents/UserRegisterForm';
+import {Button} from '../../themes/components';
 
 export default function CartDropdown({modalVisible, setModalVisible}) {
   const [isRegister, setIsRegister] = useState(false);
   return (
     <Modal isVisible={modalVisible}>
-      <SafeAreaView>
-        <Div row>
-          <Button onPress={() => setIsRegister(true)}>Register</Button>
-          <Button onPress={() => setIsRegister(false)}>Login</Button>
-          <Button
-            bg="gray400"
-            h={35}
-            w={35}
-            position="absolute"
-            right={15}
-            rounded="circle"
-            onPress={() => {
-              setModalVisible(false);
-            }}>
-            <Icon color="gray400" name="close" />
-          </Button>
-        </Div>
-
-        <Div
-          bg="gray100"
-          color="blue600"
-          justifyContent="center"
-          width="100%"
-          mb={50}>
+      <StickyHeaderFooterScrollView
+        makeScrollable={true}
+        fitToScreen={true}
+        renderStickyHeader={() => (
+          <Header
+            p="lg"
+            alignment="center"
+            shadow={false}
+            prefix={
+              <Button
+                variant="icon"
+                backgroundColor="transparent"
+                rounded="circle"
+                prefix="arrow-left"
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              />
+            }>
+            Register or Login Form
+          </Header>
+        )}
+        renderStickyFooter={() => (
+          <Div row p={10} backgroundColor="white">
+            <Div w="50%" pr={10}>
+              <Button
+                text="Register Form"
+                variant={isRegister ? 'secondary' : 'primary'}
+                block
+                onPress={() => setIsRegister(true)}
+              />
+            </Div>
+            <Div w="50%" pl={10}>
+              <Button
+                text="Login Form"
+                variant={!isRegister ? 'secondary' : 'primary'}
+                block
+                onPress={() => setIsRegister(false)}
+              />
+            </Div>
+          </Div>
+        )}>
+        <Div px={10}>
           {isRegister ? (
             <UserRegisterForm modalVisible={() => setModalVisible(false)} />
           ) : (
             <UserLoginForm modalVisible={() => setModalVisible(false)} />
           )}
         </Div>
-      </SafeAreaView>
+      </StickyHeaderFooterScrollView>
     </Modal>
   );
 }

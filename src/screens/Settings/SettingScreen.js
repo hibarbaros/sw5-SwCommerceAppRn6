@@ -1,61 +1,27 @@
-import React, {useState, useContext} from 'react';
-import {Menu, MenuGroup, MenuItem} from '@ui-kitten/components';
+import React, {useContext} from 'react';
+import {Div} from 'react-native-magnus';
 
 import {LocalizationContext} from '../../context/Translations';
-import {Container} from '../../themes/components';
-import AppContext from '../../context/AppContext';
-import {languages} from '../../localization/languages';
+import {Container, Headline} from '../../themes/components';
+
+import Languages from './Languages';
+import Currencies from './Currencies';
 
 const SettingScreen = () => {
-  const {translations, appLanguage, setAppLanguage} = useContext(
-    LocalizationContext,
-  );
-  const {
-    currency,
-    setCurrency,
-    setSelectedLanguageContext,
-    setSelectedTranslateContext,
-    selectedLanguage,
-    allCurrencies,
-  } = useContext(AppContext);
-
-  const [selectedIndex, setSelectedIndex] = useState(appLanguage);
-
-  function handleLanguage(lang) {
-    setAppLanguage(lang.locale);
-    setSelectedLanguageContext(lang.id);
-    setSelectedTranslateContext(lang.translateId);
-  }
+  const {translations} = useContext(LocalizationContext);
 
   return (
     <Container>
-      <Menu
-        selectedIndex={selectedIndex}
-        onSelect={(index) => setSelectedIndex(index)}>
-        <MenuGroup title={translations.appLanguages}>
-          {languages.map((lang) => (
-            <MenuItem
-              key={lang.name}
-              selected={selectedLanguage === lang.id}
-              title={lang.name}
-              locale={lang.locale}
-              onPress={() => handleLanguage(lang)}
-            />
-          ))}
-        </MenuGroup>
-      </Menu>
-      <Menu>
-        <MenuGroup title={translations.appCurrencies}>
-          {allCurrencies.map((currencyItem, index) => (
-            <MenuItem
-              key={currencyItem.id}
-              selected={currencyItem.id === currency.id}
-              title={currencyItem.name}
-              onPress={() => setCurrency(currencyItem)}
-            />
-          ))}
-        </MenuGroup>
-      </Menu>
+      <Headline variant="h5">{translations.appLanguages}</Headline>
+      <Div my={10}>
+        <Languages />
+      </Div>
+      <Headline variant="h5" mt={30}>
+        {translations.appCurrencies}
+      </Headline>
+      <Div my={10}>
+        <Currencies />
+      </Div>
     </Container>
   );
 };

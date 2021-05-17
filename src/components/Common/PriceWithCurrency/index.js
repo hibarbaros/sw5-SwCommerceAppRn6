@@ -6,7 +6,7 @@ import {Headline} from '../../../themes/components';
 
 export default function PriceWithCurrency({price, product, color}) {
   const {currency} = useContext(AppContext);
-  const parsedPrice = parseFloat(price);
+  const parsedPrice = parseFloat(price).toFixed(2) * currency.factor;
 
   if (!currency.currency) {
     return null;
@@ -18,7 +18,6 @@ export default function PriceWithCurrency({price, product, color}) {
   const priceFormat = new Intl.NumberFormat('de-DE', {
     style: 'currency',
     currency: currency.currency,
-    maximumSignificantDigits: 2,
   }).format(priceWith);
 
   return (
@@ -26,7 +25,7 @@ export default function PriceWithCurrency({price, product, color}) {
       variant="primarytext"
       color={color ? color : 'red'}
       bold
-      fontSize="3xl"
+      fontSize={16}
       mt={10}>
       {priceFormat}
     </Headline>

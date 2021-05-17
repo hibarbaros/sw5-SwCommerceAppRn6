@@ -33,6 +33,7 @@ export default function GenderActionSheet(props) {
       <Button
         block
         mr="auto"
+        my={10}
         text={
           salutationValue
             ? genderList.find((x) => x.value === salutationValue).name

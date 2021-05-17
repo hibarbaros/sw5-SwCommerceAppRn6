@@ -108,8 +108,7 @@ const ProductDetail = ({route}) => {
               </Styled.ShipText>
             </Styled.ShipContainer>
           )}
-
-          {/* Description */}
+          {/* ANCHOR Description */}
           <Styled.DescriptionContainer>
             <Styled.DescriptionTitle>
               Products Description
@@ -130,7 +129,7 @@ const ProductDetail = ({route}) => {
             ))}
           </Styled.CategoryContainer>
 
-          {/* Variants */}
+          {/* ANCHOR Variants */}
           {data.configuratorSet && (
             <Div my={15}>
               <Styled.DescriptionTitle>
@@ -145,7 +144,7 @@ const ProductDetail = ({route}) => {
             </Div>
           )}
 
-          {/* Property Groups */}
+          {/* ANCHOR Property Groups */}
           {data.propertyGroup && (
             <ProductPropertyGroup
               groupId={data.propertyGroup.id}
