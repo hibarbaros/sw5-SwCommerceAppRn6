@@ -1,5 +1,4 @@
-import {firestoreDB} from '../../config/firebase';
-import database from '@react-native-firebase/database';
+import {firestoreDB} from '../../services/firebase';
 
 export async function getReferenceFromFirebase(collection, doc) {
   const ref = await firestoreDB.collection(collection).doc(doc).get();
