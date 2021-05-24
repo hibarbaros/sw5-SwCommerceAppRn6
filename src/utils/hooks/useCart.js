@@ -7,8 +7,6 @@ import {LocalizationContext} from '../../context/Translations';
 import AppContext from '../../context/AppContext';
 import CartContext from '../../context/CartContext';
 
-import {priceWithTax} from '../../utils/functions';
-
 import {
   getCartBySessionId,
   removeFromCart,
@@ -18,9 +16,8 @@ import {
   removeInitialUserCart,
   migrateUserCart,
   findProductVariant,
+  userCartPriceCalculation,
 } from '../actions/cartactions';
-
-import {productsWithFilter} from '../actions/articleactions';
 
 //!Get Customer Cart
 const getUserCart = async (user, sessionId) => {
@@ -47,30 +44,8 @@ export function useUserCart() {
 
 //!Cart Total Price
 const getUserCartTotalPrice = async (userCart) => {
-  let netPrice = 0;
-  let taxPrice = 0;
-  const reducer = _.reduce(
-    userCart,
-    (prevValue, reduceProduct) => {
-      return `${prevValue}&filter[id][]=${reduceProduct.id}`;
-    },
-    '',
-  );
-  const filteredProductList = await productsWithFilter(reducer);
-  const mapped = _.map(filteredProductList, 'details');
-  const flattenDeep = _.flattenDeep(mapped);
-  for (const cartProduct of userCart) {
-    const mainProduct = _.find(filteredProductList, {id: cartProduct.id});
-    const findedProduct = _.find(flattenDeep, {
-      number: cartProduct.number,
-    });
-    const [price] = findedProduct.prices;
-    const priceCalc = priceWithTax(price.price, mainProduct.tax.tax);
-    netPrice += priceCalc * cartProduct.quantity;
-    const taxCalc = price.price * (mainProduct.tax.tax / 100);
-    taxPrice += taxCalc * cartProduct.quantity;
-  }
-  return {netPrice, taxPrice};
+  const response = await userCartPriceCalculation(userCart);
+  return response;
 };
 
 export function useUserCartTotalPrice() {
@@ -101,8 +76,8 @@ export function useAddToCart() {
     (mutateVariables) =>
       getAddToCart(mutateVariables, userCart, user, sessionId),
     {
-      onSuccess: (res) => {
-        setInitialUserCart([...res]);
+      onSuccess: (response) => {
+        setInitialUserCart([...response]);
         Toast.show({
           type: 'success',
           text1: 'Success',

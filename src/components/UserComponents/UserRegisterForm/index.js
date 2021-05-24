@@ -22,7 +22,7 @@ import {validationSchema} from '../../../utils/validationSchema';
 //*self
 import {initialValues} from './initialValues';
 
-export default function UserRegisterForm({modalVisible = false}) {
+export default function UserRegisterForm({navigationDisabled = false}) {
   const navigation = useNavigation();
 
   const {mutateAsync, isLoading} = useRegisterCustomer();
@@ -30,9 +30,9 @@ export default function UserRegisterForm({modalVisible = false}) {
   async function handlePress(value) {
     const mutate = await mutateAsync(value);
     if (mutate) {
-      modalVisible
-        ? modalVisible()
-        : navigation.dispatch(StackActions.replace(AppRoutes.PROFILE));
+      if (!navigationDisabled) {
+        navigation.dispatch(StackActions.replace(AppRoutes.PROFILE));
+      }
     }
   }
 

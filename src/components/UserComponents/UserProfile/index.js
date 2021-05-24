@@ -28,6 +28,7 @@ export default function UserProfile() {
       <Text>{data.firstname}</Text>
       <Text>{data.lastname}</Text>
       <Text>{data.email}</Text>
+      <Text>{data.id}</Text>
     </Card>
   );
 }

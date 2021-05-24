@@ -37,17 +37,32 @@ export function priceWithTax(price, tax = 0) {
   return priceCalc;
 }
 
-export function checkMd5Pass(password) {
+export async function checkMd5Pass(password) {
   const check = md5.hex_md5(password);
   return check ? true : false;
 }
 
-export function checkBcryptPass(password, hashPassword) {
+export async function checkBcryptPass(password, hashPassword) {
   const check = bcrypt.compareSync(password, hashPassword);
   return check ? true : false;
 }
+export async function checkHashPassword(
+  encoderName,
+  oldPassword,
+  hashPassword,
+) {
+  if (encoderName === 'md5') {
+    const checked = await checkMd5Pass(oldPassword);
+    return checked ? true : false;
+  }
+  if (encoderName === 'bcrypt') {
+    const checked = await checkBcryptPass(oldPassword, hashPassword);
+    return checked ? true : false;
+  }
+}
 export async function makeBcryptPass(password) {
-  const hash = bcrypt.hashSync(password, 12);
+  const hash = await bcrypt.hashSync(password, 12);
+  console.log('hash :>> ', hash);
   return hash;
 }
 

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Div} from 'react-native-magnus';
-import {useNavigation} from '@react-navigation/native';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 //*components
@@ -17,15 +16,13 @@ import {validationSchema} from '../../../utils/validationSchema';
 
 import {initialValues} from './initialValues';
 
-export default function UserLoginForm({modalVisible = false}) {
-  const navigation = useNavigation();
+export default function UserLoginForm() {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const {mutateAsync, isLoading} = useCustomerLogin();
 
   async function handleLogin(values) {
     await mutateAsync(values);
-    modalVisible ? modalVisible() : navigation.goBack();
   }
 
   return (

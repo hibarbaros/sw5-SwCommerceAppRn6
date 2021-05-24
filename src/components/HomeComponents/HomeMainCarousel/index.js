@@ -1,16 +1,11 @@
-import React, {useRef, useState} from 'react';
-import {ActivityIndicator} from 'react-native';
-import {View, Text} from 'react-native-ui-lib';
-import Carousel from 'react-native-snap-carousel';
+import React, {useState} from 'react';
+import {Text, Div, Image} from 'react-native-magnus';
+import styled from 'styled-components/native';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useCollectionByCollectinName} from '../../../utils/hooks/useFirebase';
-import {GlobalStyled} from '../../../themes/styled/GlobalStyled';
-
-import {Styled} from './styles';
 
 export default function HomeMainCarousel() {
-  const snapCarousel = useRef(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   const {data, isLoading} = useCollectionByCollectinName(
@@ -19,54 +14,56 @@ export default function HomeMainCarousel() {
   );
 
   if (isLoading) {
-    return (
-      <Styled.LoadingContainer>
-        <Text>'Loading...'</Text>
-      </Styled.LoadingContainer>
-    );
+    return <Text>'Loading...'</Text>;
   }
 
-  const renderCarouselItem = (item) => {
-    return (
-      <Styled.StyledAnimatedImage
-        source={{uri: item.item.url}}
-        loader={<ActivityIndicator />}
-        key={item.index}
-        animationDuration={item.index === 0 ? 300 : 800}
-      />
-    );
-  };
+  const renderCarouselItem = (item) => (
+    <Image
+      h="100%"
+      w={wp('100%')}
+      source={{
+        uri: item.item.url,
+      }}
+    />
+  );
 
-  const handleIndexChange = (index) => {
-    setCarouselIndex(index);
+  const handleScrollEnd = (e) => {
+    const offset = e.nativeEvent.contentOffset;
+    const viewSize = e.nativeEvent.layoutMeasurement;
+    let pageNum = Math.floor(offset.x / viewSize.width);
+    setCarouselIndex(pageNum);
   };
 
   return (
     <>
-      <View flex>
-        <Carousel
-          activeSlideAlignment={'start'}
-          ref={snapCarousel}
+      <Div>
+        <StyledCarousel
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled={true}
+          onMomentumScrollEnd={(e) => handleScrollEnd(e)}
           data={data}
-          renderItem={renderCarouselItem}
-          onBeforeSnapToItem={handleIndexChange}
-          onSnapToIndex={(index) => handleIndexChange(index)}
-          firstItem={0}
-          sliderWidth="100%"
-          itemWidth="100%"
-          layout={'default'}
+          renderItem={(item) => renderCarouselItem(item)}
+          keyExtractor={(item, index) => index.toString()}
         />
-      </View>
-      <View flex row marginH-s5>
-        {data.map((element, i) => {
-          return (
-            <GlobalStyled.Bullet
-              key={i}
-              selected={carouselIndex === i ? true : false}
-            />
-          );
-        })}
-      </View>
+      </Div>
+      <Div row mt={10}>
+        {data.map((element, i) => (
+          <Div
+            key={i}
+            h={20}
+            w={20}
+            mx={5}
+            bg={carouselIndex === i ? 'red' : 'secondary'}
+            rounded="xl"
+          />
+        ))}
+      </Div>
     </>
   );
 }
+
+const StyledCarousel = styled.FlatList`
+  width: 100%;
+  height: 280px;
+`;

@@ -4,13 +4,11 @@ import {Button, Icon, Text} from 'react-native-magnus';
 export default function ThemeButton({
   text,
   variant = 'primary',
-  disabled,
   suffix,
   prefix,
   mr,
   ml,
   fontSize,
-  py,
   ...rest
 }) {
   switch (variant) {
@@ -19,8 +17,6 @@ export default function ThemeButton({
         <Button
           {...rest}
           bg="primary"
-          px={24}
-          py={16}
           suffix={
             <Icon
               name={suffix}
@@ -52,8 +48,6 @@ export default function ThemeButton({
         <Button
           {...rest}
           bg="secondary"
-          px={24}
-          py={16}
           color="white"
           suffix={
             <Icon
@@ -83,8 +77,6 @@ export default function ThemeButton({
           bg="white"
           borderColor="grey"
           borderWidth={1}
-          px={24}
-          py={16}
           color="white"
           suffix={
             <Icon
@@ -112,7 +104,6 @@ export default function ThemeButton({
         <Button
           {...rest}
           bg="red"
-          p={12}
           color="white"
           suffix={
             <Icon
@@ -138,7 +129,6 @@ export default function ThemeButton({
         <Button
           {...rest}
           bg="primary"
-          p={8}
           color="white"
           suffix={
             <Icon

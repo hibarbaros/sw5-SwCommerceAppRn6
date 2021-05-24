@@ -2,6 +2,8 @@ import _ from 'lodash';
 
 import Api from '../api';
 import {cartNormalize} from '../normalize/cartNormalize';
+import {productsWithFilter} from '../actions/articleactions';
+import {priceWithTax} from '../../utils/functions';
 
 export async function getCartBySessionId(sessionId) {
   const response = await Api.get(
@@ -46,9 +48,6 @@ export async function removeFromCart(productNumber, user) {
 }
 
 export async function addFromCart(mutateVariables, user, sessionId) {
-  console.log(
-    '🚀 ~ file: cartactions.js ~ line 49 ~ addFromCart ~ addFromCart',
-  );
   const {productData, quantity, number} = mutateVariables;
   const checktoBasket = await getCartByUserId(user);
   const finded = checktoBasket.find((x) => x.orderNumber === number);
@@ -100,7 +99,7 @@ export async function removeInitialUserCart(userCart, productNumber) {
 }
 //!Context Api cart fonksiyonlari
 
-//!Kullanici login olduktan sonra cart migrate fonksiyonu
+//!Kullanici login ve register olduktan sonra cart migrate fonksiyonu
 export async function migrateUserCart(user, userCart, sessionId) {
   const response = await Api.get(`/ConnectorBasket?filter[customerId]=${user}`);
   const {data} = response;
@@ -116,17 +115,16 @@ export async function migrateUserCart(user, userCart, sessionId) {
       const formDataPost = cartNormalize(
         productGet.data,
         cartProduct.quantity,
+        cartProduct.number,
         user,
         sessionId,
       );
       Api.post('/ConnectorBasket', formDataPost);
     }
-    console.log('cartProduct :>> ', cartProduct);
   }
-  console.log('object');
   return true;
 }
-//!Kullanici login olduktan sonra cart migrate fonksiyonu
+//!Kullanici login ve register olduktan sonra cart migrate fonksiyonu
 
 //!variant varsa bulunuyor yoksa sadece ürün numarasi ekleniyor
 export async function findProductVariant(mutateVariables) {
@@ -143,3 +141,30 @@ export async function findProductVariant(mutateVariables) {
   return mutateVariables;
 }
 //!variant varsa bulunuyor yoksa sadece ürün numarasi ekleniyor
+
+export async function userCartPriceCalculation(userCart) {
+  let netPrice = 0;
+  let taxPrice = 0;
+  const reducer = _.reduce(
+    userCart,
+    (prevValue, reduceProduct) => {
+      return `${prevValue}&filter[id][]=${reduceProduct.id}`;
+    },
+    '',
+  );
+  const filteredProductList = await productsWithFilter(reducer);
+  const mapped = _.map(filteredProductList, 'details');
+  const flattenDeep = _.flattenDeep(mapped);
+  for (const cartProduct of userCart) {
+    const mainProduct = _.find(filteredProductList, {id: cartProduct.id});
+    const findedProduct = _.find(flattenDeep, {
+      number: cartProduct.number,
+    });
+    const [price] = findedProduct.prices;
+    const priceCalc = priceWithTax(price.price, mainProduct.tax.tax);
+    netPrice += priceCalc * cartProduct.quantity;
+    const taxCalc = price.price * (mainProduct.tax.tax / 100);
+    taxPrice += taxCalc * cartProduct.quantity;
+  }
+  return {netPrice, taxPrice};
+}

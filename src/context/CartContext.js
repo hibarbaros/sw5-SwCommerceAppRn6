@@ -8,8 +8,13 @@ export const CartProvider = ({children}) => {
   const [userCart, setUserCart] = useState([]);
 
   const setInitialUserCart = (products) => {
-    setUserCart(products);
-    setItem('userCart', products);
+    if (products.length > 0) {
+      setUserCart(products);
+      setItem('userCart', products);
+    } else {
+      setUserCart(null);
+      setItem('userCart', null);
+    }
   };
 
   useEffect(() => {

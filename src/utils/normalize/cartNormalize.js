@@ -33,26 +33,6 @@ export function cartNormalize(
     currencyFactor: 1,
   };
 
-  //   {
-  //     "customerId": 1,
-  //     "articleId": 12,
-  //     "orderNumber": "SW10012",
-  //     "taxRate": 19,
-  //     "sessionId": "i77la6fct88lksh2itbhr0mvi1",
-  //     "partnerId": "",
-  //     "shippingFree": 0,
-  //     "quantity": 1,
-  //     "price": 5,
-  //     "netPrice": 4.2016806722689,
-  //     "date": "2021-02-17T16:51:36+0100",
-  //     "mode": 0,
-  //     "esdArticle": 0,
-  //     "lastViewPort": "mobile",
-  //     "userAgent": "iphone",
-  //     "config": "",
-  //     "currencyFactor": 1
-  // }
-
   const formData = JSON.stringify({
     ...allData,
   });

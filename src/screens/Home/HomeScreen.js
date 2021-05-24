@@ -33,28 +33,28 @@ const HomeScreen = () => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
-      {/* <Div my={20}>
+      <Div my={20}>
         <HomeMainCarousel />
-      </Div> */}
+      </Div>
 
       <Div mt={20}>
-        {/* <Carousel
+        <Carousel
           title={translations.recomendedProducts}
           collection="homescreenrecomended"
           doc={`mainCategory${selectedLanguage}`}
           cardTheme="theme02"
           cardWidth={160}
-        /> */}
+        />
       </Div>
 
       <Div mt={20}>
-        {/* <Carousel
+        <Carousel
           title={translations.topSale}
           collection="homescreentopsale"
           doc={`mainCategory${selectedLanguage}`}
           cardTheme="theme02"
           cardWidth={160}
-        /> */}
+        />
       </Div>
 
       <Div mt={20}>

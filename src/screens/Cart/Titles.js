@@ -3,6 +3,7 @@ import {Div, Button, Text, Avatar} from 'react-native-magnus';
 
 const stepTitles = [
   'Kasse',
+  'User',
   'Adresse',
   'Shipping',
   'Zahlungsart',
@@ -18,7 +19,8 @@ export default function Titles({handleGoTo, currentStep}) {
             <Button
               key={index}
               disabled={currentStep + 1 <= index}
-              maxW="20%"
+              maxW="16%"
+              minW="16%"
               bg="transparent"
               p={0}
               color="black"
@@ -28,7 +30,7 @@ export default function Titles({handleGoTo, currentStep}) {
                 justifyContent="center"
                 alignItems="center"
                 textAlign="center">
-                <Text fontSize={12}>{title}</Text>
+                <Text fontSize={9}>{title}</Text>
                 <Avatar
                   size={30}
                   mt={10}

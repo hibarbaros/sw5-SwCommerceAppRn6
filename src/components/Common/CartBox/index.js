@@ -1,5 +1,5 @@
 import React from 'react';
-import {Div} from 'react-native-magnus';
+import {Div, Text} from 'react-native-magnus';
 //*components
 import Media from '../Media/Media';
 import PriceWithCurrency from '../PriceWithCurrency';
@@ -64,7 +64,7 @@ export default function CartBox({product}) {
             <Headline variant="primarytext" bold>
               {productData.name}
             </Headline>
-            {/* <Text>{variantDetail.number}</Text> */}
+            <Text>{variantDetail.number}</Text>
             {variantDetail.configuratorOptions.length > 0 && (
               <>
                 <Headline mt={10} variant="primarytext">

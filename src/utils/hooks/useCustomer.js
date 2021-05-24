@@ -20,8 +20,8 @@ import {initialCartNormalize} from '../normalize/cartNormalize';
 
 //!Get Customer by Id
 const getCustomerByCustomerId = async (userId) => {
-  const data = await customerData(userId);
-  return data;
+  const response = await customerData(userId);
+  return response;
 };
 
 export function useCustomerByCustomerId(userId, options) {
@@ -65,7 +65,6 @@ export function useCustomerLogin() {
 
   const mutate = useMutation((values) => getCustomerLogin(values, userCart), {
     onSuccess: async (response) => {
-      console.log('response :>> ', response);
       const {id, sessionId} = response;
       if (response) {
         const userResponse = await customerData(id);
@@ -118,30 +117,40 @@ export function useCustomerCheckByMail() {
 //!Check Customer By Mail
 
 //!Register customer
-const getRegisterCustomer = async (values) => {
-  const data = await customerRegister(values);
-  return data;
+const getRegisterCustomer = async (values, userCart) => {
+  const response = await customerRegister(values);
+  const {
+    data: {id, sessionId},
+  } = response;
+  if (userCart) {
+    await migrateUserCart(id, userCart, sessionId);
+  }
+  return response;
 };
 
 export function useRegisterCustomer() {
   const {setUserContext} = useContext(AppContext);
+  const {userCart} = useContext(CartContext);
 
-  const mutate = useMutation((values) => getRegisterCustomer(values), {
-    onSuccess: (data) => {
-      if (data) {
-        setUserContext(data.data.id, data.data.sessionId);
-        return true;
-      }
-      if (!data) {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: 'This e-mail address is registered',
-        });
-        return false;
-      }
+  const mutate = useMutation(
+    (values) => getRegisterCustomer(values, userCart),
+    {
+      onSuccess: (response) => {
+        if (response) {
+          setUserContext(response.data.id, response.data.sessionId);
+          return true;
+        }
+        if (!response) {
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'This e-mail address is registered',
+          });
+          return false;
+        }
+      },
     },
-  });
+  );
 
   return mutate;
 }
@@ -207,7 +216,7 @@ export function useEditCustomerPassword() {
     },
     onSuccess: (data) => {
       if (data) {
-        cache.invalidateQueries('userData', data.customerId);
+        cache.invalidateQueries('userData', data.id);
         Toast.show({
           text1: 'Success',
           text2: translations.formularSuccess,

@@ -2,11 +2,7 @@ import uuid from 'react-uuid';
 
 import Api from '../api';
 import {removeItem, setItem} from '../../utils/storagehelper';
-import {
-  checkMd5Pass,
-  checkBcryptPass,
-  makeBcryptPass,
-} from '../../utils/functions';
+import {makeBcryptPass, checkHashPassword} from '../../utils/functions';
 import {
   customerRegisterNormalize,
   customerEditNormalize,
@@ -39,28 +35,25 @@ export async function customerEdit(data) {
   const response = await Api.put(`/ConnectorCustomers/${customerId}`, formData);
   return response.data.id ? true : false;
 }
-//TODO: sifre degistirmede problem var. sifre degistirmek icin bir api yapilabilir
+
 export async function passwordEdit(values) {
   const {oldPassword, hashPassword, encoderName, customer, password} = values;
   const hash = await makeBcryptPass(password);
-  if (encoderName === 'md5') {
-    const checked = checkMd5Pass(oldPassword);
-    if (!checked) {
-      return false;
-    }
-  }
-  if (encoderName === 'bcrypt') {
-    const checked = checkBcryptPass(oldPassword, hashPassword);
-    if (!checked) {
-      return false;
-    }
-  }
-  const formData = passwordEditNormalize(customer, hash);
-  const response = await Api.put(
-    `/ConnectorCustomers/${customer.id}`,
-    formData,
+  const checkedHashPassword = await checkHashPassword(
+    encoderName,
+    oldPassword,
+    hashPassword,
   );
-  return response.data.id ? true : false;
+  if (!checkedHashPassword) {
+    return false;
+  } else {
+    const formData = passwordEditNormalize(hash);
+    const response = await Api.put(
+      `/ConnectorCustomers/${customer.id}?putPassword=true`,
+      formData,
+    );
+    return response.data.id ? true : false;
+  }
 }
 
 export async function userLogin(values) {
@@ -68,15 +61,12 @@ export async function userLogin(values) {
   const response = await Api.get(`/ConnectorCustomers?filter[email]=${email}`);
   const [user] = response.data;
   if (user) {
-    if (user.encoderName === 'md5') {
-      const checked = checkMd5Pass(password);
-      return checked ? user : false;
-    }
-    if (user.encoderName === 'bcrypt') {
-      const hash = user.hashPassword;
-      const checked = checkBcryptPass(password, hash);
-      return checked ? user : false;
-    }
+    const checkedHashPassword = await checkHashPassword(
+      user.encoderName,
+      password,
+      user.hashPassword,
+    );
+    return checkedHashPassword ? user : false;
   } else {
     //Email not found
     return false;
@@ -88,14 +78,12 @@ export async function checkUserForLogin(values) {
   const response = await Api.get(`/ConnectorCustomers?filter[email]=${email}`);
   let {data} = response;
   if (data.length > 0) {
-    if (data[0].encoderName === 'md5') {
-      const checked = checkMd5Pass(password);
-      return checked ? data[0] : false;
-    }
-    if (data[0].encoderName === 'bcrypt') {
-      const checked = checkBcryptPass(password, data[0].hashPassword);
-      return checked ? data[0] : false;
-    }
+    const checkedHashPassword = await checkHashPassword(
+      data[0].encoderName,
+      password,
+      data[0].hashPassword,
+    );
+    return checkedHashPassword ? data[0] : false;
   } else {
     //Email not found
     return false;

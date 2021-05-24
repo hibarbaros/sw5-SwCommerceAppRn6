@@ -80,14 +80,9 @@ export function customerEditNormalize(data) {
   return formData;
 }
 
-export function passwordEditNormalize(customer, hash) {
+export function passwordEditNormalize(hash) {
   const allData = {
-    firstname: customer.firstname,
-    lastname: customer.lastname,
-    salutation: customer.salutation,
-    email: customer.email,
     hashPassword: hash,
-    sendOptinMail: false,
   };
   const formData = JSON.stringify({
     ...allData,

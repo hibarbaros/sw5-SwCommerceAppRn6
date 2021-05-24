@@ -100,29 +100,31 @@ const ProductDetail = ({route}) => {
           {data.mainDetail.inStock > 0 && (
             <Styled.ShipContainer>
               <Styled.ShipText>
-                {`${translations.readyToShipToday} :`}
+                {translations.readyToShipToday} :
               </Styled.ShipText>
               <Styled.ShipText>
-                {`${translations.deliverytime} :`}
-                {data.mainDetail.shippingTime} {translations.workdays}
+                {translations.deliverytime} : {data.mainDetail.shippingTime}{' '}
+                {translations.workdays}
               </Styled.ShipText>
             </Styled.ShipContainer>
           )}
           {/* ANCHOR Description */}
-          <Styled.DescriptionContainer>
-            <Styled.DescriptionTitle>
-              Products Description
-            </Styled.DescriptionTitle>
-            <HTMLView
-              value={description}
-              TextComponent={(props) => <Styled.DescriptionText {...props} />}
-            />
-          </Styled.DescriptionContainer>
+          {description && (
+            <Styled.DescriptionContainer>
+              <Styled.DescriptionTitle>
+                .Products Description
+              </Styled.DescriptionTitle>
+              <HTMLView
+                value={description}
+                TextComponent={(props) => <Styled.DescriptionText {...props} />}
+              />
+            </Styled.DescriptionContainer>
+          )}
 
-          {/* Categories */}
+          {/* ANCHOR Categories */}
           <Styled.CategoryContainer>
             <Styled.DescriptionTitle>
-              {`${translations.categories}.`}
+              .{translations.categories}
             </Styled.DescriptionTitle>
             {data.categories.map((cat, index) => (
               <Styled.GeneralText key={index}>{cat.name}</Styled.GeneralText>
@@ -133,7 +135,7 @@ const ProductDetail = ({route}) => {
           {data.configuratorSet && (
             <Div my={15}>
               <Styled.DescriptionTitle>
-                {`${translations.variants}.`}
+                {translations.variants} .
               </Styled.DescriptionTitle>
               <ProductDetailVariants
                 selectedVariants={selectedVariants}
@@ -152,23 +154,27 @@ const ProductDetail = ({route}) => {
             />
           )}
 
-          {/* Related Products */}
+          {/* ANCHOR Related Products */}
           {data.related && (
             <>
               <Styled.DescriptionTitle>
-                {`.${translations.relatedProducts}`}
+                .{translations.relatedProducts}
               </Styled.DescriptionTitle>
-              <ProductCarousel data={data.related} cardTheme="theme02" />
+              <Div>
+                <ProductCarousel data={data.related} cardTheme="theme02" />
+              </Div>
             </>
           )}
 
-          {/* Similar products */}
+          {/* ANCHOR Similar products */}
           {data.similar && (
             <>
               <Styled.DescriptionTitle>
-                {`.${translations.similarProducts}`}
+                .{translations.similarProducts}
               </Styled.DescriptionTitle>
-              <ProductCarousel data={data.similar} cardTheme="theme02" />
+              <Div>
+                <ProductCarousel data={data.similar} cardTheme="theme02" />
+              </Div>
             </>
           )}
         </Styled.Wrapper>

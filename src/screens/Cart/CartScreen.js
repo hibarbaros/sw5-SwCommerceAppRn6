@@ -1,4 +1,10 @@
-import React, {useRef, useState, useCallback, useContext} from 'react';
+import React, {
+  useRef,
+  useState,
+  useCallback,
+  useContext,
+  useEffect,
+} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {Div} from 'react-native-magnus';
 import Wizard from 'react-native-wizard';
@@ -6,52 +12,53 @@ import StickyHeaderFooterScrollView from 'react-native-sticky-header-footer-scro
 //*components
 import CartTotalPrice from '../../components/Common/CartTotalPrice';
 import {Container, Button, Headline} from '../../themes/components';
-import CartDropdown from './CartDropdown';
 //*context
-import CheckoutContext from '../../context/CheckoutContext';
 import CartContext from '../../context/CartContext';
 import AppContext from '../../context/AppContext';
 
 import Titles from './Titles';
-import Step01 from './Step01';
-import Step02 from './Step02';
-import Step03 from './Step03';
-import Step04 from './Step04';
-import Step05 from './Step04';
+import StepUserCartBox from './StepUserCartBox';
+import StepAddress from './StepAddress';
+import StepShipping from './StepShipping';
+import StepPayments from './StepPayments';
+import StepOrder from './StepOrder';
+import StepForm from './StepForm';
 
 const CartScreen = () => {
   const wizardRef = useRef();
-  const scrollRef = useRef();
   const {userCart} = useContext(CartContext);
   const {user} = useContext(AppContext);
-  const {selectedShippingMethod, selectedPaymentMethod} = useContext(
-    CheckoutContext,
-  );
   const [isLastStep, setIsLastStep] = useState();
   const [currentStep, setCurrentStep] = useState(0);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [isNextButtonDisable, setIsNextButtonDisable] = useState(false);
 
   const stepList = [
     {
-      content: <Step01 userCart={userCart} />,
+      content: <StepUserCartBox userCart={userCart} />,
     },
     {
-      content: <Step02 />,
+      content: (
+        <StepForm user={user} setIsNextButtonDisable={setIsNextButtonDisable} />
+      ),
     },
     {
-      content: <Step03 />,
+      content: <StepAddress />,
     },
     {
-      content: <Step04 />,
+      content: <StepShipping setIsNextButtonDisable={setIsNextButtonDisable} />,
     },
     {
-      content: <Step05 />,
+      content: <StepPayments setIsNextButtonDisable={setIsNextButtonDisable} />,
+    },
+    {
+      content: <StepOrder />,
     },
   ];
 
   const handleGoTo = (step) => {
     wizardRef?.current?.goTo(step);
     setCurrentStep(step);
+    setIsNextButtonDisable(false);
   };
 
   useFocusEffect(
@@ -60,48 +67,42 @@ const CartScreen = () => {
     }, [userCart]),
   );
 
-  const isNextDisabled = () => {
-    if (currentStep === 1) {
-      return selectedShippingMethod ? false : true;
-    }
-    if (currentStep === 2) {
-      return selectedPaymentMethod ? false : true;
-    }
-    return false;
-  };
+  useEffect(() => {
+    !user && handleGoTo(0);
+  }, [user]);
 
   return (
     <>
       <StickyHeaderFooterScrollView
         makeScrollable={true}
         fitToScreen={false}
+        additionalHeightReserve={100}
         renderStickyHeader={() => (
           <Div backgroundColor="white" py={5}>
             <Titles handleGoTo={handleGoTo} currentStep={currentStep} />
           </Div>
         )}
-        renderStickyFooter={() => (
-          <Div backgroundColor="white">
-            {currentStep < 3 && <CartTotalPrice userCart={userCart} />}
-            {!isLastStep && (
-              <Div row justifyContent="center">
-                <Button
-                  block
-                  text="Weiter"
-                  onPress={() => {
-                    user ? handleGoTo(currentStep + 1) : setModalVisible(true);
-                    scrollRef.current?.scrollTo({
-                      y: 0,
-                    });
-                  }}
-                  disabled={isNextDisabled()}
-                  rounded={0}
-                />
-              </Div>
-            )}
-          </Div>
-        )}>
-        {userCart?.length ? (
+        renderStickyFooter={() =>
+          userCart ? (
+            <Div backgroundColor="white">
+              {currentStep === 0 && <CartTotalPrice userCart={userCart} />}
+              {!isLastStep && (
+                <Div row justifyContent="center" mt={10}>
+                  <Button
+                    w="60%"
+                    p="lg"
+                    variant="secondary"
+                    text="Weiter"
+                    onPress={() => handleGoTo(currentStep + 1)}
+                    disabled={isNextButtonDisable}
+                    rounded={0}
+                  />
+                </Div>
+              )}
+            </Div>
+          ) : null
+        }>
+        {userCart ? (
           <Container>
             <Wizard
               ref={wizardRef}
@@ -117,10 +118,6 @@ const CartScreen = () => {
           </Container>
         )}
       </StickyHeaderFooterScrollView>
-      <CartDropdown
-        setModalVisible={setModalVisible}
-        modalVisible={modalVisible}
-      />
     </>
   );
 };
