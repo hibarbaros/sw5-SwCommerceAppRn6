@@ -3,9 +3,8 @@ import {orderNormalize} from '../normalize/orderNormalize';
 
 export async function orderbyCustomerList(customerId) {
   const response = await Api.get(`/ConnectorCustomers/${customerId}`);
-  const allOrders = response.data.orders;
-  if (allOrders) {
-    return allOrders;
+  if (response.data.orders) {
+    return response.data.orders;
   } else {
     return null;
   }
@@ -26,14 +25,13 @@ export async function orderCreate(mutateVariables) {
   mutateVariables.details = products;
 
   const formData = orderNormalize(mutateVariables);
-  return 32;
-  // const response = await Api.post('/orders', formData);
-  // console.log('response', response);
-  // if (response.data?.id) {
-  //   return response.data.id;
-  // } else {
-  //   return false;
-  // }
+  const response = await Api.post('/orders', formData);
+  console.log('response', response);
+  if (response.data?.id) {
+    return response.data.id;
+  } else {
+    return false;
+  }
 }
 
 export default {

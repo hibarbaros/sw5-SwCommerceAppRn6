@@ -3,7 +3,7 @@ import {Text} from 'react-native-ui-lib';
 
 import CheckoutContext from '../../../context/CheckoutContext';
 import {usePaymentMethods} from '../../../utils/hooks/useApp';
-import {Styled} from './styles';
+import {Card} from '../../../themes/components';
 
 export default function PaymentMethods() {
   const {selectedPaymentMethod, setselectedPaymentMethod} = useContext(
@@ -16,17 +16,12 @@ export default function PaymentMethods() {
     return <Text>Loading...</Text>;
   }
 
-  return (
-    <>
-      {data &&
-        data.map((item) => (
-          <Styled.PaymentCard
-            key={item.id}
-            selected={selectedPaymentMethod?.id === item.id && true}
-            onPress={() => setselectedPaymentMethod(item)}>
-            <Text>{item.description}</Text>
-          </Styled.PaymentCard>
-        ))}
-    </>
-  );
+  return data.map((item) => (
+    <Card
+      key={item.id}
+      selected={selectedPaymentMethod?.id === item.id && true}
+      onPress={() => setselectedPaymentMethod(item)}>
+      <Text>{item.description}</Text>
+    </Card>
+  ));
 }

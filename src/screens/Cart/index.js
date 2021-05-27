@@ -83,9 +83,11 @@ const CartScreen = () => {
           </Div>
         )}
         renderStickyFooter={() =>
-          userCart ? (
+          userCart.length ? (
             <Div backgroundColor="white">
-              {currentStep === 0 && <CartTotalPrice userCart={userCart} />}
+              {currentStep === 1 ? null : (
+                <CartTotalPrice userCart={userCart} />
+              )}
               {!isLastStep && (
                 <Div row justifyContent="center" mt={10}>
                   <Button
@@ -102,7 +104,7 @@ const CartScreen = () => {
             </Div>
           ) : null
         }>
-        {userCart ? (
+        {userCart.length ? (
           <Container>
             <Wizard
               ref={wizardRef}

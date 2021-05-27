@@ -15,6 +15,8 @@ import {CartProvider} from './src/context/CartContext';
 import FilterProvider from './src/context/FilterProvider';
 import {LocalizationProvider} from './src/context/Translations';
 
+import linking from './src/config/linking';
+
 import {theme} from './src/themes/theme';
 
 const queryClient = new QueryClient();
@@ -22,11 +24,11 @@ const queryClient = new QueryClient();
 const App = () => {
   const ref = useRef(null);
 
-  if (__DEV__) {
-    import('react-query-native-devtools').then(({addPlugin}) => {
-      addPlugin({queryClient});
-    });
-  }
+  // if (__DEV__) {
+  //   import('react-query-native-devtools').then(({addPlugin}) => {
+  //     addPlugin({queryClient});
+  //   });
+  // }
 
   setLogger({
     log: console.log,
@@ -45,7 +47,10 @@ const App = () => {
                 <CartProvider>
                   <CheckoutProvider>
                     <FilterProvider>
-                      <NavigationContainer theme={NavigationTheme} ref={ref}>
+                      <NavigationContainer
+                        theme={NavigationTheme}
+                        ref={ref}
+                        linking={linking}>
                         <MainNavigation />
                       </NavigationContainer>
                     </FilterProvider>

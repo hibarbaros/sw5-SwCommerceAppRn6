@@ -6,6 +6,9 @@ import {Styled} from './styles';
 
 export default function LocalNotification() {
   const [initialNotifications, setInitialNotifications] = useState(null);
+
+  //TODO: firestore entegre edilecek
+
   useEffect(() => {
     getReferenceFromFirebase('localnotification').then((response) => {
       const reversed = response.reverse();

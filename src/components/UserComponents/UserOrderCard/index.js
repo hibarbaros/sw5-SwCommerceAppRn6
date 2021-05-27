@@ -1,42 +1,51 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+import {Div} from 'react-native-magnus';
 
 import AppRoute from '../../../utils/approutes';
 import PriceWithCurrency from '../../Common/PriceWithCurrency';
-
-import {Styled} from './styles';
+import {Headline, Paragraph, Button} from '../../../themes/components';
 
 export default function UserOrderCard({order}) {
   const navigation = useNavigation();
 
   return (
-    <Styled.OrderCard disabled>
-      <Styled.OrderNumber>{order.ordernumber}</Styled.OrderNumber>
-      <Styled.TextContainer>
-        <Styled.OrderText>Order at</Styled.OrderText>
-        <Styled.OrderTextRight>{order.ordertime}</Styled.OrderTextRight>
-      </Styled.TextContainer>
-      <Styled.TextContainer>
-        <Styled.OrderText>Order Status</Styled.OrderText>
-        <Styled.OrderTextRight>Shipping</Styled.OrderTextRight>
-      </Styled.TextContainer>
-      <Styled.TextContainer>
-        <Styled.OrderText>Items</Styled.OrderText>
-        <Styled.OrderTextRight>1 Items purchased</Styled.OrderTextRight>
-      </Styled.TextContainer>
-      <Styled.TextContainer>
-        <Styled.OrderText>Price</Styled.OrderText>
+    <Div borderColor="light" borderRadius={5} borderWidth={1} p={10}>
+      <Headline variant="h1" bold mb={10}>
+        Order No : {order.ordernumber}
+      </Headline>
+      <Div row justifyContent="space-between" alignItems="flex-end" mb={10}>
+        <Headline variant="h4" bold>
+          Order at
+        </Headline>
+        <Paragraph>{order.ordertime}</Paragraph>
+      </Div>
+      <Div row justifyContent="space-between" alignItems="flex-end" mb={10}>
+        <Headline variant="h4" bold>
+          Order Status
+        </Headline>
+        {/* TODO: dinamik order status gelmeli */}
+        <Paragraph>{order.status}</Paragraph>
+      </Div>
+      <Div row justifyContent="space-between" alignItems="flex-end" mb={10}>
+        <Headline variant="h4" bold>
+          Items
+        </Headline>
+        {/* TODO: dinamik sayi gelmeli */}
+        <Paragraph>1</Paragraph>
+      </Div>
+      <Div row justifyContent="space-between" alignItems="flex-end" mb={10}>
+        <Headline variant="h4" bold>
+          Price
+        </Headline>
         <PriceWithCurrency price={order.invoice_amount} />
-      </Styled.TextContainer>
-      <Styled.ButtonContainer>
-        <Styled.DetailButton
-          status="outline"
-          onPress={() =>
-            navigation.navigate(AppRoute.ORDER_DETAIL, {order: order})
-          }>
-          Order Detail
-        </Styled.DetailButton>
-      </Styled.ButtonContainer>
-    </Styled.OrderCard>
+      </Div>
+      <Button
+        text="Order Detail"
+        onPress={() =>
+          navigation.navigate(AppRoute.ORDER_DETAIL, {order: order})
+        }
+      />
+    </Div>
   );
 }

@@ -28,6 +28,7 @@ import {
   LocalNotification,
   UserPasswordEdit,
   AboutShop,
+  AddressList,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -88,6 +89,7 @@ export default function MainNavigator() {
         name={AppRoutes.PASSWORD_EDIT}
       />
       <Stack.Screen component={AboutShop} name={AppRoutes.ABOUT_SHOP} />
+      <Stack.Screen component={AddressList} name={AppRoutes.ADDRESSES} />
       <Stack.Screen
         component={CheckoutOrder}
         name={AppRoutes.CHECKOUT_ORDER}

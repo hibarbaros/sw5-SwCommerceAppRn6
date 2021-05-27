@@ -11,3 +11,4 @@ export {default as CheckBox} from './CheckBox';
 export {default as TopNavigation} from './TopNavigation';
 export {default as KeyboardAwareScroll} from './KeyboardAwareScroll/KeyboardAwareScroll';
 export {default as ModalHeader} from './ModalHeader';
+export {default as Paragraph} from './Paragraph';

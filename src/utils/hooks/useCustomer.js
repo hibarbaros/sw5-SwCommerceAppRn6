@@ -40,7 +40,7 @@ export function useCustomerLogout() {
 
   const mutate = useMutation(logoutUserContext, {
     onSuccess: () => {
-      setInitialUserCart(null);
+      setInitialUserCart([]);
     },
   });
 

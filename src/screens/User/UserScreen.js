@@ -7,7 +7,6 @@ import {LocalizationContext} from '../../context/Translations';
 
 import {Container} from '../../themes/components';
 import UserProfile from '../../components/UserComponents/UserProfile';
-import UserAddressList from '../../components/UserComponents/UserAddressList';
 import {Button} from '../../themes/components';
 import AppRoute from '../../utils/approutes';
 
@@ -33,11 +32,15 @@ export default function UserScreen({customerData}) {
               fontSize={12}
               block
               onPress={() => navigation.navigate(AppRoute.PASSWORD_EDIT)}
-              text="Password Change"
+              text="Change Password"
             />
-          </Div>
-          <Div my={10}>
-            <UserAddressList />
+            <Button
+              variant="block"
+              fontSize={12}
+              block
+              onPress={() => navigation.navigate(AppRoute.ADDRESSES)}
+              text="Addresses"
+            />
           </Div>
         </Container>
       </ScrollView>

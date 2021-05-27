@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
-import {View, Text} from 'react-native';
+import {Div, Text} from 'react-native-magnus';
 
 import CheckoutContext from '../../../context/CheckoutContext';
 import AppContext from '../../../context/AppContext';
 import {useShippingByCountryId} from '../../../utils/hooks/useApp';
 import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
-import {Styled} from './styles';
+import {Card} from '../../../themes/components';
 
 export default function ShippingMethods() {
   const {
@@ -35,19 +35,19 @@ export default function ShippingMethods() {
   }
 
   return (
-    <View>
+    <Div>
       {data.map((shipping) => {
         return (
-          <Styled.AddressCard
+          <Card
             key={shipping.id}
             selected={selectedShippingMethod?.id === shipping.id && true}
             onPress={() => setselectedShippingMethod(shipping)}>
             <Text>{shipping.name}</Text>
             <Text>{shipping.description}</Text>
             <Text>Cost : {shipping.detail.value}</Text>
-          </Styled.AddressCard>
+          </Card>
         );
       })}
-    </View>
+    </Div>
   );
 }

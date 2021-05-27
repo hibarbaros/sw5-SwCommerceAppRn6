@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, Button} from 'react-native-magnus';
+import {Text} from 'react-native-magnus';
 
 import {useCreateOrder, useOrderByOrderId} from '../../utils/hooks/useOrder';
 
 import LoadSpinner from '../../components/Common/LoadSpinner';
+import {Button} from '../../themes/components';
 
-export default function Step04() {
+export default function StepOrder() {
   const {mutate, isLoading, data = null} = useCreateOrder();
 
   const {data: orderData} = useOrderByOrderId(data);
@@ -14,7 +15,7 @@ export default function Step04() {
     <>
       <LoadSpinner isVisible={isLoading} />
       <Text>Order</Text>
-      <Button onPress={() => mutate()}>Order</Button>
+      <Button text="Checkout" onPress={mutate} />
       {orderData && (
         <>
           <Text>Order number : {orderData.number}</Text>

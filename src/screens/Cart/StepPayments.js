@@ -1,12 +1,11 @@
 import React, {useContext, useEffect} from 'react';
-import {Text} from 'react-native-magnus';
 
-import {Container} from '../../themes/components';
+import {Container, Headline} from '../../themes/components';
 import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods';
 
 import CheckoutContext from '../../context/CheckoutContext';
 
-export default function Step03({setIsNextButtonDisable}) {
+export default function StepPayments({setIsNextButtonDisable}) {
   const {selectedPaymentMethod} = useContext(CheckoutContext);
 
   useEffect(() => {
@@ -16,9 +15,7 @@ export default function Step03({setIsNextButtonDisable}) {
   return (
     <>
       <Container>
-        <Text text60 marginB-s5>
-          Payments Methods
-        </Text>
+        <Headline>Payments Methods</Headline>
         <PaymentMethods />
       </Container>
     </>

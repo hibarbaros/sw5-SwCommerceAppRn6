@@ -6,6 +6,7 @@ export default function GeneralCard({
   onPress,
   theme = 'primary',
   rest,
+  selected = false,
 }) {
   switch (theme) {
     case 'primary':
@@ -16,7 +17,7 @@ export default function GeneralCard({
           bg="transparent"
           onPress={onPress ? onPress : null}
           borderWidth={1}
-          borderColor="grey"
+          borderColor={selected ? 'red' : 'grey'}
           borderRadius={5}
           my={10}
           p={20}>

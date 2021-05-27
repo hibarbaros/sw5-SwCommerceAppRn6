@@ -2,7 +2,7 @@ import React from 'react';
 
 import {useShopByShopId} from '../../utils/hooks/useApp';
 
-import Paragraph from '../../themes/components/Paragraph/Paragraph';
+import Paragraph from '../../themes/components/Paragraph';
 import Container from '../../themes/components/Container/Container';
 
 export default function AboutShop() {

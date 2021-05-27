@@ -24,8 +24,8 @@ export default function ServiceHelp() {
 
   return (
     <>
-      <Styled.Container>
-        <Styled.StyledScrollView>
+      <Styled.StyledScrollView>
+        <Styled.Container>
           {data.map((page, index) => {
             if (page.html) {
               return (
@@ -44,8 +44,8 @@ export default function ServiceHelp() {
               return null;
             }
           })}
-        </Styled.StyledScrollView>
-      </Styled.Container>
+        </Styled.Container>
+      </Styled.StyledScrollView>
       <Styled.StyledModal
         animationType="slide"
         transparent={false}

@@ -108,6 +108,20 @@ const ProductDetail = ({route}) => {
               </Styled.ShipText>
             </Styled.ShipContainer>
           )}
+          {/* ANCHOR Variants */}
+          {data.configuratorSet && (
+            <Div my={15}>
+              <Styled.DescriptionTitle>
+                {translations.variants} .
+              </Styled.DescriptionTitle>
+              <ProductDetailVariants
+                selectedVariants={selectedVariants}
+                setSelectedVariants={setSelectedVariants}
+                groups={data.configuratorSet.groups}
+                productData={data}
+              />
+            </Div>
+          )}
           {/* ANCHOR Description */}
           {description && (
             <Styled.DescriptionContainer>
@@ -130,21 +144,6 @@ const ProductDetail = ({route}) => {
               <Styled.GeneralText key={index}>{cat.name}</Styled.GeneralText>
             ))}
           </Styled.CategoryContainer>
-
-          {/* ANCHOR Variants */}
-          {data.configuratorSet && (
-            <Div my={15}>
-              <Styled.DescriptionTitle>
-                {translations.variants} .
-              </Styled.DescriptionTitle>
-              <ProductDetailVariants
-                selectedVariants={selectedVariants}
-                setSelectedVariants={setSelectedVariants}
-                groups={data.configuratorSet.groups}
-                productData={data}
-              />
-            </Div>
-          )}
 
           {/* ANCHOR Property Groups */}
           {data.propertyGroup && (
