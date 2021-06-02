@@ -3,6 +3,7 @@ import {SafeAreaView, ScrollView, Text} from 'react-native';
 import {Modal, Div} from 'react-native-magnus';
 
 import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
+import {useCountries} from '../../../utils/hooks/useApp';
 
 import AppContext from '../../../context/AppContext';
 import CheckoutContext from '../../../context/CheckoutContext';
@@ -17,28 +18,37 @@ export default function Address() {
     setselectedBilllingAddress,
     selectedShippingAddress,
     setselectedShippingAddress,
-    setselectedShippingMethod,
   } = useContext(CheckoutContext);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(null);
 
-  const {data, isLoading} = useCustomerByCustomerId(user, {
-    onSuccess: (res) => {
-      setselectedBilllingAddress(res.defaultBillingAddress);
-      setselectedShippingAddress(res.defaultShippingAddress);
-    },
-  });
+  const {data, isLoading} = useCustomerByCustomerId(user);
+  const {data: countries} = useCountries();
 
   if (isLoading) {
     return <Text>Loading</Text>;
   }
 
-  const handleCard = (address) => {
+  const addCountryToAddress = (address) => {
+    const found = countries.find(
+      (x) => x.id === parseFloat(address.country_id),
+    );
+    setselectedBilllingAddress(found);
+    address.country = found;
+    return address;
+  };
+
+  const handleBilling = (address) => {
     setModalVisible(false);
-    isBillingAddress
-      ? setselectedBilllingAddress(address)
-      : setselectedShippingAddress(address);
+    const response = addCountryToAddress(address);
+    setselectedBilllingAddress(response);
+  };
+
+  const handleShipping = (address) => {
+    setModalVisible(false);
+    const response = addCountryToAddress(address);
+    setselectedShippingAddress(response);
   };
 
   return (
@@ -86,7 +96,11 @@ export default function Address() {
                       key={i}
                       addressId={address.id}
                       setModalVisible={setModalVisible}
-                      onPress={() => handleCard(address)}
+                      onPress={() =>
+                        isBillingAddress
+                          ? handleBilling(address)
+                          : handleShipping(address)
+                      }
                     />
                   );
                 })}

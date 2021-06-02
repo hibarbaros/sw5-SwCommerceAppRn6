@@ -2,9 +2,7 @@ import React, {useContext} from 'react';
 import {Div, Text} from 'react-native-magnus';
 
 import CheckoutContext from '../../../context/CheckoutContext';
-import AppContext from '../../../context/AppContext';
 import {useShippingByCountryId} from '../../../utils/hooks/useApp';
-import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
 import {Card} from '../../../themes/components';
 
 export default function ShippingMethods() {
@@ -12,26 +10,14 @@ export default function ShippingMethods() {
     selectedShippingAddress,
     selectedShippingMethod,
     setselectedShippingMethod,
-    setselectedShippingAddress,
   } = useContext(CheckoutContext);
 
-  const {user} = useContext(AppContext);
-
-  useCustomerByCustomerId(user, {
-    onSuccess: (res) => {
-      setselectedShippingAddress(res.defaultShippingAddress);
-    },
-  });
-
-  const addressId =
-    selectedShippingAddress && selectedShippingAddress.country.id;
-
-  const {isLoading, data} = useShippingByCountryId(addressId, {
-    enabled: addressId,
-  });
+  const {isLoading, data} = useShippingByCountryId(
+    selectedShippingAddress.country.id,
+  );
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return null;
   }
 
   return (

@@ -1,11 +1,12 @@
 import React, {useContext} from 'react';
 import {useQuery} from 'react-query';
 import {Image, Div} from 'react-native-magnus';
-import {motion, useTransform} from 'framer-motion';
+// import {motion, useTransform} from 'framer-motion';
 
 import Navigation from './Navigation';
 import AppContext from '../context/AppContext';
 import CartContext from '../context/CartContext';
+import CheckoutContext from '../context/CheckoutContext';
 
 import {customerData} from '../utils/actions/useractions';
 import {shopData, paymentsData} from '../utils/actions/appactions';
@@ -15,9 +16,10 @@ import Logo from '../assets/images/lemken-logo.png';
 // const AnimatedView = motion(Div);
 
 export default function MainScreen() {
-  const [isLoading, setIsLoading] = React.useState(true);
   const {setInitialUserCart} = useContext(CartContext);
-
+  const {setselectedBilllingAddress, setselectedShippingAddress} = useContext(
+    CheckoutContext,
+  );
   const {
     user,
     setUserContext,
@@ -26,15 +28,21 @@ export default function MainScreen() {
     setAllCurrencies,
   } = useContext(AppContext);
 
-  useQuery('customerDataContext', () => customerData(user), {
-    enabled: !!user,
-    onSuccess: (res) => {
-      if (res) {
-        setInitialUserCart(initialCartNormalize(res.basket));
-        setUserContext(res.id, res.sessionId);
-      }
+  const customerContext = useQuery(
+    'customerDataContext',
+    () => customerData(user),
+    {
+      enabled: !!user,
+      onSuccess: (userData) => {
+        if (userData) {
+          setInitialUserCart(initialCartNormalize(userData.basket));
+          setUserContext(userData.id, userData.sessionId);
+          setselectedBilllingAddress(userData.defaultBillingAddress);
+          setselectedShippingAddress(userData.defaultShippingAddress);
+        }
+      },
     },
-  });
+  );
 
   const shopContext = useQuery('shopContext', () => shopData(), {
     onSuccess: (data) => {
@@ -53,16 +61,14 @@ export default function MainScreen() {
   //   from: {opacity: 0},
   // }));
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      // set({opacity: 0});
-      setIsLoading(false);
-    }, 2000);
-  }, [paymentContext.isLoading, shopContext.isLoading]);
+  const navigationLoaded =
+    paymentContext.isSuccess &&
+    shopContext.isSuccess &&
+    customerContext.isSuccess;
 
   return (
     <>
-      {isLoading ? (
+      {!navigationLoaded ? (
         <Div
           // style={opacity}
           w="100%"

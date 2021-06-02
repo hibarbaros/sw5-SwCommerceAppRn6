@@ -57,7 +57,7 @@ const getCountries = async () => {
 };
 
 export function useCountries() {
-  return useQuery('countries', () => getCountries());
+  return useQuery('countries', getCountries);
 }
 
 const getAddRemoveToWishList = async (productId, whislist, setWhislist) => {

@@ -1,5 +1,6 @@
-import Api from '../api';
 import _ from 'lodash';
+
+import Api from '../api';
 
 export async function customerData(customerId) {
   const user = await Api.get(`/ConnectorCustomers/${customerId}`);
