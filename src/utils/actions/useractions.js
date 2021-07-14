@@ -35,7 +35,7 @@ export async function customerEdit(data) {
   const response = await Api.put(`/ConnectorCustomers/${customerId}`, formData);
   return response.data.id ? true : false;
 }
-
+//TODO: sifre desitirmeyi php ye entegre et
 export async function passwordEdit(values) {
   const {oldPassword, hashPassword, encoderName, customer, password} = values;
   const hash = await makeBcryptPass(password);
@@ -58,36 +58,10 @@ export async function passwordEdit(values) {
 
 export async function userLogin(values) {
   const {email, password} = values;
-  const response = await Api.get(`/ConnectorCustomers?filter[email]=${email}`);
-  const [user] = response.data;
-  if (user) {
-    const checkedHashPassword = await checkHashPassword(
-      user.encoderName,
-      password,
-      user.hashPassword,
-    );
-    return checkedHashPassword ? user : false;
-  } else {
-    //Email not found
-    return false;
-  }
-}
-
-export async function checkUserForLogin(values) {
-  const {email, password} = values;
-  const response = await Api.get(`/ConnectorCustomers?filter[email]=${email}`);
-  let {data} = response;
-  if (data.length > 0) {
-    const checkedHashPassword = await checkHashPassword(
-      data[0].encoderName,
-      password,
-      data[0].hashPassword,
-    );
-    return checkedHashPassword ? data[0] : false;
-  } else {
-    //Email not found
-    return false;
-  }
+  const apiUrl = `/ConnectorCustomers?useLogin=true&email="${email}"&password=${password}`;
+  const response = await Api.get(apiUrl);
+  const user = response.data;
+  return user ? user : false;
 }
 
 export const customerData = async (customerId) => {

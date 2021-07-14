@@ -10,7 +10,6 @@ import {
   customerData,
   customerRegister,
   customerEdit,
-  checkUserForLogin,
   passwordEdit,
   userLogin,
 } from '../actions/useractions';
@@ -84,37 +83,6 @@ export function useCustomerLogin() {
   return mutate;
 }
 //!Customer login
-
-//!Check Customer By Mail
-const getCustomerCheckByCustomerMail = async (values) => {
-  const data = await checkUserForLogin(values);
-  return data;
-};
-
-export function useCustomerCheckByMail() {
-  const {translations} = useContext(LocalizationContext);
-
-  const mutate = useMutation(
-    (values) => getCustomerCheckByCustomerMail(values),
-    {
-      onSuccess: (data) => {
-        if (data) {
-          return data;
-        }
-        if (!data) {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: translations.emailBereits,
-          });
-        }
-      },
-    },
-  );
-
-  return mutate;
-}
-//!Check Customer By Mail
 
 //!Register customer
 const getRegisterCustomer = async (values, userCart) => {
