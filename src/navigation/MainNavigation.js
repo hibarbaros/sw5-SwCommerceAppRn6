@@ -4,11 +4,11 @@ import {Image, Div} from 'react-native-magnus';
 // import {motion, useTransform} from 'framer-motion';
 
 import Navigation from './Navigation';
-import AppContext from '../context/AppContext';
-import CartContext from '../context/CartContext';
-import CheckoutContext from '../context/CheckoutContext';
+import AppContext from 'context/AppContext';
+import CartContext from 'context/CartContext';
+import CheckoutContext from 'context/CheckoutContext';
 
-import {customerData} from '../utils/actions/useractions';
+import {customerData} from 'utils/actions/useractions';
 import {shopData, paymentsData} from '../utils/actions/appactions';
 import {initialCartNormalize} from '../utils/normalize/cartNormalize';
 
