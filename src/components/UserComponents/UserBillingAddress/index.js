@@ -1,14 +1,15 @@
-import React, {useContext} from 'react';
-import AppContext from '../../../context/AppContext';
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Button, ButtonGroup} from '@ui-kitten/components';
 import {Card, View, Text} from 'react-native-ui-lib';
-import {EditIcon, TrashIcon} from '../../../themes/components/IconSet';
-import AppRoute from '../../../utils/approutes';
+
+import {useAppContext} from 'context/AppContext';
+import {EditIcon, TrashIcon} from 'themes/components/IconSet';
+import AppRoute from 'utils/approutes';
 
 export default function UserBillingAddress({checkout = false}) {
   const navigation = useNavigation();
-  const {user} = useContext(AppContext);
+  const {user} = useAppContext();
   const {defaultBillingAddress} = user;
 
   return (

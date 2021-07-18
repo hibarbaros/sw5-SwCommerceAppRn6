@@ -4,8 +4,10 @@ import {
   useNavigation,
   useNavigationState,
 } from '@react-navigation/native';
-import {BackIcon, MenuDrawer} from '../../themes/components/IconSet';
-import {colors} from '../../themes/variables';
+
+import {BackIcon, MenuDrawer} from 'themes/components/IconSet';
+import {colors} from 'themes/variables';
+
 import {Styled} from './styles';
 
 const HeaderLeft = () => {

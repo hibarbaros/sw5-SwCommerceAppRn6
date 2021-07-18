@@ -1,25 +1,25 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Button} from '@ui-kitten/components';
 import {View, Text} from 'react-native-ui-lib';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 
-import {Container, FormInput} from '../../../themes/components';
-import {ForwardIcon} from '../../../themes/components/IconSet';
-import LoadSpinner from '../../Common/LoadSpinner';
+import {Container, FormInput} from 'themes/components';
+import {ForwardIcon} from 'themes/components/IconSet';
+import LoadSpinner from 'components/Common/LoadSpinner';
 
-import AppContext from '../../../context/AppContext';
+import {useAppContext} from 'context/AppContext';
 import {
   useEditCustomerPassword,
   useCustomerByCustomerId,
-} from '../../../utils/hooks/useCustomer';
+} from 'utils/hooks/useCustomer';
+import {validationSchema} from 'utils/validationSchema';
 
 import {initialValues} from './initialValues';
 
-import {validationSchema} from '../../../utils/validationSchema';
-
 export default function UserPasswordEditForm() {
-  const {user} = useContext(AppContext);
+  const {user} = useAppContext();
+
   const {data, isLoading} = useCustomerByCustomerId(user);
   const {mutate, isLoading: editPasswordLoading} = useEditCustomerPassword();
 

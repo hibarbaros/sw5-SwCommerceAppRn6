@@ -1,14 +1,14 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Card, Text} from 'react-native-ui-lib';
 
-import {LocalizationContext} from '../../../context/Translations';
-import AppContext from '../../../context/AppContext';
+import {useLocalizationContext} from 'context/Translations';
+import {useAppContext} from 'context/AppContext';
 
-import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
+import {useCustomerByCustomerId} from 'utils/hooks/useCustomer';
 
 export default function UserProfile() {
-  const {translations} = useContext(LocalizationContext);
-  const {user} = useContext(AppContext);
+  const {translations} = useLocalizationContext();
+  const {user} = useAppContext();
 
   const {data, isLoading} = useCustomerByCustomerId(user);
 

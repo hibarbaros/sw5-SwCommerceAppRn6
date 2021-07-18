@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {Div} from 'react-native-magnus';
 
-import {useCollectionByCollectinName} from '../../../utils/hooks/useFirebase';
 import ProductCard from '../ProductCard';
-import {Headline} from '../../../themes/components';
+import {Headline} from 'themes/components';
+
+import {useCollectionByCollectinName} from 'utils/hooks/useFirebase';
 
 export default function Carousel({cardTheme, collection, doc, title}) {
   const {isLoading, data} = useCollectionByCollectinName(collection, doc);

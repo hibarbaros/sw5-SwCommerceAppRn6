@@ -3,13 +3,13 @@ import {Text} from 'react-native';
 import {View} from 'react-native-ui-lib';
 import {useNavigation} from '@react-navigation/native';
 
-import PriceWithCurrency from '../../Common/PriceWithCurrency';
-import {ButtonIcon} from '../../../themes/components';
-import AppRoutes from '../../../utils/approutes';
-import ProductCardMedia from '../../ProductComponents/ProductCardMedia';
+import PriceWithCurrency from 'components/Common/PriceWithCurrency';
+import {ButtonIcon} from 'themes/components';
+import AppRoutes from 'utils/approutes';
+import ProductCardMedia from 'components/ProductComponents/ProductCardMedia';
 
-import {useProductByProductId} from '../../../utils/hooks/useProduct';
-import {useAddToWhislist} from '../../../utils/hooks/useWishlist';
+import {useProductByProductId} from 'utils/hooks/useProduct';
+import {useAddToWhislist} from 'utils/hooks/useWishlist';
 
 import {Styled} from './styles';
 

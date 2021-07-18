@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import _ from 'lodash';
 
-import {Button} from '../../../themes/components';
+import {Button} from 'themes/components';
 
 export default function componentName({onPress, option, selectedFilter}) {
   const [isToggle, setIsTIggle] = useState(true);

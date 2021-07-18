@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {ScrollView} from 'react-native';
 
-import AppContext from '../../context/AppContext';
-import ProductWhislistCard from '../../components/ProductComponents/ProductWhislistCard';
-import {Container, Headline} from '../../themes/components';
+import {useAppContext} from 'context/AppContext';
+import ProductWhislistCard from 'components/ProductComponents/ProductWhislistCard';
+import {Container, Headline} from 'themes/components';
 
 export default function Whislist() {
-  const {wishlist} = useContext(AppContext);
+  const {wishlist} = useAppContext();
 
   return (
     <Container>

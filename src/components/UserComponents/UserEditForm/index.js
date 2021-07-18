@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {View, Text} from 'react-native-ui-lib';
 import {Button, CheckBox} from '@ui-kitten/components';
 import {Formik, Field} from 'formik';
@@ -7,23 +7,24 @@ import * as yup from 'yup';
 import {
   useEditCustomer,
   useCustomerByCustomerId,
-} from '../../../utils/hooks/useCustomer';
+} from 'utils/hooks/useCustomer';
 
-import LoadSpinner from '../../Common/LoadSpinner';
-import GenderActionSheet from '../../Common/GenderActionSheet/GenderActionSheet';
-import {LocalizationContext} from '../../../context/Translations';
-import AppContext from '../../../context/AppContext';
+import LoadSpinner from 'components/Common/LoadSpinner';
+import GenderActionSheet from 'components/Common/GenderActionSheet/GenderActionSheet';
+import {useLocalizationContext} from 'context/Translations';
+import {useAppContext} from 'context/AppContext';
 
-import {Container, FormInput} from '../../../themes/components';
-import {ForwardIcon} from '../../../themes/components/IconSet';
+import {Container, FormInput} from 'themes/components';
+import {ForwardIcon} from 'themes/components/IconSet';
 
 import {initialValues} from './initialValues';
-import {validationSchema} from '../../../utils/validationSchema';
+import {validationSchema} from 'utils/validationSchema';
 
 export default function UserEditForm() {
+  const {user} = useAppContext();
+  const {translations} = useLocalizationContext();
+
   const [userNewsletter, setUserNewsletter] = useState(null);
-  const {translations} = useContext(LocalizationContext);
-  const {user} = useContext(AppContext);
   const {data, isLoading} = useCustomerByCustomerId(user, {
     onSuccess: () => {
       setUserNewsletter(data.newsletter);

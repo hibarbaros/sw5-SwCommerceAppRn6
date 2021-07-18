@@ -6,7 +6,6 @@ import {
 import {DrawerActions} from '@react-navigation/native';
 import {MenuItem, Divider, ListItem} from '@ui-kitten/components';
 
-import AppContext from '../context/AppContext';
 import {
   ForwardIcon,
   RegisterIcon,
@@ -15,16 +14,20 @@ import {
   LogoutIcon,
   CreditCardIcon,
   StarIcon,
-} from '../themes/components/IconSet';
+} from 'themes/components/IconSet';
 import TabComponent from './TabComponent';
-import AppRoutes from '../utils/approutes';
-import {useCustomerLogout} from '../utils/hooks/useCustomer';
-import {LocalizationContext} from '../context/Translations';
+
+import {useAppContext} from 'context/AppContext';
+import {useLocalizationContext} from 'context/Translations';
+
+import AppRoutes from 'utils/approutes';
+import {useCustomerLogout} from 'utils/hooks/useCustomer';
+
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
-  const {user} = useContext(AppContext);
-  const {translations} = useContext(LocalizationContext);
+  const {user} = useAppContext();
+  const {translations} = useLocalizationContext();
 
   const {mutate: logoutMutate} = useCustomerLogout();
 

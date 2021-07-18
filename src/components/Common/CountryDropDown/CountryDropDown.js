@@ -1,8 +1,8 @@
 import React, {createRef, useState} from 'react';
 import {Dropdown, Text} from 'react-native-magnus';
 
-import {Button, FormErrorLabel} from '../../../themes/components';
-import {useCountries} from '../../../utils/hooks/useApp';
+import {Button, FormErrorLabel} from 'themes/components';
+import {useCountries} from 'utils/hooks/useApp';
 
 export default function CountryDropDown(props) {
   const {

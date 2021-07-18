@@ -1,20 +1,14 @@
-import React, {
-  useRef,
-  useState,
-  useCallback,
-  useContext,
-  useEffect,
-} from 'react';
+import React, {useRef, useState, useCallback, useEffect} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {Div} from 'react-native-magnus';
 import Wizard from 'react-native-wizard';
 import StickyHeaderFooterScrollView from 'react-native-sticky-header-footer-scroll-view';
 //*components
-import CartTotalPrice from '../../components/Common/CartTotalPrice';
-import {Container, Button, Headline} from '../../themes/components';
+import CartTotalPrice from 'components/Common/CartTotalPrice';
+import {Container, Button, Headline} from 'themes/components';
 //*context
-import CartContext from '../../context/CartContext';
-import AppContext from '../../context/AppContext';
+import {useCartContext} from 'context/CartContext';
+import {useAppContext} from 'context/AppContext';
 
 import Titles from './Titles';
 import StepUserCartBox from './StepUserCartBox';
@@ -25,9 +19,11 @@ import StepOrder from './StepOrder';
 import StepForm from './StepForm';
 
 const CartScreen = () => {
+  const {userCart} = useCartContext();
   const wizardRef = useRef();
-  const {userCart} = useContext(CartContext);
-  const {user} = useContext(AppContext);
+
+  const {user} = useAppContext();
+
   const [isLastStep, setIsLastStep] = useState();
   const [currentStep, setCurrentStep] = useState(0);
   const [isNextButtonDisable, setIsNextButtonDisable] = useState(false);

@@ -2,8 +2,9 @@ import React, {useState, createRef} from 'react';
 import styled from 'styled-components';
 import {View, Text} from 'react-native-ui-lib';
 import {Button} from '@ui-kitten/components';
-import {CheckmarkIcon} from '../../../themes/components/IconSet';
 import ActionSheet from 'react-native-actions-sheet';
+
+import {CheckmarkIcon} from 'themes/components/IconSet';
 
 export default function SheetItem({set, productVariants, handleSetVariant}) {
   const actionSheetRef = createRef();

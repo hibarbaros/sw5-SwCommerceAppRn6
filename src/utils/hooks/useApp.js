@@ -9,7 +9,7 @@ import {
   countriesData,
 } from '../actions/appactions';
 
-import AppContext from '../../context/AppContext';
+import {useAppContext} from 'context/AppContext';
 
 const getShopPagesByShopId = async (shopId) => {
   const data = await shopData(shopId);
@@ -73,7 +73,7 @@ const getAddRemoveToWishList = async (productId, whislist, setWhislist) => {
 };
 
 export function useAddRemoveToWishList() {
-  const {whislist, setWhislist} = useContext(AppContext);
+  const {whislist, setWhislist} = useAppContext();
   const mutate = useMutation('paymentMethodsData', (productId) =>
     getAddRemoveToWishList(productId, whislist, setWhislist),
   );

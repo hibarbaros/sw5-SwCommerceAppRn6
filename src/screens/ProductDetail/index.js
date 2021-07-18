@@ -1,30 +1,30 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {Div, Text} from 'react-native-magnus';
 import HTMLView from 'react-native-htmlview';
 import Toast from 'react-native-toast-message';
 //*context
-import {LocalizationContext} from '../../context/Translations';
-import AppContext from '../../context/AppContext';
+import {useLocalizationContext} from 'context/Translations';
+import {useAppContext} from 'context/AppContext';
 //*utils
-import {useProductByProductId} from '../../utils/hooks/useProduct';
-import {useAddToCart} from '../../utils/hooks/useCart';
-import {useAddToVisitedlist} from '../../utils/hooks/useVisitedProduct';
+import {useProductByProductId} from 'utils/hooks/useProduct';
+import {useAddToCart} from 'utils/hooks/useCart';
+import {useAddToVisitedlist} from 'utils/hooks/useVisitedProduct';
 //*components
-import PriceWithCurrency from '../../components/Common/PriceWithCurrency';
-import ProductPropertyGroup from '../../components/ProductComponents/ProductPropertyGroup';
-import ProductWhislistButton from '../../components/ProductComponents/ProductWhislistButton';
-import ProductDetailVariants from '../../components/ProductComponents/ProductDetailVariants';
-import ProductDetailMedia from '../../components/ProductComponents/ProductDetailMedia';
-import ProductCarousel from '../../components/Common/ProductCarousel';
-import {Button} from '../../themes/components';
-import LoadSpinner from '../../components/Common/LoadSpinner';
+import PriceWithCurrency from 'components/Common/PriceWithCurrency';
+import ProductPropertyGroup from 'components/ProductComponents/ProductPropertyGroup';
+import ProductWhislistButton from 'components/ProductComponents/ProductWhislistButton';
+import ProductDetailVariants from 'components/ProductComponents/ProductDetailVariants';
+import ProductDetailMedia from 'components/ProductComponents/ProductDetailMedia';
+import ProductCarousel from 'components/Common/ProductCarousel';
+import {Button} from 'themes/components';
+import LoadSpinner from 'components/Common/LoadSpinner';
 
 import {Styled} from './styles';
 
 const ProductDetail = ({route}) => {
-  const {translations} = useContext(LocalizationContext);
-  const {selectedTranslate} = useContext(AppContext);
+  const {translations} = useLocalizationContext();
+  const {selectedTranslate} = useAppContext();
   const [selectedVariants, setSelectedVariants] = useState([]);
   const [initialQuantity, setInitialQuantity] = useState(1);
 

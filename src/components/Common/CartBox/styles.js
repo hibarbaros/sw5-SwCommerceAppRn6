@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
-
 import {SimpleStepper as unStyledSimpleStepper} from 'react-native-simple-stepper';
-import {colors} from '../../../themes/variables';
+
+import {colors} from 'themes/variables';
 
 export const SimpleStepper = styled(unStyledSimpleStepper).attrs({
   textStyle: {

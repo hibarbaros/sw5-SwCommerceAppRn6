@@ -11,14 +11,14 @@ import {
   Headline,
   CheckBox,
   Button,
-} from '../../../themes/components';
-import GenderActionSheet from '../../Common/GenderActionSheet/GenderActionSheet';
-import CountryDropDown from '../../Common/CountryDropDown/CountryDropDown';
-import LoadSpinner from '../../Common/LoadSpinner';
+} from 'themes/components';
+import GenderActionSheet from 'components/Common/GenderActionSheet/GenderActionSheet';
+import CountryDropDown from 'components/Common/CountryDropDown/CountryDropDown';
+import LoadSpinner from 'components/Common/LoadSpinner';
 //*utils
-import AppRoutes from '../../../utils/approutes';
-import {useRegisterCustomer} from '../../../utils/hooks/useCustomer';
-import {validationSchema} from '../../../utils/validationSchema';
+import AppRoutes from 'utils/approutes';
+import {useRegisterCustomer} from 'utils/hooks/useCustomer';
+import {validationSchema} from 'utils/validationSchema';
 //*self
 import {initialValues} from './initialValues';
 

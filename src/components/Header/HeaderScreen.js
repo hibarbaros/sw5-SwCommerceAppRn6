@@ -1,7 +1,8 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {colors} from '../../themes/variables';
-import {BackIcon} from '../../themes/components/IconSet';
+
+import {colors} from 'themes/variables';
+import {BackIcon} from 'themes/components/IconSet';
 
 const HeaderLeft = () => {
   //NOTE: Ekranlarin header'lari

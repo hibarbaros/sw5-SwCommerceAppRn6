@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {Text} from 'react-native-ui-lib';
 
-import CheckoutContext from '../../../context/CheckoutContext';
-import {usePaymentMethods} from '../../../utils/hooks/useApp';
-import {Card} from '../../../themes/components';
+import CheckoutContext from 'context/CheckoutContext';
+import {usePaymentMethods} from 'utils/hooks/useApp';
+import {Card} from 'themes/components';
 
 export default function PaymentMethods() {
   const {selectedPaymentMethod, setselectedPaymentMethod} = useContext(

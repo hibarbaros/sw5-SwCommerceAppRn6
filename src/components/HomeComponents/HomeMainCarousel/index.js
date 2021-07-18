@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Text, Div, Image} from 'react-native-magnus';
 import styled from 'styled-components/native';
-
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {useCollectionByCollectinName} from '../../../utils/hooks/useFirebase';
+
+import {useCollectionByCollectinName} from 'utils/hooks/useFirebase';
 
 export default function HomeMainCarousel() {
   const [carouselIndex, setCarouselIndex] = useState(0);

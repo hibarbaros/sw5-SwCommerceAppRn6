@@ -1,7 +1,8 @@
 import React from 'react';
 import {Text} from 'react-native';
 
-import {usePropertyGroupDetail} from '../../../utils/hooks/useProduct';
+import {usePropertyGroupDetail} from 'utils/hooks/useProduct';
+
 import {Styled} from './styles';
 
 export default function ProductPropertyGroup({groupId, propertyValues}) {

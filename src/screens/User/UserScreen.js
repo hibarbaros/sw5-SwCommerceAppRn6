@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Div} from 'react-native-magnus';
 
-import {LocalizationContext} from '../../context/Translations';
+import {useLocalizationContext} from '../../context/Translations';
 
 import {Container} from '../../themes/components';
 import UserProfile from '../../components/UserComponents/UserProfile';
@@ -12,7 +12,7 @@ import AppRoute from '../../utils/approutes';
 
 export default function UserScreen({customerData}) {
   const navigation = useNavigation();
-  const {translations} = useContext(LocalizationContext);
+  const {translations} = useLocalizationContext();
 
   return (
     <SafeAreaView>

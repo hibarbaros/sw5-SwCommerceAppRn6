@@ -1,15 +1,15 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Div} from 'react-native-magnus';
 //*components
 import PriceWithCurrency from '../PriceWithCurrency';
-import {Headline} from '../../../themes/components';
+import {Headline} from 'themes/components';
 //*utils
-import {useUserCartTotalPrice} from '../../../utils/hooks/useCart';
+import {useUserCartTotalPrice} from 'utils/hooks/useCart';
 //*context
-import CheckoutContext from '../../../context/CheckoutContext';
+import {useCheckoutContext} from 'context/CheckoutContext';
 
 export default function CartTotalPrice() {
-  const {selectedShippingMethod} = useContext(CheckoutContext);
+  const {selectedShippingMethod} = useCheckoutContext();
 
   const {data} = useUserCartTotalPrice();
   const shippingPrice = selectedShippingMethod

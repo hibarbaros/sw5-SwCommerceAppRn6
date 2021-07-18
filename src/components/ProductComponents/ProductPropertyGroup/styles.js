@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import {View, Text} from 'react-native-ui-lib';
 import {sanFranciscoWeights} from 'react-native-typography';
 
-import {colors} from '../../../themes/variables';
+import {colors} from 'themes/variables';
 
 const ImageContainer = styled(View)`
   height: 440px;

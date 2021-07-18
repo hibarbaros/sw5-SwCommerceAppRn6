@@ -1,8 +1,6 @@
-import {createContext} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 
 const CheckoutContext = createContext([{}, () => {}]);
-
-import React, {useState} from 'react';
 
 export const CheckoutProvider = ({children}) => {
   const [selectedBilllingAddress, setselectedBilllingAddress] = useState(null);
@@ -28,3 +26,7 @@ export const CheckoutProvider = ({children}) => {
 };
 
 export default CheckoutContext;
+
+export const useCheckoutContext = () => {
+  return useContext(CheckoutContext);
+};

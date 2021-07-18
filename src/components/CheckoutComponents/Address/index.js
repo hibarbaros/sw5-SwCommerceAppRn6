@@ -1,24 +1,24 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, ScrollView, Text} from 'react-native';
 import {Modal, Div} from 'react-native-magnus';
 
-import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
-import {useCountries} from '../../../utils/hooks/useApp';
+import {useCustomerByCustomerId} from 'utils/hooks/useCustomer';
+import {useCountries} from 'utils/hooks/useApp';
 
-import AppContext from '../../../context/AppContext';
-import CheckoutContext from '../../../context/CheckoutContext';
-import {Container, Button, ModalHeader} from '../../../themes/components';
+import {useAppContext} from 'context/AppContext';
+import {useCheckoutContext} from 'context/CheckoutContext';
+import {Container, Button, ModalHeader} from 'themes/components';
 import AddressCard from '../AddressCard';
 
 export default function Address() {
-  const {user} = useContext(AppContext);
+  const {user} = useAppContext();
 
   const {
     selectedBilllingAddress,
     setselectedBilllingAddress,
     selectedShippingAddress,
     setselectedShippingAddress,
-  } = useContext(CheckoutContext);
+  } = useCheckoutContext();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(null);

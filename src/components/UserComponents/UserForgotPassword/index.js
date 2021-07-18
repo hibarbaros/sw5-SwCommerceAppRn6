@@ -3,11 +3,11 @@ import {Div} from 'react-native-magnus';
 import * as yup from 'yup';
 import {Formik, Field} from 'formik';
 //*components
-import {FormInput, Button, Container} from '../../../themes/components';
-import LoadSpinner from '../../Common/LoadSpinner';
+import {FormInput, Button, Container} from 'themes/components';
+import LoadSpinner from 'components/Common/LoadSpinner';
 //*utils
-import {useForgotPassword} from '../../../utils/hooks/useEmailjs';
-import {validationSchema} from '../../../utils/validationSchema';
+import {useForgotPassword} from 'utils/hooks/useEmailjs';
+import {validationSchema} from 'utils/validationSchema';
 
 import {initialValues} from './initialValues';
 

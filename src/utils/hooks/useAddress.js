@@ -1,6 +1,5 @@
-import {useContext} from 'react';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
-import {LocalizationContext} from '../../context/Translations';
+import {useLocalizationContext} from '../../context/Translations';
 import Toast from 'react-native-toast-message';
 
 import {
@@ -39,7 +38,7 @@ const getDeleteAddress = async (addressId) => {
 };
 
 export function useDeleteAddress() {
-  const {translations} = useContext(LocalizationContext);
+  const {translations} = useLocalizationContext();
   const cache = useQueryClient();
 
   const mutate = useMutation((addressId) => getDeleteAddress(addressId), {
@@ -83,7 +82,7 @@ const getAddEditAddress = async (values) => {
 };
 
 export function useAddEditAddress() {
-  const {translations} = useContext(LocalizationContext);
+  const {translations} = useLocalizationContext();
 
   const cache = useQueryClient();
 

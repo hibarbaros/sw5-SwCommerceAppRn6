@@ -1,24 +1,22 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import NestedListView from 'react-native-nested-listview';
 import {Div, Text, Icon} from 'react-native-magnus';
 //*context
-import {LocalizationContext} from '../../context/Translations';
-import AppContext from '../../context/AppContext';
+import {useLocalizationContext} from 'context/Translations';
+import {useAppContext} from 'context/AppContext';
 //*utils
-import AppRoute from '../../utils/approutes';
-import {setProductCategories} from '../../utils/functions';
-import {useAllCategories} from '../../utils/hooks/useCategory';
+import AppRoute from 'utils/approutes';
+import {setProductCategories} from 'utils/functions';
+import {useAllCategories} from 'utils/hooks/useCategory';
 //*components
-import {Headline, Button} from '../../themes/components';
-import LoadSpinner from '../../components/Common/LoadSpinner';
+import {Headline, Button} from 'themes/components';
+import LoadSpinner from 'components/Common/LoadSpinner';
 
 export default function CategoriesScreen({navigation}) {
-  const {translations} = useContext(LocalizationContext);
-  const {selectedLanguage} = useContext(AppContext);
+  const {translations} = useLocalizationContext();
+  const {selectedLanguage} = useAppContext();
 
   const {isLoading, data} = useAllCategories(selectedLanguage);
-
-  // console.log('data :>> ', data);
 
   const renderNode = (node, level) => {
     const {opened, children} = node;

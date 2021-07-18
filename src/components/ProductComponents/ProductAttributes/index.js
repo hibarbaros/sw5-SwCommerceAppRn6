@@ -3,11 +3,11 @@ import {Div} from 'react-native-magnus';
 import StickyHeaderFooterScrollView from 'react-native-sticky-header-footer-scroll-view';
 import _ from 'lodash';
 
-import {useAttributesOptions} from '../../../utils/hooks/useProduct';
-import {categoryFilterList} from '../../../utils/functions';
+import {useAttributesOptions} from 'utils/hooks/useProduct';
+import {categoryFilterList} from 'utils/functions';
 
-import {Headline, TopNavigation} from '../../../themes/components';
-import Button from '../../../themes/components/Button';
+import {Headline, TopNavigation} from 'themes/components';
+import Button from 'themes/components/Button';
 
 import CheckItem from './CheckItem';
 

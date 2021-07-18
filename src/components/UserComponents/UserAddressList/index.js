@@ -1,20 +1,23 @@
-import React, {useState, useContext, createRef} from 'react';
+import React, {useState, createRef} from 'react';
 import {View} from 'react-native-ui-lib';
 import {useNavigation} from '@react-navigation/native';
 import {Dropdown, Text} from 'react-native-magnus';
 
-import {Button} from '../../../themes/components';
+import {Button} from 'themes/components';
+import LoadSpinner from 'components/Common/LoadSpinner';
+
+import {useAppContext} from 'context/AppContext';
+
+import AppRoute from 'utils/approutes';
+import {useCustomerByCustomerId} from 'utils/hooks/useCustomer';
+import {useDeleteAddress} from 'utils/hooks/useAddress';
+
 import UserAddressCard from '../UserAddressCard';
-import LoadSpinner from '../../Common/LoadSpinner';
-import AppRoute from '../../../utils/approutes';
-import AppContext from '../../../context/AppContext';
-import {useCustomerByCustomerId} from '../../../utils/hooks/useCustomer';
-import {useDeleteAddress} from '../../../utils/hooks/useAddress';
 
 export default function UserAddressList({checkout = false}) {
   const dropdownRef = createRef();
   const navigation = useNavigation();
-  const {user} = useContext(AppContext);
+  const {user} = useAppContext();
 
   const [selectedAddressId, setSelectedAddressId] = useState(null);
 

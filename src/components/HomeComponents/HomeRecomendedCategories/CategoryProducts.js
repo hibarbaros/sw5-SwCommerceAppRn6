@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
-import {useProducstByCategoryId} from '../../../utils/hooks/useProduct';
-import ProductCard from '../../Common/ProductCard';
+import {useProducstByCategoryId} from 'utils/hooks/useProduct';
+import ProductCard from 'components/Common/ProductCard';
 
 import {Styled} from './styles';
 

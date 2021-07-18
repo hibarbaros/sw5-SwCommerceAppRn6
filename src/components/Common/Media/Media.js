@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import FastImage from 'react-native-fast-image';
 import {Skeleton} from 'react-native-magnus';
 
-import {MediaImage} from './styles';
+import {makeImageUrl} from 'utils/functions';
 
-import {makeImageUrl} from '../../../utils/functions';
+import {MediaImage} from './styles';
 
 export default function Media({thumbnail}) {
   const image = makeImageUrl(thumbnail);

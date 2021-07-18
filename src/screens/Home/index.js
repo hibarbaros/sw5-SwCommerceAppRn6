@@ -1,19 +1,19 @@
-import React, {useState, useCallback, useContext} from 'react';
+import React, {useState, useCallback} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
 import {useQueryClient} from 'react-query';
 import {Div} from 'react-native-magnus';
 
-import {LocalizationContext} from '../../context/Translations';
-import AppContext from '../../context/AppContext';
-import {Headline} from '../../themes/components';
-import Carousel from '../../components/Common/FirebaseCarousel';
-import VisitedProducts from '../../components/Common/VisitedProducts';
-import HomeMainCarousel from '../../components/HomeComponents/HomeMainCarousel';
-import HomeRecomendedCategories from '../../components/HomeComponents/HomeRecomendedCategories';
+import {useLocalizationContext} from 'context/Translations';
+import {useAppContext} from 'context/AppContext';
+import {Headline, Text} from 'themes/components';
+import Carousel from 'components/Common/FirebaseCarousel';
+import VisitedProducts from 'components/Common/VisitedProducts';
+import HomeMainCarousel from 'components/HomeComponents/HomeMainCarousel';
+import HomeRecomendedCategories from 'components/HomeComponents/HomeRecomendedCategories';
 
 const HomeScreen = () => {
-  const {translations} = useContext(LocalizationContext);
-  const {selectedLanguage} = useContext(AppContext);
+  const {translations} = useLocalizationContext();
+  const {selectedLanguage} = useAppContext();
   const cache = useQueryClient();
 
   const [refreshing, setRefreshing] = useState(false);
@@ -33,6 +33,7 @@ const HomeScreen = () => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
+      <Text variant="secondary">deneme</Text>
       <Div my={20}>
         <HomeMainCarousel />
       </Div>

@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 
-import AppContext from '../../../context/AppContext';
-import {priceWithTax} from '../../../utils/functions';
-import {Headline} from '../../../themes/components';
+import {useAppContext} from 'context/AppContext';
+import {priceWithTax} from 'utils/functions';
+import {Headline} from 'themes/components';
 
 export default function PriceWithCurrency({price, product, color}) {
-  const {currency} = useContext(AppContext);
+  const {currency} = useAppContext();
   const parsedPrice = parseFloat(price).toFixed(2) * currency.factor;
 
   if (!currency.currency) {

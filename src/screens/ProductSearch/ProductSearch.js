@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {FlatList} from 'react-native';
 import {Input, Icon, Div} from 'react-native-magnus';
 import {Spinner} from '@ui-kitten/components';
@@ -7,12 +7,12 @@ import {Spinner} from '@ui-kitten/components';
 import {Container} from '../../themes/components';
 import VisitedProducts from '../../components/Common/VisitedProducts';
 import {useSearchByString} from '../../utils/hooks/useProduct';
-import {LocalizationContext} from '../../context/Translations';
+import {useLocalizationContext} from '../../context/Translations';
 import ProductCard from '../../components/Common/ProductCard';
 import {Headline} from '../../themes/components';
 
 export default function ProductSearch() {
-  const {translations} = useContext(LocalizationContext);
+  const {translations} = useLocalizationContext();
   const [value, setValue] = useState('');
 
   const {status, data} = useSearchByString(value.length > 2 && value);

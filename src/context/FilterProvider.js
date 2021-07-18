@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import FilterContext from './FilterContext';
+import React, {useState, useContext, createContext} from 'react';
 
-const FilterProvider = (props) => {
-  const {children} = props;
+const FilterContext = createContext([{}, () => {}]);
+
+const FilterProvider = ({children}) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -20,3 +20,7 @@ const FilterProvider = (props) => {
 };
 
 export default FilterProvider;
+
+export const useFilterContext = () => {
+  return useContext(FilterContext);
+};

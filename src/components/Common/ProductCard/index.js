@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {useProductByProductId} from '../../../utils/hooks/useProduct';
+import {useProductByProductId} from 'utils/hooks/useProduct';
 
 import Theme01 from '../ProductCardThemes/Theme01';
 import Theme02 from '../ProductCardThemes/Theme02';

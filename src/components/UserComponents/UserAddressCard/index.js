@@ -2,8 +2,8 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Button} from '@ui-kitten/components';
 
-import AppRoute from '../../../utils/approutes';
-import {TrashIcon} from '../../../themes/components/IconSet';
+import AppRoute from 'utils/approutes';
+import {TrashIcon} from 'themes/components/IconSet';
 
 import {Styled} from './styles';
 

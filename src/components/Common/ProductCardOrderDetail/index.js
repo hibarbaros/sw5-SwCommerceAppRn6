@@ -1,9 +1,9 @@
 import React from 'react';
 
 import PriceWithCurrency from '../PriceWithCurrency';
-import ProductCardMedia from '../../ProductComponents/ProductCardMedia';
+import ProductCardMedia from 'components/ProductComponents/ProductCardMedia';
 
-import {useProductByProductId} from '../../../utils/hooks/useProduct';
+import {useProductByProductId} from 'utils/hooks/useProduct';
 
 import {Styled} from './styles';
 

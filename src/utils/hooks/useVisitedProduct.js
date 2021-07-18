@@ -1,8 +1,7 @@
-import {useContext} from 'react';
 import {useQuery} from 'react-query';
 
 import {setItem} from '../storagehelper';
-import AppContext from '../../context/AppContext';
+import {useAppContext} from 'context/AppContext';
 
 function setHandleVisitedList(newList, setVisitedProducts) {
   if (newList.length > 10) {
@@ -13,7 +12,7 @@ function setHandleVisitedList(newList, setVisitedProducts) {
 }
 
 export function useAddToVisitedlist(productId) {
-  const {visitedProducts, setVisitedProducts} = useContext(AppContext);
+  const {visitedProducts, setVisitedProducts} = useAppContext();
 
   const floatProductId = parseFloat(productId);
 

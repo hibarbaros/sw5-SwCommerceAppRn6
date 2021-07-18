@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 import {View, Text} from 'react-native-ui-lib';
-import {colors} from '../../../themes/variables';
 import {sanFranciscoWeights} from 'react-native-typography';
+
+import {colors} from 'themes/variables';
 
 const CardContainer = styled.TouchableOpacity`
   border-color: ${colors.neutralLight};

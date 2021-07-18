@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {ScrollView} from 'react-native';
 import {Div, Text} from 'react-native-magnus';
 
@@ -6,11 +6,11 @@ import {Container, Headline, Paragraph} from '../../themes/components';
 import {useOrderByOrderId} from '../../utils/hooks/useOrder';
 // import ProductCard from '../../components/Common/ProductCard';
 import PriceWithCurrency from '../../components/Common/PriceWithCurrency';
-import {LocalizationContext} from '../../context/Translations';
+import {useLocalizationContext} from '../../context/Translations';
 
 export default function OrderDetail({route}) {
   const {order} = route.params;
-  const {translations} = useContext(LocalizationContext);
+  const {translations} = useLocalizationContext();
 
   const {isLoading, data} = useOrderByOrderId(order.id);
 

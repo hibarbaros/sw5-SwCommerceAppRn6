@@ -1,10 +1,9 @@
-import {useContext} from 'react';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
 import Toast from 'react-native-toast-message';
 //*context
-import {LocalizationContext} from '../../context/Translations';
-import AppContext from '../../context/AppContext';
-import CartContext from '../../context/CartContext';
+import {useLocalizationContext} from 'context/Translations';
+import {useAppContext} from 'context/AppContext';
+import {useCartContext} from 'context/CartContext';
 //*actions
 import {
   customerData,
@@ -34,8 +33,8 @@ export function useCustomerByCustomerId(userId, options) {
 
 //!Customer logout
 export function useCustomerLogout() {
-  const {logoutUserContext} = useContext(AppContext);
-  const {setInitialUserCart} = useContext(CartContext);
+  const {logoutUserContext} = useAppContext();
+  const {setInitialUserCart} = useCartContext();
 
   const mutate = useMutation(logoutUserContext, {
     onSuccess: () => {
@@ -58,9 +57,9 @@ const getCustomerLogin = async (values, userCart) => {
 };
 
 export function useCustomerLogin() {
-  const {translations} = useContext(LocalizationContext);
-  const {setUserContext} = useContext(AppContext);
-  const {userCart, setInitialUserCart} = useContext(CartContext);
+  const {translations} = useLocalizationContext();
+  const {setUserContext} = useAppContext();
+  const {userCart, setInitialUserCart} = useCartContext();
 
   const mutate = useMutation((values) => getCustomerLogin(values, userCart), {
     onSuccess: async (response) => {
@@ -97,8 +96,8 @@ const getRegisterCustomer = async (values, userCart) => {
 };
 
 export function useRegisterCustomer() {
-  const {setUserContext} = useContext(AppContext);
-  const {userCart} = useContext(CartContext);
+  const {setUserContext} = useAppContext();
+  const {userCart} = useCartContext();
 
   const mutate = useMutation(
     (values) => getRegisterCustomer(values, userCart),
@@ -131,7 +130,7 @@ const getEditCustomer = async (values) => {
 };
 
 export function useEditCustomer() {
-  const {translations} = useContext(LocalizationContext);
+  const {translations} = useLocalizationContext();
   const cache = useQueryClient();
 
   const mutate = useMutation((values) => getEditCustomer(values), {
@@ -171,7 +170,7 @@ const getEditCustomerPassword = async (values) => {
 };
 
 export function useEditCustomerPassword() {
-  const {translations} = useContext(LocalizationContext);
+  const {translations} = useLocalizationContext();
   const cache = useQueryClient();
 
   const mutate = useMutation((values) => getEditCustomerPassword(values), {

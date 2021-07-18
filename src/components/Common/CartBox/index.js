@@ -3,10 +3,10 @@ import {Div, Text} from 'react-native-magnus';
 //*components
 import Media from '../Media/Media';
 import PriceWithCurrency from '../PriceWithCurrency';
-import {Button, Headline} from '../../../themes/components';
+import {Button, Headline} from 'themes/components';
 //*utils
-import {useProductByProductId} from '../../../utils/hooks/useProduct';
-import {useAddToCart, useRemoveToCart} from '../../../utils/hooks/useCart';
+import {useProductByProductId} from 'utils/hooks/useProduct';
+import {useAddToCart, useRemoveToCart} from 'utils/hooks/useCart';
 
 import {SimpleStepper} from './styles';
 

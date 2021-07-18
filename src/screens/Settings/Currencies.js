@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Text, Radio, Div} from 'react-native-magnus';
 
-import AppContext from '../../context/AppContext';
+import {useAppContext} from 'context/AppContext';
 
 export default function Currencies() {
-  const {allCurrencies, currency, setCurrency} = useContext(AppContext);
+  const {allCurrencies, currency, setCurrency} = useAppContext();
   return (
     <Radio.Group row onChange={(item) => setCurrency(item)}>
       {allCurrencies.map((item) => (

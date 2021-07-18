@@ -1,11 +1,12 @@
-import React, {useState, useEffect, useContext} from 'react';
-import AppContext from '../../../context/AppContext';
-import {useAddToWhislist} from '../../../utils/hooks/useWishlist';
+import React, {useState, useEffect} from 'react';
+
+import {useAppContext} from 'context/AppContext';
+import {useAddToWhislist} from 'utils/hooks/useWishlist';
 
 import {Styled} from './styles';
 
 export default function ProductWhislistButton({productId}) {
-  const {wishlist} = useContext(AppContext);
+  const {wishlist} = useAppContext();
   const [checkWishList, setCheckWishList] = useState(false);
 
   const {mutate} = useAddToWhislist();

@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon, Badge} from 'react-native-magnus';
 
-import AppRoute from '../utils/approutes';
-import {theme} from '../themes/theme';
-import AppContext from '../context/AppContext';
-import CartContext from '../context/CartContext';
+import AppRoute from 'utils/approutes';
+import {theme} from 'themes/theme';
+import {useAppContext} from 'context/AppContext';
+import {useCartContext} from 'context/CartContext';
 
 //Screens
 import {
@@ -18,9 +18,10 @@ import {
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
+
 const TabComponent = () => {
-  const {user} = useContext(AppContext);
-  const {userCart} = useContext(CartContext);
+  const {user} = useAppContext();
+  const {userCart} = useCartContext();
 
   return (
     <Tab.Navigator

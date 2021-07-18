@@ -1,9 +1,9 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {Button} from '../../../themes/components';
+import {Button} from 'themes/components';
 
-import AppRoute from '../../../utils/approutes';
+import AppRoute from 'utils/approutes';
 
 export default function RegisterButton() {
   const navigation = useNavigation();

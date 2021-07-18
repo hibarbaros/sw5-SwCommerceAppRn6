@@ -1,17 +1,17 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Div, Button} from 'react-native-magnus';
 //*components
 import PriceWithCurrency from '../PriceWithCurrency';
-import ProductCardMedia from '../../ProductComponents/ProductCardMedia';
+import ProductCardMedia from 'components/ProductComponents/ProductCardMedia';
 //*utils
-import AppRoutes from '../../../utils/approutes';
+import AppRoutes from 'utils/approutes';
 //*context
-import AppContext from '../../../context/AppContext';
+import {useAppContext} from 'context/AppContext';
 //*themes
-import {Headline} from '../../../themes/components';
+import {Headline} from 'themes/components';
 
 export default function ProductCardTheme02({navigation, product, thumbnail}) {
-  const {selectedTranslate} = useContext(AppContext);
+  const {selectedTranslate} = useAppContext();
 
   const [price] = product.mainDetail.prices;
 

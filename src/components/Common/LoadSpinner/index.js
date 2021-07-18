@@ -2,7 +2,7 @@ import React from 'react';
 import {Modal} from 'react-native';
 import {Image, Div} from 'react-native-magnus';
 
-import Logo from '../../../assets/images/lemken-logo.png';
+import Logo from 'assets/images/lemken-logo.png';
 
 export default function LoadSpinner({isVisible}) {
   return (

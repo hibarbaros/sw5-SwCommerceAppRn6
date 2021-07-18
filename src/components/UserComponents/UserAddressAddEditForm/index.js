@@ -5,17 +5,15 @@ import {View} from 'react-native-ui-lib';
 import {Formik, Field} from 'formik';
 import * as yup from 'yup';
 
-import {ForwardIcon} from '../../../themes/components/IconSet';
-import {
-  KeyboardAwareScroll,
-  Button,
-  FormInput,
-} from '../../../themes/components';
-import CountryDropDown from '../../Common/CountryDropDown/CountryDropDown';
-import GenderActionSheet from '../../Common/GenderActionSheet/GenderActionSheet';
-import LoadSpinner from '../../Common/LoadSpinner';
-import {useAddEditAddress} from '../../../utils/hooks/useAddress';
-import {validationSchema} from '../../../utils/validationSchema';
+import {ForwardIcon} from 'themes/components/IconSet';
+import {KeyboardAwareScroll, Button, FormInput} from 'themes/components';
+
+import CountryDropDown from 'components/Common/CountryDropDown/CountryDropDown';
+import GenderActionSheet from 'components/Common/GenderActionSheet/GenderActionSheet';
+import LoadSpinner from 'components/Common/LoadSpinner';
+
+import {useAddEditAddress} from 'utils/hooks/useAddress';
+import {validationSchema} from 'utils/validationSchema';
 
 import {initialValues} from './initialValues';
 

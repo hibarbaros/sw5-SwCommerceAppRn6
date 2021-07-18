@@ -1,8 +1,8 @@
 import React from 'react';
 import {Div} from 'react-native-magnus';
 
-import {useAddress} from '../../../utils/hooks/useAddress';
-import {Card, Headline, Text} from '../../../themes/components';
+import {useAddress} from 'utils/hooks/useAddress';
+import {Card, Headline, Text} from 'themes/components';
 
 export default function Address({addressId, onPress}) {
   const {isLoading, data} = useAddress(addressId);

@@ -1,11 +1,10 @@
-import {useContext} from 'react';
 import {useMutation} from 'react-query';
 
-import {setItem} from '../../utils/storagehelper';
-import AppContext from '../../context/AppContext';
+import {setItem} from 'utils/storagehelper';
+import {useAppContext} from 'context/AppContext';
 
 export function useAddToWhislist() {
-  const {wishlist, setWishlist} = useContext(AppContext);
+  const {wishlist, setWishlist} = useAppContext();
 
   function setHandleWishList(newList) {
     setWishlist(newList);

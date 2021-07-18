@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
-import {colors} from '../../../themes/variables';
 import {sanFranciscoWeights} from 'react-native-typography';
 import {Button} from '@ui-kitten/components';
+
+import {colors} from 'themes/variables';
 
 const Card = styled.View`
   border-color: ${colors.blue};

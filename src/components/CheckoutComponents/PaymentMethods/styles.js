@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
-import {Card} from '../../../themes/components';
+import {Card} from 'themes/components';
 
-import {colors} from '../../../themes/variables';
+import {colors} from 'themes/variables';
 
 export const PaymentCard = styled(Card)`
   border-width: 1px;

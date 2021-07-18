@@ -1,5 +1,6 @@
 import React from 'react';
-import Media from '../../Common/Media/Media';
+
+import Media from 'components/Common/Media/Media';
 
 import {Styled} from './styles';
 

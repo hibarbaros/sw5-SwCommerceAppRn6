@@ -1,17 +1,17 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Text, Radio, Div} from 'react-native-magnus';
 
-import {languages} from '../../localization/languages';
-import AppContext from '../../context/AppContext';
-import {LocalizationContext} from '../../context/Translations';
+import {languages} from 'localization/languages';
+import {useAppContext} from 'context/AppContext';
+import {useLocalizationContext} from 'context/Translations';
 
 export default function Languages() {
-  const {setAppLanguage} = useContext(LocalizationContext);
+  const {setAppLanguage} = useLocalizationContext();
   const {
     setSelectedLanguageContext,
     setSelectedTranslateContext,
     selectedLanguage,
-  } = useContext(AppContext);
+  } = useAppContext();
 
   function handleLanguage(lang) {
     setAppLanguage(lang.locale);

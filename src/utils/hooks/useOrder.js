@@ -1,10 +1,9 @@
-import {useContext} from 'react';
 import {useQuery, useMutation} from 'react-query';
 import Toast from 'react-native-toast-message';
 
-import {LocalizationContext} from '../../context/Translations';
-import AppContext from '../../context/AppContext';
-import CheckoutContext from '../../context/CheckoutContext';
+import {useLocalizationContext} from 'context/Translations';
+import {useAppContext} from 'context/AppContext';
+import {useCheckoutContext} from 'context/CheckoutContext';
 
 import {
   orderbyCustomerList,
@@ -41,14 +40,14 @@ const getCreateOrder = async (mutateVariables) => {
 };
 
 export function useCreateOrder() {
-  const {translations} = useContext(LocalizationContext);
-  const {user, currency} = useContext(AppContext);
+  const {translations} = useLocalizationContext();
+  const {user, currency} = useAppContext();
   const {
     selectedPaymentMethod,
     selectedShippingMethod,
     selectedShippingAddress,
     selectedBilllingAddress,
-  } = useContext(CheckoutContext);
+  } = useCheckoutContext();
 
   const mutateVariables = {
     user,

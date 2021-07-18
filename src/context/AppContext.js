@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createContext} from 'react';
+import React, {useState, useEffect, createContext, useContext} from 'react';
 
 import {setItem, getItem, removeItem} from '../utils/storagehelper';
 
@@ -92,3 +92,7 @@ export const AppProvider = ({children}) => {
 };
 
 export default AppContext;
+
+export const useAppContext = () => {
+  return useContext(AppContext);
+};

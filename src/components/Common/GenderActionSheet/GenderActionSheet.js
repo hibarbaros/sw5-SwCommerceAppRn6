@@ -1,8 +1,8 @@
 import React, {createRef, useState} from 'react';
 import {Dropdown, Text} from 'react-native-magnus';
 
-import {FormErrorLabel} from '../../../themes/components';
-import {Button} from '../../../themes/components';
+import {FormErrorLabel} from 'themes/components';
+import {Button} from 'themes/components';
 
 const genderList = [
   {

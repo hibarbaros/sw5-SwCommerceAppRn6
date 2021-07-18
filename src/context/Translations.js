@@ -1,5 +1,5 @@
+import React, {createContext, useState, useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {createContext, useState} from 'react';
 import LocalizedStrings from 'react-native-localization';
 import * as RNLocalize from 'react-native-localize';
 import ReactNative from 'react-native';
@@ -77,4 +77,8 @@ export const LocalizationProvider = ({children}) => {
       {children}
     </LocalizationContext.Provider>
   );
+};
+
+export const useLocalizationContext = () => {
+  return useContext(LocalizationContext);
 };

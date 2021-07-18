@@ -5,21 +5,22 @@ import {View, Text} from 'react-native-ui-lib';
 import {Button} from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
 
-import {Container} from '../../themes/components';
-import AppContext from '../../context/AppContext';
-import CheckoutContext from '../../context/CheckoutContext';
-import AppRoute from '../../utils/approutes';
-import CartTotalPrice from '../../components/Common/CartTotalPrice';
-import UserLoginForm from '../../components/UserComponents/UserLoginForm';
-import CartBox from '../../components/Common/CartBox';
-import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods';
-import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods';
-import Address from '../../components/CheckoutComponents/Address';
+import {Container} from 'themes/components';
+import {useAppContext} from 'context/AppContext';
+import CheckoutContext from 'context/CheckoutContext';
 
-import {useUserCart} from '../../utils/hooks/useCart';
+import CartTotalPrice from 'components/Common/CartTotalPrice';
+import UserLoginForm from 'components/UserComponents/UserLoginForm';
+import CartBox from 'components/Common/CartBox';
+import ShippingMethods from 'components/CheckoutComponents/ShippingMethods';
+import PaymentMethods from 'components/CheckoutComponents/PaymentMethods';
+import Address from 'components/CheckoutComponents/Address';
+
+import AppRoute from 'utils/approutes';
+import {useUserCart} from 'utils/hooks/useCart';
 
 export default function CheckoutWizard() {
-  const {user} = useContext(AppContext);
+  const {user} = useAppContext();
   const {selectedPaymentMethod, selectedShippingMethod} = useContext(
     CheckoutContext,
   );

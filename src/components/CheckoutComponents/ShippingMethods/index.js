@@ -1,16 +1,16 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Div, Text} from 'react-native-magnus';
 
-import CheckoutContext from '../../../context/CheckoutContext';
-import {useShippingByCountryId} from '../../../utils/hooks/useApp';
-import {Card} from '../../../themes/components';
+import {useCheckoutContext} from 'context/CheckoutContext';
+import {useShippingByCountryId} from 'utils/hooks/useApp';
+import {Card} from 'themes/components';
 
 export default function ShippingMethods() {
   const {
     selectedShippingAddress,
     selectedShippingMethod,
     setselectedShippingMethod,
-  } = useContext(CheckoutContext);
+  } = useCheckoutContext();
 
   const {isLoading, data} = useShippingByCountryId(
     selectedShippingAddress.country.id,

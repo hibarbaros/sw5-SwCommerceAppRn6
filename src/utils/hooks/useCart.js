@@ -1,11 +1,9 @@
-import {useContext} from 'react';
 import {useMutation, useQuery} from 'react-query';
 import Toast from 'react-native-toast-message';
-import _ from 'lodash';
 
-import {LocalizationContext} from '../../context/Translations';
-import AppContext from '../../context/AppContext';
-import CartContext from '../../context/CartContext';
+import {useLocalizationContext} from 'context/Translations';
+import {useAppContext} from 'context/AppContext';
+import {useCartContext} from 'context/CartContext';
 
 import {
   getCartBySessionId,
@@ -31,7 +29,7 @@ const getUserCart = async (user, sessionId) => {
 };
 
 export function useUserCart() {
-  const {sessionId, user, userCart} = useContext(AppContext);
+  const {sessionId, user, userCart} = useAppContext();
   if (user) {
     return useQuery(['userCart', sessionId], () =>
       getUserCart(user, sessionId),
@@ -49,7 +47,7 @@ const getUserCartTotalPrice = async (userCart) => {
 };
 
 export function useUserCartTotalPrice() {
-  const {userCart} = useContext(CartContext);
+  const {userCart} = useCartContext();
   let priceTotal = 0;
   return useQuery(['userCartTotalPrice', userCart], () =>
     getUserCartTotalPrice(userCart, priceTotal),
@@ -68,9 +66,9 @@ const getAddToCart = async (mutateVariables, userCart, user, sessionId) => {
 };
 
 export function useAddToCart() {
-  const {translations} = useContext(LocalizationContext);
-  const {user, sessionId} = useContext(AppContext);
-  const {userCart, setInitialUserCart} = useContext(CartContext);
+  const {translations} = useLocalizationContext();
+  const {user, sessionId} = useAppContext();
+  const {userCart, setInitialUserCart} = useCartContext();
 
   const mutate = useMutation(
     (mutateVariables) =>
@@ -100,8 +98,8 @@ const getRemoveToCart = async (productNumber, user, userCart) => {
 };
 
 export function useRemoveToCart() {
-  const {user} = useContext(AppContext);
-  const {userCart, setInitialUserCart} = useContext(CartContext);
+  const {user} = useAppContext();
+  const {userCart, setInitialUserCart} = useCartContext();
 
   const mutate = useMutation(
     (productNumber) => getRemoveToCart(productNumber, user, userCart),
@@ -122,8 +120,8 @@ const getMigrateUserCart = async (user, userCart, sessionId) => {
 };
 
 export function useMigrateUserCart() {
-  const {user, sessionId} = useContext(AppContext);
-  const {userCart} = useContext(CartContext);
+  const {user, sessionId} = useAppContext();
+  const {userCart} = useCartContext();
 
   const mutate = useMutation(
     () => getMigrateUserCart(user, userCart, sessionId),

@@ -4,19 +4,19 @@ import {Image, Div} from 'react-native-magnus';
 // import {motion, useTransform} from 'framer-motion';
 
 import Navigation from './Navigation';
-import AppContext from 'context/AppContext';
-import CartContext from 'context/CartContext';
+import {useAppContext} from 'context/AppContext';
+import {useCartContext} from 'context/CartContext';
 import CheckoutContext from 'context/CheckoutContext';
 
 import {customerData} from 'utils/actions/useractions';
-import {shopData, paymentsData} from '../utils/actions/appactions';
-import {initialCartNormalize} from '../utils/normalize/cartNormalize';
+import {shopData, paymentsData} from 'utils/actions/appactions';
+import {initialCartNormalize} from 'utils/normalize/cartNormalize';
 
 import Logo from '../assets/images/lemken-logo.png';
 // const AnimatedView = motion(Div);
 
 export default function MainScreen() {
-  const {setInitialUserCart} = useContext(CartContext);
+  const {setInitialUserCart} = useCartContext();
   const {setselectedBilllingAddress, setselectedShippingAddress} = useContext(
     CheckoutContext,
   );
@@ -26,7 +26,7 @@ export default function MainScreen() {
     setCurrency,
     setPaymentMethods,
     setAllCurrencies,
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const customerContext = useQuery(
     'customerDataContext',

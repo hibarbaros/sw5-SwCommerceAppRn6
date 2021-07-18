@@ -8,7 +8,7 @@ import {ThemeProvider} from 'react-native-magnus';
 import Toast from 'react-native-toast-message';
 
 import MainNavigation from './src/navigation/MainNavigation';
-import {NavigationTheme} from './src/themes/variables';
+import {NavigationTheme} from 'themes/variables';
 import {AppProvider} from './src/context/AppContext';
 import {CheckoutProvider} from './src/context/CheckoutContext';
 import {CartProvider} from './src/context/CartContext';
@@ -23,12 +23,6 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const ref = useRef(null);
-
-  // if (__DEV__) {
-  //   import('react-query-native-devtools').then(({addPlugin}) => {
-  //     addPlugin({queryClient});
-  //   });
-  // }
 
   setLogger({
     log: console.log,

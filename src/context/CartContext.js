@@ -1,6 +1,6 @@
-import React, {useState, useEffect, createContext} from 'react';
+import React, {useState, useEffect, createContext, useContext} from 'react';
 
-import {setItem, getItem} from '../utils/storagehelper';
+import {setItem, getItem} from 'utils/storagehelper';
 
 const CartContext = createContext([{}, () => {}]);
 
@@ -29,3 +29,7 @@ export const CartProvider = ({children}) => {
 };
 
 export default CartContext;
+
+export const useCartContext = () => {
+  return useContext(CartContext);
+};

@@ -100,6 +100,7 @@ export async function removeInitialUserCart(userCart, productNumber) {
 //!Context Api cart fonksiyonlari
 
 //!Kullanici login ve register olduktan sonra cart migrate fonksiyonu
+//TODO: migration fonksiyonu php api de düzenle
 export async function migrateUserCart(user, userCart, sessionId) {
   const response = await Api.get(`/ConnectorBasket?filter[customerId]=${user}`);
   const {data} = response;
