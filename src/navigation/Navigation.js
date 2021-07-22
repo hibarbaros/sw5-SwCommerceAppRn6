@@ -23,7 +23,6 @@ import {
   CategoriesProducts,
   ProductSearch,
   Whislist,
-  CheckoutWizard,
   CheckoutOrder,
   LocalNotification,
   UserPasswordEdit,
@@ -65,7 +64,6 @@ export default function MainNavigator() {
       <Stack.Screen component={ProductSearch} name={AppRoutes.SEARCH} />
       <Stack.Screen component={CategoriesProducts} name={AppRoutes.CATEGORIES_PRODUCTS} />
       <Stack.Screen component={Whislist} name={AppRoutes.WHISLIT} />
-      <Stack.Screen component={CheckoutWizard} name={AppRoutes.CHECKOUT_WIZARD} />
       <Stack.Screen component={UserPasswordEdit} name={AppRoutes.PASSWORD_EDIT} />
       <Stack.Screen component={AboutShop} name={AppRoutes.ABOUT_SHOP} />
       <Stack.Screen component={AddressList} name={AppRoutes.ADDRESSES} />

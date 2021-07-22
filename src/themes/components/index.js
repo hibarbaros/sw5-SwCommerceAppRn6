@@ -1,7 +1,7 @@
-export {default as Container} from './Container/Container';
-export {default as Card} from './Card';
-export {default as FormErrorLabel} from './FormErrorLabel/FormErrorLabel';
-export {default as Button} from './Button';
+export { default as Container } from './Container/Container';
+export { default as Card } from './Card';
+export { default as FormErrorLabel } from './FormErrorLabel/FormErrorLabel';
+export { default as Button } from './Button';
 export { default as Text } from './Text';
 export { default as TextButton } from './TextButton';
 export { default as FormInput } from './FormInput/FormInput';

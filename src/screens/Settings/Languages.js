@@ -1,16 +1,16 @@
 import React from 'react';
-import {Text, Radio, Div} from 'react-native-magnus';
+import { Text, Radio, Div } from 'react-native-magnus';
 
-import {languages} from 'localization/languages';
-import {useAppContext} from 'context/AppContext';
-import {useLocalizationContext} from 'context/Translations';
+import { languages } from 'localization/languages';
+import { useAppContext } from 'context/AppContext';
+import { useLocalizationContext } from 'context/Translations';
 
 export default function Languages() {
-  const {setAppLanguage} = useLocalizationContext();
+  const { setAppLanguage } = useLocalizationContext();
   const {
     setSelectedLanguageContext,
     setSelectedTranslateContext,
-    selectedLanguage,
+    selectedLanguage
   } = useAppContext();
 
   function handleLanguage(lang) {
@@ -18,8 +18,6 @@ export default function Languages() {
     setSelectedLanguageContext(lang.id);
     setSelectedTranslateContext(lang.translateId);
   }
-
-  console.log('selectedLanguage :>> ', selectedLanguage);
 
   return (
     <>
@@ -32,11 +30,9 @@ export default function Languages() {
                 px="xl"
                 py="md"
                 mr="md"
-                rounded="circle">
-                <Text
-                  color={selectedLanguage === lang.id ? 'white' : 'gray800'}>
-                  {lang.name}
-                </Text>
+                rounded="circle"
+              >
+                <Text color={selectedLanguage === lang.id ? 'white' : 'gray800'}>{lang.name}</Text>
               </Div>
             )}
           </Radio>

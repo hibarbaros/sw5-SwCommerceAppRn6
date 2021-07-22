@@ -1,14 +1,14 @@
 import React from 'react';
-import {Div} from 'react-native-magnus';
+import { Div } from 'react-native-magnus';
 
-import {useLocalizationContext} from '../../context/Translations';
-import {Container, Headline} from '../../themes/components';
+import { useLocalizationContext } from 'context/Translations';
+import { Container, Headline } from 'themes/components';
 
 import Languages from './Languages';
 import Currencies from './Currencies';
 
 const SettingScreen = () => {
-  const {translations} = useLocalizationContext();
+  const { translations } = useLocalizationContext();
 
   return (
     <Container>

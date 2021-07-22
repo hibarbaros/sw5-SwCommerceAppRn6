@@ -1,16 +1,16 @@
 import React from 'react';
-import {Card, Text} from 'react-native-ui-lib';
 
-import {useLocalizationContext} from 'context/Translations';
-import {useAppContext} from 'context/AppContext';
+import { useLocalizationContext } from 'context/Translations';
+import { useAppContext } from 'context/AppContext';
 
-import {useCustomerByCustomerId} from 'utils/hooks/useCustomer';
+import { useCustomerByCustomerId } from 'utils/hooks/useCustomer';
+import { Card, Text } from 'themes/components';
 
 export default function UserProfile() {
-  const {translations} = useLocalizationContext();
-  const {user} = useAppContext();
+  const { translations } = useLocalizationContext();
+  const { user } = useAppContext();
 
-  const {data, isLoading} = useCustomerByCustomerId(user);
+  const { data, isLoading } = useCustomerByCustomerId(user);
 
   if (isLoading) {
     return (
@@ -21,7 +21,7 @@ export default function UserProfile() {
   }
 
   return (
-    <Card borderRadius={0} marginB-s5 padding-15 enableShadow={false}>
+    <Card theme="secondary">
       <Text marginB-s3 text60>
         {translations.userProfile}
       </Text>

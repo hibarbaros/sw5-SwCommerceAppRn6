@@ -1,12 +1,12 @@
 import React from 'react';
-import {Div, Button} from 'react-native-magnus';
+import { Div, Button } from 'react-native-magnus';
 
 export default function GeneralCard({
   children,
   onPress,
   theme = 'primary',
   rest,
-  selected = false,
+  selected = false
 }) {
   switch (theme) {
     case 'primary':
@@ -20,7 +20,8 @@ export default function GeneralCard({
           borderColor={selected ? 'red' : 'grey'}
           borderRadius={5}
           my={10}
-          p={20}>
+          p={20}
+        >
           <Div w="100%">{children}</Div>
         </Button>
       );

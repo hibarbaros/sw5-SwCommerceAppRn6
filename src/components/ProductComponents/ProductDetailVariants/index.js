@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native-ui-lib';
+import { Div } from 'react-native-magnus';
 import _ from 'lodash';
 
 import VariantItem from './VariantItem';
@@ -8,7 +8,7 @@ export default function ProductDetailVariants({
   productData,
   setSelectedVariants,
   selectedVariants,
-  groups,
+  groups
 }) {
   function handleSetVariant(variant) {
     const initialList = selectedVariants ? [...selectedVariants] : [];
@@ -18,7 +18,7 @@ export default function ProductDetailVariants({
   }
 
   return (
-    <View>
+    <Div>
       {groups.map((item) => (
         <VariantItem
           key={item.id}
@@ -28,6 +28,6 @@ export default function ProductDetailVariants({
           handleSetVariant={handleSetVariant}
         />
       ))}
-    </View>
+    </Div>
   );
 }

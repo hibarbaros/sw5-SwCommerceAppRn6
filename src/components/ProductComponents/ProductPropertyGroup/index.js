@@ -1,12 +1,11 @@
 import React from 'react';
-import {Text} from 'react-native';
+import { Div } from 'react-native-magnus';
 
-import {usePropertyGroupDetail} from 'utils/hooks/useProduct';
+import { usePropertyGroupDetail } from 'utils/hooks/useProduct';
+import { Text } from 'themes/components';
 
-import {Styled} from './styles';
-
-export default function ProductPropertyGroup({groupId, propertyValues}) {
-  const {isLoading, data} = usePropertyGroupDetail(groupId);
+export default function ProductPropertyGroup({ groupId, propertyValues }) {
+  const { isLoading, data } = usePropertyGroupDetail(groupId);
 
   if (isLoading) {
     return <Text>...Loading</Text>;
@@ -14,21 +13,21 @@ export default function ProductPropertyGroup({groupId, propertyValues}) {
   return (
     <>
       {data.options.map((prop, index) => (
-        <Styled.CategoryContainer key={index}>
-          <Styled.DescriptionTitle>
+        <Div key={index} mb={20}>
+          <Text mb={5}>
             {'.'}
             {prop.name}
-          </Styled.DescriptionTitle>
+          </Text>
           {propertyValues.map((value) => {
             return (
               prop.id === value.optionId && (
-                <Styled.GeneralText marginB-5 marginT-15 key={value.value}>
+                <Text marginB-5 marginT-15 key={value.value}>
                   {value.value}
-                </Styled.GeneralText>
+                </Text>
               )
             );
           })}
-        </Styled.CategoryContainer>
+        </Div>
       ))}
     </>
   );

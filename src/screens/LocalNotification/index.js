@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView} from 'react-native';
-import {getReferenceFromFirebase} from '../../utils/actions/firebaseactions';
+import React, { useEffect, useState } from 'react';
+import { ScrollView } from 'react-native';
+import { Div } from 'react-native-magnus';
 
-import {Styled} from './styles';
+import { getReferenceFromFirebase } from 'utils/actions/firebaseactions';
+import { Container, Text } from 'themes/components';
 
 export default function LocalNotification() {
   const [initialNotifications, setInitialNotifications] = useState(null);
@@ -18,19 +19,17 @@ export default function LocalNotification() {
 
   return (
     <ScrollView>
-      <Styled.Container>
+      <Container>
         {initialNotifications &&
           initialNotifications.map((item) => {
             return (
-              <Styled.ListItem key={item.id}>
-                <Styled.TextContainer>
-                  <Styled.ListItemTitle>{item.title}</Styled.ListItemTitle>
-                  <Styled.ListItemDesc>{item.description}</Styled.ListItemDesc>
-                </Styled.TextContainer>
-              </Styled.ListItem>
+              <Div key={item.id}>
+                <Text variant="large">{item.title}</Text>
+                <Text variant="medium">{item.description}</Text>
+              </Div>
             );
           })}
-      </Styled.Container>
+      </Container>
     </ScrollView>
   );
 }

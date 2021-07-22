@@ -1,17 +1,14 @@
-import React, {useState} from 'react';
-import {Text, Div, Image} from 'react-native-magnus';
+import React, { useState } from 'react';
+import { Text, Div, Image } from 'react-native-magnus';
 import styled from 'styled-components/native';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-import {useCollectionByCollectinName} from 'utils/hooks/useFirebase';
+import { useCollectionByCollectinName } from 'utils/hooks/useFirebase';
 
 export default function HomeMainCarousel() {
   const [carouselIndex, setCarouselIndex] = useState(0);
 
-  const {data, isLoading} = useCollectionByCollectinName(
-    'images',
-    'homepageBanner',
-  );
+  const { data, isLoading } = useCollectionByCollectinName('images', 'homepageBanner');
 
   if (isLoading) {
     return <Text>'Loading...'</Text>;
@@ -22,7 +19,7 @@ export default function HomeMainCarousel() {
       h="100%"
       w={wp('100%')}
       source={{
-        uri: item.item.url,
+        uri: item.item.url
       }}
     />
   );

@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, Radio, Div} from 'react-native-magnus';
+import { Text, Radio, Div } from 'react-native-magnus';
 
-import {useAppContext} from 'context/AppContext';
+import { useAppContext } from 'context/AppContext';
 
 export default function Currencies() {
-  const {allCurrencies, currency, setCurrency} = useAppContext();
+  const { allCurrencies, currency, setCurrency } = useAppContext();
   return (
     <Radio.Group row onChange={(item) => setCurrency(item)}>
       {allCurrencies.map((item) => (
@@ -15,10 +15,9 @@ export default function Currencies() {
               px="xl"
               py="md"
               mr="md"
-              rounded="circle">
-              <Text color={item.id === currency.id ? 'white' : 'gray800'}>
-                {item.name}
-              </Text>
+              rounded="circle"
+            >
+              <Text color={item.id === currency.id ? 'white' : 'gray800'}>{item.name}</Text>
             </Div>
           )}
         </Radio>

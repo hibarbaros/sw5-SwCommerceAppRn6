@@ -30,7 +30,7 @@ const AppRoutes = {
   LOCAL_NOTIFICATION: 'Notifications',
   PASSWORD_EDIT: 'Password Change',
   ABOUT_SHOP: 'About Shop',
-  ADDRESSES: 'Addresses',
+  ADDRESSES: 'Addresses'
 };
 
 export default AppRoutes;

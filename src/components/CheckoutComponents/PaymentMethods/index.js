@@ -1,16 +1,13 @@
-import React, {useContext} from 'react';
-import {Text} from 'react-native-ui-lib';
+import React, { useContext } from 'react';
 
 import CheckoutContext from 'context/CheckoutContext';
-import {usePaymentMethods} from 'utils/hooks/useApp';
-import {Card} from 'themes/components';
+import { usePaymentMethods } from 'utils/hooks/useApp';
+import { Card, Text } from 'themes/components';
 
 export default function PaymentMethods() {
-  const {selectedPaymentMethod, setselectedPaymentMethod} = useContext(
-    CheckoutContext,
-  );
+  const { selectedPaymentMethod, setselectedPaymentMethod } = useContext(CheckoutContext);
 
-  const {isLoading, data} = usePaymentMethods();
+  const { isLoading, data } = usePaymentMethods();
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -20,8 +17,9 @@ export default function PaymentMethods() {
     <Card
       key={item.id}
       selected={selectedPaymentMethod?.id === item.id && true}
-      onPress={() => setselectedPaymentMethod(item)}>
-      <Text>{item.description}</Text>
+      onPress={() => setselectedPaymentMethod(item)}
+    >
+      <Text variant="medium">{item.description}</Text>
     </Card>
   ));
 }
