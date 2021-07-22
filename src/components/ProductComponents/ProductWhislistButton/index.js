@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {useAppContext} from 'context/AppContext';
-import {useAddToWhislist} from 'utils/hooks/useWishlist';
+import { useAppContext } from 'context/AppContext';
+import { useAddToWhislist } from 'utils/hooks/useWishlist';
+import { IconButton } from 'themes/components';
 
-import {Styled} from './styles';
-
-export default function ProductWhislistButton({productId}) {
-  const {wishlist} = useAppContext();
+export default function ProductWhislistButton({ productId }) {
+  const { wishlist } = useAppContext();
   const [checkWishList, setCheckWishList] = useState(false);
 
-  const {mutate} = useAddToWhislist();
+  const { mutate } = useAddToWhislist();
 
   function handleWhislist() {
     mutate(productId);
@@ -23,9 +22,9 @@ export default function ProductWhislistButton({productId}) {
   }, [wishlist]);
 
   return (
-    <Styled.FavoriteIcon
-      name="star"
-      isSelected={checkWishList}
+    <IconButton
+      iconName="star"
+      color={checkWishList ? 'red' : 'primary'}
       onPress={handleWhislist}
     />
   );

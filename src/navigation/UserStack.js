@@ -1,14 +1,14 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import AppRoutes from '../utils/approutes';
+import { createStackNavigator } from '@react-navigation/stack';
+import AppRoutes from 'utils/approutes';
 //Screens
 import {
   UserEditScreen,
   UserLoginScreen,
   UserScreen,
   UserRegister,
-  UserRegisterScreen,
-} from '../screens';
+  UserRegisterScreen
+} from 'screens';
 
 const Stack = createStackNavigator();
 

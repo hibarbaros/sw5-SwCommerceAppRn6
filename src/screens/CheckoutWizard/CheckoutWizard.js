@@ -1,12 +1,11 @@
-import React, {useContext} from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {View, Text} from 'react-native-ui-lib';
-import {Button} from '@ui-kitten/components';
+import React, { useContext } from 'react';
+import { SafeAreaView, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { View, Text } from 'react-native-ui-lib';
 import Toast from 'react-native-toast-message';
 
-import {Container} from 'themes/components';
-import {useAppContext} from 'context/AppContext';
+import { Container, Button } from 'themes/components';
+import { useAppContext } from 'context/AppContext';
 import CheckoutContext from 'context/CheckoutContext';
 
 import CartTotalPrice from 'components/Common/CartTotalPrice';
@@ -17,23 +16,21 @@ import PaymentMethods from 'components/CheckoutComponents/PaymentMethods';
 import Address from 'components/CheckoutComponents/Address';
 
 import AppRoute from 'utils/approutes';
-import {useUserCart} from 'utils/hooks/useCart';
+import { useUserCart } from 'utils/hooks/useCart';
 
 export default function CheckoutWizard() {
-  const {user} = useAppContext();
-  const {selectedPaymentMethod, selectedShippingMethod} = useContext(
-    CheckoutContext,
-  );
+  const { user } = useAppContext();
+  const { selectedPaymentMethod, selectedShippingMethod } = useContext(CheckoutContext);
   const navigation = useNavigation();
 
-  const {data = []} = useUserCart();
+  const { data = [] } = useUserCart();
 
   function handleOrderCreate() {
     if (!selectedPaymentMethod) {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: 'Bitte wählen Sie das Zahlungssystem',
+        text2: 'Bitte wählen Sie das Zahlungssystem'
       });
       return null;
     }
@@ -41,7 +38,7 @@ export default function CheckoutWizard() {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: 'Bitte wählen Sie das Shipping Method',
+        text2: 'Bitte wählen Sie das Shipping Method'
       });
       return null;
     }
@@ -83,7 +80,7 @@ export default function CheckoutWizard() {
               <CartTotalPrice cart={data} />
             </Container>
             <View margin-s5>
-              <Button onPress={() => handleOrderCreate()}>Check</Button>
+              <Button text="Check" onPress={() => handleOrderCreate()} />
             </View>
           </SafeAreaView>
         </ScrollView>
@@ -92,9 +89,7 @@ export default function CheckoutWizard() {
         <Container>
           <UserLoginForm />
           <View margin-s5>
-            <Button onPress={() => navigation.navigate(AppRoute.REGISTER)}>
-              Register
-            </Button>
+            <Button onPress={() => navigation.navigate(AppRoute.REGISTER)}>Register</Button>
           </View>
         </Container>
       )}

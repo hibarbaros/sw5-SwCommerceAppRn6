@@ -4,7 +4,7 @@ import {View} from 'react-native-ui-lib';
 import {useNavigation} from '@react-navigation/native';
 
 import PriceWithCurrency from 'components/Common/PriceWithCurrency';
-import {ButtonIcon} from 'themes/components';
+import {Button} from 'themes/components';
 import AppRoutes from 'utils/approutes';
 import ProductCardMedia from 'components/ProductComponents/ProductCardMedia';
 
@@ -48,7 +48,7 @@ export default function ProductWhislistCard({productId}) {
             })}
           </Styled.TextContainer>
           <View centerV>
-            <ButtonIcon iconName="trash" onPress={() => mutate(productId)} />
+            <Button prefix="trash" onPress={() => mutate(productId)} />
           </View>
         </Styled.RightContainer>
       </View>

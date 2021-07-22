@@ -1,8 +1,8 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import AppRoutes from '../utils/approutes';
-import {ServiceHelp} from '../screens';
+import { ServiceHelp } from '../screens';
 
 const Stack = createStackNavigator();
 

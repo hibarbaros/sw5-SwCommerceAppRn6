@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text} from 'react-native-magnus';
+import { Text } from 'react-native-magnus';
 
 const textStyles = {
   primary: {
     fontSize: 12,
-    my: 2,
+    my: 2
   },
   secondary: {
     fontSize: 'lg',
@@ -12,11 +12,25 @@ const textStyles = {
     textTransform: 'uppercase',
     color: 'red',
     letterSpacing: 2,
-    mt: 'lg',
+    mt: 'lg'
   },
+  largeTitle: {
+    fontSize: 'lg',
+    fontWeight: 'bold',
+    color: 'red',
+    my: 10
+  },
+  medium: {
+    fontSize: 16,
+    my: 5
+  },
+  large: {
+    fontSize: 22,
+    my: 5
+  }
 };
 
-export default function ThemeText({children, variant = 'primary', ...rest}) {
+export default function ThemeText({ children, variant = 'primary', ...rest }) {
   const textStyle = textStyles[variant];
   return (
     <Text {...rest} {...textStyle}>

@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  DrawerActions,
-  useNavigation,
-  useNavigationState,
-} from '@react-navigation/native';
+import { DrawerActions, useNavigation, useNavigationState } from '@react-navigation/native';
 
-import {BackIcon, MenuDrawer} from 'themes/components/IconSet';
-import {colors} from 'themes/variables';
+import { IconButton } from 'themes/components';
 
-import {Styled} from './styles';
+import { Styled } from './styles';
 
 const HeaderLeft = () => {
   const navigation = useNavigation();
@@ -16,15 +11,17 @@ const HeaderLeft = () => {
   return (
     <Styled.IconContainer>
       {index === 0 ? (
-        <MenuDrawer
-          fill={colors.themeColor}
+        <IconButton
+          iconName="bars"
+          color="black"
           onPress={() => {
             navigation.dispatch(DrawerActions.openDrawer());
           }}
         />
       ) : (
-        <BackIcon
-          fill={colors.themeColor}
+        <IconButton
+          iconName="arrow-left"
+          color="black"
           onPress={() => {
             navigation.goBack();
           }}

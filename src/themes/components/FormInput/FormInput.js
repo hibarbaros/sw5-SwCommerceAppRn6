@@ -1,12 +1,12 @@
 import React from 'react';
-import {Input, Icon} from 'react-native-magnus';
+import { Input, Icon } from 'react-native-magnus';
 
-import {FormErrorLabel} from '../../../themes/components';
+import { FormErrorLabel } from 'themes/components';
 
 export default function FormInput(props) {
   const {
-    field: {name, onBlur, onChange, value},
-    form: {errors, touched, setFieldTouched},
+    field: { name, onBlur, onChange, value },
+    form: { errors, touched, setFieldTouched },
     suffix,
     prefix,
     ...inputProps

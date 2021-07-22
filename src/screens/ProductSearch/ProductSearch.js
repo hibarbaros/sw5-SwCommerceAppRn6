@@ -1,25 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {FlatList} from 'react-native';
-import {Input, Icon, Div} from 'react-native-magnus';
-import {Spinner} from '@ui-kitten/components';
+import React, { useState } from 'react';
+import { FlatList } from 'react-native';
+import { Input, Icon, Div, Skeleton } from 'react-native-magnus';
 
-import {Container} from '../../themes/components';
+import { Container } from '../../themes/components';
 import VisitedProducts from '../../components/Common/VisitedProducts';
-import {useSearchByString} from '../../utils/hooks/useProduct';
-import {useLocalizationContext} from '../../context/Translations';
+import { useSearchByString } from '../../utils/hooks/useProduct';
+import { useLocalizationContext } from '../../context/Translations';
 import ProductCard from '../../components/Common/ProductCard';
-import {Headline} from '../../themes/components';
+import { Headline } from '../../themes/components';
 
 export default function ProductSearch() {
-  const {translations} = useLocalizationContext();
+  const { translations } = useLocalizationContext();
   const [value, setValue] = useState('');
 
-  const {status, data} = useSearchByString(value.length > 2 && value);
+  const { status, data } = useSearchByString(value.length > 2 && value);
 
-  const renderItem = ({item}) => (
-    <ProductCard theme="theme03" productId={item.id} />
-  );
+  const renderItem = ({ item }) => <ProductCard theme="theme03" productId={item.id} />;
 
   return (
     <>
@@ -33,10 +30,10 @@ export default function ProductSearch() {
           onChangeText={(text) => setValue(text)}
         />
       </Container>
-      {status === 'loading' && <Spinner />}
+      {status === 'loading' && <Skeleton.Circle h={40} w={40} />}
       {value.length > 2 ? (
         <FlatList
-          contentContainerStyle={{paddingBottom: 500}}
+          contentContainerStyle={{ paddingBottom: 500 }}
           contentInsetAdjustmentBehavior="automatic"
           scrollEnabled={true}
           numColumns={2}

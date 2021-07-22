@@ -1,5 +1,50 @@
 import React from 'react';
-import {Button, Icon, Text} from 'react-native-magnus';
+import { Button, Icon } from 'react-native-magnus';
+
+const buttonStyles = {
+  primary: {
+    bg: 'primary',
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  secondary: {
+    bg: 'secondary',
+    color: 'grey',
+    fontWeight: 'bold'
+  },
+  outline: {
+    bg: 'white',
+    borderColor: 'grey',
+    borderWidth: 1,
+    color: 'grey',
+    fontWeight: 'bold'
+  },
+  red: {
+    bg: 'red',
+    color: 'white'
+  },
+  icon: {
+    bg: 'primary',
+    color: 'white'
+  },
+  block: {
+    bg: 'white',
+    color: 'primary',
+    p: 14,
+    my: 5,
+    w: '100%',
+    borderColor: 'primary',
+    borderWidth: 1,
+    justifyContent: 'flex-start'
+  },
+  drawer: {
+    bg: 'transparent',
+    color: 'grey',
+    w: '100%',
+    justifyContent: 'space-between',
+    pr: 20
+  }
+};
 
 export default function ThemeButton({
   text,
@@ -9,177 +54,25 @@ export default function ThemeButton({
   mr,
   ml,
   fontSize,
+  iconColor,
   ...rest
 }) {
-  switch (variant) {
-    case 'primary':
-      return (
-        <Button
-          {...rest}
-          bg="primary"
-          suffix={
-            <Icon
-              name={suffix}
-              color="white"
-              fontSize={fontSize ? fontSize : 18}
-              fontFamily="Feather"
-            />
-          }
-          prefix={
-            <Icon
-              name={prefix}
-              fontSize={fontSize ? fontSize : 18}
-              color="white"
-              fontFamily="Feather"
-            />
-          }>
-          <Text
-            color="white"
-            mr={mr}
-            ml={ml}
-            fontSize={fontSize ? fontSize : 18}
-            fontWeight="bold">
-            {text}
-          </Text>
-        </Button>
-      );
-    case 'secondary':
-      return (
-        <Button
-          {...rest}
-          bg="secondary"
-          color="white"
-          suffix={
-            <Icon
-              name={suffix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }
-          prefix={
-            <Icon
-              name={prefix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }>
-          <Text color="white" mr={mr} ml={ml} fontSize={18} fontWeight="bold">
-            {text}
-          </Text>
-        </Button>
-      );
-    case 'outline':
-      return (
-        <Button
-          {...rest}
-          bg="white"
-          borderColor="grey"
-          borderWidth={1}
-          color="white"
-          suffix={
-            <Icon
-              name={suffix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }
-          prefix={
-            <Icon
-              name={prefix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }>
-          <Text color="grey" mr={mr} ml={ml} fontSize={18} fontWeight="bold">
-            {text}
-          </Text>
-        </Button>
-      );
-    case 'red':
-      return (
-        <Button
-          {...rest}
-          bg="red"
-          color="white"
-          suffix={
-            <Icon
-              name={suffix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }
-          prefix={
-            <Icon
-              name={prefix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }>
-          {text}
-        </Button>
-      );
-    case 'icon':
-      return (
-        <Button
-          {...rest}
-          bg="primary"
-          color="white"
-          suffix={
-            <Icon
-              name={suffix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }
-          prefix={
-            <Icon
-              name={prefix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }
-        />
-      );
-    case 'block':
-      return (
-        <Button
-          {...rest}
-          bg="white"
-          p={14}
-          my={5}
-          w="100%"
-          color="primary"
-          borderColor="primary"
-          borderWidth={1}
-          justifyContent="flex-start"
-          suffix={
-            <Icon
-              name={suffix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }
-          prefix={
-            <Icon
-              name={prefix}
-              color="white"
-              fontSize={18}
-              fontFamily="Feather"
-            />
-          }>
-          {text}
-        </Button>
-      );
-    default:
-      return null;
-  }
+  const buttonStyle = buttonStyles[variant];
+  const SuffixIcon = suffix ? (
+    <Icon name={suffix} color={iconColor || 'white'} fontSize={18} fontFamily="Feather" />
+  ) : null;
+  const PrefixIcon = prefix ? (
+    <Icon name={prefix} color={iconColor || 'white'} fontSize={18} fontFamily="Feather" />
+  ) : null;
+  return (
+    <Button
+      {...rest}
+      {...buttonStyle}
+      fontSize={fontSize ? fontSize : 18}
+      suffix={SuffixIcon}
+      prefix={PrefixIcon}
+    >
+      {text ? text : null}
+    </Button>
+  );
 }

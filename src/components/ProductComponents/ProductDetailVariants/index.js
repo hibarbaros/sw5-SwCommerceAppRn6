@@ -2,7 +2,6 @@ import React from 'react';
 import {View} from 'react-native-ui-lib';
 import _ from 'lodash';
 
-// import SheetItem from './SheetItem';
 import VariantItem from './VariantItem';
 
 export default function ProductDetailVariants({
