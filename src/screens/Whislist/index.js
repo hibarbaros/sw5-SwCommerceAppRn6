@@ -1,8 +1,8 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 
 import { useAppContext } from 'context/AppContext';
 import ProductWhislistCard from 'components/ProductComponents/ProductWhislistCard';
+import SmartScrollVIew from 'components/Common/SmartScrollVIew';
 import { Container, Headline } from 'themes/components';
 
 export default function Whislist() {
@@ -11,11 +11,11 @@ export default function Whislist() {
   return (
     <Container>
       {wishlist.length > 0 && (
-        <ScrollView>
+        <SmartScrollVIew>
           {wishlist.map((productId, index) => (
             <ProductWhislistCard key={index} productId={productId} />
           ))}
-        </ScrollView>
+        </SmartScrollVIew>
       )}
       {wishlist.length === 0 && <Headline>Your wishlist is empty</Headline>}
     </Container>

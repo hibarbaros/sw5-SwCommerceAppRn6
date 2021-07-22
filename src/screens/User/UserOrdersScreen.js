@@ -1,14 +1,15 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
-import UserOrderList from '../../components/UserComponents/UserOrderList';
-import {Container} from '../../themes/components';
+
+import UserOrderList from 'components/UserComponents/UserOrderList';
+import SmartScrollVIew from 'components/Common/SmartScrollVIew';
+import { Container } from 'themes/components';
 
 export default function UserOrdersScreen() {
   return (
-    <ScrollView>
+    <SmartScrollVIew>
       <Container>
         <UserOrderList />
       </Container>
-    </ScrollView>
+    </SmartScrollVIew>
   );
 }
