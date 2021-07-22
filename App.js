@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
 import { NavigationContainer } from '@react-navigation/native';
-import * as eva from '@eva-design/eva';
 import { ThemeProvider } from 'react-native-magnus';
 import Toast from 'react-native-toast-message';
 

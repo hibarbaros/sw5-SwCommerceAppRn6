@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {Container, Headline} from '../../themes/components';
-import PaymentMethods from '../../components/CheckoutComponents/PaymentMethods';
+import { Container, Headline } from 'themes/components';
+import PaymentMethods from 'components/CheckoutComponents/PaymentMethods';
 
-import {useCheckoutContext} from '../../context/CheckoutContext';
+import { useCheckoutContext } from 'context/CheckoutContext';
 
-export default function StepPayments({setIsNextButtonDisable}) {
-  const {selectedPaymentMethod} = useCheckoutContext();
+export default function StepPayments({ setIsNextButtonDisable }) {
+  const { selectedPaymentMethod } = useCheckoutContext();
 
   useEffect(() => {
     setIsNextButtonDisable(selectedPaymentMethod ? false : true);

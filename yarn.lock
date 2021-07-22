@@ -749,11 +749,6 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@eva-design/eva@^2.0.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@eva-design/eva/-/eva-2.1.0.tgz#210561abd37a6a894203420a727b1184d66e809a"
-  integrity sha512-n/8sUkjo0GWrO9dhsjijkqg+nlste2p8/3mOWT18wymm03hQXoT4kg31IhawjdWgzubjNzSjqPh+Pov5ShtsHQ==
-
 "@firebase/analytics-types@0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@firebase/analytics-types/-/analytics-types-0.4.0.tgz#d6716f9fa36a6e340bc0ecfe68af325aa6f60508"

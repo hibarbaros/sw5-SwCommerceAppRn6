@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Modal, Div, Header } from 'react-native-magnus';
 import StickyHeaderFooterScrollView from 'react-native-sticky-header-footer-scroll-view';
 
-import UserLoginForm from '../../components/UserComponents/UserLoginForm';
-import UserRegisterForm from '../../components/UserComponents/UserRegisterForm';
-import { Button } from '../../themes/components';
+import UserLoginForm from 'components/UserComponents/UserLoginForm';
+import UserRegisterForm from 'components/UserComponents/UserRegisterForm';
+import { Button } from 'themes/components';
 
 export default function CartDropdown({ modalVisible, setModalVisible }) {
   const [isRegister, setIsRegister] = useState(false);

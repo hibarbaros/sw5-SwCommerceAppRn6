@@ -20,14 +20,14 @@ export const colors = {
   gray4: '#D1D1D6',
   gray5: '#C7C7CC',
   gray6: '#8E8E93',
-  gray7: '#48484A',
+  gray7: '#48484A'
 };
 
 export const sizes = {
   tiny: 10,
   small: 15,
   medium: 20,
-  large: 25,
+  large: 25
 };
 
 export const fontSizes = {
@@ -36,12 +36,12 @@ export const fontSizes = {
   medium: 14,
   large: 16,
   xlarge: 18,
-  xxlarge: 20,
+  xxlarge: 20
 };
 
 export const fontFamilies = {
   primaryRegular: 'PlayfairDisplay-Regular',
-  secondaryRegular: 'Mulish-Regular',
+  secondaryRegular: 'Mulish-Regular'
 };
 
 export const NavigationTheme = {
@@ -51,6 +51,6 @@ export const NavigationTheme = {
     card: 'rgb(255, 255, 255)',
     text: 'rgb(28, 28, 30)',
     border: 'rgb(199, 199, 204)',
-    notification: 'rgb(255, 69, 58)',
-  },
+    notification: 'rgb(255, 69, 58)'
+  }
 };

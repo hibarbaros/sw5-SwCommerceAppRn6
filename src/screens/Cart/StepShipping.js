@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {Container, Headline} from '../../themes/components';
-import ShippingMethods from '../../components/CheckoutComponents/ShippingMethods';
+import { Container, Headline } from 'themes/components';
+import ShippingMethods from 'components/CheckoutComponents/ShippingMethods';
 
-import {useCheckoutContext} from '../../context/CheckoutContext';
+import { useCheckoutContext } from 'context/CheckoutContext';
 
-export default function StepShipping({setIsNextButtonDisable}) {
-  const {selectedShippingMethod} = useCheckoutContext();
+export default function StepShipping({ setIsNextButtonDisable }) {
+  const { selectedShippingMethod } = useCheckoutContext();
 
   useEffect(() => {
     setIsNextButtonDisable(selectedShippingMethod ? false : true);

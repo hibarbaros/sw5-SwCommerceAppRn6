@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {Div, Radio, Text} from 'react-native-magnus';
+import React, { useState, useEffect } from 'react';
+import { Div, Radio, Text } from 'react-native-magnus';
 
-import UserLoginForm from '../../components/UserComponents/UserLoginForm';
-import UserRegisterForm from '../../components/UserComponents/UserRegisterForm';
-import UserProfile from '../../components/UserComponents/UserProfile';
+import UserLoginForm from 'components/UserComponents/UserLoginForm';
+import UserRegisterForm from 'components/UserComponents/UserRegisterForm';
+import UserProfile from 'components/UserComponents/UserProfile';
 
 const formArray = [
-  {value: 'register', name: 'Register'},
-  {value: 'login', name: 'Login'},
+  { value: 'register', name: 'Register' },
+  { value: 'login', name: 'Login' }
 ];
 
-export default function StepForm({user, setIsNextButtonDisable}) {
+export default function StepForm({ user, setIsNextButtonDisable }) {
   const [formValue, setFormValue] = useState('login');
 
   useEffect(() => {
@@ -32,11 +32,9 @@ export default function StepForm({user, setIsNextButtonDisable}) {
                     px="xl"
                     py="md"
                     mr="md"
-                    rounded="circle">
-                    <Text
-                      color={formValue === item.value ? 'white' : 'gray800'}>
-                      {item.name}
-                    </Text>
+                    rounded="circle"
+                  >
+                    <Text color={formValue === item.value ? 'white' : 'gray800'}>{item.name}</Text>
                   </Div>
                 )}
               </Radio>

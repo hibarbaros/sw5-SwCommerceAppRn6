@@ -1,15 +1,15 @@
 import React from 'react';
-import {Text} from 'react-native-magnus';
+import { Text } from 'react-native-magnus';
 
-import {useCreateOrder, useOrderByOrderId} from '../../utils/hooks/useOrder';
+import { useCreateOrder, useOrderByOrderId } from 'utils/hooks/useOrder';
 
-import LoadSpinner from '../../components/Common/LoadSpinner';
-import {Button} from '../../themes/components';
+import LoadSpinner from 'components/Common/LoadSpinner';
+import { Button } from 'themes/components';
 
 export default function StepOrder() {
-  const {mutate, isLoading, data = null} = useCreateOrder();
+  const { mutate, isLoading, data = null } = useCreateOrder();
 
-  const {data: orderData} = useOrderByOrderId(data);
+  const { data: orderData } = useOrderByOrderId(data);
 
   return (
     <>

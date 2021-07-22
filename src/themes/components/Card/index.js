@@ -1,18 +1,11 @@
 import React from 'react';
 import { Div, Button } from 'react-native-magnus';
 
-export default function GeneralCard({
-  children,
-  onPress,
-  theme = 'primary',
-  rest,
-  selected = false
-}) {
+export default function GeneralCard({ children, onPress, theme = 'primary', selected = false }) {
   switch (theme) {
     case 'primary':
       return (
         <Button
-          {...rest}
           column
           bg="transparent"
           onPress={onPress ? onPress : null}
@@ -26,8 +19,10 @@ export default function GeneralCard({
         </Button>
       );
     case 'secondary':
+      return <Div onPress={onPress}>{children}</Div>;
+    case 'border-card':
       return (
-        <Div {...rest} onPress={onPress}>
+        <Div onPress={onPress} borderWidth={1} borderColor="grey" p={10}>
           {children}
         </Div>
       );

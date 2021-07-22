@@ -1,22 +1,23 @@
 import React from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {Div} from 'react-native-magnus';
+import { SafeAreaView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Div } from 'react-native-magnus';
 
-import {useLocalizationContext} from '../../context/Translations';
+import { useLocalizationContext } from 'context/Translations';
 
-import {Container} from '../../themes/components';
-import UserProfile from '../../components/UserComponents/UserProfile';
-import {Button} from '../../themes/components';
-import AppRoute from '../../utils/approutes';
+import { Container } from 'themes/components';
+import SmartScrollVIew from 'components/Common/SmartScrollVIew';
+import UserProfile from 'components/UserComponents/UserProfile';
+import { Button } from 'themes/components';
+import AppRoute from 'utils/approutes';
 
-export default function UserScreen({customerData}) {
+export default function UserScreen({ customerData }) {
   const navigation = useNavigation();
-  const {translations} = useLocalizationContext();
+  const { translations } = useLocalizationContext();
 
   return (
     <SafeAreaView>
-      <ScrollView>
+      <SmartScrollVIew>
         <Container>
           <UserProfile />
           <Div column>
@@ -43,7 +44,7 @@ export default function UserScreen({customerData}) {
             />
           </Div>
         </Container>
-      </ScrollView>
+      </SmartScrollVIew>
     </SafeAreaView>
   );
 }

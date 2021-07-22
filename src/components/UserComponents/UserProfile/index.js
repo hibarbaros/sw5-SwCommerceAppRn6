@@ -3,8 +3,9 @@ import React from 'react';
 import { useLocalizationContext } from 'context/Translations';
 import { useAppContext } from 'context/AppContext';
 
-import { useCustomerByCustomerId } from 'utils/hooks/useCustomer';
 import { Card, Text } from 'themes/components';
+
+import { useCustomerByCustomerId } from 'utils/hooks/useCustomer';
 
 export default function UserProfile() {
   const { translations } = useLocalizationContext();
@@ -21,14 +22,12 @@ export default function UserProfile() {
   }
 
   return (
-    <Card theme="secondary">
-      <Text marginB-s3 text60>
-        {translations.userProfile}
-      </Text>
-      <Text>{data.firstname}</Text>
-      <Text>{data.lastname}</Text>
-      <Text>{data.email}</Text>
-      <Text>{data.id}</Text>
+    <Card theme="border-card">
+      <Text variant="medium">{translations.userProfile}</Text>
+      <Text variant="medium">{data.firstname}</Text>
+      <Text variant="medium">{data.lastname}</Text>
+      <Text variant="medium">{data.email}</Text>
+      <Text variant="medium">{data.id}</Text>
     </Card>
   );
 }
