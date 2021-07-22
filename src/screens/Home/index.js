@@ -1,19 +1,19 @@
-import React, {useState, useCallback} from 'react';
-import {RefreshControl, ScrollView} from 'react-native';
-import {useQueryClient} from 'react-query';
-import {Div} from 'react-native-magnus';
+import React, { useState, useCallback } from 'react';
+import { RefreshControl, ScrollView } from 'react-native';
+import { useQueryClient } from 'react-query';
+import { Div } from 'react-native-magnus';
 
-import {useLocalizationContext} from 'context/Translations';
-import {useAppContext} from 'context/AppContext';
-import {Headline, Text} from 'themes/components';
+import { useLocalizationContext } from 'context/Translations';
+import { useAppContext } from 'context/AppContext';
+import { Headline } from 'themes/components';
 import Carousel from 'components/Common/FirebaseCarousel';
 import VisitedProducts from 'components/Common/VisitedProducts';
 import HomeMainCarousel from 'components/HomeComponents/HomeMainCarousel';
 import HomeRecomendedCategories from 'components/HomeComponents/HomeRecomendedCategories';
 
 const HomeScreen = () => {
-  const {translations} = useLocalizationContext();
-  const {selectedLanguage} = useAppContext();
+  const { translations } = useLocalizationContext();
+  const { selectedLanguage } = useAppContext();
   const cache = useQueryClient();
 
   const [refreshing, setRefreshing] = useState(false);
@@ -30,10 +30,8 @@ const HomeScreen = () => {
     <ScrollView
       showsVerticalScrollIndicator={true}
       scrollEventThrottle={16}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
-      <Text variant="secondary">deneme</Text>
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    >
       <Div my={20}>
         <HomeMainCarousel />
       </Div>
