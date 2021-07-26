@@ -1,39 +1,40 @@
-import React, {createRef, useState} from 'react';
-import {Dropdown, Text} from 'react-native-magnus';
+import React, { createRef, useState, useEffect } from 'react';
+import { Dropdown } from 'react-native-magnus';
 
-import {Button, FormErrorLabel} from 'themes/components';
-import {useCountries} from 'utils/hooks/useApp';
+import { Button, FormErrorLabel, Text } from 'themes/components';
+import { useCountries } from 'utils/hooks/useApp';
 
 export default function CountryDropDown(props) {
   const {
     countryId,
-    field: {name, onBlur, onChange},
-    form: {errors, touched, setFieldTouched, setFieldValue},
+    field: { name, onBlur, onChange },
+    form: { errors, touched, setFieldTouched, setFieldValue },
     ...inputProps
   } = props;
 
-  const [initialValue, setinitialValue] = useState(inputProps.placeholder);
+  const [initialValue, setinitialValue] = useState(null);
 
   const hasError = errors[name] && touched[name];
   const dropdownRef = createRef();
 
-  const {isLoading, data} = useCountries();
+  const { isLoading, data } = useCountries();
 
   if (isLoading) {
     return <Text>'Loading...'</Text>;
   }
 
+  useEffect(() => {
+    const selectedCountry = data.find((x) => x.id === parseInt(countryId, 10));
+    selectedCountry ? setinitialValue(selectedCountry) : setinitialValue(null);
+  }, []);
+
   return (
     <>
       <Button
         block
-        mr="auto"
+        justifyContent="space-between"
         my={10}
-        text={
-          countryId
-            ? data.find((x) => x.id === parseInt(countryId, 10)).name
-            : initialValue
-        }
+        text={initialValue ? initialValue.name : inputProps.placeholder}
         onPress={() => dropdownRef.current.open()}
         suffix="arrow-down"
       />
@@ -43,28 +44,27 @@ export default function CountryDropDown(props) {
         </Text>
       )}
       {hasError && <FormErrorLabel errorMessage={errors[name]} />}
-      <Dropdown
-        ref={dropdownRef}
-        mt="md"
-        pb="2xl"
-        showSwipeIndicator={true}
-        roundedTop="xl">
+      <Dropdown ref={dropdownRef} mt="md" pb="2xl" showSwipeIndicator={true} roundedTop="xl">
         {data.map((country) => (
           <Dropdown.Option
             key={country.id}
+            block
+            disabled={initialValue?.id === country.id}
             onPress={() => {
               onChange(name)(country.name);
-              setinitialValue(country.name);
+              setinitialValue(country);
               setFieldValue(name, country.id);
             }}
             py="md"
             px="xl"
-            block>
+          >
             <Text
+              variant="medium"
               onBlur={() => {
                 setFieldTouched(country.name);
                 onBlur(country.name);
-              }}>
+              }}
+            >
               {country.name}
             </Text>
           </Dropdown.Option>

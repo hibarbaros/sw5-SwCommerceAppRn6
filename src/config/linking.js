@@ -3,23 +3,23 @@ const config = {
     Home: {
       path: 'home/:id',
       parse: {
-        id: (id) => `${id}`,
-      },
+        id: (id) => `${id}`
+      }
     },
     Profile: {
       path: 'profile/:id',
       parse: {
-        id: (id) => `${id}`,
-      },
+        id: (id) => `${id}`
+      }
     },
     Notifications: 'notifications',
-    Settings: 'settings',
-  },
+    Settings: 'settings'
+  }
 };
 
 const linking = {
   prefixes: ['demo://app'],
-  config,
+  config
 };
 
 export default linking;
