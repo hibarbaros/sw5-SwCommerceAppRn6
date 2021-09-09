@@ -4,5 +4,5 @@ export default {
   PROFILE: 'My Profile',
   PROFILEEDIT: 'Profile Edit',
   ORDERS: 'My Orders',
-  SETTINGS: 'Settings',
+  SETTINGS: 'Settings'
 };

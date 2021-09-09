@@ -25,7 +25,7 @@ export default function UserAddressAddEditForm() {
     if (userAddress) {
       values.userAddressId = parseFloat(userAddress.id);
     }
-    mutate(values);
+    mutate({ ...values });
   }
 
   return (

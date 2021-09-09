@@ -1,4 +1,4 @@
-import {useQuery} from 'react-query';
+import { useQuery } from 'react-query';
 import lodash from 'lodash';
 
 import {
@@ -10,7 +10,7 @@ import {
   attributesOptions,
   articlesByAttributes,
   propertyGroupDetail,
-  articleDetailByVariant,
+  articleDetailByVariant
 } from '../actions/articleactions';
 
 const getSearchByString = async (string) => {
@@ -20,7 +20,7 @@ const getSearchByString = async (string) => {
 
 export function useSearchByString(string) {
   return useQuery(['productSearch', string], () => getSearchByString(string), {
-    enabled: !!string,
+    enabled: !!string
   });
 }
 
@@ -30,11 +30,7 @@ const getProductByProductId = async (articleId) => {
 };
 
 export function useProductByProductId(articleId, options) {
-  return useQuery(
-    ['productDetail', articleId],
-    () => getProductByProductId(articleId),
-    options,
-  );
+  return useQuery(['productDetail', articleId], () => getProductByProductId(articleId), options);
 }
 const getProductByVariant = async (variantId) => {
   const data = await articleDetailByVariant(variantId);
@@ -42,9 +38,7 @@ const getProductByVariant = async (variantId) => {
 };
 
 export function useProductByVariant(variantId) {
-  return useQuery(['productByVariant', variantId], () =>
-    getProductByVariant(variantId),
-  );
+  return useQuery(['productByVariant', variantId], () => getProductByVariant(variantId));
 }
 
 const getProducstByCategoryId = async (categoryId) => {
@@ -54,9 +48,7 @@ const getProducstByCategoryId = async (categoryId) => {
 };
 
 export function useProducstByCategoryId(categoryId) {
-  return useQuery(['categoryProducts', categoryId], () =>
-    getProducstByCategoryId(categoryId),
-  );
+  return useQuery(['categoryProducts', categoryId], () => getProducstByCategoryId(categoryId));
 }
 
 const getProductAttributesOptions = async () => {
@@ -84,7 +76,7 @@ const getProductAttributesOptionsFilterByOptionId = async (optionId) => {
 
 export function useProductAttributesOptionsFilterByOptionId(optionId) {
   return useQuery(['productAttributesOptions', optionId], () =>
-    getProductAttributesOptionsFilterByOptionId(optionId),
+    getProductAttributesOptionsFilterByOptionId(optionId)
   );
 }
 
@@ -94,9 +86,7 @@ const getProductCustomAttr = async (attrId) => {
 };
 
 export function useProductCustomAttr(attrId) {
-  return useQuery(['productCustomAttr', attrId], () =>
-    getProductCustomAttr(attrId),
-  );
+  return useQuery(['productCustomAttr', attrId], () => getProductCustomAttr(attrId));
 }
 
 const getPropertyGroupDetail = async (propertyGroupId) => {
@@ -106,6 +96,6 @@ const getPropertyGroupDetail = async (propertyGroupId) => {
 
 export function usePropertyGroupDetail(propertyGroupId) {
   return useQuery(['propertyGroupDetail', propertyGroupId], () =>
-    getPropertyGroupDetail(propertyGroupId),
+    getPropertyGroupDetail(propertyGroupId)
   );
 }

@@ -11,10 +11,8 @@ export const lang = {
     deliveryPartialStock: 'Seulement %inStock% sur %quantity% en stock',
     deliveryPartialStockAddon:
       '- Délai de livraison pour les produits non disponibles : %shippingTime% jours ouvrables',
-    deliveryInStock:
-      "Expédition immédiate, livraison d'env. 1 à 3 jours ouvrables",
-    deliveryShippingTime:
-      "Délais de livraison d'env. %shippingTime% jours ouvrables",
+    deliveryInStock: "Expédition immédiate, livraison d'env. 1 à 3 jours ouvrables",
+    deliveryShippingTime: "Délais de livraison d'env. %shippingTime% jours ouvrables",
     deliveryShippingDelay: 'Délai de livraison env. 5 jours ouvrables',
     offcanvasCloseMenu: 'Fermer le menu',
     noscriptNotice:
@@ -43,7 +41,7 @@ export const lang = {
     sortingLabel: 'Tri',
     next: 'Prochain',
     previous: 'Précédent',
-    formSubmit: 'Envoyer',
+    formSubmit: 'Envoyer'
   },
   header: {
     logoLink: "Retour à la page d'accueil",
@@ -54,38 +52,28 @@ export const lang = {
     supportInfo:
       '<strong>Des questions concernant votre commande ?</strong><br/>Nous sommes joignables au <strong><a href="tel:+4912345-123456789">12345-123456789</a></strong> <small>tous les jours de 7h30 à 22h</small>',
     indexLinkService: 'Service/Assistance',
-    searchNoResult: "Votre recherche n'a donné aucun résultat.",
+    searchNoResult: "Votre recherche n'a donné aucun résultat."
   },
   error: {
     'VIOLATION::IS_BLANK_ERROR': '%field% ne doit pas être vide.',
     'VIOLATION::TOO_LOW_ERROR': '%field% ne doit pas être vide.',
     'VIOLATION::STRICT_CHECK_FAILED_ERROR': "%field% n'est pas valide.",
-    'VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE':
-      'Cette adresse e-mail est déjà enregistrée.',
-    'VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT':
-      "Ce mot de passe n'est pas valide.",
+    'VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE': 'Cette adresse e-mail est déjà enregistrée.',
+    'VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT': "Ce mot de passe n'est pas valide.",
     'message-default': 'Un problème est malheureusement survenu.',
     'message-404': 'La page souhaitée est introuvable.',
-    addToCartError:
-      "Une erreur est survenue lors de l'ajout du produit dans le panier.",
-    FRAMEWORK__INVALID_UUID:
-      "Le moyen de paiement sélectionné n'a pas pu être trouvé.",
-    CHECKOUT__UNKNOWN_PAYMENT_METHOD:
-      "Le moyen de paiement sélectionné n'a pas pu être trouvé.",
+    addToCartError: "Une erreur est survenue lors de l'ajout du produit dans le panier.",
+    FRAMEWORK__INVALID_UUID: "Le moyen de paiement sélectionné n'a pas pu être trouvé.",
+    CHECKOUT__UNKNOWN_PAYMENT_METHOD: "Le moyen de paiement sélectionné n'a pas pu être trouvé.",
     productNotFound: 'Le produit "%number%" est introuvable.',
-    'payment-method-blocked':
-      'Le moyen de paiement sélectionné %name% est indisponible.',
-    'shipping-method-blocked':
-      "Le mode d'expédition sélectionné %name% est indisponible.",
-    'shipping-address-blocked':
-      "Impossible de livrer à l'adresse sélectionnée.",
+    'payment-method-blocked': 'Le moyen de paiement sélectionné %name% est indisponible.',
+    'shipping-method-blocked': "Le mode d'expédition sélectionné %name% est indisponible.",
+    'shipping-address-blocked': "Impossible de livrer à l'adresse sélectionnée.",
     'VIOLATION::TOO_SHORT_ERROR': '%field% est trop court.',
     'product-not-found': 'Produit introuvable.',
-    'message-403-ajax':
-      'La session a expiré. Veuillez actualiser la page et recommencer.',
-    'message-403':
-      'La session a expiré. Veuillez retourner à la page précédente et recommencer.',
-    'product-out-of-stock': "%name% n'est pas disponible actuellement.",
+    'message-403-ajax': 'La session a expiré. Veuillez actualiser la page et recommencer.',
+    'message-403': 'La session a expiré. Veuillez retourner à la page précédente et recommencer.',
+    'product-out-of-stock': "%name% n'est pas disponible actuellement."
   },
   account: {
     confirmationIsAlreadyDone:
@@ -97,8 +85,7 @@ export const lang = {
     myAccount: 'Mon compte',
     registerTitle: 'Inscription',
     loginHeader: 'Je suis déjà client',
-    loginFormDescription:
-      'Se connecter avec son adresse e-mail et son mot de passe',
+    loginFormDescription: 'Se connecter avec son adresse e-mail et son mot de passe',
     loginMailLabel: 'Votre adresse e-mail',
     loginMailPlaceholder: 'Adresse e-mail',
     loginPasswordLabel: 'Votre mot de passe',
@@ -109,8 +96,7 @@ export const lang = {
     registerAdvantagesHeader: "Avantages d'une inscription :",
     registerAdvantage1: 'Achat rapide',
     registerAdvantage2: 'Enregistrez vos données et vos paramétrages.',
-    registerAdvantage3:
-      "Aperçu de la commande et informations sur l'expédition",
+    registerAdvantage3: "Aperçu de la commande et informations sur l'expédition",
     registerAdvantage4: 'Gérer votre abonnement à la newsletter',
     registerPersonalHeader: 'Je suis un nouveau client',
     registerAddressBillingHeader: 'Votre adresse',
@@ -129,27 +115,21 @@ export const lang = {
     personalMailLabel: 'Nouvelle adresse e-mail',
     personalMailPlaceholder: 'Saisir une nouvelle adresse e-mail...',
     personalMailConfirmationLabel: "Confirmation de l'adresse e-mail",
-    personalMailConfirmationPlaceholder:
-      'Veuillez confirmer votre adresse e-mail...',
-    personalMailConfirmationInvalidMessage:
-      'Les adresses e-mail ne correspondent pas.',
+    personalMailConfirmationPlaceholder: 'Veuillez confirmer votre adresse e-mail...',
+    personalMailConfirmationInvalidMessage: 'Les adresses e-mail ne correspondent pas.',
     personalPasswordLabel: 'Mot de passe',
     personalPasswordPlaceholder: 'Saisir le mot de passe...',
     personalPasswordConfirmationLabel: 'Confirmation du mot de passe',
-    personalPasswordConfirmationPlaceholder:
-      'Veuillez confirmer votre mot de passe...',
-    personalPasswordConfirmationInvalidMessage:
-      'Les mots de passe ne correspondent pas.',
-    personalPasswordDescription:
-      'Le mot de passe doit inclure au moins %minLength% caractères.',
+    personalPasswordConfirmationPlaceholder: 'Veuillez confirmer votre mot de passe...',
+    personalPasswordConfirmationInvalidMessage: 'Les mots de passe ne correspondent pas.',
+    personalPasswordDescription: 'Le mot de passe doit inclure au moins %minLength% caractères.',
     personalBirthdayLabel: 'Date de naissance',
     personalBirthdaySelectDay: 'Jour',
     personalBirthdaySelectMonth: 'Mois',
     personalBirthdaySelectYear: 'Année',
     personalPhoneLabel: 'Téléphone',
     personalPhonePlaceholder: 'Entrer le n° de téléphone',
-    registerDifferentShipping:
-      "L'adresse de livraison est différente de l'adresse de facturation.",
+    registerDifferentShipping: "L'adresse de livraison est différente de l'adresse de facturation.",
     registerSubmit: 'Continuer',
     overviewTitle: 'Aperçu',
     greetings: 'Bonjour, ',
@@ -216,10 +196,8 @@ export const lang = {
     addressListHeader: 'Toutes les adresses',
     addressesTitleDefaultShippingAddress: 'Adresse de livraison par défaut',
     addressesTitleDefaultBillingAddress: 'Adresse de facturation par défaut',
-    addressesSetAsDefaultShippingAction:
-      'Définir comme adresse de livraison standard',
-    addressesSetAsDefaultBillingAction:
-      'Définir comme adresse de facturation standard',
+    addressesSetAsDefaultShippingAction: 'Définir comme adresse de livraison standard',
+    addressesSetAsDefaultBillingAction: 'Définir comme adresse de facturation standard',
     addressesTitleCurrentShippingAddress: 'Adresse de livraison actuelle',
     addressesTitleCurrentBillingAddress: 'Adresse de facturation actuelle',
     addressesContentItemActionEdit: 'Modifier',
@@ -293,8 +271,7 @@ export const lang = {
     orderItemInfoContent: 'Contenu :',
     orderItemInfoCurrentPrice: 'Prix unitaire actuel',
     orderItemInfoFree: 'GRATUIT',
-    orderItemInfoNotAvailable:
-      "Ce produit n'est plus disponible pour une commande ultérieure",
+    orderItemInfoNotAvailable: "Ce produit n'est plus disponible pour une commande ultérieure",
     orderActionView: 'Afficher',
     orderActionHide: 'Masquer',
     orderInfoNoDispatch: 'Non précisé',
@@ -307,7 +284,7 @@ export const lang = {
       "Si vous avez oublié votre mot de passe, vous pouvez en définir un nouveau ici. Dès que vous enregistrez un nouveau mot de passe, l'ancien n'est plus valide.",
     passwordOptInInfo:
       'E-mail de confirmation envoyé. Cliquez sur le lien pour changer votre mot de passe.',
-    colonCharacter: ':',
+    colonCharacter: ':'
   },
   address: {
     streetLabel: 'Adresse et n° de rue',
@@ -331,13 +308,12 @@ export const lang = {
     companyDepartmentLabel: 'Service',
     companyDepartmentPlaceholder: 'Entrer le nom du service...',
     companyVatLabel: 'N° TVA',
-    companyVatPlaceholder: 'N° TVA',
+    companyVatPlaceholder: 'N° TVA'
   },
   checkout: {
     itemCounter: '{1} 1 Produit|]1,Inf[ %count% Produits',
     addressHeader: "Conditions d'expédition",
-    addressLoginToggle:
-      'Êtes-vous déjà client ? Cliquez ici pour vous connecter.',
+    addressLoginToggle: 'Êtes-vous déjà client ? Cliquez ici pour vous connecter.',
     addressRegisterCardTitle: 'Informations personnelles',
     registerGuestmodeLabel: 'Continuer sans créer de compte client',
     cartTitle: 'Panier',
@@ -394,8 +370,7 @@ export const lang = {
     finishInfoPayment: 'Moyen de paiement :',
     finishInfoShipping: "Mode d'expédition :",
     finishHeader: 'Nous vous remercions pour votre commande chez %shop% !',
-    finishUpdateHeader:
-      'Nous vous remercions pour la mise à jour de votre commande !',
+    finishUpdateHeader: 'Nous vous remercions pour la mise à jour de votre commande !',
     finishPaymentHeader:
       'Le moyen de paiement de votre commande a été modifié et est désormais %paymentName% !',
     finishInfoHeader: 'Informations',
@@ -412,26 +387,20 @@ export const lang = {
     shippingCountry: 'Pays de livraison',
     paymentMethod: 'Moyen de paiement',
     shippingMethod: "Mode d'expédition",
-    'product-stock-reached':
-      'Il ne reste plus que %quantity% exemplaires du produit %name%.',
+    'product-stock-reached': 'Il ne reste plus que %quantity% exemplaires du produit %name%.',
     'product-out-of-stock': "Ce produit %name% n'est plus disponible.",
-    'shipping-method-blocked':
-      "Le mode d'expédition %name% est bloqué pour votre panier actuel.",
-    'payment-method-blocked':
-      'Le moyen de paiement %name% est bloqué pour votre panier actuel.',
+    'shipping-method-blocked': "Le mode d'expédition %name% est bloqué pour votre panier actuel.",
+    'payment-method-blocked': 'Le moyen de paiement %name% est bloqué pour votre panier actuel.',
     lineItemDeliveryDate: 'Délai de livraison : %earliest% – %latest%',
-    'promotion-discount-deleted':
-      'La réduction "%name%" a été supprimée du panier',
+    'promotion-discount-deleted': 'La réduction "%name%" a été supprimée du panier',
     'promotion-discount-added': 'La réduction "%name%" a été ajoutée au panier',
     'promotion-not-found': 'Le code promo "%code%" n\'existe pas.',
     'promotion-not-eligible':
       "Le bon d'achat a été enregistré, mais n'a pas été appliqué au panier, car les conditions ne sont pas remplies. Une fois les conditions remplies, le bon d'achat sera automatiquement ajouté.",
-    'shipping-address-blocked':
-      "Impossible de livrer à l'adresse sélectionnée.",
+    'shipping-address-blocked': "Impossible de livrer à l'adresse sélectionnée.",
     customerCommentHeader: 'Informations complémentaires :',
-    customerCommentLabel:
-      'Avez-vous des informations à nous communiquer sur votre commande ?',
-    customerCommentPlaceholder: 'Entrez votre commentaire ici...',
+    customerCommentLabel: 'Avez-vous des informations à nous communiquer sur votre commande ?',
+    customerCommentPlaceholder: 'Entrez votre commentaire ici...'
   },
   listing: {
     filterTitleText: 'Filtre',
@@ -456,9 +425,8 @@ export const lang = {
     filterRangeMaxLabel: 'Maximum',
     filterRangeActiveMinLabel: 'Prix à partir de',
     filterRangeActiveMaxLabel: "Prix jusqu'à",
-    filterRangeErrorMessage:
-      'Le montant minimum ne doit pas dépasser le montant maximum.',
-    filterSubmitText: 'Filtre',
+    filterRangeErrorMessage: 'Le montant minimum ne doit pas dépasser le montant maximum.',
+    filterSubmitText: 'Filtre'
   },
   newsletter: {
     headline: 'Abonnement à la newsletter',
@@ -472,19 +440,17 @@ export const lang = {
     subscriptionPersistedInfo:
       "Si vous n'avez pas reçu d'e-mail, veuillez répéter la procédure ou contacter le service d'assistance.",
     subscriptionRevokeSuccess: 'Votre abonnement à la newsletter a réussi.',
-    subscriptionConfirmationSuccess:
-      'Votre abonnement à la newsletter a bien été pris en compte.',
+    subscriptionConfirmationSuccess: 'Votre abonnement à la newsletter a bien été pris en compte.',
     subscriptionConfirmationFailed:
       "Une erreur est survenue lors de votre abonnement à la newsletter. Veuillez contacter le service d'assistance.",
-    subscriptionCompleted:
-      'Nous vous en remercions. Nous avons enregistré votre adresse e-mail.',
+    subscriptionCompleted: 'Nous vous en remercions. Nous avons enregistré votre adresse e-mail.',
     labelActionSelect: 'Promotion',
     labelMail: 'Adresse e-mail',
     labelFirstName: 'Prénom',
     labelLastName: 'Nom',
     placeholderMail: 'max@modele.fr',
     placeholderFirstName: 'Max',
-    placeholderLastName: 'Modèle',
+    placeholderLastName: 'Modèle'
   },
   contact: {
     headline: 'Formulaire de contact',
@@ -495,11 +461,11 @@ export const lang = {
     commentPlaceholder: 'Entrez votre commentaire...',
     formSubmit: 'Envoyer',
     success:
-      'Nous avons bien reçu votre message et reviendrons vers vous dans les meilleurs délais.',
+      'Nous avons bien reçu votre message et reviendrons vers vous dans les meilleurs délais.'
   },
   search: {
     headline:
-      '{0} Aucun produit trouvé pour "%searchTerm%" | {1} 1 produit trouvé pour "%searchTerm%" | ]1,Inf[ %count% produits trouvés pour "%searchTerm%"',
+      '{0} Aucun produit trouvé pour "%searchTerm%" | {1} 1 produit trouvé pour "%searchTerm%" | ]1,Inf[ %count% produits trouvés pour "%searchTerm%"'
   },
   detail: {
     ordernumberLabel: 'Réf. produit :',
@@ -515,8 +481,7 @@ export const lang = {
     dataColumnQuantity: 'Quantité',
     dataColumnPrice: 'Prix unitaire',
     dataColumnReferencePrice: 'Prix de base',
-    deliveryTimeAvailable:
-      'Immédiatement disponible, délai de livraison %name%',
+    deliveryTimeAvailable: 'Immédiatement disponible, délai de livraison %name%',
     deliveryTimeRestock:
       '{1} Disponible dans 1 jour, délai de livraison %name% |]1,Inf[ Disponible dans %restockTime% jours, délai de livraison %name% ',
     soldOut: 'Plus disponible',
@@ -543,23 +508,20 @@ export const lang = {
     reviewFormSuccessUpdateAlert:
       "Nous vous remercions d'avoir pris le temps de réaliser cette évaluation. Elle réapparaitra dès que nous l'aurons à nouveau activée.",
     reviewTeaserTitle: 'Laissez une évaluation !',
-    reviewTeaserText:
-      "Partagez avec d'autres clients votre avis sur le produit.",
+    reviewTeaserText: "Partagez avec d'autres clients votre avis sur le produit.",
     reviewTeaserButton: 'Écrivez une évaluation',
     reviewTeaserButtonHide: "Afficher l'évaluation !",
     reviewExistsTeaserTitle: 'Modifiez votre évaluation !',
     reviewExistsTeaserText:
       'Vous avez déjà évalué ce produit, souhaitez-vous modifier votre évaluation ?',
     reviewExistsTeaserButton: "Modifier l'évaluation",
-    reviewLanguageFilterLabel:
-      'Afficher les évaluations uniquement dans la langue actuelle.',
+    reviewLanguageFilterLabel: 'Afficher les évaluations uniquement dans la langue actuelle.',
     reviewSortLabel: 'Trié par',
     reviewSortTopRatedLabel: 'A reçu les meilleures notes',
     reviewSortNewLabel: 'Nouvelle évaluation',
     reviewCountAfter: '{1} évaluation|]1,Inf[ évaluations',
     reviewCountBefore: 'de',
-    reviewListEmpty:
-      'Aucune évaluation trouvée. Soyez le premier à partager votre avis.',
+    reviewListEmpty: 'Aucune évaluation trouvée. Soyez le premier à partager votre avis.',
     reviewLoginHeader: 'Connexion',
     reviewLoginDescription:
       'Seuls les utilisateurs inscrits peuvent laisser une évaluation. Veuillez vous connecter ou créer un nouveau compte.',
@@ -567,7 +529,7 @@ export const lang = {
     reviewLoginSignupLink: 'Cliquez ici pour vous inscrire.',
     reviewLoginCancelButton: 'Annuler',
     reviewAvgRate: 'de',
-    reviewAvgRateElements: 'Étoiles',
+    reviewAvgRateElements: 'Étoiles'
   },
   footer: {
     serviceHotlineHeadline: 'Assistance téléphonique',
@@ -585,7 +547,7 @@ export const lang = {
       '* Tous les prix s\'entendent TVA incluse TVA, <a data-toggle="modal" href="%url%" data-url="%url%">frais de livraison</a> en sus et, le cas échéant, frais de contre-remboursement en sus, sauf indication contraire.',
     excludeVat:
       '* Tous les prix s\'entendent hors TVA, <a data-toggle="modal" href="%url%" data-url="%url%">frais de livraison</a> en sus et, le cas échéant, frais de contre-remboursement en sus, sauf indication contraire.',
-    copyrightInfo: 'Créé avec Shopware',
+    copyrightInfo: 'Créé avec Shopware'
   },
   cookie: {
     message:
@@ -596,18 +558,17 @@ export const lang = {
     save: 'Enregistrer',
     headline: 'Réglages par défaut des cookies',
     groupRequired: 'Nécessaires sur le plan technique',
-    groupRequiredDescription:
-      'Cookies nécessaires au fonctionnement de la boutique :',
+    groupRequiredDescription: 'Cookies nécessaires au fonctionnement de la boutique :',
     groupRequiredSession: 'Session',
     groupRequiredTimezone: 'Fuseau horaire',
     groupStatistical: 'Statistiques',
     groupStatisticalDescription:
       'Cookies utilisés pour les statistiques et les mesures de performance de la boutique.',
-    groupStatisticalGoogleAnalytics: 'Google Analytics',
+    groupStatisticalGoogleAnalytics: 'Google Analytics'
   },
   ellipsis: {
     expandLabel: 'afficher la suite',
-    shrinkLabel: 'ne plus afficher la suite',
+    shrinkLabel: 'ne plus afficher la suite'
   },
   component: {
     product: {
@@ -621,13 +582,13 @@ export const lang = {
           length: 'Longueur :',
           releaseDate: 'Publié :',
           description: 'Description :',
-          referencePrice: 'Contenu :',
+          referencePrice: 'Contenu :'
         },
         customField: {
           true: 'Oui',
-          false: 'Non',
-        },
-      },
-    },
-  },
+          false: 'Non'
+        }
+      }
+    }
+  }
 };

@@ -1,20 +1,20 @@
-import {useQuery, useMutation, useQueryClient} from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import Toast from 'react-native-toast-message';
 //*context
-import {useLocalizationContext} from 'context/Translations';
-import {useAppContext} from 'context/AppContext';
-import {useCartContext} from 'context/CartContext';
+import { useLocalizationContext } from 'context/Translations';
+import { useAppContext } from 'context/AppContext';
+import { useCartContext } from 'context/CartContext';
 //*actions
 import {
   customerData,
   customerRegister,
   customerEdit,
   passwordEdit,
-  userLogin,
+  userLogin
 } from '../actions/useractions';
-import {migrateUserCart} from '../actions/cartactions';
+import { migrateUserCart } from '../actions/cartactions';
 //*normalize
-import {initialCartNormalize} from '../normalize/cartNormalize';
+import { initialCartNormalize } from '../normalize/cartNormalize';
 
 //!Get Customer by Id
 const getCustomerByCustomerId = async (userId) => {
@@ -23,23 +23,19 @@ const getCustomerByCustomerId = async (userId) => {
 };
 
 export function useCustomerByCustomerId(userId, options) {
-  return useQuery(
-    ['userData', userId],
-    () => getCustomerByCustomerId(userId),
-    options,
-  );
+  return useQuery(['userData', userId], () => getCustomerByCustomerId(userId), options);
 }
 //!Get Customer by Id
 
 //!Customer logout
 export function useCustomerLogout() {
-  const {logoutUserContext} = useAppContext();
-  const {setInitialUserCart} = useCartContext();
+  const { logoutUserContext } = useAppContext();
+  const { setInitialUserCart } = useCartContext();
 
   const mutate = useMutation(logoutUserContext, {
     onSuccess: () => {
       setInitialUserCart([]);
-    },
+    }
   });
 
   return mutate;
@@ -49,7 +45,7 @@ export function useCustomerLogout() {
 //!Customer login
 const getCustomerLogin = async (values, userCart) => {
   const response = await userLogin(values);
-  const {id, sessionId} = response;
+  const { id, sessionId } = response;
   if (userCart) {
     await migrateUserCart(id, userCart, sessionId);
   }
@@ -57,26 +53,26 @@ const getCustomerLogin = async (values, userCart) => {
 };
 
 export function useCustomerLogin() {
-  const {translations} = useLocalizationContext();
-  const {setUserContext} = useAppContext();
-  const {userCart, setInitialUserCart} = useCartContext();
+  const { translations } = useLocalizationContext();
+  const { setUserContext } = useAppContext();
+  const { userCart, setInitialUserCart } = useCartContext();
 
   const mutate = useMutation((values) => getCustomerLogin(values, userCart), {
     onSuccess: async (response) => {
-      const {id, sessionId} = response;
+      const { id, sessionId } = response;
       if (response) {
         const userResponse = await customerData(id);
-        const {basket} = userResponse;
+        const { basket } = userResponse;
         setInitialUserCart(initialCartNormalize(basket));
         setUserContext(id, sessionId);
       } else {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: translations.passwordFalsch,
+          text2: translations.passwordFalsch
         });
       }
-    },
+    }
   });
 
   return mutate;
@@ -87,7 +83,7 @@ export function useCustomerLogin() {
 const getRegisterCustomer = async (values, userCart) => {
   const response = await customerRegister(values);
   const {
-    data: {id, sessionId},
+    data: { id, sessionId }
   } = response;
   if (userCart) {
     await migrateUserCart(id, userCart, sessionId);
@@ -96,28 +92,25 @@ const getRegisterCustomer = async (values, userCart) => {
 };
 
 export function useRegisterCustomer() {
-  const {setUserContext} = useAppContext();
-  const {userCart} = useCartContext();
+  const { setUserContext } = useAppContext();
+  const { userCart } = useCartContext();
 
-  const mutate = useMutation(
-    (values) => getRegisterCustomer(values, userCart),
-    {
-      onSuccess: (response) => {
-        if (response) {
-          setUserContext(response.data.id, response.data.sessionId);
-          return true;
-        }
-        if (!response) {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'This e-mail address is registered',
-          });
-          return false;
-        }
-      },
-    },
-  );
+  const mutate = useMutation((values) => getRegisterCustomer(values, userCart), {
+    onSuccess: (response) => {
+      if (response) {
+        setUserContext(response.data.id, response.data.sessionId);
+        return true;
+      }
+      if (!response) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'This e-mail address is registered'
+        });
+        return false;
+      }
+    }
+  });
 
   return mutate;
 }
@@ -130,7 +123,7 @@ const getEditCustomer = async (values) => {
 };
 
 export function useEditCustomer() {
-  const {translations} = useLocalizationContext();
+  const { translations } = useLocalizationContext();
   const cache = useQueryClient();
 
   const mutate = useMutation((values) => getEditCustomer(values), {
@@ -138,7 +131,7 @@ export function useEditCustomer() {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: e.message,
+        text2: e.message
       });
     },
     onSuccess: (data) => {
@@ -146,17 +139,17 @@ export function useEditCustomer() {
         cache.invalidateQueries('userData', data.customerId);
         Toast.show({
           text1: 'Success',
-          text2: translations.formularSuccess,
+          text2: translations.formularSuccess
         });
       }
       if (!data) {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: translations.formularError,
+          text2: translations.formularError
         });
       }
-    },
+    }
   });
 
   return mutate;
@@ -170,7 +163,7 @@ const getEditCustomerPassword = async (values) => {
 };
 
 export function useEditCustomerPassword() {
-  const {translations} = useLocalizationContext();
+  const { translations } = useLocalizationContext();
   const cache = useQueryClient();
 
   const mutate = useMutation((values) => getEditCustomerPassword(values), {
@@ -178,7 +171,7 @@ export function useEditCustomerPassword() {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: e.message,
+        text2: e.message
       });
     },
     onSuccess: (data) => {
@@ -186,17 +179,17 @@ export function useEditCustomerPassword() {
         cache.invalidateQueries('userData', data.id);
         Toast.show({
           text1: 'Success',
-          text2: translations.formularSuccess,
+          text2: translations.formularSuccess
         });
       }
       if (!data) {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: 'Old Password is false',
+          text2: 'Old Password is false'
         });
       }
-    },
+    }
   });
 
   return mutate;

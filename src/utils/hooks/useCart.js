@@ -1,9 +1,9 @@
-import {useMutation, useQuery} from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import Toast from 'react-native-toast-message';
 
-import {useLocalizationContext} from 'context/Translations';
-import {useAppContext} from 'context/AppContext';
-import {useCartContext} from 'context/CartContext';
+import { useLocalizationContext } from 'context/Translations';
+import { useAppContext } from 'context/AppContext';
+import { useCartContext } from 'context/CartContext';
 
 import {
   getCartBySessionId,
@@ -14,7 +14,7 @@ import {
   removeInitialUserCart,
   migrateUserCart,
   findProductVariant,
-  userCartPriceCalculation,
+  userCartPriceCalculation
 } from '../actions/cartactions';
 
 //!Get Customer Cart
@@ -29,11 +29,9 @@ const getUserCart = async (user, sessionId) => {
 };
 
 export function useUserCart() {
-  const {sessionId, user, userCart} = useAppContext();
+  const { sessionId, user, userCart } = useAppContext();
   if (user) {
-    return useQuery(['userCart', sessionId], () =>
-      getUserCart(user, sessionId),
-    );
+    return useQuery(['userCart', sessionId], () => getUserCart(user, sessionId));
   } else {
     return useQuery('initialUserCart', () => userCart);
   }
@@ -47,10 +45,10 @@ const getUserCartTotalPrice = async (userCart) => {
 };
 
 export function useUserCartTotalPrice() {
-  const {userCart} = useCartContext();
+  const { userCart } = useCartContext();
   let priceTotal = 0;
   return useQuery(['userCartTotalPrice', userCart], () =>
-    getUserCartTotalPrice(userCart, priceTotal),
+    getUserCartTotalPrice(userCart, priceTotal)
   );
 }
 //!Cart Total Price
@@ -66,23 +64,22 @@ const getAddToCart = async (mutateVariables, userCart, user, sessionId) => {
 };
 
 export function useAddToCart() {
-  const {translations} = useLocalizationContext();
-  const {user, sessionId} = useAppContext();
-  const {userCart, setInitialUserCart} = useCartContext();
+  const { translations } = useLocalizationContext();
+  const { user, sessionId } = useAppContext();
+  const { userCart, setInitialUserCart } = useCartContext();
 
   const mutate = useMutation(
-    (mutateVariables) =>
-      getAddToCart(mutateVariables, userCart, user, sessionId),
+    (mutateVariables) => getAddToCart(mutateVariables, userCart, user, sessionId),
     {
       onSuccess: (response) => {
         setInitialUserCart([...response]);
         Toast.show({
           type: 'success',
           text1: 'Success',
-          text2: translations.addToCartMessage,
+          text2: translations.addToCartMessage
         });
-      },
-    },
+      }
+    }
   );
   return mutate;
 }
@@ -98,17 +95,14 @@ const getRemoveToCart = async (productNumber, user, userCart) => {
 };
 
 export function useRemoveToCart() {
-  const {user} = useAppContext();
-  const {userCart, setInitialUserCart} = useCartContext();
+  const { user } = useAppContext();
+  const { userCart, setInitialUserCart } = useCartContext();
 
-  const mutate = useMutation(
-    (productNumber) => getRemoveToCart(productNumber, user, userCart),
-    {
-      onSuccess: (res) => {
-        setInitialUserCart(res);
-      },
-    },
-  );
+  const mutate = useMutation((productNumber) => getRemoveToCart(productNumber, user, userCart), {
+    onSuccess: (res) => {
+      setInitialUserCart(res);
+    }
+  });
   return mutate;
 }
 //!Remove to Cart
@@ -120,17 +114,14 @@ const getMigrateUserCart = async (user, userCart, sessionId) => {
 };
 
 export function useMigrateUserCart() {
-  const {user, sessionId} = useAppContext();
-  const {userCart} = useCartContext();
+  const { user, sessionId } = useAppContext();
+  const { userCart } = useCartContext();
 
-  const mutate = useMutation(
-    () => getMigrateUserCart(user, userCart, sessionId),
-    {
-      onSuccess: (res) => {
-        // setInitialUserCart(res);
-      },
-    },
-  );
+  const mutate = useMutation(() => getMigrateUserCart(user, userCart, sessionId), {
+    onSuccess: (res) => {
+      // setInitialUserCart(res);
+    }
+  });
   return mutate;
 }
 //!Migrate User Cart

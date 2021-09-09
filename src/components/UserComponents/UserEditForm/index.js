@@ -19,13 +19,13 @@ export default function UserEditForm() {
   const { user } = useAppContext();
   const { translations } = useLocalizationContext();
 
-  const [isNewsletter, setIsNewsletter] = useState(false);
+  const [initialNewsletter, setInitialNewsletter] = useState(false);
 
   const { mutate, isLoading: editCustomerLoading } = useEditCustomer();
   const { data, isLoading } = useCustomerByCustomerId(user, {
-    onSuccess: () => {
-      const checkNewsletter = data?.newsletter === 0 ? false : true;
-      setIsNewsletter(checkNewsletter);
+    onSuccess: (response) => {
+      const isNewsletter = response.newsletter === 0 ? false : true;
+      setInitialNewsletter(isNewsletter);
     }
   });
 
@@ -42,16 +42,16 @@ export default function UserEditForm() {
       <LoadSpinner isVisible={editCustomerLoading} />
       <Container>
         <Formik
+          enableReinitialize
           initialValues={{
             email: initialValues.email(data),
             firstname: initialValues.firstname(data),
             lastname: initialValues.lastname(data),
-            newsletter: initialValues.newsletter(data),
+            newsletter: initialNewsletter ? '1' : '0',
             salutation: initialValues.salutation(data)
           }}
           onSubmit={(values) => handleForm(values)}
           validationSchema={yup.object().shape({
-            email: validationSchema.textValidation('Email is a required filed'),
             firstname: validationSchema.textValidation('Firstname is a required filed'),
             lastname: validationSchema.textValidation('Lastname is a required filed'),
             salutation: validationSchema.textValidation('Salutation is a required filed')
@@ -59,12 +59,7 @@ export default function UserEditForm() {
         >
           {({ values, handleSubmit }) => (
             <>
-              <Field
-                value={values.email}
-                component={FormInput}
-                name="email"
-                placeholder={`${translations.email} *`}
-              />
+              <Text variant="medium">E-mail : {values.email}</Text>
               <Field
                 value={values.firstname}
                 component={FormInput}
@@ -83,9 +78,14 @@ export default function UserEditForm() {
                 salutationValue={data.salutation}
                 placeholder="Gender Select"
               />
+              <Checkbox value={values.newsletter}>
+                {({ checked }) => <Text color={checked ? 'white' : 'gray800'}>Newsletter</Text>}
+              </Checkbox>
               <Checkbox
                 my={10}
-                defaultChecked={isNewsletter}
+                onChange={() => setInitialNewsletter(!initialNewsletter)}
+                value={initialNewsletter}
+                // defaultChecked={values.newsletter}
                 suffix={<Text flex={1}>Newsletter</Text>}
               />
               <Button block text={translations.edit} onPress={handleSubmit} />

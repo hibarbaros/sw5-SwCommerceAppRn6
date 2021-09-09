@@ -1,5 +1,5 @@
-import {useQuery} from 'react-query';
-import {mediaDetail} from '../actions/mediaactions';
+import { useQuery } from 'react-query';
+import { mediaDetail } from '../actions/mediaactions';
 
 const getMediaByMediaId = async (mediaId) => {
   const data = await mediaDetail(mediaId);

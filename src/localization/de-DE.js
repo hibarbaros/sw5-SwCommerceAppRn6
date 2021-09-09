@@ -9,8 +9,7 @@ export const lang = {
     deliveryNotAvailable: 'Diese Auswahl steht nicht zur Verfügung',
     deliveryShipping: 'Dieses Produkt erscheint am',
     deliveryPartialStock: 'Nur %inStock% von %quantity% auf Lager',
-    deliveryPartialStockAddon:
-      '- Lieferzeit (nicht vorrätiges Produkt): %shippingTime% Werktage',
+    deliveryPartialStockAddon: '- Lieferzeit (nicht vorrätiges Produkt): %shippingTime% Werktage',
     deliveryInStock: 'Sofort versandfertig, Lieferung in ca. 1-3 Werktagen',
     deliveryShippingTime: 'Lieferzeit ca. %shippingTime% Werktage',
     deliveryShippingDelay: 'Lieferzeit ca. 5 Werktage',
@@ -25,8 +24,7 @@ export const lang = {
     categories: 'Kategorien',
     showCategory: '%category% anzeigen',
     required: '*',
-    requiredFields:
-      'Die mit einem Stern (*) markierten Felder sind Pflichtfelder.',
+    requiredFields: 'Die mit einem Stern (*) markierten Felder sind Pflichtfelder.',
     privacyTitle: 'Datenschutz',
     privacyNotice:
       'Ich habe die <a data-toggle="modal" data-url="%url%" href="%url%" title="Datenschutzbestimmungen">Datenschutzbestimmungen</a> zur Kenntnis genommen.',
@@ -42,7 +40,7 @@ export const lang = {
     sortingLabel: 'Sortierung',
     next: 'Nächstes',
     previous: 'Vorheriges',
-    formSubmit: 'Absenden',
+    formSubmit: 'Absenden'
   },
   header: {
     logoLink: 'Zur Startseite wechseln',
@@ -54,30 +52,23 @@ export const lang = {
       '<strong>Fragen zu Ihrer Bestellung?</strong><br /><strong><a href="tel:+4912345-123456789">12345-123456789</a></strong> <small>Täglich 7:30 bis 22:00 Uhr</small>',
     indexLinkService: 'Service/Hilfe',
     searchNoResult: 'Keine Suchergebnisse gefunden.',
-    wishlist: 'Merkzettel',
+    wishlist: 'Merkzettel'
   },
   error: {
     'VIOLATION::IS_BLANK_ERROR': '%field% darf nicht leer sein.',
     'VIOLATION::TOO_LOW_ERROR': '%field% darf nicht leer sein.',
     'VIOLATION::STRICT_CHECK_FAILED_ERROR': '%field% ist ungültig',
-    'VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE':
-      'Diese E-Mail-Adresse ist bereits registriert.',
-    'VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT':
-      'Das Passwort ist nicht korrekt.',
+    'VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE': 'Diese E-Mail-Adresse ist bereits registriert.',
+    'VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT': 'Das Passwort ist nicht korrekt.',
     'message-default': 'Leider ist etwas schief gelaufen',
     'message-404': 'Die angeforderte Seite kann nicht gefunden werden.',
     addToCartError: 'Beim Hinzufügen zum Warenkorb ist ein Fehler aufgetreten.',
-    FRAMEWORK__INVALID_UUID:
-      'Die gewählte Zahlungsart konnte nicht gefunden werden.',
-    CHECKOUT__UNKNOWN_PAYMENT_METHOD:
-      'Die gewählte Zahlungsart konnte nicht gefunden werden.',
+    FRAMEWORK__INVALID_UUID: 'Die gewählte Zahlungsart konnte nicht gefunden werden.',
+    CHECKOUT__UNKNOWN_PAYMENT_METHOD: 'Die gewählte Zahlungsart konnte nicht gefunden werden.',
     productNotFound: 'Produkt "%number%" konnte nicht gefunden werden.',
-    'payment-method-blocked':
-      'Die gewählte Zahlungsart %name% ist nicht verfügbar.',
-    'shipping-method-blocked':
-      'Die gewählte Versandart %name% ist nicht verfügbar.',
-    'shipping-address-blocked':
-      'Lieferungen an die gewählte Lieferadresse sind nicht möglich.',
+    'payment-method-blocked': 'Die gewählte Zahlungsart %name% ist nicht verfügbar.',
+    'shipping-method-blocked': 'Die gewählte Versandart %name% ist nicht verfügbar.',
+    'shipping-address-blocked': 'Lieferungen an die gewählte Lieferadresse sind nicht möglich.',
     'shipping-address-invalid':
       'Die gewählte Versandadresse ist nicht gültig oder unvollständig. Bitte prüfen Sie Ihre Eingaben.',
     'billing-address-blocked':
@@ -91,15 +82,14 @@ export const lang = {
     'message-403':
       'Die Sitzung ist abgelaufen. Bitte kehren Sie zur letzten Seite zurück neu und versuchen Sie  es erneut.',
     'product-out-of-stock': '%name% ist momentan nicht verfügbar.',
-    'auto-promotion-not-found': 'Promotion "%name%" was no longer valid!',
+    'auto-promotion-not-found': 'Promotion "%name%" was no longer valid!'
   },
   account: {
     externalPaymentCanceled:
       'Wir haben Ihre Bestellung erhalten, aber die Zahlung wurde abgebrochen. Bitte ändern Sie Ihre Zahlungsmethode oder versuchen Sie es erneut',
     externalPaymentFailure:
       'Wir haben Ihre Bestellung erhalten, aber wir konnten Ihre Zahlung nicht bearbeiten, bitte ändern Sie die Zahlungsmethode oder versuchen Sie es erneut',
-    confirmationIsAlreadyDone:
-      'Die Bestätigung ist bereits erfolgt oder die URL ist ungültig.',
+    confirmationIsAlreadyDone: 'Die Bestätigung ist bereits erfolgt oder die URL ist ungültig.',
     doubleOptInMailConfirmationSuccessfully:
       'Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse! Sie können Ihre Bestellung nun abschließen.',
     doubleOptInRegistrationSuccessfully:
@@ -114,8 +104,7 @@ export const lang = {
     loginPasswordPlaceholder: 'Passwort',
     loginPasswordRecover: 'Ich habe mein Passwort vergessen.',
     loginSubmit: 'Anmelden',
-    loginBadCredentials:
-      'Es konnte kein Account mit den angegebenen Zugangsdaten gefunden werden.',
+    loginBadCredentials: 'Es konnte kein Account mit den angegebenen Zugangsdaten gefunden werden.',
     registerAdvantagesHeader: 'Vorteile einer Registrierung:',
     registerAdvantage1: 'Schnelles Einkaufen',
     registerAdvantage2: 'Speichern Sie Ihre Daten und Einstellungen.',
@@ -138,26 +127,21 @@ export const lang = {
     personalMailLabel: 'Neue E-Mail-Adresse',
     personalMailPlaceholder: 'Neue E-Mail-Adresse eingeben ...',
     personalMailConfirmationLabel: 'E-Mail-Bestätigung',
-    personalMailConfirmationPlaceholder:
-      'Wiederholen Sie Ihre E-Mail-Adresse ...',
-    personalMailConfirmationInvalidMessage:
-      'Die E-Mail-Adressen stimmen nicht überein.',
+    personalMailConfirmationPlaceholder: 'Wiederholen Sie Ihre E-Mail-Adresse ...',
+    personalMailConfirmationInvalidMessage: 'Die E-Mail-Adressen stimmen nicht überein.',
     personalPasswordLabel: 'Passwort',
     personalPasswordPlaceholder: 'Passwort eingeben ...',
     personalPasswordConfirmationLabel: 'Passwort-Bestätigung',
     personalPasswordConfirmationPlaceholder: 'Wiederholen Sie Ihr Passwort ...',
-    personalPasswordConfirmationInvalidMessage:
-      'Die Passwörter stimmen nicht überein.',
-    personalPasswordDescription:
-      'Das Passwort muss mindestens %minLength% Zeichen lang sein.',
+    personalPasswordConfirmationInvalidMessage: 'Die Passwörter stimmen nicht überein.',
+    personalPasswordDescription: 'Das Passwort muss mindestens %minLength% Zeichen lang sein.',
     personalBirthdayLabel: 'Geburtsdatum',
     personalBirthdaySelectDay: 'Tag',
     personalBirthdaySelectMonth: 'Monat',
     personalBirthdaySelectYear: 'Jahr',
     personalPhoneLabel: 'Telefon',
     personalPhonePlaceholder: 'Telefonnummer eingeben ...',
-    registerDifferentShipping:
-      'Die Lieferadresse weicht von der Rechnungsadresse ab.',
+    registerDifferentShipping: 'Die Lieferadresse weicht von der Rechnungsadresse ab.',
     registerSubmit: 'Weiter',
     overviewTitle: 'Übersicht',
     greetings: 'Hallo, ',
@@ -189,8 +173,7 @@ export const lang = {
     overviewChangeBilling: 'Rechnungsadresse ändern',
     overviewChangeShipping: 'Lieferadresse ändern',
     overviewNewestOrderHeader: 'Letzte Bestellung',
-    overviewCustomerGroupRequest:
-      'Anfrage zur Aufnahme in die Kundengruppe "%group%" gestellt.',
+    overviewCustomerGroupRequest: 'Anfrage zur Aufnahme in die Kundengruppe "%group%" gestellt.',
     paymentChangeSubmit: 'Ändern',
     profilePersonalTitle: 'Persönliche Daten',
     profileMailTitle: 'E-Mail-Adresse',
@@ -208,8 +191,7 @@ export const lang = {
     emailChangeNoSuccess: 'E-Mail-Adresse konnte nicht geändert werden.',
     passwordChangeSuccess: 'Passwort wurde geändert',
     passwordChangeNoSuccess: 'Passwort konnte nicht geändert werden.',
-    passwordHashNotFound:
-      'Der Link zum Zurücksetzen des Passworts scheint defekt zu sein.',
+    passwordHashNotFound: 'Der Link zum Zurücksetzen des Passworts scheint defekt zu sein.',
     passwordHashExpired:
       'Der Link zum Zurücksetzen des Passworts ist nicht mehr gültig. Bitte fordern Sie einen neuen Link an.',
     recoveryMailSend:
@@ -235,8 +217,7 @@ export const lang = {
     addressesTitleDefaultShippingAddress: 'Standard-Lieferadresse',
     addressesTitleDefaultBillingAddress: 'Standard-Rechnungsadresse',
     addressesSetAsDefaultShippingAction: 'Als Standard-Lieferadresse verwenden',
-    addressesSetAsDefaultBillingAction:
-      'Als Standard-Rechnungsadresse verwenden',
+    addressesSetAsDefaultBillingAction: 'Als Standard-Rechnungsadresse verwenden',
     addressesTitleCurrentShippingAddress: 'Aktuelle Lieferadresse',
     addressesTitleCurrentBillingAddress: 'Aktuelle Rechnungsadresse',
     addressesContentItemActionEdit: 'Bearbeiten',
@@ -312,8 +293,7 @@ export const lang = {
     orderItemInfoContent: 'Inhalt:',
     orderItemInfoCurrentPrice: 'Aktueller Einzelpreis',
     orderItemInfoFree: 'GRATIS',
-    orderItemInfoNotAvailable:
-      'Das Produkt ist für eine Folgebestellung nicht mehr verfügbar',
+    orderItemInfoNotAvailable: 'Das Produkt ist für eine Folgebestellung nicht mehr verfügbar',
     orderActionView: 'Anzeigen',
     orderActionHide: 'Ausblenden',
     orderInfoNoDispatch: 'Nicht angegeben',
@@ -334,7 +314,7 @@ export const lang = {
     orderGuestLoginDescription:
       'Um Ihre Bestellung einsehen zu können, geben Sie bitte zuerst Ihre E-Mail-Adresse sowie die Postleitzahl aus Ihrer verwendeten Rechnungsadresse ein.',
     orderGuestLoginWrongCredentials:
-      'Die eingegebenen Daten konnten leider keiner Bestellung zugeordnet werden.',
+      'Die eingegebenen Daten konnten leider keiner Bestellung zugeordnet werden.'
   },
   address: {
     streetLabel: 'Straße und Hausnummer',
@@ -358,13 +338,12 @@ export const lang = {
     companyDepartmentLabel: 'Abteilung',
     companyDepartmentPlaceholder: 'Abteilung eingeben ...',
     companyVatLabel: 'Umsatzsteuer-ID',
-    companyVatPlaceholder: 'Umsatzsteuer-ID',
+    companyVatPlaceholder: 'Umsatzsteuer-ID'
   },
   checkout: {
     itemCounter: '{1} 1 Produkt|]1,Inf[ %count% Produkte',
     addressHeader: 'Versandinformation',
-    addressLoginToggle:
-      'Sie sind bereits Kunde? Klicken Sie hier, um sich einzuloggen.',
+    addressLoginToggle: 'Sie sind bereits Kunde? Klicken Sie hier, um sich einzuloggen.',
     addressRegisterCardTitle: 'Persönliche Informationen',
     registerGuestmodeLabel: 'Kein Kundenkonto anlegen.',
     cartTitle: 'Warenkorb',
@@ -424,8 +403,7 @@ export const lang = {
     finishInfoShipping: 'Versandart:',
     finishHeader: 'Vielen Dank für Ihre Bestellung bei %shop%!',
     finishUpdateHeader: 'Vielen Dank für die Aktualisierung Ihrer Bestellung!',
-    finishPaymentHeader:
-      'Die Zahlungsart Ihrer Bestellung wurde zu "%paymentName%" geändert!',
+    finishPaymentHeader: 'Die Zahlungsart Ihrer Bestellung wurde zu "%paymentName%" geändert!',
     finishInfoHeader: 'Informationen',
     finishInfoOrdernumber: 'Ihre Bestellnummer:',
     finishInfoConfirmationMail: 'Bestellbestätigungs-E-Mail wurde verschickt.',
@@ -440,8 +418,7 @@ export const lang = {
     shippingCountry: 'Lieferland',
     paymentMethod: 'Zahlungsart',
     shippingMethod: 'Versandart',
-    'product-stock-reached':
-      'Das Produkt "%name%" ist nur noch %quantity% mal verfügbar',
+    'product-stock-reached': 'Das Produkt "%name%" ist nur noch %quantity% mal verfügbar',
     'product-out-of-stock': 'Das Produkt "%name%" ist nicht mehr verfügbar',
     'purchase-steps-quantity':
       'Das Produkt "%name%" ist nicht in der gewünschten Menge verfügbar. Die Menge wurde auf %quantity% geändert.',
@@ -450,26 +427,21 @@ export const lang = {
     'payment-method-blocked':
       'Die Zahlungsart "%name%" ist für Ihren aktuellen Warenkorb gesperrt.',
     lineItemDeliveryDate: 'Lieferzeitraum: %earliest% - %latest%',
-    'promotion-discount-deleted':
-      'Rabatt "%name%" wurde aus dem Warenkorb gelöscht',
-    'promotion-discount-added':
-      'Rabatt "%name%" wurde dem Warenkorb hinzugefügt',
+    'promotion-discount-deleted': 'Rabatt "%name%" wurde aus dem Warenkorb gelöscht',
+    'promotion-discount-added': 'Rabatt "%name%" wurde dem Warenkorb hinzugefügt',
     'promotion-not-found': 'Der Gutschein-Code "%code%" existiert nicht.',
     'promotion-not-eligible':
       'Der Gutschein-Code wurde gespeichert, aber nicht auf den Warenkorb angewendet, da die Voraussetzungen dafür nicht zutreffen. Sobald die Voraussetzungen zutreffen, wird er automatisch hinzugefügt.',
-    'auto-promotion-not-found':
-      'Die Rabattaktion "%name%" ist nicht länger gültig!',
-    'shipping-address-blocked':
-      'Lieferungen an die gewählte Lieferadresse sind nicht möglich.',
+    'auto-promotion-not-found': 'Die Rabattaktion "%name%" ist nicht länger gültig!',
+    'shipping-address-blocked': 'Lieferungen an die gewählte Lieferadresse sind nicht möglich.',
     'billing-address-blocked':
       'Rechnungen können nicht an die gewählte Rechnungsadresse ausgestellt werden.',
     customerCommentHeader: 'Zusätzliche Informationen',
-    customerCommentLabel:
-      'Möchten Sie uns etwas über Ihre Bestellung mitteilen?',
+    customerCommentLabel: 'Möchten Sie uns etwas über Ihre Bestellung mitteilen?',
     customerCommentPlaceholder: 'Kommentieren Sie hier ...',
     'cart-merged-hint':
       'Der aktuelle Warenkorb enthält u.U. zusätzliche Produkte, die noch von einem früheren Besuch gespeichert waren.',
-    'product-not-found': 'Das Produkt wurde nicht gefunden.',
+    'product-not-found': 'Das Produkt wurde nicht gefunden.'
   },
   listing: {
     filterTitleText: 'Filter',
@@ -494,8 +466,7 @@ export const lang = {
     filterRangeMaxLabel: 'Maximal',
     filterRangeActiveMinLabel: 'Preis ab',
     filterRangeActiveMaxLabel: 'Preis bis',
-    filterRangeErrorMessage:
-      'Der Mindestpreis darf nicht höher sein als der Höchstpreis.',
+    filterRangeErrorMessage: 'Der Mindestpreis darf nicht höher sein als der Höchstpreis.',
     filterSubmitText: 'Filter',
     defaultProductSortingLabel: 'Name A-Z',
     disabledFilterTooltip:
@@ -504,7 +475,7 @@ export const lang = {
     afterListPrice: '',
     addToWishlist: 'Zum Merkzettel hinzufügen',
     addedToWishlist: 'Zum Merkzettel hinzugefügt',
-    toggleWishlist: 'Merkzettel ein-/ausschalten',
+    toggleWishlist: 'Merkzettel ein-/ausschalten'
   },
   newsletter: {
     headline: 'Newsletter abonnieren',
@@ -517,21 +488,18 @@ export const lang = {
       'Sie haben gerade unseren Newsletter abonniert.\n Um die Registrierung abzuschließen, suchen Sie in Ihrer E-Mail-Box nach unserer Bestätigungsmail und klicken Sie auf den darin enthaltenen Link.',
     subscriptionPersistedInfo:
       'Sollten Sie keine Mail erhalten haben, wiederholen Sie den Vorgang oder wenden Sie sich an den Support.',
-    subscriptionRevokeSuccess:
-      'Sie haben sich erfolgreich vom Newsletter abgemeldet.',
-    subscriptionConfirmationSuccess:
-      'Ihr Newsletter-Abonnement wurde erfolgreich registriert.',
+    subscriptionRevokeSuccess: 'Sie haben sich erfolgreich vom Newsletter abgemeldet.',
+    subscriptionConfirmationSuccess: 'Ihr Newsletter-Abonnement wurde erfolgreich registriert.',
     subscriptionConfirmationFailed:
       'Bei Ihrer Newsletter-Anmeldung ist etwas schief gelaufen. Bitte wenden Sie sich an den Support.',
-    subscriptionCompleted:
-      'Vielen Dank. Wir haben Ihre Email-Adresse eingetragen.',
+    subscriptionCompleted: 'Vielen Dank. Wir haben Ihre Email-Adresse eingetragen.',
     labelActionSelect: 'Aktion',
     labelMail: 'E-Mail-Adresse',
     labelFirstName: 'Vorname',
     labelLastName: 'Nachname',
     placeholderMail: 'max@mustermann.de',
     placeholderFirstName: 'Max',
-    placeholderLastName: 'Mustermann',
+    placeholderLastName: 'Mustermann'
   },
   contact: {
     headline: 'Kontaktformular',
@@ -541,12 +509,11 @@ export const lang = {
     commentLabel: 'Kommentar',
     commentPlaceholder: 'Kommentar eingeben ...',
     formSubmit: 'Abschicken',
-    success:
-      'Wir haben Ihre Kontaktanfrage erhalten und werden sie schnellstmöglich bearbeiten.',
+    success: 'Wir haben Ihre Kontaktanfrage erhalten und werden sie schnellstmöglich bearbeiten.'
   },
   search: {
     headline:
-      '{0} Zu "%searchTerm%" wurde kein Produkt gefunden | {1} Zu "%searchTerm%" wurde 1 Produkt gefunden | ]1,Inf[ Zu "%searchTerm%" wurden %count% Produkte gefunden',
+      '{0} Zu "%searchTerm%" wurde kein Produkt gefunden | {1} Zu "%searchTerm%" wurde 1 Produkt gefunden | ]1,Inf[ Zu "%searchTerm%" wurden %count% Produkte gefunden'
   },
   detail: {
     ordernumberLabel: 'Produktnummer:',
@@ -589,8 +556,7 @@ export const lang = {
     reviewFormSuccessUpdateAlert:
       'Vielen Dank für das Bearbeiten Ihrer Bewertung. Die Bewertung wird wieder sichtbar, sobald wir Sie erneut freigeschaltet haben.',
     reviewTeaserTitle: 'Geben Sie eine Bewertung ab!',
-    reviewTeaserText:
-      'Teilen Sie Ihre Erfahrungen mit dem Produkt mit anderen Kunden.',
+    reviewTeaserText: 'Teilen Sie Ihre Erfahrungen mit dem Produkt mit anderen Kunden.',
     reviewTeaserButton: 'Schreiben Sie eine Bewertung',
     reviewTeaserButtonHide: 'Bewertungen anzeigen!',
     reviewExistsTeaserTitle: 'Bearbeiten Sie Ihre Bewertung!',
@@ -612,18 +578,16 @@ export const lang = {
     reviewLoginSignupLink: 'Klicken Sie hier, um sich anzumelden.',
     reviewLoginCancelButton: 'Abbrechen',
     reviewAvgRate: 'von',
-    reviewAvgRateElements: 'Sternen',
+    reviewAvgRateElements: 'Sternen'
   },
   wishlist: {
     headline: 'Ihr Merkzettel',
-    itemDeleteSuccess:
-      'Sie haben das Produkt erfolgreich vom Merkzettel entfernt.',
-    itemAddedSuccess:
-      'Sie haben das Produkt erfolgreich in den Merkzettel eingefügt.',
+    itemDeleteSuccess: 'Sie haben das Produkt erfolgreich vom Merkzettel entfernt.',
+    itemAddedSuccess: 'Sie haben das Produkt erfolgreich in den Merkzettel eingefügt.',
     currentlyNotAvailable: 'Derzeit nicht verfügbar',
     manufacturerDisplayName: 'Hersteller',
     deliveryTimeAvailable: 'Sofort verfügbar, Lieferzeit %name%',
-    noLongerAvailableTooltip: 'Das Produkt ist nicht mehr verfügbar.',
+    noLongerAvailableTooltip: 'Das Produkt ist nicht mehr verfügbar.'
   },
   footer: {
     serviceHotlineHeadline: 'Service-Hotline',
@@ -641,7 +605,7 @@ export const lang = {
       '* Alle Preise inkl. gesetzl. Mehrwertsteuer zzgl. <a data-toggle="modal" href="%url%" data-url="%url%">Versandkosten</a> und ggf. Nachnahmegebühren, wenn nicht anders angegeben.',
     excludeVat:
       '* Alle Preise exkl. gesetzl. Mehrwertsteuer zzgl. <a data-toggle="modal" href="%url%" data-url="%url%">Versandkosten</a> und ggf. Nachnahmegebühren, wenn nicht anders angegeben.',
-    copyrightInfo: 'Realisiert mit Shopware',
+    copyrightInfo: 'Realisiert mit Shopware'
   },
   cookie: {
     message:
@@ -653,21 +617,19 @@ export const lang = {
     acceptAll: 'Alle Cookies akzeptieren',
     headline: 'Cookie-Voreinstellungen',
     groupRequired: 'Technisch erforderlich',
-    groupRequiredDescription:
-      'Für die Funktion des Shops erforderliche Cookies:',
+    groupRequiredDescription: 'Für die Funktion des Shops erforderliche Cookies:',
     groupRequiredSession: 'Sitzung',
     groupRequiredCsrf: 'CSRF-Schutz',
     groupRequiredTimezone: 'Zeitzone',
     groupStatistical: 'Statistiken',
-    groupStatisticalDescription:
-      'Für Statistiken und Shop-Performance-Metriken genutzte Cookies.',
+    groupStatisticalDescription: 'Für Statistiken und Shop-Performance-Metriken genutzte Cookies.',
     groupStatisticalGoogleAnalytics: 'Google Analytics',
     groupComfortFeatures: 'Komfortfunktionen',
-    groupComfortFeaturesWishlist: 'Merkzettel',
+    groupComfortFeaturesWishlist: 'Merkzettel'
   },
   ellipsis: {
     expandLabel: 'mehr anzeigen',
-    shrinkLabel: 'weniger anzeigen',
+    shrinkLabel: 'weniger anzeigen'
   },
   component: {
     product: {
@@ -681,20 +643,20 @@ export const lang = {
           length: 'Länge:',
           releaseDate: 'Veröffentlicht:',
           description: 'Beschreibung:',
-          referencePrice: 'Inhalt:',
+          referencePrice: 'Inhalt:'
         },
         customField: {
           true: 'Ja',
-          false: 'Nein',
-        },
-      },
+          false: 'Nein'
+        }
+      }
     },
     cms: {
       vimeo: {
         privacyNotice:
           'Mit dem Aufruf des Videos erklärst Du Dich einverstanden, dass Deine Daten an %platform% übermittelt werden und das Du die <a data-toggle="modal" data-url="%url%" href="%url%" title="Datenschutzbestimmungen">Datenschutzbestimmungen</a> gelesen hast.',
-        acceptButtonLabel: 'Akzeptieren',
-      },
-    },
-  },
+        acceptButtonLabel: 'Akzeptieren'
+      }
+    }
+  }
 };

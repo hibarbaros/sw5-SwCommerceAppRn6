@@ -1,10 +1,10 @@
-import React, {useState, useEffect, createContext, useContext} from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 
-import {setItem, getItem} from 'utils/storagehelper';
+import { setItem, getItem } from 'utils/storagehelper';
 
 const CartContext = createContext([{}, () => {}]);
 
-export const CartProvider = ({children}) => {
+export const CartProvider = ({ children }) => {
   const [userCart, setUserCart] = useState([]);
 
   const setInitialUserCart = (products) => {
@@ -21,8 +21,9 @@ export const CartProvider = ({children}) => {
       value={{
         userCart,
         setUserCart,
-        setInitialUserCart,
-      }}>
+        setInitialUserCart
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

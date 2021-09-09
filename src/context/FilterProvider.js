@@ -1,8 +1,8 @@
-import React, {useState, useContext, createContext} from 'react';
+import React, { useState, useContext, createContext } from 'react';
 
 const FilterContext = createContext([{}, () => {}]);
 
-const FilterProvider = ({children}) => {
+const FilterProvider = ({ children }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -12,8 +12,9 @@ const FilterProvider = ({children}) => {
         selectedOptions,
         setSelectedOptions,
         filteredProducts,
-        setFilteredProducts,
-      }}>
+        setFilteredProducts
+      }}
+    >
       {children}
     </FilterContext.Provider>
   );

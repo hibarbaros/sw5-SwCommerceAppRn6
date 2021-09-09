@@ -1,4 +1,4 @@
-import React, {createContext, useState, useContext} from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LocalizedStrings from 'react-native-localization';
 import * as RNLocalize from 'react-native-localize';
@@ -6,13 +6,13 @@ import ReactNative from 'react-native';
 import I18n from 'i18n-js';
 import en from '../localization/en.json';
 import de from '../localization/de.json';
-import {lang as fr} from '../localization/fr-FR';
+import { lang as fr } from '../localization/fr-FR';
 
 const DEFAULT_LANGUAGE = 'de';
 const APP_LANGUAGE = 'appLanguage';
 
 // Define the supported translations
-I18n.translations = {de, en, fr};
+I18n.translations = { de, en, fr };
 
 export const languages = I18n.translations;
 
@@ -22,19 +22,18 @@ export const LocalizationContext = createContext({
   translations,
   setAppLanguage: () => {},
   appLanguage: DEFAULT_LANGUAGE,
-  initializeAppLanguage: () => {},
+  initializeAppLanguage: () => {}
 });
 
 const currentLocale = I18n.currentLocale();
 
 // Is it a RTL language?
-export const isRTL =
-  currentLocale.indexOf('he') === 0 || currentLocale.indexOf('ar') === 0;
+export const isRTL = currentLocale.indexOf('he') === 0 || currentLocale.indexOf('ar') === 0;
 
 // Allow RTL alignment in RTL languages
 ReactNative.I18nManager.allowRTL(isRTL);
 
-export const LocalizationProvider = ({children}) => {
+export const LocalizationProvider = ({ children }) => {
   const [appLanguage, setAppLanguage] = useState(DEFAULT_LANGUAGE);
 
   const setLanguage = (language) => {
@@ -49,9 +48,7 @@ export const LocalizationProvider = ({children}) => {
     if (currentLanguage === 'undefined') {
       let localeCode = DEFAULT_LANGUAGE;
       const supportedLocaleCodes = translations.getAvailableLanguages();
-      const phoneLocaleCodes = RNLocalize.getLocales().map(
-        (locale) => locale.languageCode,
-      );
+      const phoneLocaleCodes = RNLocalize.getLocales().map((locale) => locale.languageCode);
       phoneLocaleCodes.some((code) => {
         if (supportedLocaleCodes.includes(code)) {
           localeCode = code;
@@ -72,8 +69,9 @@ export const LocalizationProvider = ({children}) => {
         translations,
         setAppLanguage: setLanguage,
         appLanguage,
-        initializeAppLanguage,
-      }}>
+        initializeAppLanguage
+      }}
+    >
       {children}
     </LocalizationContext.Provider>
   );

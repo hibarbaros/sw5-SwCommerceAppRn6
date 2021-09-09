@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 import { Button, Modal, Text, Container } from 'themes/components';
 import { useShopPagesByShopId } from 'utils/hooks/useApp';

@@ -1,15 +1,11 @@
-import {useQuery, useMutation} from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import Toast from 'react-native-toast-message';
 
-import {useLocalizationContext} from 'context/Translations';
-import {useAppContext} from 'context/AppContext';
-import {useCheckoutContext} from 'context/CheckoutContext';
+import { useLocalizationContext } from 'context/Translations';
+import { useAppContext } from 'context/AppContext';
+import { useCheckoutContext } from 'context/CheckoutContext';
 
-import {
-  orderbyCustomerList,
-  orderDetail,
-  orderCreate,
-} from '../actions/orderactions';
+import { orderbyCustomerList, orderDetail, orderCreate } from '../actions/orderactions';
 
 const getOrderByOrderId = async (orderId) => {
   const data = await orderDetail(orderId);
@@ -18,7 +14,7 @@ const getOrderByOrderId = async (orderId) => {
 
 export function useOrderByOrderId(orderId) {
   return useQuery(['orderDetail', orderId], () => getOrderByOrderId(orderId), {
-    enabled: !!orderId,
+    enabled: !!orderId
   });
 }
 
@@ -28,9 +24,7 @@ const getOrderByCustomerId = async (userId) => {
 };
 
 export function useOrdersByCustomerId(userId) {
-  return useQuery(['userOrdersData', userId], () =>
-    getOrderByCustomerId(userId),
-  );
+  return useQuery(['userOrdersData', userId], () => getOrderByCustomerId(userId));
 }
 
 //Create Order
@@ -40,13 +34,13 @@ const getCreateOrder = async (mutateVariables) => {
 };
 
 export function useCreateOrder() {
-  const {translations} = useLocalizationContext();
-  const {user, currency} = useAppContext();
+  const { translations } = useLocalizationContext();
+  const { user, currency } = useAppContext();
   const {
     selectedPaymentMethod,
     selectedShippingMethod,
     selectedShippingAddress,
-    selectedBilllingAddress,
+    selectedBilllingAddress
   } = useCheckoutContext();
 
   const mutateVariables = {
@@ -55,7 +49,7 @@ export function useCreateOrder() {
     currency,
     selectedShippingAddress,
     selectedBilllingAddress,
-    selectedShippingMethod,
+    selectedShippingMethod
   };
 
   const mutate = useMutation(() => getCreateOrder(mutateVariables), {
@@ -63,15 +57,15 @@ export function useCreateOrder() {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: e.message,
+        text2: e.message
       });
     },
     onSuccess: () => {
       Toast.show({
         text1: 'Success',
-        text2: translations.formularSuccess,
+        text2: translations.formularSuccess
       });
-    },
+    }
   });
 
   return mutate;

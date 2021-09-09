@@ -1,15 +1,14 @@
-import {useContext} from 'react';
 import _ from 'lodash';
 
-import {useQuery, useMutation} from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import {
   shopData,
   shippingsDataByCountry,
   paymentsData,
-  countriesData,
+  countriesData
 } from '../actions/appactions';
 
-import {useAppContext} from 'context/AppContext';
+import { useAppContext } from 'context/AppContext';
 
 const getShopPagesByShopId = async (shopId) => {
   const data = await shopData(shopId);
@@ -17,9 +16,7 @@ const getShopPagesByShopId = async (shopId) => {
 };
 
 export function useShopPagesByShopId(shopId) {
-  return useQuery(['shopPagesData', shopId], () =>
-    getShopPagesByShopId(shopId),
-  );
+  return useQuery(['shopPagesData', shopId], () => getShopPagesByShopId(shopId));
 }
 
 const getShopByShopId = async () => {
@@ -37,9 +34,7 @@ const getShippingByCountryId = async (countryId) => {
 };
 
 export function useShippingByCountryId(countryId) {
-  return useQuery(['shippingMethodsData', countryId], () =>
-    getShippingByCountryId(countryId),
-  );
+  return useQuery(['shippingMethodsData', countryId], () => getShippingByCountryId(countryId));
 }
 
 const getPaymentMethods = async () => {
@@ -62,9 +57,9 @@ export function useCountries() {
 
 const getAddRemoveToWishList = async (productId, whislist, setWhislist) => {
   let products = whislist;
-  const someProduct = _.some(products, {id: productId});
+  const someProduct = _.some(products, { id: productId });
   if (someProduct) {
-    _.remove(products, {id: productId});
+    _.remove(products, { id: productId });
   } else {
     products.push(productId);
   }
@@ -73,9 +68,9 @@ const getAddRemoveToWishList = async (productId, whislist, setWhislist) => {
 };
 
 export function useAddRemoveToWishList() {
-  const {whislist, setWhislist} = useAppContext();
+  const { whislist, setWhislist } = useAppContext();
   const mutate = useMutation('paymentMethodsData', (productId) =>
-    getAddRemoveToWishList(productId, whislist, setWhislist),
+    getAddRemoveToWishList(productId, whislist, setWhislist)
   );
   return mutate;
 }

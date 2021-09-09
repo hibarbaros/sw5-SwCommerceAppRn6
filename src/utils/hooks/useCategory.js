@@ -1,9 +1,5 @@
-import {useQuery} from 'react-query';
-import {
-  categoryDetail,
-  categories,
-  categoriesByRecomended,
-} from '../actions/categoryactions';
+import { useQuery } from 'react-query';
+import { categoryDetail, categories, categoriesByRecomended } from '../actions/categoryactions';
 
 const getCategoryByCategoryId = async (categoryId) => {
   const data = await categoryDetail(categoryId);
@@ -11,11 +7,7 @@ const getCategoryByCategoryId = async (categoryId) => {
 };
 
 export function useCategoryByCategoryId(categoryId, options) {
-  return useQuery(
-    ['categoryData', categoryId],
-    () => getCategoryByCategoryId(categoryId),
-    options,
-  );
+  return useQuery(['categoryData', categoryId], () => getCategoryByCategoryId(categoryId), options);
 }
 
 const getAllCategories = async () => {

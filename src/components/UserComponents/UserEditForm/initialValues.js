@@ -3,5 +3,5 @@ export const initialValues = {
   firstname: (customerData) => customerData.firstname,
   lastname: (customerData) => customerData.lastname,
   newsletter: (customerData) => customerData.newsletter,
-  salutation: (customerData) => customerData.salutation,
+  salutation: (customerData) => customerData.salutation
 };

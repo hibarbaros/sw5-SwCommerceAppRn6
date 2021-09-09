@@ -11,7 +11,7 @@ export const validationSchema = {
   confirmpasswordValidation: (text) =>
     yup.string().when('password', {
       is: (val) => (val && val.length > 0 ? true : false),
-      then: yup.string().oneOf([yup.ref('password')], text),
+      then: yup.string().oneOf([yup.ref('password')], text)
     }),
   textValidation: (text) => yup.string().required(text),
   numberValidation: (text) => yup.number().required(text),
@@ -20,6 +20,6 @@ export const validationSchema = {
   isShippingTrue: (text) =>
     yup.string().when('isShipping', {
       is: true,
-      then: yup.string().required(text),
-    }),
+      then: yup.string().required(text)
+    })
 };

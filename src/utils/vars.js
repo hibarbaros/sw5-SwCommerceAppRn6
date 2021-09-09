@@ -2,7 +2,7 @@ export default {
   host: 'https://stage-shopware.lemken.com/api',
   imageUrl: 'https://shop.lemken.com',
   username: 'restapigranpasso',
-  password: 'Dyfa4hfqOCQ7s3rAdWFaQxBd0fM6D0g7oRSM8nlN',
+  password: 'Dyfa4hfqOCQ7s3rAdWFaQxBd0fM6D0g7oRSM8nlN'
 };
 // export default {
 //   host: 'https://sw5.shopwarelab.com/api',

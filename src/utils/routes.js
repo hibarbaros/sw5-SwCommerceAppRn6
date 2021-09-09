@@ -8,5 +8,5 @@ export default {
   loginScreen: 'UserLoginScreen',
   userOrderScreen: 'UserOrderScreen',
   settingsScreen: 'SettingsScreen',
-  tabComponent: 'TabComponent',
+  tabComponent: 'TabComponent'
 };

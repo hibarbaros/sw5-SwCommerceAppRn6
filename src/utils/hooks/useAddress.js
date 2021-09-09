@@ -1,13 +1,9 @@
-import {useQuery, useMutation, useQueryClient} from 'react-query';
-import {useLocalizationContext} from '../../context/Translations';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useLocalizationContext } from '../../context/Translations';
 import Toast from 'react-native-toast-message';
 
-import {
-  addressDetail,
-  addressDelete,
-  addressAddEdit,
-} from '../actions/addressactions';
-import {customerData} from '../actions/useractions';
+import { addressDetail, addressDelete, addressAddEdit } from '../actions/addressactions';
+import { customerData } from '../actions/useractions';
 
 //!Get Address
 const getAddressById = async (addressId) => {
@@ -25,9 +21,7 @@ const getUserAddressByUserId = async (userId) => {
   return data.address;
 };
 export function useAddressesByUserId(userId) {
-  return useQuery(['userAddressesData', userId], () =>
-    getUserAddressByUserId(userId),
-  );
+  return useQuery(['userAddressesData', userId], () => getUserAddressByUserId(userId));
 }
 //!Get User Address
 
@@ -38,7 +32,7 @@ const getDeleteAddress = async (addressId) => {
 };
 
 export function useDeleteAddress() {
-  const {translations} = useLocalizationContext();
+  const { translations } = useLocalizationContext();
   const cache = useQueryClient();
 
   const mutate = useMutation((addressId) => getDeleteAddress(addressId), {
@@ -46,7 +40,7 @@ export function useDeleteAddress() {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: e.message,
+        text2: e.message
       });
     },
     onSettled: () => {
@@ -57,7 +51,7 @@ export function useDeleteAddress() {
         cache.invalidateQueries('userData');
         Toast.show({
           text1: 'Success',
-          text2: translations.formularSuccess,
+          text2: translations.formularSuccess
         });
         return data;
       }
@@ -65,10 +59,10 @@ export function useDeleteAddress() {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: translations.formularError,
+          text2: translations.formularError
         });
       }
-    },
+    }
   });
 
   return mutate;
@@ -77,12 +71,13 @@ export function useDeleteAddress() {
 
 //!Add-Edit Address
 const getAddEditAddress = async (values) => {
+  console.log('🚀 ~ file: useAddress.js ~ line 74 ~ getAddEditAddress ~ values', values);
   const data = await addressAddEdit(values);
   return data;
 };
 
 export function useAddEditAddress() {
-  const {translations} = useLocalizationContext();
+  const { translations } = useLocalizationContext();
 
   const cache = useQueryClient();
 
@@ -91,7 +86,7 @@ export function useAddEditAddress() {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: e.message,
+        text2: e.message
       });
     },
     onSettled: () => {
@@ -102,17 +97,17 @@ export function useAddEditAddress() {
         cache.invalidateQueries('userData');
         Toast.show({
           text1: 'Success',
-          text2: translations.formularSuccess,
+          text2: translations.formularSuccess
         });
       }
       if (!res) {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: translations.formularError,
+          text2: translations.formularError
         });
       }
-    },
+    }
   });
 
   return mutate;

@@ -5,6 +5,7 @@ import { FormErrorLabel } from 'themes/components';
 
 export default function FormInput(props) {
   const {
+    disabled,
     field: { name, onBlur, onChange, value },
     form: { errors, touched, setFieldTouched },
     suffix,

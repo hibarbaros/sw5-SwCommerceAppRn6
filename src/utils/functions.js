@@ -5,19 +5,16 @@ import bcrypt from 'react-native-bcrypt';
 import vars from '../utils/vars';
 
 function setSubCategories(data, categoryId) {
-  const categories = _.filter(data, {parentId: categoryId});
+  const categories = _.filter(data, { parentId: categoryId });
   return categories;
 }
 
 export function setProductCategories(allCategories, selectedLanguage) {
-  const mainCategory = _.find(allCategories, {id: selectedLanguage});
+  const mainCategory = _.find(allCategories, { id: selectedLanguage });
   let categoriesTree = [];
   for (const category of allCategories) {
     const dataSubCategories = setSubCategories(allCategories, category.id);
-    if (
-      dataSubCategories.length === 0 &&
-      category.parentId === selectedLanguage
-    ) {
+    if (dataSubCategories.length === 0 && category.parentId === selectedLanguage) {
       const element = category;
       categoriesTree.push(element);
     }
@@ -27,7 +24,7 @@ export function setProductCategories(allCategories, selectedLanguage) {
       categoriesTree.push(element);
     }
   }
-  categoriesTree = _.filter(categoriesTree, {parentId: mainCategory.id});
+  categoriesTree = _.filter(categoriesTree, { parentId: mainCategory.id });
   return _.orderBy(categoriesTree, ['id'], ['asc']);
 }
 
@@ -46,11 +43,7 @@ export async function checkBcryptPass(password, hashPassword) {
   const check = bcrypt.compareSync(password, hashPassword);
   return check ? true : false;
 }
-export async function checkHashPassword(
-  encoderName,
-  oldPassword,
-  hashPassword,
-) {
+export async function checkHashPassword(encoderName, oldPassword, hashPassword) {
   if (encoderName === 'md5') {
     const checked = await checkMd5Pass(oldPassword);
     return checked ? true : false;
@@ -73,9 +66,7 @@ export function findVariantProductOrderNumber(productData, selectedVariants) {
   flatDetail.forEach((element) => {
     let findedCount = 0;
     return selectedVariants.forEach((variant) => {
-      const finded = element.configuratorOptions.some(
-        (x) => x.id === variant.variant.id,
-      );
+      const finded = element.configuratorOptions.some((x) => x.id === variant.variant.id);
       if (finded) {
         findedCount++;
         if (findedCount === selectedVariants.length) {
@@ -100,9 +91,7 @@ export const categoryFilterList = (categoryProducts, attributesOptions) => {
   const filteredData = attributesOptions.map((item) => ({
     id: item.id,
     name: item.name,
-    options: uniqueFilterList.filter(
-      (x) => parseInt(x.optionID, 10) === item.id,
-    ),
+    options: uniqueFilterList.filter((x) => parseInt(x.optionID, 10) === item.id)
   }));
 
   return filteredData;

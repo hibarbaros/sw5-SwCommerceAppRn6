@@ -36,12 +36,11 @@ export const lang = {
       "We are sorry, the page you're looking for could not be found. It may no longer exist or may have been moved.",
     '404ErrorReturn': 'Back to homepage',
     maintenanceModeHeader: 'Maintenance mode',
-    maintenanceModeDescription:
-      'We are currently updating this site. Please check back later.',
+    maintenanceModeDescription: 'We are currently updating this site. Please check back later.',
     sortingLabel: 'Sorting',
     next: 'Next',
     previous: 'Previous',
-    formSubmit: 'Submit',
+    formSubmit: 'Submit'
   },
   header: {
     logoLink: 'Go to homepage',
@@ -53,41 +52,34 @@ export const lang = {
       '<strong>Questions regarding your order?</strong><br /><strong><a href="tel:+4912345-123456789">12345-123456789</a></strong> <small>Daily from 7:30 am to 10:00 pm</small>',
     indexLinkService: 'Service/help',
     searchNoResult: 'No results found.',
-    wishlist: 'Wishlist',
+    wishlist: 'Wishlist'
   },
   error: {
     'VIOLATION::IS_BLANK_ERROR': '%field% should not be empty.',
     'VIOLATION::TOO_LOW_ERROR': '%field% should not be empty.',
     'VIOLATION::STRICT_CHECK_FAILED_ERROR': '%field% is invalid',
-    'VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE':
-      'This email address has already been registered.',
+    'VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE': 'This email address has already been registered.',
     'VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT': 'Password incorrect.',
     'message-default': 'Unfortunately, something went wrong.',
     'message-404': 'The requested page cannot be found.',
-    addToCartError:
-      'An error occurred while trying to add items to the shopping cart.',
+    addToCartError: 'An error occurred while trying to add items to the shopping cart.',
     FRAMEWORK__INVALID_UUID: 'The selected payment method does not exist.',
-    CHECKOUT__UNKNOWN_PAYMENT_METHOD:
-      'The selected payment method does not exist.',
+    CHECKOUT__UNKNOWN_PAYMENT_METHOD: 'The selected payment method does not exist.',
     productNotFound: 'Product "%number%" not found.',
     'payment-method-blocked': 'Payment via %name% not available.',
     'shipping-method-blocked': '%name% shipping is not available.',
-    'shipping-address-blocked':
-      'Shipping to the selected address is not possible.',
+    'shipping-address-blocked': 'Shipping to the selected address is not possible.',
     'shipping-address-invalid':
       'The selected shipping address is not valid or incomplete. Please check your entries.',
-    'billing-address-blocked':
-      'Billing to the selected address is not possible.',
+    'billing-address-blocked': 'Billing to the selected address is not possible.',
     'billing-address-invalid':
       'The selected billing address is not valid or incomplete. Please check your entries.',
     'VIOLATION::TOO_SHORT_ERROR': '%field% is too short.',
     'product-not-found': 'The product could not be found.',
-    'message-403-ajax':
-      'Your session has expired. Please reload the page and try again.',
-    'message-403':
-      'Your session has expired. Please return to the last page and try again.',
+    'message-403-ajax': 'Your session has expired. Please reload the page and try again.',
+    'message-403': 'Your session has expired. Please return to the last page and try again.',
     'product-out-of-stock': '%name% is not available at the moment.',
-    'auto-promotion-not-found': 'Promotion "%name%" was no longer valid!',
+    'auto-promotion-not-found': 'Promotion "%name%" was no longer valid!'
   },
   account: {
     externalPaymentCanceled:
@@ -110,8 +102,7 @@ export const lang = {
     loginPasswordPlaceholder: 'Password',
     loginPasswordRecover: 'I have forgotten my password.',
     loginSubmit: 'Login',
-    loginBadCredentials:
-      'Could not find an account that matches the given credentials.',
+    loginBadCredentials: 'Could not find an account that matches the given credentials.',
     registerAdvantagesHeader: 'Login advantages:',
     registerAdvantage1: 'Express shopping',
     registerAdvantage2: 'Save your data and settings',
@@ -134,18 +125,14 @@ export const lang = {
     personalMailLabel: 'New email address',
     personalMailPlaceholder: 'Enter new email address...',
     personalMailConfirmationLabel: 'Email confirmation',
-    personalMailConfirmationPlaceholder:
-      'Please enter your email address once again...',
+    personalMailConfirmationPlaceholder: 'Please enter your email address once again...',
     personalMailConfirmationInvalidMessage: 'Email addresses do not match.',
     personalPasswordLabel: 'Password',
     personalPasswordPlaceholder: 'Enter password...',
     personalPasswordConfirmationLabel: 'Password confirmation',
-    personalPasswordConfirmationPlaceholder:
-      'Please enter your password once again...',
-    personalPasswordConfirmationInvalidMessage:
-      'The passwords you have entered do not match.',
-    personalPasswordDescription:
-      'Passwords must have a minimum length of %minLength% characters.',
+    personalPasswordConfirmationPlaceholder: 'Please enter your password once again...',
+    personalPasswordConfirmationInvalidMessage: 'The passwords you have entered do not match.',
+    personalPasswordDescription: 'Passwords must have a minimum length of %minLength% characters.',
     personalBirthdayLabel: 'Date of birth',
     personalBirthdaySelectDay: 'Day',
     personalBirthdaySelectMonth: 'Month',
@@ -166,8 +153,7 @@ export const lang = {
     profileText: 'Check your personal data.',
     addressTitle: 'Addresses',
     paymentTitle: 'Payment methods',
-    paymentText:
-      'View all available payment methods and select a default payment method.',
+    paymentText: 'View all available payment methods and select a default payment method.',
     ordersTitle: 'Orders',
     logout: 'Logout',
     guestAbort: 'Close guest session',
@@ -184,8 +170,7 @@ export const lang = {
     overviewChangeBilling: 'Change billing address',
     overviewChangeShipping: 'Change shipping address',
     overviewNewestOrderHeader: 'Last order',
-    overviewCustomerGroupRequest:
-      'Access to customer group "%group%" requested.',
+    overviewCustomerGroupRequest: 'Access to customer group "%group%" requested.',
     paymentChangeSubmit: 'Change',
     profilePersonalTitle: 'Personal data',
     profileMailTitle: 'Email address',
@@ -194,8 +179,7 @@ export const lang = {
     profileUpdateSuccess: 'Profile has been updated.',
     profileChangeEmail: 'Change email address',
     profileChangePassword: 'Change password',
-    profileConfirmPassword:
-      'Please enter your current password again to confirm changes.',
+    profileConfirmPassword: 'Please enter your current password again to confirm changes.',
     profileCredentialsTitle: 'Login data',
     orRegister: 'or',
     orRegisterLink: 'sign up',
@@ -204,8 +188,7 @@ export const lang = {
     passwordChangeSuccess: 'Your password has been updated.',
     passwordChangeNoSuccess: 'Password could not be changed.',
     passwordHashNotFound: 'The password reset link seems to be invalid.',
-    passwordHashExpired:
-      'The password reset link is no longer valid. Please request a new one.',
+    passwordHashExpired: 'The password reset link is no longer valid. Please request a new one.',
     recoveryMailSend:
       ' If the provided email address is registered, a confirmation email including a password reset link has been sent.',
     profilePasswordCreateNew: 'New password',
@@ -276,8 +259,7 @@ export const lang = {
     editOrderCancelOrderModalHeader: 'Cancel order',
     editOrderCancelOrderModalBodyText:
       'Beware, if you decide to ultimately cancel your order, the associated payment method and all applied promotions will be lost!',
-    editOrderCancelOrderModalBodyQuestion:
-      'Are you sure you want to cancel your order after all?',
+    editOrderCancelOrderModalBodyQuestion: 'Are you sure you want to cancel your order after all?',
     editOrderCancelOrderModalFooterButton: 'Cancel order',
     editOrderCancelOrderModalFooterButtonBack: 'Back',
     editOrderPaymentNotChangeable:
@@ -304,8 +286,7 @@ export const lang = {
     orderItemInfoContent: 'Content:',
     orderItemInfoCurrentPrice: 'Current item price',
     orderItemInfoFree: 'FREE',
-    orderItemInfoNotAvailable:
-      'Product no longer available for a follow-up order',
+    orderItemInfoNotAvailable: 'Product no longer available for a follow-up order',
     orderActionView: 'View',
     orderActionHide: 'Hide',
     orderInfoNoDispatch: 'No stated',
@@ -325,8 +306,7 @@ export const lang = {
     orderGuestLoginTitle: 'Authentication',
     orderGuestLoginDescription:
       'To view your order, please enter your mail address and the postal code given with your billing address.',
-    orderGuestLoginWrongCredentials:
-      'The given data could not be associated with an order.',
+    orderGuestLoginWrongCredentials: 'The given data could not be associated with an order.'
   },
   address: {
     streetLabel: 'Street address',
@@ -350,7 +330,7 @@ export const lang = {
     companyDepartmentLabel: 'Department',
     companyDepartmentPlaceholder: 'Enter department...',
     companyVatLabel: 'VAT ID',
-    companyVatPlaceholder: 'VAT ID',
+    companyVatPlaceholder: 'VAT ID'
   },
   checkout: {
     itemCounter: '{1} 1 item|]1,Inf[ %count% items',
@@ -415,8 +395,7 @@ export const lang = {
     finishInfoShipping: 'Shipping method:',
     finishHeader: 'Thank you for your order with %shop%!',
     finishUpdateHeader: 'Thank you for updating your order!',
-    finishPaymentHeader:
-      "Your order's payment method has been changed to %paymentName%!",
+    finishPaymentHeader: "Your order's payment method has been changed to %paymentName%!",
     finishInfoHeader: 'Information',
     finishInfoOrdernumber: 'Your order number: #',
     finishInfoConfirmationMail: 'Order confirmation email has been sent.',
@@ -431,8 +410,7 @@ export const lang = {
     shippingCountry: 'Shipping country',
     paymentMethod: 'Payment method',
     shippingMethod: 'Shipping method',
-    'product-stock-reached':
-      'The product "%name%" is only available %quantity% times',
+    'product-stock-reached': 'The product "%name%" is only available %quantity% times',
     'product-out-of-stock': 'The product "%name%" is not available any more',
     'purchase-steps-quantity':
       'The product "%name%" is not available in this quantity. The quantity was changed to %quantity%',
@@ -449,15 +427,13 @@ export const lang = {
       'Promotion code valid - however, not all conditions were met and the discount was not applied. Once all conditions are met, the discount will be applied automatically.',
     'shipping-address-blocked':
       'Shipping to the selected shipping address is currently not possible.',
-    'billing-address-blocked':
-      'Billing to the selected address is not possible.',
+    'billing-address-blocked': 'Billing to the selected address is not possible.',
     customerCommentHeader: 'Additional information',
-    customerCommentLabel:
-      'Would you like to tell us anything about your order?',
+    customerCommentLabel: 'Would you like to tell us anything about your order?',
     customerCommentPlaceholder: 'Comment here...',
     'cart-merged-hint':
       'The current shopping cart might contain additional products that have been added and saved during a previous visit.',
-    'product-not-found': 'The product could not be found.',
+    'product-not-found': 'The product could not be found.'
   },
   listing: {
     filterTitleText: 'Filter',
@@ -482,8 +458,7 @@ export const lang = {
     filterRangeMaxLabel: 'Maximum',
     filterRangeActiveMinLabel: 'Price from',
     filterRangeActiveMaxLabel: 'Price to',
-    filterRangeErrorMessage:
-      'The minimum price cannot be higher than the maximum price.',
+    filterRangeErrorMessage: 'The minimum price cannot be higher than the maximum price.',
     filterSubmitText: 'Filter',
     defaultProductSortingLabel: 'Name, ascending',
     disabledFilterTooltip:
@@ -492,7 +467,7 @@ export const lang = {
     afterListPrice: '',
     addToWishlist: 'Add to wish list',
     addedToWishlist: 'Added to wish list',
-    toggleWishlist: 'Toggle wishlist',
+    toggleWishlist: 'Toggle wishlist'
   },
   newsletter: {
     headline: 'Subscribe to newsletter',
@@ -516,7 +491,7 @@ export const lang = {
     labelLastName: 'Last name',
     placeholderMail: 'john@doe.com',
     placeholderFirstName: 'John',
-    placeholderLastName: 'Doe',
+    placeholderLastName: 'Doe'
   },
   contact: {
     headline: 'Contact',
@@ -526,12 +501,11 @@ export const lang = {
     commentLabel: 'Comment',
     commentPlaceholder: 'Enter comment...',
     formSubmit: 'Submit',
-    success:
-      'We have received your contact request and will process it as soon as possible.',
+    success: 'We have received your contact request and will process it as soon as possible.'
   },
   search: {
     headline:
-      '{0} 0 products found for "%searchTerm%" | {1} One product found for "%searchTerm%" | ]1,Inf[ %count% products found for "%searchTerm%"',
+      '{0} 0 products found for "%searchTerm%" | {1} One product found for "%searchTerm%" | ]1,Inf[ %count% products found for "%searchTerm%"'
   },
   detail: {
     ordernumberLabel: 'Product number:',
@@ -567,8 +541,7 @@ export const lang = {
     reviewFormContentLabel: 'Your review',
     reviewFormSubmitText: 'Submit',
     reviewFormCancelText: 'Cancel',
-    reviewFormErrorAlert:
-      'An error occured. Please make sure you filled in all fields correctly.',
+    reviewFormErrorAlert: 'An error occured. Please make sure you filled in all fields correctly.',
     reviewFormSuccessAlert:
       'Thank you for submitting your review. We will examine the review and eventually unlock it. In the meantime, please be patient.',
     reviewFormSuccessUpdateAlert:
@@ -595,18 +568,16 @@ export const lang = {
     reviewLoginSignupLink: 'Click here to sign up.',
     reviewLoginCancelButton: 'Cancel',
     reviewAvgRate: 'out of',
-    reviewAvgRateElements: 'stars',
+    reviewAvgRateElements: 'stars'
   },
   wishlist: {
     headline: 'Your wishlist',
-    itemDeleteSuccess:
-      'You have successfully removed the product from the wishlist.',
-    itemAddedSuccess:
-      'You have successfully added the product into the wishlist.',
+    itemDeleteSuccess: 'You have successfully removed the product from the wishlist.',
+    itemAddedSuccess: 'You have successfully added the product into the wishlist.',
     currentlyNotAvailable: 'Currently not available',
     manufacturerDisplayName: 'Manufacturer',
     deliveryTimeAvailable: 'Available, delivery time %name%',
-    noLongerAvailableTooltip: 'The product is no longer available.',
+    noLongerAvailableTooltip: 'The product is no longer available.'
   },
   footer: {
     serviceHotlineHeadline: 'Service hotline',
@@ -624,7 +595,7 @@ export const lang = {
       '* All prices incl. VAT plus <a data-toggle="modal" href="%url%" data-url="%url%">shipping costs</a> and possible delivery charges, if not stated otherwise.',
     excludeVat:
       '* All prices excl. VAT plus <a data-toggle="modal" href="%url%" data-url="%url%">shipping costs</a> and possible delivery charges, if not stated otherwise.',
-    copyrightInfo: 'Realised with Shopware',
+    copyrightInfo: 'Realised with Shopware'
   },
   cookie: {
     message:
@@ -641,15 +612,14 @@ export const lang = {
     groupRequiredCsrf: 'CSRF protection',
     groupRequiredTimezone: 'Timezone',
     groupStatistical: 'Statistics',
-    groupStatisticalDescription:
-      'Cookies used for statistics and shop performance metrics.',
+    groupStatisticalDescription: 'Cookies used for statistics and shop performance metrics.',
     groupStatisticalGoogleAnalytics: 'Google Analytics',
     groupComfortFeatures: 'Comfort features',
-    groupComfortFeaturesWishlist: 'Wishlist',
+    groupComfortFeaturesWishlist: 'Wishlist'
   },
   ellipsis: {
     expandLabel: 'show more',
-    shrinkLabel: 'show less',
+    shrinkLabel: 'show less'
   },
   component: {
     product: {
@@ -663,20 +633,20 @@ export const lang = {
           length: 'Length:',
           releaseDate: 'Release date:',
           description: 'Description:',
-          referencePrice: 'Content:',
+          referencePrice: 'Content:'
         },
         customField: {
           true: 'Yes',
-          false: 'No',
-        },
-      },
+          false: 'No'
+        }
+      }
     },
     cms: {
       vimeo: {
         privacyNotice:
           'By viewing the video you agree that your data will be transferred to %platform% and that you have read the <a data-toggle="modal" data-url="%url%" href="%url%" title="Privacy policy">Privacy policy</a>.',
-        acceptButtonLabel: 'Accept',
-      },
-    },
-  },
+        acceptButtonLabel: 'Accept'
+      }
+    }
+  }
 };

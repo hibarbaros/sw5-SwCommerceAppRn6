@@ -1,8 +1,8 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const CheckoutContext = createContext([{}, () => {}]);
 
-export const CheckoutProvider = ({children}) => {
+export const CheckoutProvider = ({ children }) => {
   const [selectedBilllingAddress, setselectedBilllingAddress] = useState(null);
   const [selectedShippingAddress, setselectedShippingAddress] = useState(null);
   const [selectedPaymentMethod, setselectedPaymentMethod] = useState(null);
@@ -18,8 +18,9 @@ export const CheckoutProvider = ({children}) => {
         selectedPaymentMethod,
         setselectedPaymentMethod,
         selectedShippingMethod,
-        setselectedShippingMethod,
-      }}>
+        setselectedShippingMethod
+      }}
+    >
       {children}
     </CheckoutContext.Provider>
   );

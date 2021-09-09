@@ -1,10 +1,10 @@
-import React, {useState, useEffect, createContext, useContext} from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 
-import {setItem, getItem, removeItem} from '../utils/storagehelper';
+import { setItem, getItem, removeItem } from '../utils/storagehelper';
 
 const AppContext = createContext([{}, () => {}]);
 
-export const AppProvider = ({children}) => {
+export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [sessionId, setSessionId] = useState(null);
   const [wishlist, setWishlist] = useState([]);
@@ -48,11 +48,9 @@ export const AppProvider = ({children}) => {
     getItem('wishlist').then((v) => v && setWishlist(v));
     getItem('visitedProducts').then((v) => v && setVisitedProducts(v));
     getItem('sessionId').then((v) => v && setSessionId(v));
-    getItem('selectedLanguage').then((v) =>
-      v ? setSelectedLanguage(v) : setSelectedLanguage(3),
-    );
+    getItem('selectedLanguage').then((v) => (v ? setSelectedLanguage(v) : setSelectedLanguage(3)));
     getItem('selectedTranslate').then((v) =>
-      v ? setSelectedTranslate(v) : setSelectedTranslate(0),
+      v ? setSelectedTranslate(v) : setSelectedTranslate(0)
     );
   }, []);
 
@@ -84,8 +82,9 @@ export const AppProvider = ({children}) => {
         allCurrencies,
         setAllCurrencies,
         setSelectedTranslateContext,
-        selectedTranslate,
-      }}>
+        selectedTranslate
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

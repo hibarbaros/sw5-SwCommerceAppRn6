@@ -3,12 +3,12 @@ import vars from './vars';
 import base64 from 'base-64';
 
 let axiosInstance = axios.create({
-  baseURL: vars.host,
+  baseURL: vars.host
 });
 
 axiosInstance.defaults.headers.common['Content-Type'] = 'application/json';
 axiosInstance.defaults.headers.common.Authorization = `Basic ${base64.encode(
-  `${vars.username}:${vars.password}`,
+  `${vars.username}:${vars.password}`
 )}`;
 
 axiosInstance.interceptors.request.use((config) => {
@@ -21,7 +21,7 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosInstance;
