@@ -15,7 +15,7 @@ import {
   migrateUserCart,
   findProductVariant,
   userCartPriceCalculation
-} from '../actions/cartactions';
+} from 'utils/actions/cartactions';
 
 //!Get Customer Cart
 const getUserCart = async (user, sessionId) => {

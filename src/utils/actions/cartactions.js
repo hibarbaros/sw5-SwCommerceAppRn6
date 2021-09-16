@@ -1,13 +1,13 @@
 import _ from 'lodash';
 
 import Api from '../api';
-import {cartNormalize} from '../normalize/cartNormalize';
-import {productsWithFilter} from '../actions/articleactions';
-import {priceWithTax} from '../../utils/functions';
+import { cartNormalize } from '../normalize/cartNormalize';
+import { productsWithFilter } from '../actions/articleactions';
+import { priceWithTax } from '../../utils/functions';
 
 export async function getCartBySessionId(sessionId) {
   const response = await Api.get(
-    `/ConnectorBasket?filter[0][property]=sessionId&filter[0][value]=${sessionId}`,
+    `/ConnectorBasket?filter[0][property]=sessionId&filter[0][value]=${sessionId}`
   );
   if (response) {
     return response.data;
@@ -17,9 +17,7 @@ export async function getCartBySessionId(sessionId) {
 }
 
 export async function getCartByUserId(userId) {
-  const response = await Api.get(
-    `/ConnectorBasket?filter[customerId]=${userId}`,
-  );
+  const response = await Api.get(`/ConnectorBasket?filter[customerId]=${userId}`);
   if (response) {
     return response.data;
   } else {
@@ -29,7 +27,7 @@ export async function getCartByUserId(userId) {
 
 export async function getFindCartBySessionId(sessionId, orderNumber) {
   const response = await Api.get(
-    `/ConnectorBasket?filter[0][property]=sessionId&filter[0][value]=${sessionId}`,
+    `/ConnectorBasket?filter[0][property]=sessionId&filter[0][value]=${sessionId}`
   );
   const finded = response.data.find((x) => x.orderNumber === orderNumber);
   if (finded) {
@@ -48,22 +46,16 @@ export async function removeFromCart(productNumber, user) {
 }
 
 export async function addFromCart(mutateVariables, user, sessionId) {
-  const {productData, quantity, number} = mutateVariables;
+  const { productData, quantity, number } = mutateVariables;
   const checktoBasket = await getCartByUserId(user);
   const finded = checktoBasket.find((x) => x.orderNumber === number);
   if (finded) {
     const formDataUpdate = {
-      quantity: finded.quantity + quantity,
+      quantity: finded.quantity + quantity
     };
     Api.put(`/ConnectorBasket/${finded.id}`, formDataUpdate);
   } else {
-    const formDataPost = cartNormalize(
-      productData,
-      quantity,
-      number,
-      user,
-      sessionId,
-    );
+    const formDataPost = cartNormalize(productData, quantity, number, user, sessionId);
     await Api.post('/ConnectorBasket', formDataPost);
   }
   return true;
@@ -73,19 +65,16 @@ export async function addFromCart(mutateVariables, user, sessionId) {
 //!Context Api cart fonksiyonlari
 export async function addInitialUserCart(userCart, mutateVariables) {
   const newList = userCart ? userCart : [];
-  const finded = newList.find(
-    (x) => x.number === mutateVariables.productData.number,
-  );
+  const finded = newList.find((x) => x.number === mutateVariables.productData.number);
   if (!finded || !userCart) {
     newList.unshift({
       id: mutateVariables.productData.id,
       number: mutateVariables.number,
       quantity: mutateVariables.quantity,
-      variantId: mutateVariables.variantId,
+      variantId: mutateVariables.variantId
     });
   } else {
-    finded.quantity =
-      parseInt(finded.quantity, 10) + parseInt(mutateVariables.quantity, 10);
+    finded.quantity = parseInt(finded.quantity, 10) + parseInt(mutateVariables.quantity, 10);
   }
   return newList;
 }
@@ -103,12 +92,12 @@ export async function removeInitialUserCart(userCart, productNumber) {
 //TODO: migration fonksiyonu php api de düzenle
 export async function migrateUserCart(user, userCart, sessionId) {
   const response = await Api.get(`/ConnectorBasket?filter[customerId]=${user}`);
-  const {data} = response;
+  const { data } = response;
   for (const cartProduct of userCart) {
-    const finded = _.find(data, {orderNumber: cartProduct.number});
+    const finded = _.find(data, { orderNumber: cartProduct.number });
     if (finded) {
       const formDataPut = {
-        quantity: finded.quantity + cartProduct.quantity,
+        quantity: finded.quantity + cartProduct.quantity
       };
       Api.put(`/ConnectorBasket/${finded.id}`, formDataPut);
     } else {
@@ -118,7 +107,7 @@ export async function migrateUserCart(user, userCart, sessionId) {
         cartProduct.quantity,
         cartProduct.number,
         user,
-        sessionId,
+        sessionId
       );
       Api.post('/ConnectorBasket', formDataPost);
     }
@@ -129,10 +118,10 @@ export async function migrateUserCart(user, userCart, sessionId) {
 
 //!variant varsa bulunuyor yoksa sadece ürün numarasi ekleniyor
 export async function findProductVariant(mutateVariables) {
-  const {productData, selectedVariants} = mutateVariables;
+  const { productData, selectedVariants } = mutateVariables;
   if (selectedVariants) {
     const variantProduct = _.find(productData.details, {
-      configuratorOptions: selectedVariants,
+      configuratorOptions: selectedVariants
     });
     mutateVariables.number = variantProduct.number;
   } else {
@@ -151,15 +140,15 @@ export async function userCartPriceCalculation(userCart) {
     (prevValue, reduceProduct) => {
       return `${prevValue}&filter[id][]=${reduceProduct.id}`;
     },
-    '',
+    ''
   );
   const filteredProductList = await productsWithFilter(reducer);
   const mapped = _.map(filteredProductList, 'details');
   const flattenDeep = _.flattenDeep(mapped);
   for (const cartProduct of userCart) {
-    const mainProduct = _.find(filteredProductList, {id: cartProduct.id});
+    const mainProduct = _.find(filteredProductList, { id: cartProduct.id });
     const findedProduct = _.find(flattenDeep, {
-      number: cartProduct.number,
+      number: cartProduct.number
     });
     const [price] = findedProduct.prices;
     const priceCalc = priceWithTax(price.price, mainProduct.tax.tax);
@@ -167,5 +156,5 @@ export async function userCartPriceCalculation(userCart) {
     const taxCalc = price.price * (mainProduct.tax.tax / 100);
     taxPrice += taxCalc * cartProduct.quantity;
   }
-  return {netPrice, taxPrice};
+  return { netPrice, taxPrice };
 }

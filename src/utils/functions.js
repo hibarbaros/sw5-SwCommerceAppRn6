@@ -2,7 +2,7 @@ import _ from 'lodash';
 import md5 from 'react-native-md5';
 import bcrypt from 'react-native-bcrypt';
 
-import vars from '../utils/vars';
+import vars from 'utils/vars';
 
 function setSubCategories(data, categoryId) {
   const categories = _.filter(data, { parentId: categoryId });

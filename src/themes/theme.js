@@ -7,12 +7,21 @@ export const theme = {
     white: '#ffffff',
     grey: '#9098B1',
     light: '#EBF0FF',
-    dark: '#223263',
+    dark: '#223263'
   },
+  components: {
+    Button: {
+      variants: {
+        red: {
+          backgroundColor: 'green'
+        }
+      }
+    }
+  }
 };
 
 export const fontFamilies = {
   primaryRegular: 'PlayfairDisplay-Regular',
   secondary: 'PlayfairDisplay-Regular',
-  secondaryRegular: 'Mulish-Regular',
+  secondaryRegular: 'Mulish-Regular'
 };

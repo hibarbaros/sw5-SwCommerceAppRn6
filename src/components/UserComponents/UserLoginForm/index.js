@@ -1,20 +1,20 @@
-import React, {useState} from 'react';
-import {Div} from 'react-native-magnus';
-import {Formik, Field} from 'formik';
+import React, { useState } from 'react';
+import { Div } from 'react-native-magnus';
+import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 //*components
-import {FormInput, Button, TextButton, Container} from 'themes/components';
+import { FormInput, Button, TextButton, Container } from 'themes/components';
 import LoadSpinner from 'components/Common/LoadSpinner';
 //*utils
-import {useCustomerLogin} from 'utils/hooks/useCustomer';
-import {validationSchema} from 'utils/validationSchema';
+import { useCustomerLogin } from 'utils/hooks/useCustomer';
+import { validationSchema } from 'utils/validationSchema';
 
-import {initialValues} from './initialValues';
+import { initialValues } from './initialValues';
 
 export default function UserLoginForm() {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  const {mutateAsync, isLoading} = useCustomerLogin();
+  const { mutateAsync, isLoading } = useCustomerLogin();
 
   async function handleLogin(values) {
     await mutateAsync(values);
@@ -31,18 +31,14 @@ export default function UserLoginForm() {
           password: validationSchema.passwordValidation(
             'No password provided.',
             'Password is too short - should be 8 chars minimum.',
-            'Password can only contain Latin letters.',
-          ),
-        })}>
-        {({handleSubmit}) => (
+            'Password can only contain Latin letters.'
+          )
+        })}
+      >
+        {({ handleSubmit }) => (
           <Container>
             <Div>
-              <Field
-                component={FormInput}
-                name="email"
-                placeholder="E-Mail *"
-                suffix="envelope"
-              />
+              <Field component={FormInput} name="email" placeholder="E-Mail *" suffix="envelope" />
             </Div>
             <Div>
               <Field
@@ -52,9 +48,7 @@ export default function UserLoginForm() {
                 placeholder="Password *"
               />
             </Div>
-            <TextButton
-              mb={10}
-              onPress={() => setSecureTextEntry(!secureTextEntry)}>
+            <TextButton mb={10} onPress={() => setSecureTextEntry(!secureTextEntry)}>
               Show Password
             </TextButton>
             <Div mT={10}>

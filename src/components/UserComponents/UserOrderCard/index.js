@@ -1,12 +1,12 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {Div} from 'react-native-magnus';
+import { useNavigation } from '@react-navigation/native';
+import { Div } from 'react-native-magnus';
 
 import AppRoute from 'utils/approutes';
 import PriceWithCurrency from 'components/Common/PriceWithCurrency';
-import {Headline, Paragraph, Button} from 'themes/components';
+import { Headline, Paragraph, Button } from 'themes/components';
 
-export default function UserOrderCard({order}) {
+export default function UserOrderCard({ order }) {
   const navigation = useNavigation();
 
   return (
@@ -42,9 +42,7 @@ export default function UserOrderCard({order}) {
       </Div>
       <Button
         text="Order Detail"
-        onPress={() =>
-          navigation.navigate(AppRoute.ORDER_DETAIL, {order: order})
-        }
+        onPress={() => navigation.navigate(AppRoute.ORDER_DETAIL, { order: order })}
       />
     </Div>
   );
