@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
 import { Image, Div } from 'react-native-magnus';
-// import {motion, useTransform} from 'framer-motion';
 
 import Navigation from './Navigation';
 import { useAppContext } from 'context/AppContext';
@@ -13,7 +12,6 @@ import { shopData, paymentsData } from 'utils/actions/appactions';
 import { initialCartNormalize } from 'utils/normalize/cartNormalize';
 
 import Logo from '../assets/images/lemken-logo.png';
-// const AnimatedView = motion(Div);
 
 export default function MainScreen() {
   const { setInitialUserCart } = useCartContext();
@@ -26,7 +24,7 @@ export default function MainScreen() {
     setAllCurrencies
   } = useAppContext();
 
-  const customerContext = useQuery('customerDataContext', () => customerData(user), {
+  useQuery('customerDataContext', () => customerData(user), {
     enabled: !!user,
     onSuccess: (userData) => {
       if (userData) {
@@ -50,13 +48,7 @@ export default function MainScreen() {
     onSuccess: (data) => setPaymentMethods(data)
   });
 
-  // const opacity = useTransform(() => ({
-  //   opacity: 1,
-  //   from: {opacity: 0},
-  // }));
-
-  const navigationLoaded =
-    paymentContext.isSuccess && shopContext.isSuccess && customerContext.isSuccess;
+  const navigationLoaded = paymentContext.isSuccess && shopContext.isSuccess;
 
   return (
     <>

@@ -1,17 +1,17 @@
 import React from 'react';
-import {Div} from 'react-native-magnus';
+import { Div } from 'react-native-magnus';
 import styled from 'styled-components/native';
 
 import ProductCard from '../ProductCard';
-import {useAppContext} from 'context/AppContext';
-import {useLocalizationContext} from 'context/Translations';
-import {Headline} from 'themes/components';
+import { useAppContext } from 'context/AppContext';
+import { useLocalizationContext } from 'context/Translations';
+import { Headline } from 'themes/components';
 
 export default function VisitedProducts() {
-  const {translations} = useLocalizationContext();
-  const {visitedProducts} = useAppContext();
+  const { translations } = useLocalizationContext();
+  const { visitedProducts } = useAppContext();
 
-  const renderCarouselItem = ({item}) => {
+  const renderCarouselItem = ({ item }) => {
     return (
       <Div maxW={200} minW={200}>
         <ProductCard theme="theme02" productId={item} />

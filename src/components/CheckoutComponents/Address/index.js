@@ -1,39 +1,37 @@
-import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, Text} from 'react-native';
-import {Modal, Div} from 'react-native-magnus';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, Text } from 'react-native';
+import { Modal, Div } from 'react-native-magnus';
 
-import {useCustomerByCustomerId} from 'utils/hooks/useCustomer';
-import {useCountries} from 'utils/hooks/useApp';
+import { useCustomerByCustomerId } from 'utils/hooks/useCustomer';
+import { useCountries } from 'utils/hooks/useApp';
 
-import {useAppContext} from 'context/AppContext';
-import {useCheckoutContext} from 'context/CheckoutContext';
-import {Container, Button, ModalHeader} from 'themes/components';
+import { useAppContext } from 'context/AppContext';
+import { useCheckoutContext } from 'context/CheckoutContext';
+import { Container, Button, ModalHeader } from 'themes/components';
 import AddressCard from '../AddressCard';
 
 export default function Address() {
-  const {user} = useAppContext();
+  const { user } = useAppContext();
 
   const {
     selectedBilllingAddress,
     setselectedBilllingAddress,
     selectedShippingAddress,
-    setselectedShippingAddress,
+    setselectedShippingAddress
   } = useCheckoutContext();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [isBillingAddress, setIsBillingAddress] = useState(null);
 
-  const {data, isLoading} = useCustomerByCustomerId(user);
-  const {data: countries} = useCountries();
+  const { data, isLoading } = useCustomerByCustomerId(user);
+  const { data: countries } = useCountries();
 
   if (isLoading) {
     return <Text>Loading</Text>;
   }
 
   const addCountryToAddress = (address) => {
-    const found = countries.find(
-      (x) => x.id === parseFloat(address.country_id),
-    );
+    const found = countries.find((x) => x.id === parseFloat(address.country_id));
     setselectedBilllingAddress(found);
     address.country = found;
     return address;
@@ -53,9 +51,7 @@ export default function Address() {
 
   return (
     <>
-      {selectedBilllingAddress && (
-        <AddressCard addressId={selectedBilllingAddress.id} />
-      )}
+      {selectedBilllingAddress && <AddressCard addressId={selectedBilllingAddress.id} />}
       <Div mb={20}>
         <Button
           block
@@ -66,11 +62,7 @@ export default function Address() {
           text="Change Billing Address"
         />
       </Div>
-      <Div>
-        {selectedShippingAddress && (
-          <AddressCard addressId={selectedShippingAddress.id} />
-        )}
-      </Div>
+      <Div>{selectedShippingAddress && <AddressCard addressId={selectedShippingAddress.id} />}</Div>
       <Div>
         <Button
           block
@@ -84,10 +76,7 @@ export default function Address() {
       <SafeAreaView>
         <Modal animationType="slide" visible={modalVisible}>
           <SafeAreaView>
-            <ModalHeader
-              title="Address"
-              onPress={() => setModalVisible(false)}
-            />
+            <ModalHeader title="Address" onPress={() => setModalVisible(false)} />
             <ScrollView>
               <Container>
                 {data.address.map((address, i) => {
@@ -97,9 +86,7 @@ export default function Address() {
                       addressId={address.id}
                       setModalVisible={setModalVisible}
                       onPress={() =>
-                        isBillingAddress
-                          ? handleBilling(address)
-                          : handleShipping(address)
+                        isBillingAddress ? handleBilling(address) : handleShipping(address)
                       }
                     />
                   );

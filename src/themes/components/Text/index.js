@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text } from 'react-native-magnus';
 
 const textStyles = {
@@ -30,11 +30,13 @@ const textStyles = {
   }
 };
 
-export default function ThemeText({ children, variant = 'primary', ...rest }) {
+const ThemeText = ({ children, variant = 'primary', ...rest }) => {
   const textStyle = textStyles[variant];
   return (
     <Text {...rest} {...textStyle}>
       {children}
     </Text>
   );
-}
+};
+
+export default memo(ThemeText);

@@ -68,7 +68,7 @@ export default function ThemeButton({
     <Button
       {...rest}
       {...buttonStyle}
-      fontSize={fontSize ? fontSize : 18}
+      fontSize={fontSize || 18}
       suffix={SuffixIcon}
       prefix={PrefixIcon}
     >

@@ -24,7 +24,7 @@ export const initialValues = {
   shippingzipcode: '',
   shippingcountry: 0,
   doubleOptinRegister: false,
-  sendOptinMail: false,
+  sendOptinMail: false
 };
 
 // export const initialValues = {

@@ -3,8 +3,8 @@ import styled from 'styled-components/native';
 
 import ProductCard from '../ProductCard';
 
-export default function Carousel({data, cardTheme}) {
-  const renderCarouselItem = ({item}) => {
+export default function Carousel({ data, cardTheme }) {
+  const renderCarouselItem = ({ item }) => {
     return <ProductCard theme={cardTheme} productId={item.id} product={item} />;
   };
 

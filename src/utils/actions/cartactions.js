@@ -3,7 +3,7 @@ import _ from 'lodash';
 import Api from '../api';
 import { cartNormalize } from '../normalize/cartNormalize';
 import { productsWithFilter } from '../actions/articleactions';
-import { priceWithTax } from '../../utils/functions';
+import { priceWithTax } from 'utils/functions';
 
 export async function getCartBySessionId(sessionId) {
   const response = await Api.get(
